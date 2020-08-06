@@ -1,0 +1,2 @@
+{{ $page := .Page.GetPage (.Get 1) }}
+<a target="_blank" {{ printf "href=%q" $page.Permalink | safeHTMLAttr }}>{{ .Get 0 | markdownify }}</a>

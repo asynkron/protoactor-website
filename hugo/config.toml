@@ -1,0 +1,36 @@
+baseURL = "https://asynkron.se/"
+languageCode = "en-us"
+title = "Asynkron AB"
+theme = "blank"
+# relativeURLs = "true"
+# uglyURLs = "true"
+# [params]
+#   ugly = ".html"
+#   uglyhome = "/index.html"
+
+[markup]
+  [markup.highlight]
+    codeFences = false
+    guessSyntax = false
+    hl_Lines = ""
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = false
+    noClasses = true
+    style = "" #https://xyproto.github.io/splash/docs/all.html
+    tabWidth = 4
+
+  [markup.goldmark.renderer]
+    unsafe = true
+
+  [markup.goldmark.extensions]
+      definitionList = true
+      footnote = true
+      linkify = true
+      strikethrough = true
+      table = true
+      taskList = true
+      typographer = true
+
+[outputs]
+home = ["HTML", "RSS"]

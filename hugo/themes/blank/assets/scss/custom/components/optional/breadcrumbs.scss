@@ -1,0 +1,37 @@
+// 
+// 
+// breadcrumbs.scss
+//
+//
+
+
+.breadcrumb{
+    align-items: center;
+}
+
+.breadcrumb-item{
+    + .breadcrumb-item{
+        display: flex;
+        align-items: center;
+        &:before{
+            content: '';
+            opacity: .5;
+            width: $spacer*1.5;
+            height: $spacer*1.5;
+            background-image: str-replace(url("data:image/svg+xml,%3csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M14.376 11.584C14.6728 11.7819 14.6728 12.2181 14.376 12.416L9.77735 15.4818C9.44507 15.7033 9 15.4651 9 15.0657L9 8.93426C9 8.53491 9.44507 8.29671 9.77735 8.51823L14.376 11.584Z' fill='#{$gray-900}'/%3e%3c/svg%3e"), "#", "%23");
+        }
+    }
+    a{
+        color: $body-color;
+        &:hover{
+            color: $primary;
+        }
+    }
+}
+
+@include media-breakpoint-down(sm){
+    .breadcrumb{
+        font-size: $font-size-sm;
+        padding: $breadcrumb-padding-y*.75 $breadcrumb-padding-x*.75;
+    }
+}

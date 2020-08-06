@@ -1,0 +1,115 @@
+// 
+// 
+// docs.scss
+//
+// Simply to style the documentation, feel free to remove.
+
+$docs-layout-height: calc(100vh - 80px);
+
+@include media-breakpoint-up(lg){
+	.docs-sidebar{
+		height: $docs-layout-height;
+		overflow-y: scroll;
+		position: -webkit-sticky;
+		position: sticky;
+		top: 80px;
+	}
+	#docs-index{
+		display: block !important;
+	}
+}
+
+.docs-dl{
+	margin-left: 0;
+	margin-right: 0;
+	border-top: $border-width solid $border-color;
+	p{
+		margin-bottom: 0;
+	}
+	> dt, > dd{
+		margin: 0;
+		padding: .5rem;
+		border-bottom: $border-width solid $border-color;
+	}
+}
+
+.alert{
+	p{
+		margin-bottom: 0;
+	}
+}
+
+.code-snippet{
+	position: relative;
+	.btn-clipboard{
+		position: absolute;
+		top: $spacer/2;
+		right: $spacer/2;
+		opacity: 0;
+	}
+	&:hover{
+		.btn-clipboard{
+			opacity: 1;
+		}
+	}
+}
+
+.docs-graphic{
+	.btn{
+		margin: .5rem;
+	}
+	&:not(:hover){
+		.btn{
+			opacity: 0;
+		}
+	}
+}
+
+.lead{
+	> p{
+		&:last-child{
+			margin-bottom: 0;
+		}
+	}
+}
+
+.docs-sidebar{
+	.nav-link{
+		color: $body-color;
+		&:not(:hover){
+			opacity: .5;
+		}
+		&:hover{
+			.icon{
+				path{
+					fill: $primary;
+				}
+			}
+		}
+		&[aria-expanded="true"]{
+			.icon{
+				transform: rotateZ(90deg);
+			}
+		}
+		&.active{
+			color: $headings-color;
+			opacity: 1;
+		}
+	}
+}
+
+table{
+	margin-bottom: $spacer*3;
+}
+thead{
+	margin: $spacer 0;
+}
+td{
+	padding: $spacer;
+}
+tr{
+	border-bottom: $border-width $border-color solid;
+}
+td code{
+	word-break: keep-all;
+}

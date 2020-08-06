@@ -1,0 +1,16 @@
+// 
+// 
+// modals.scss
+//
+//
+
+.modal-header{
+  position: relative;
+  z-index: 1;
+  .close{
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 0;
+  }
+}

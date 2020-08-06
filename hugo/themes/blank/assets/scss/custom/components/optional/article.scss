@@ -1,0 +1,66 @@
+// 
+// 
+// article.scss
+//
+//
+
+.article{
+    figure, blockquote, pre{
+        margin: $spacer*2 0;
+    }
+    ul,ol{
+        padding-left: $spacer*2;
+    }
+    pre{
+        padding: $spacer;
+        background: $dark;
+        color: $code-color;
+        border-radius: $border-radius;
+    }
+}
+
+@include media-breakpoint-up(md){
+    .article{
+        figure, blockquote, pre{
+            margin: $spacer*4 0;
+        }
+        h5:not(:first-child){
+            margin-top: $spacer*3;
+        }
+        ul,ol{
+            > li:not(:last-child){
+                margin-bottom: $spacer/2;
+            }
+        }
+        pre{
+            padding: $spacer*2.25;
+        }
+    }
+}
+
+.article-comments{
+    list-style: none;
+    padding-left: 0;
+    > li{
+        &:not(:last-child){
+            margin-bottom: $spacer;
+        }
+        li{
+            margin-top: $spacer;
+            padding-top: $spacer;
+            padding-bottom: $spacer;
+            padding-left: $spacer;
+            border-left: 2px solid $border-color;
+        }
+    }
+}
+
+@include media-breakpoint-up(md){
+    .article-comments{
+        > li{
+            &:not(:last-child){
+                margin-bottom: $spacer*1.5;
+            }
+        }
+    }
+}

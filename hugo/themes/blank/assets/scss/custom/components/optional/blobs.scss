@@ -1,0 +1,38 @@
+// 
+// 
+// blobs.scss
+//
+//
+
+
+.blob{
+    position: absolute;
+    z-index: 0;
+    transform: scale(3);
+    mask-image: url('../img/blobs/blob-1.svg');
+    &.blob-2{
+        mask-image: url('../img/blobs/blob-2.svg');
+    }
+    &.blob-3{
+        mask-image: url('../img/blobs/blob-3.svg');
+    }
+    &.blob-4{
+        mask-image: url('../img/blobs/blob-4.svg');
+    }
+    &.blob-5{
+        mask-image: url('../img/blobs/blob-5.svg');
+    }
+    mask-size: 100% 100%;
+    &.top{
+        top: -5vw;
+    }
+    &.bottom{
+        bottom: -5vw;
+    }
+    &.right{
+        right: -5vw;
+    }
+    &.left{
+        left: -5vw;
+    }
+}

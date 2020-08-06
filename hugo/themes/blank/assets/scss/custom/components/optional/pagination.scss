@@ -1,0 +1,46 @@
+// 
+// 
+// pagination.scss
+//
+//
+
+.page-link{
+    transition: $transition-base;
+    .icon-xs{
+        position: relative;
+        bottom: 1px;
+    }
+    &:hover{
+        z-index: 0;
+    }
+}
+
+.page-item{
+    &:first-child{
+        .page-link{
+            &.rounded{
+                border-radius: 200em 0 0 200em !important;
+            }
+            .icon{
+                margin-left: $pagination-padding-x/4;
+            }
+        }
+    }
+    &:last-child{
+        .page-link{
+            &.rounded{
+                border-radius: 0 200em 200em 0 !important;
+            }
+            .icon{
+                margin-right: $pagination-padding-x/4;
+            }
+        }
+    }
+    &.active{
+        .page-link{
+            .icon{
+                @include svgColor($white);
+            }
+        }
+    }
+}

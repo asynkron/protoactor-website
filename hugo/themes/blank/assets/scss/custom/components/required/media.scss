@@ -1,0 +1,22 @@
+// 
+// 
+// media.scss
+//
+//
+
+
+@include media-breakpoint-down(sm){
+    .media{
+        > h5{
+            font-size: $font-size-base;
+        }
+    }
+}
+
+.media{
+    .icon{
+        &.icon-sm{
+            height: $spacer*2.25;
+        }
+    }
+}

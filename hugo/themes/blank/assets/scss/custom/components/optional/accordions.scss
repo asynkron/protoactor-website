@@ -1,0 +1,31 @@
+// 
+// 
+// accordions.scss
+//
+//
+
+.card{
+    >[data-toggle="collapse"]{
+        h6, .icon{
+            transition: $transition-base;
+        }
+        &[aria-expanded="false"]{
+            &:hover{
+                h6{
+                    color: $primary;
+                }
+            }
+        }
+        &[aria-expanded="true"]{
+            h6{
+                color: $primary;
+            }
+            .icon{
+                transform: rotateZ(90deg);
+                [fill]:not([fill="none"]){
+                    fill: $primary;
+                }
+            }
+        }
+    }
+}

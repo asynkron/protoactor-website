@@ -1,0 +1,18 @@
+// 
+// 
+// tooltips.scss
+//
+//
+
+
+.tooltip-circle{
+    cursor: pointer;
+    width: $spacer;
+    height: $spacer;
+    border-radius: 50%;
+    font-size: $font-size-sm*.85;
+    font-weight: $font-weight-bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

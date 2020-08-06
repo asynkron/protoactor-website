@@ -1,0 +1,34 @@
+// 
+// 
+// badges.scss
+//
+//
+
+
+.badge{
+    vertical-align: middle;
+    letter-spacing: 0;
+}
+
+@each $color, $value in $theme-colors {
+    a.badge-#{$color} {
+        background-color: rgba($value,.1);
+        color: $value;
+    }
+}
+
+a.badge.badge-white{
+    background: rgba($white,.1);
+    color: $white;
+    &:hover{
+        background: rgba($white,.25);
+    }
+}
+
+.card-img-top{
+    + .badge{
+        position: absolute;
+        bottom: $spacer*1.5;
+        right: $spacer*1.5;
+    }
+}

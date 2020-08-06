@@ -1,0 +1,15 @@
+[context.production.environment]
+  HUGO_VERSION = "0.71.1"
+
+[context.deploy-preview.environment]
+  HUGO_VERSION = "0.71.1"
+
+# [[plugins]]
+#   package = "netlify-plugin-algolia-index"
+#   package = "netlify-plugin-submit-sitemap"
+
+[[redirects]]
+  from = "https://proto.actor/"
+  to = "https://asynkron.se/docs/proto.actor/"
+  status = 200
+  force = true # COMMENT: ensure that we always redirect

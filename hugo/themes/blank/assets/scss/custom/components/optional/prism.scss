@@ -1,0 +1,51 @@
+// 
+// 
+// prism.scss
+//
+//
+
+@import "../../components/plugins/prism";
+
+
+
+// code {
+
+//     background-color: unset;
+//     border: unset;
+//     border-radius: unset;
+//     padding: unset;
+//     font-weight: unset;
+//     color: unset;
+    
+//     font-weight: normal;
+//     font-family: "Lucida Console", Monaco, monospace !important;
+//     font-size: 14px;
+// }
+
+code[class*='language-']{
+  border: none;
+  font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+  line-height: 18px;
+  padding: 0;
+  background-color: unset;
+}
+
+article{
+  pre[class*='language-']{
+    border: 1px solid #ececec;
+    border-left-width: 10px; 
+    font-weight: normal;
+    font-size: 14px;
+    padding: 10px;
+    margin: 0;
+    margin-bottom: 16px;
+  }
+}
+
+pre[class*='language-']{
+  padding: $spacer;
+}
+
+.token.property, .token.tag, .token.boolean, .token.number, .token.constant, .token.symbol, .token.deleted{
+  color: $code-color;
+}

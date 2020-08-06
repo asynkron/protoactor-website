@@ -1,0 +1,26 @@
+{{ define "main" }}
+<section class="bg-light o-hidden pt-5 pb-0">
+	<div class="container">
+		<div class="row align-items-center justify-content-between">
+			<div class="col" data-aos="fade-right">
+				<div class="pr-xl-5">
+					<main>
+						{{ if or .Title .Content }}
+						<div>
+							{{ with .Title }}<h1>{{ . }}</h1>{{ end }}
+							{{ with .Content }}<div>{{ . }}</div>{{ end }}
+						</div>
+						{{ end }}
+
+						{{ range .Paginator.Pages }}
+						{{ .Render "summary" }}
+						{{ end }}
+						{{ partial "pagination.html" . }}
+					</main>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="divider divider-bottom bg-dark mt-5"></div>
+</section>
+{{ end }}

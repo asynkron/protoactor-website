@@ -1,0 +1,113 @@
+// 
+// 
+// forms.scss
+//
+//
+
+
+.custom-control{
+    label, input{
+        cursor: pointer;
+    }
+    label{
+        user-select: none;
+    }
+    &.text-small{
+      label{
+          &:before,&:after{
+              top: 0;
+          }
+      }  
+    }
+}
+
+.form-group{
+    position: relative;
+    .custom-select{
+        + .icon{
+            position: absolute;
+            transform: translateY(-50%);
+            right: $spacer*.75;
+            top: $spacer*1.5;
+            pointer-events: none;
+        }
+        &.custom-select-sm{
+            + .icon{
+                top: $spacer*1.125;
+            }
+        }
+        &.custom-select-lg{
+            + .icon{
+                top: $spacer*2.25;
+                transform: translateY(-50%) scale(1.25);
+            }
+        }
+    }
+}
+
+.custom-select, .custom-file-input{
+    cursor: pointer;
+}
+
+.custom-file-label{
+    &:after{
+        padding-left: $spacer*1.5;
+        padding-right: $spacer*1.5;
+    }
+}
+
+@include media-breakpoint-down(sm){
+    .form-control-lg{
+        font-size: $font-size-base;
+        padding: $input-padding-y $input-padding-x;
+        height: $input-height;
+    }
+}
+
+.input-group-text{
+    transition: $transition-base;
+}
+
+.input-group{
+    .form-control{
+        &:last-child{
+            border-left: 0;
+        }
+    }
+    &:focus-within{
+        .input-group-text{
+            border-color: $input-focus-border-color;
+        }
+    }
+}
+
+
+// reCAPTCHA
+
+[data-recaptcha]{
+    &:not([data-size="invisible"]){
+      margin-bottom: $spacer/2;
+    }
+  }
+  
+  .grecaptcha-badge{
+    display: none !important;
+  }
+
+  // Form Validation
+
+.was-validated .form-control:invalid, .form-control.is-invalid{
+    background-image: str-replace(url("data:image/svg+xml,%3csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M18 6L6 18' stroke='#{$danger}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3e%3cpath d='M6 6L18 18' stroke='#{$danger}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e"), "#", "%23");
+}
+
+.was-validated .form-control:valid, .form-control.is-valid{
+    background-image: str-replace(url("data:image/svg+xml,%3csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M20 6L9 17L4 12' stroke='#{$success}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e"), "#", "%23");
+}
+
+.was-validated .custom-select:invalid, .custom-select.is-invalid{
+    background: none no-repeat right 0.75rem center/8px 10px, str-replace(url("data:image/svg+xml,%3csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M18 6L6 18' stroke='#{$danger}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3e%3cpath d='M6 6L18 18' stroke='#{$danger}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e"), "#", "%23") #fff no-repeat center right 1.75rem/calc(0.75em + 0.6875rem) calc(0.75em + 0.6875rem);     
+}
+
+.was-validated .custom-select:valid, .custom-select.is-valid{
+    background: none no-repeat right 0.75rem center/8px 10px, str-replace(url("data:image/svg+xml,%3csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M20 6L9 17L4 12' stroke='#{$success}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e"), "#", "%23") #fff no-repeat center right 1.75rem/calc(0.75em + 0.6875rem) calc(0.75em + 0.6875rem);
+}

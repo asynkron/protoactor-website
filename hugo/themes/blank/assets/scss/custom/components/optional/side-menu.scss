@@ -1,0 +1,61 @@
+// 
+// 
+// side-menu.scss
+//
+//
+
+.side-menu{
+  position: fixed;
+  pointer-events: none;
+  right: 0;
+  top: 0;
+  z-index: $zindex-fixed+1;
+  display: flex;
+  align-items: center;
+  .side-menu-body{
+    height: 100vh;
+    overflow-y: scroll;
+    transform: translateX(100%);
+    transition: $transition-base;
+    pointer-events: all;
+  }
+  .btn{
+    transition: $transition-base;
+    pointer-events: all;
+    position: relative;
+    margin-right: 1.5rem;
+    left: calc(100% - 4.5rem);
+    .icon{
+      margin: 0 !important;
+      transition: $transition-base;
+      &:last-child{
+        position: absolute;
+        opacity: 0;
+      }
+    }
+    &.active{
+      left: 0;
+      .icon{
+        &:first-child{
+          opacity: 0;
+        }
+        &:last-child{
+          opacity: 1;
+        }
+      }
+      + .side-menu-body{
+        transform: translateX(0);
+      }
+    }
+  }
+  .nav-link{
+    color: $body-color;
+    &:not(:hover),&:not(.active){
+      opacity: .5;
+    }
+    &:hover,&.active{
+      color: $primary;
+      opacity: 1;
+    }
+  }
+}

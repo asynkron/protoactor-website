@@ -1,0 +1,57 @@
+// 
+// 
+// components.scss
+//
+//
+
+
+// Required Components
+//
+// These partials are essential for theme styling
+
+@import "components/required/badges.scss";
+@import "components/required/buttons.scss";
+@import "components/required/cards";
+@import "components/required/colors.scss";
+@import "components/required/containers.scss";
+@import "components/required/dropdowns.scss";
+@import "components/required/forms.scss";
+@import "components/required/footers.scss";
+@import "components/required/icons.scss";
+@import "components/required/media.scss";
+@import "components/required/navbar.scss";
+@import "components/required/navs.scss";
+@import "components/required/sections.scss";
+@import "components/required/svg.scss";
+@import "components/required/typography.scss";
+@import "components/required/utilities.scss";
+
+
+// Optional Components
+//
+// These partials can be included and excluded as required
+
+@import "components/plugins/aos";
+@import "components/optional/prism";
+@import "components/optional/accordions";
+@import "components/optional/article";
+@import "components/optional/avatars";
+@import "components/optional/blobs";
+@import "components/optional/breadcrumbs";
+@import "components/optional/dividers";
+@import "components/optional/docs";
+@import "components/optional/fancybox";
+@import "components/optional/flatpickr";
+@import "components/optional/flickity";
+@import "components/optional/ie-fixes";
+@import "components/optional/ion-rangeslider";
+@import "components/optional/maps";
+@import "components/optional/modals";
+@import "components/optional/page-transitions";
+@import "components/optional/pagination";
+@import "components/optional/plyr";
+@import "components/optional/pricing";
+@import "components/optional/side-menu";
+@import "components/optional/tabs";
+@import "components/optional/tooltips";
+@import "components/optional/twitterfetcher";

@@ -1,0 +1,66 @@
+// 
+// 
+// plyr.scss
+//
+//
+
+@import "../plugins/plyr";
+
+.plyr{
+  font-family: $font-family-base;
+}
+
+.plyr__poster{
+  background-size: cover !important;
+}
+
+button.plyr__control--overlaid{
+  background: $white;
+  width: 6rem;
+  height: 6rem;
+  padding: 0;
+  color: $gray-900;
+  svg{
+    transform: scaleX(1);
+    margin: 0 auto;
+  }
+  &:hover{
+    background: darken(theme-color('primary'),5%);
+  }
+}
+
+.plyr--video{
+  .plyr__control{
+    &:hover{
+      background: darken(theme-color('primary'),5%);
+    }
+  }
+}
+
+.plyr--full-ui input[type='range']{
+  color: theme-color('primary');
+}
+
+.rounded{
+  video, .plyr{
+    border-radius: $border-radius;
+    overflow: hidden;
+  }
+  .plyr__controls{
+    border-radius: 0 0 $border-radius $border-radius;
+  }
+}
+
+.plyr__video-wrapper, .plyr__poster, .plyr--video{
+  background: transparent;
+}
+
+.video-poster{
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .btn{
+    position: absolute;
+  }
+}

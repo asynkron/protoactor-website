@@ -1,0 +1,35 @@
+// 
+// 
+// pricing.scss
+//
+//
+
+.pricing-table-section{
+  .row{
+    &:not(:first-child){
+      border-top: $border-width solid $border-color;
+    }
+    &:nth-child(even){
+      background: $light;
+    }
+  }
+  + .pricing-table-section{
+    margin-top: $spacer*4;
+  }
+}
+
+@include media-breakpoint-up(md){
+  .pricing-table-section{
+    + .pricing-table-section{
+      margin-top: $spacer*8;
+    }
+  }
+}
+
+@include media-breakpoint-down(md){
+  .pricing-table-section{
+    [class*='col-12']{
+      border-bottom: $border-width solid $border-color;
+    }
+  }
+}
