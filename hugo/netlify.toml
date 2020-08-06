@@ -8,8 +8,8 @@
 #   package = "netlify-plugin-algolia-index"
 #   package = "netlify-plugin-submit-sitemap"
 
-[[redirects]]
-  from = "https://proto.actor/"
-  to = "https://asynkron.se/docs/proto.actor/"
-  status = 200
-  force = true # COMMENT: ensure that we always redirect
+# [[redirects]]
+#   from = "https://proto.actor/"
+#   to = "https://asynkron.se/docs/proto.actor/"
+#   status = 200
+#   force = true # COMMENT: ensure that we always redirect
