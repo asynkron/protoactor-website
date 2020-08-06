@@ -1,6 +1,6 @@
-baseURL = "https://asynkron.se/"
+baseURL = "https://proto.actor/"
 languageCode = "en-us"
-title = "Asynkron AB"
+title = "Proto.Actor"
 theme = "blank"
 # relativeURLs = "true"
 # uglyURLs = "true"
