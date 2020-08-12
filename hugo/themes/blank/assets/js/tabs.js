@@ -11,18 +11,17 @@ $(document).ready(function () {
             let id = 'tab' + tabId;
             $(this).attr("id", "tab" + tabId);
 
-            let a = $('<a class="nav-link" data-toggle="tab" role="tab" aria-selected="false" href="#' + id + '" aria-controls="' + id + '" >' + title + '</a>');
-            let li = $('<li class="nav-item"></li>');
-            a.appendTo(li);
-            li.appendTo(navTabs);
+            let li = $('<li class="nav-item"></li>').appendTo(navTabs);
+            let a = $('<a class="nav-link" data-toggle="tab" role="tab" aria-selected="false" href="#' + id + '" aria-controls="' + id + '" >' + title + '</a>').appendTo(li);            
+           
             a.click(() => {
                 if (inClick){
                     return;
                 }
                 inClick = true;
                 let allTabLinks = $('.code-tabs').find("ul li a");
-                let allTabLinksOfSameText = allTabLinks.filter(function(index) { return $(this).text() === title && $(this).attr('href') != "#" + id })
-                allTabLinksOfSameText.click();
+                let allTabLinksOfSameTextExceptThis = allTabLinks.filter(function(index) { return $(this).text() === title && $(this).attr('href') != "#" + id })
+                allTabLinksOfSameTextExceptThis.click();
                 inClick = false;
             });
 
