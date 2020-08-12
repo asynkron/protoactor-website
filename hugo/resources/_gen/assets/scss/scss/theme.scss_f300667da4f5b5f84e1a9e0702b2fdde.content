@@ -9208,7 +9208,8 @@ code[class*='language-'] {
   background-color: unset; }
 
 article pre[class*='language-'] {
-  border: 1px solid #ececec;
+  border: 1px solid #f5f3f3;
+  border-radius: 3px;
   border-left-width: 10px;
   font-weight: normal;
   font-size: 14px;

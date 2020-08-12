@@ -9,7 +9,7 @@ tags: [protoactor, docs]
 
 An actor is a container for [State](#state), [Behavior](#behavior), a [Mailbox](#mailbox), [Children](#children) and a [Supervisor Strategy](#supervisor-strategy). All of this is encapsulated behind a process ID (`PID`).
 
-![Actor](images/actor.png)
+![Actor](images/actor.gif)
 
 ## PID - Process ID
 
