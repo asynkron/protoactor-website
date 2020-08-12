@@ -1,6 +1,5 @@
 let tabId = 0;
-let selected = "C#";
-let inClick = false;
+
 $(document).ready(function () {
 
     //loop over each pane in the source
