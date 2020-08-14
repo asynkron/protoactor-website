@@ -9180,20 +9180,24 @@ pre[class*="language-"] {
 .language-autohotkey .token.selector {
   color: #000; }
 
-.token.class-name,
 .token.function,
 .token.deleted,
 .language-autohotkey .token.tag {
-  color: #9a050f; }
+  color: #900; }
+
+.token.class-name {
+  color: #458;
+  font-weight: bold; }
 
 .token.tag,
 .token.selector,
 .language-autohotkey .token.keyword {
   color: #00009f; }
 
-/* .token.class-name, */
+.token.class-name,
 .token.token.keyword,
 .token.important,
+.token.function,
 .token.bold {
   font-weight: bold; }
 
