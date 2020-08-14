@@ -13,7 +13,7 @@ You do this by using Protobuf IDL files.
 
 This is the definition from the `/examples/cluster/shared` example
 
-```proto
+```protobuf
 syntax = "proto3";
 package shared;
 
