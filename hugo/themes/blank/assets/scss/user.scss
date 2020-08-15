@@ -184,3 +184,10 @@ h3, .h3 {
 .nav-link.active {
     color: $primary;
 }
+
+/* Main dropdown wrapper */
+.algolia-autocomplete .ds-dropdown-menu {
+    width: 100% !important;
+  }
+
+  

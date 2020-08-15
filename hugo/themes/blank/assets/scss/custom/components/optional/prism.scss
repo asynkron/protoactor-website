@@ -24,7 +24,6 @@
 
 code[class*='language-']{
   border: none;
-  font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
   line-height: 18px;
   padding: 0;
   background-color: unset;
@@ -32,11 +31,11 @@ code[class*='language-']{
 
 article{
   pre[class*='language-']{
-    border: 1px solid #f5f3f3;
+    border: 1px solid #f0f3f5;
     border-radius: 3px;
     border-left-width: 10px; 
     font-weight: normal;
-    font-size: 14px;
+    font-size: 13.6px;
     padding: 10px;
     margin: 0;
     margin-bottom: 16px;
