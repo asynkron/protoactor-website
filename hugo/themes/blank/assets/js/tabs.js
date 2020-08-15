@@ -1,5 +1,7 @@
 let tabId = 0;
 
+
+
 $(document).ready(function () {
 
     //loop over each pane in the source
@@ -20,10 +22,14 @@ $(document).ready(function () {
         tabId++;
     });
 
-    select("C#");
+    let tab = localStorage.getItem('tab') || "C#";
+
+    select(tab);
 });
 
 function select(selected) {
+    localStorage.setItem('tab', selected);
+
     $('.code-tabs').each(function () {
         $(this).find("a").each(function () {
             let a = $(this);
