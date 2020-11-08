@@ -25,3 +25,8 @@ Once all actors have migrated, we are now back at having fully local affinity fr
 ![Actor](images/local-affinity-3.png)
 
 We now get the best of both worlds, robust fault tolerant systems, with the performance of inprocess communication.
+
+Conceptually, we can view this setup as refined topics, where you have a single topic per named actor.
+This means that we can have millions of topics with actor concurrency guarantees for consumption.
+
+![Actor](images/actor-topics.png)
