@@ -21,7 +21,13 @@ This allows us to create huge clusters of stateful services where the virtual ac
 This offers us a unique way to optimize for data locality, while still offering ease of use at scale.
 
 Just like everything else in Proto.Actor where we have re-used proven technologies such as Protobuf and gRPC, we do the same for clustering, we do not reinvent the wheel and create our own cluster mechanics.
-Instead, we leverage proven technologies such as Consul, ETCD or Kubernetes.
+Instead, we leverage proven technologies such as Consul, ETCD or Kubernetes to power our Cluster member management.
+
+The short version of what virtual actors are, is that they are abstractions on top of plain actors.
+They are spawned *somewhere* in your cluster, and their lifecycle is managed by the cluster instead of you.
+
+This means that you as a developer, don't have to care or know if the actor already exists or where it exists.
+You address it using its identity and kind and the cluster does the rest for you.
 
 ### Partition Identity
 
