@@ -1,14 +1,14 @@
 # Cluster placement patterns
 
-**How do I make an actor that is :**
+**How do I make an actor that:**
 
-## Unique for a given ID
+## Is unique for a given ID
 
 Use a virtual actor with the ID as part of its name
 
 **Use-case:** e.g. Players, monsters, user accounts 
 
-## A cluster singleton
+## Is a cluster singleton
 
 Use a virtual actor with a known name.
 
