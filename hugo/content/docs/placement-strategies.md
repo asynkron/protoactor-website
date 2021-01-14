@@ -1,6 +1,6 @@
 # Cluster placement patterns
 
-## How do I make an actor that:**
+## How do I make an actor that:
 
 ### Is unique for a given ID
 
