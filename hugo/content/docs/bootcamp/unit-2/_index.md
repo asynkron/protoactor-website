@@ -14,10 +14,10 @@ Next, we'll take a more detailed look at how to create an instance of our actor 
 
 ## Table of Contents
 
-1. [Defining Actors.](src/Unit-2/lesson-1/README.md)
-2. [Actor References.](src/Unit-2/lesson-2/README.md)
-3. [Defining Messages.](src/Unit-2/lesson-3/README.md)
-4. [Types of Message Sending.](src/Unit-2/lesson-4/README.md)
-5. [Actor Instantiation.](src/Unit-2/lesson-5/README.md)
-6. [Defining Which Messages an Actor will processing.](src/Unit-2/lesson-6/README.md)
-7. [Sending a Custom Message.](src/Unit-2/lesson-7/README.md)
+1. [Defining Actors.](lesson-1)
+2. [Actor References.](lesson-2)
+3. [Defining Messages.](lesson-3)
+4. [Types of Message Sending.](lesson-4)
+5. [Actor Instantiation.](lesson-5)
+6. [Defining Which Messages an Actor will processing.](unit-2/lesson-6)
+7. [Sending a Custom Message.](lesson-7)

@@ -2,7 +2,7 @@
 
 DeadLetter is a channel for undelivered messages. It stores all messages that have not been processed or delivered. This is the most common channel, but most often, it is not used to send messages. Only when it is detected, a problem with a message. For example, if message cannot be delivered, will the message be automatically placed into DeadLetter channel.
 
-![](images/6_5_1.png)
+![](../../images/6_5_1.png)
 
 By monitoring this channel, you can find out which messages have not been processed and take appropriate action. In particular, by testing the system using this channel you can find out why some messages have not been processed. If the system should not simply reset any messages, this channel can be used to resend messages after the problem has been resolved.
 

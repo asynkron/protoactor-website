@@ -12,7 +12,7 @@ There are several different strategies that parent actors can use to deal with a
 
 One strategy is to restart the actor from his initial state. There may be situations where the parent actor does not know what to do and cannot fix the child actor's error. In this case, the parent actor may send a message to its parent actor that it does not know what to do about the bug from the child's lower-level actor, and ask the parent to help it. 
 
-![](images/1_10_1.gif)
+![](../../images/1_10_1.gif)
 
 One of the key concepts of the actor observation hierarchy is that we can pass more risky or error-prone work to the lower level of the hierarchy so that children actors in the lower level of the hierarchy do all the unsafe work. 
 

@@ -14,10 +14,10 @@ The last section describes the type of guaranteed delivery channels. You can't c
 
 ## Table of Contents
 
-1. [Channels Types.](lesson-1/README.md)
-2. [Point-to-point Channel.](lesson-2/README.md)
-3. [Publisher/Subscriber Channel.](lesson-3/README.md)
-4. [EventStream.](lesson-4/README.md)
-5. [DeadLetter Channel.](lesson-5/README.md)
-6. [Guaranteed delivery.](lesson-6/README.md)
+1. [Channels Types.](lesson-1)
+2. [Point-to-point Channel.](lesson-2)
+3. [Publisher/Subscriber Channel.](lesson-3)
+4. [EventStream.](lesson-4)
+5. [DeadLetter Channel.](lesson-5)
+6. [Guaranteed delivery.](lesson-6)
 

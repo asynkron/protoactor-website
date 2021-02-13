@@ -6,7 +6,7 @@ The Event Sourcing technology (event history) appeared quite a long time ago. We
 
 Updating records is the simplest method used when using database SQL for operational processing transactions (Online Transaction Processing, OLTP). Picture 1 shows how you can use SQL instructions insert and update to save the calculation results in the calculator.
 
-![](images/9_1_1.png)
+![](../../images/9_1_1.png)
 
 The calculator inserts one record; the search instruction for an already existing record is omitted for ease of reference. All calculations are performed directly in the database, using the update instruction to modify the table entry. Each update instruction is executed in a different transaction.
 
@@ -16,13 +16,13 @@ It's quite simple; the record stores only the last calculated result. However, i
 
 If you want to know what calculations the user performed, you will have to save them in a separate table. All calculations are performed within SQL instructions. Each subsequent calculation depends on the previous result stored in the record.
 
-![](images/9_1_2.png)
+![](../../images/9_1_2.png)
 
 #### Saving the state without changes
 
 The idea of Event Sourcing technology (history of events) is described below. Instead of storing the last result in a single record, all successfully performed operations can be logged as events. The event must describe exactly what is happening; in this case we will store the name of the operation and its argument. Again, the example uses simple SQL instructions; the log is organized as a simple table in a database. In the Fig. 3 shows the instructions, remembering the entire history of calculations.
 
-![](images/9_1_3.png)
+![](../../images/9_1_3.png)
 
 Calculations are performed in the memory; the event is saved after a successful operation. The ID column uses the sequence mechanism in the database, and its value is automatically increased by one in each new record. (You may assume that the insertion of each record is performed in its own transaction or the automatic confirmation function is used.)
 
@@ -30,7 +30,7 @@ Events describe operations that have been successfully performed since the initi
 
 Now let's see how a calculator reconstructs the last known state based on an event. Initially, the calculator is initialized with the O value and then sequentially performs all stored operations in the same order. The application reads the events, converts them into operations, performs these operations, and eventually gets the value of 0.75, as shown in the picture. 4.
 
-![](images/9_1_4.png)
+![](../../images/9_1_4.png)
 
 As you can see, Event Sourcing is a simple technology. In the next section, we will see how this technology can be used to save the actor state.
 

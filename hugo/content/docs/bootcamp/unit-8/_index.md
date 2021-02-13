@@ -12,11 +12,11 @@ First, we will create a cluster application that calculates each word's occurren
 
 ## Table of Contents
 
-1. [Why do you need clusters.](lesson-1/README.md)
-2. [Membership in the cluster.](lesson-2/README.md)
-3. [Joining to the cluster.](lesson-3/README.md)
-4. [Processing tasks in the Cluster.](lesson-4/README.md)
-5. [Running a Cluster.](lesson-5/README.md)
-6. [How to distribute tasks by using routers.](lesson-6/README.md)
-7. [Reliable task processing.](lesson-7/README.md)
-8. [Cluster Testing.](lesson-8/README.md)
+1. [Why do you need clusters.](lesson-1)
+2. [Membership in the cluster.](lesson-2)
+3. [Joining to the cluster.](lesson-3)
+4. [Processing tasks in the Cluster.](lesson-4)
+5. [Running a Cluster.](lesson-5)
+6. [How to distribute tasks by using routers.](lesson-6)
+7. [Reliable task processing.](lesson-7)
+8. [Cluster Testing.](lesson-8)

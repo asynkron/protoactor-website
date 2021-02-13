@@ -10,7 +10,7 @@ First, we will look at some common terms and approaches to horizontal scaling su
 
 ## Table of Contents
 
-1. [What is horizontal scaling.](lesson-1/README.md)
-2. [Overview Proto.Actor Remote.](lesson-2/README.md)
-3. [Example of working with Proto.Actor Remote.](lesson-3/README.md)
+1. [What is horizontal scaling.](lesson-1)
+2. [Overview Proto.Actor Remote.](lesson-2)
+3. [Example of working with Proto.Actor Remote.](lesson-3)
 

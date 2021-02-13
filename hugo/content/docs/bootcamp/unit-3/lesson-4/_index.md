@@ -62,6 +62,6 @@ public class PlaybackActor : IActor
 
 Let's launch our app and see what happened.
 
-![](images/3_4_1.png)
+![](../../images/3_4_1.png)
 
 Как вы видите актор успешно завершил свою работу.

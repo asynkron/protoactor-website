@@ -12,9 +12,9 @@ And at the end, you'll learn how the actor's behavior can be modified during exe
 
 ## Оглавление
 
-1. [Actor Lifecycle.](lesson-1/README.md)
-2. [Actor Lifecycle Messages.](lesson-2/README.md)
-3. [Terminating Actors and Hierarchy of Actors](lesson-3/README.md)
-4. [What is the Poison Pill message and how to work with it..](lesson-4/README.md)
-5. [Switchable Actor Behavior](lesson-5/README.md)
-6. [Refactoring with using behavior switching.](lesson-6/README.md)
+1. [Actor Lifecycle.](lesson-1)
+2. [Actor Lifecycle Messages.](lesson-2)
+3. [Terminating Actors and Hierarchy of Actors](lesson-3)
+4. [What is the Poison Pill message and how to work with it..](lesson-4)
+5. [Switchable Actor Behavior](lesson-5)
+6. [Refactoring with using behavior switching.](lesson-6)

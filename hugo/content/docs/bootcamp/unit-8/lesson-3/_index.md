@@ -38,13 +38,13 @@ Servers for leader selection use [Raft algorithm](https://raft.github.io/). A le
 
 A Consul cluster is a network of connected nodes that run services registered in the cluster. Consul ensures that information about the cluster will be distributed to all cluster members and is available on request. It also supports not only a peer-to-peer cluster but also a multi-peer cluster divided into zones, which are called DataCenters in the Consul terminology. With the help of Consul, you can work with a particular data center and perform actions on any other. Datacenters are not isolated from each other within a cluster. An agent in one data center can get information from another data center, which can help build an effective distributed system.
 
-![](images/8_3_1.png)
+![](../../images/8_3_1.png)
 
 Consul agents running in server mode and their main role, also get the role of a potential cluster leader. It is recommended to use at least three agents in server mode in the cluster to provide fault tolerance. The use of server mode does not impose any restrictions on the main functionality of the agent.
 
 In addition to **Proto.Cluster.Consul** in Proto.Actor platform there is a second provider called **Proto.Cluster.SingleRemoteInstance**.  Unlike **Proto.Cluster.Consul**, in **Proto.Cluster.SingleRemoteInstance** you need to create a reference node to start the cluster. The reference node is actually the initial point of growth of the cluster and serves as the first instance for making contacts with other nodes. The nodes join the cluster by sending a message containing the unique address of the node to be connected. The anchor node is not required to contain any custom actors, so it is possible to create anchor nodes that are solely responsible for maintaining the cluster. The figure shows how the first anchor node initializes the cluster and how the other anchor nodes then join the cluster.
 
-![](images/8_3_2.png)
+![](../../images/8_3_2.png)
 
 Unlike **Proto.Cluster.Consul** **Proto.Cluster.SingleRemoteInstance** does not support automatic node detection protocol, so it needs to explicitly specify the host name and port number of the reference node to join. 
 

@@ -6,7 +6,7 @@ For more comfortable work, let's modify our project a bit, for this purpose, let
 
 Next, let's move PlaybackActor to a separate file in the Actors folder. Then let's create a new PlayMovieMessage class in the Messages folder. In the end, our project should look like this.
 
-![](images/2_8_1.png)
+![](../../images/2_8_1.png)
 
 Now we can begin to study user messages in more detail. As mentioned earlier in this course, custom messages should not be inherited from any special base class. 
 
@@ -85,6 +85,6 @@ As you can see, all we did was change the message type in the switch statement a
 
 If we run our application, we can make sure that it is no different from what we did in the previous lesson.
 
-![](images/2_8_2.png)
+![](../../images/2_8_2.png)
 
 Also, the Proto.Actor platform allows you to create messages based on gRPC technology, allowing actors written in different programming languages to communicate between themselves. But we will talk about this in the next lessons.

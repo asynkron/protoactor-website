@@ -12,7 +12,7 @@ For example, this Directive can be a command to restart a child actor, as discus
 
 Built-in strategies will use this method for decision making. For example, you can specify the maximum number of exceptions upon reaching which a child actor will be stopped.
 
-![](images/4_7_1.png)
+![](../../images/4_7_1.png)
 
 There are several built-in strategies for controlling child actors in the Proto.Actor platform, let's look at them in more detail.
 

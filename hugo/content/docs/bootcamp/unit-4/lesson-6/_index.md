@@ -8,7 +8,7 @@ The parent actor will decide how to handle this error and then sends a message t
 
 You should also keep in mind. If the child actor has its own child actors, the restart message will also be sent to its child actors, and on down the actor hierarchy. 
 
-![](images/4_6_1.png)
+![](../../images/4_6_1.png)
 
 Let's look at the various error handling strategies that a parent actor can offer for their child actors.
 

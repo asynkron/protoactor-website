@@ -10,11 +10,11 @@ In this module, we will learn how to create a hierarchy of actors and how to res
 
 ## Table of Contents
 
-1. [Supervisor and actor hierarchy.](lesson-1/README.md)
-2. [Overview of the application that demonstrates the supervisor's capabilities and the actors hierarchy.](lesson-2/README.md)
-3. [Actor's addres and PID.](lesson-3/README.md)
-4. [Creating UserCoordinatorActor.](lesson-4/README.md)
-5. [Creating MoviePlayCounterActor.](lesson-5/README.md)
-6. [How parent actors are watching over their children actors.](lesson-6/README.md)
-7. [Strategies to control the state of children's actors.](lesson-7/README.md)
+1. [Supervisor and actor hierarchy.](lesson-1)
+2. [Overview of the application that demonstrates the supervisor's capabilities and the actors hierarchy.](lesson-2)
+3. [Actor's addres and PID.](lesson-3)
+4. [Creating UserCoordinatorActor.](lesson-4)
+5. [Creating MoviePlayCounterActor.](lesson-5)
+6. [How parent actors are watching over their children actors.](lesson-6)
+7. [Strategies to control the state of children's actors.](lesson-7)
 

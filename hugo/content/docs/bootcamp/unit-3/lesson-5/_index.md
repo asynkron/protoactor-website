@@ -2,7 +2,7 @@
 
 Earlier in our course, we already mentioned four key features of the actor. One of these features is the ability to change behavior when processing the next message.
 
-![](images/3_5_1.png)
+![](../../images/3_5_1.png)
 
 Such switchable actor behavior allows us to represent different behavioral states in which our actor may be located. Without using the if and else operator. 
 

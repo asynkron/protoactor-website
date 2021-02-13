@@ -2,7 +2,7 @@
 
 Let's start by creating a cluster. A cluster consists of a master and slave nodes. The figure shows the cluster that we are about to create.
 
-![](images/8_2_1.png)
+![](../../images/8_2_1.png)
 
 The master nodes control the execution of word counting tasks. The slave nodes request tasks from the master, process their text parts and return the results to the master. The master node generates the final result as soon as all parts of the task are completed. The task is restarted if a master or a slave node fails.
 

@@ -6,7 +6,7 @@ These can be local actors (vertical scaling) or actors on remote servers (horizo
 
 In our previous example with a road camera, it takes a relatively long time for a license plate to be recognized. To organize parallel recognition of multiple license plate numbers, we will use a router.
 
-![](images/5_2_1.png)
+![](../../images/5_2_1.png)
 
 In the figure below, you can see that the router is capable of sending messages to one of the LicenseRecognition actor instances. When a message hits the router, the router selects one of the available actors and sends it to that actor. When it receives the next message, the router chooses another actor and sends it to that actor.
 
@@ -26,7 +26,7 @@ In the group, routers do not control the creation of actors. Actors are created 
 
 The pool is simpler because it supports automatic actor management, but you have to pay for this simplicity by not being able to customize individual actors' logic.
 
-![](images/5_2_2.png)
+![](../../images/5_2_2.png)
 
 In the picture, you can see the difference between a pool and a group. When you use a pool, actors are descendants of a router, and when you use a router with a group, actors can be descendants of any other actor (in this example, the ActorCreator actor). Actors do not necessarily have to be descended from the same parent. They just have to be created and run.
 

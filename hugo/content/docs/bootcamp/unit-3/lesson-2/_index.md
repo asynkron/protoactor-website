@@ -71,7 +71,7 @@ public class PlaybackActor : IActor
 
 Let's run our application and make sure that everything works right.
 
-![](images/3_2_2.png)
+![](../../images/3_2_2.png)
 
 Now, after all the necessary preparations, we can begin to study the system messages. And we will begin our introduction with the `Started` message.
 
@@ -113,7 +113,7 @@ The `ProcessStartedMessage()` method will print a green message to the console, 
 
 Let's launch our app and see what did we get.
 
-![](images/3_2_2.png)
+![](../../images/3_2_2.png)
 
 As you can see, the actor system created an instance of the actor `PlaybackActor` and sent it a `Started` message. Also, keep in mind that the system message `Started` will always be processed first. This means if you need to initialize your actor before starting the processing of custom messages. This code should be changed to the `Started` message handler.
 
@@ -253,7 +253,7 @@ class Program
 
 When you run our test application, you will see that the child actor has been rebooted and informing you about it.
 
-![](images/3_2_3.png)
+![](../../images/3_2_3.png)
 
 ### Stopping
 
@@ -336,7 +336,7 @@ class Program
 
 Now that we launch our application and press any key, we will see that our actor has received an alert about his emergency stop.
 
-![](images/3_2_4.png)
+![](../../images/3_2_4.png)
 
 
 

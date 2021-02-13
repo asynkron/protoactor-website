@@ -2,7 +2,7 @@
 
 So, let's begin creating the final architecture for our application. In this lesson, we will add `UserCoordinatorActor()` to our actor hierarchy. This actor will be responsible for creating child actors and sending them various messages.
 
-![](images/4_3_1.png)
+![](../../images/4_3_1.png)
 
 First of all, we will need to do a little preparatory work. First, we need to add the UserId to the `StopMovieMessage () ' message.
 
@@ -106,7 +106,7 @@ As you can see, this actor checks that a suitable child actor exists. If the act
 
 Now we need to make a change to the `PlaybackActor()` so that it can create an instance of the `UserCoordinatorActor()` class and save a link to it.
 
-![](images/4_2_1.png)
+![](../../images/4_2_1.png)
 
 To do this, make the necessary changes to the `ProcessStartedMessage` method so that it creates a child actor `UserCoordinatorActor()` and saves the link immediately after it is created.
 
@@ -231,14 +231,14 @@ As you can see, commands are read from the console and converted to appropriate 
 
 Let's run our project and see what happened.
 
-![](images/4_3_2.png)
+![](../../images/4_3_2.png)
 
 When you enter the command "play,1, Movie" the movie starts playing.
 
-![](images/4_3_3.png)
+![](../../images/4_3_3.png)
 
 When you re-enter the same command, you will receive an error message since the movie playback is already running.
 
 If we want to stop it playing, we should type "stop".
 
-![](images/4_3_4.png)
+![](../../images/4_3_4.png)

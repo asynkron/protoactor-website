@@ -10,7 +10,7 @@ The hierarchy stays fixed throughout the life cycle of the child actor. Once cre
 
 The actors most at risk (for whom crashes are most likely) should be in a hierarchy as low as possible. Errors that occur deep in the hierarchy can be handled by more supervisors than those that occur closer to the top. When an error occurs at the top level of the actor system, it may cause restart of all the top level actors or even stop the actor system.
 
-![](images/4_1_1.png)
+![](../../images/4_1_1.png)
 
 To create root actors, we use the method.
 

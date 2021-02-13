@@ -26,7 +26,7 @@ These are just a few examples when it is necessary to preserve the state of the 
 
 ## Table of Contents
 
-1. [What is Event Sourcing.](lesson-1/README.md)
-2. [Persistence actors.](lesson-2/README.md)
-3. [Snapshotting.](lesson-3/README.md)
+1. [What is Event Sourcing.](lesson-1)
+2. [Persistence actors.](lesson-2)
+3. [Snapshotting.](lesson-3)
 

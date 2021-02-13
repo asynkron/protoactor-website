@@ -41,7 +41,7 @@ So that if necessary, you can finish your actor's work correctly and release the
 
 Graphically, the life cycle of an actor can be represented as follows.
 
-![](images/3_1_1.png)
+![](../../images/3_1_1.png)
 
 We will consider the processing of system messages of the actor's life cycle in the next lesson.
 

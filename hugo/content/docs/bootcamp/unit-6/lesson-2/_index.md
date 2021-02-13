@@ -6,11 +6,11 @@ In the previous examples, the sender knew the next stage of message processing a
 
 Another feature of this type of channel is that messages are delivered to the recipient in the same order as they were sent. The point-to-point channel delivers the message to exactly one recipient, as shown in the figure.
 
-![](images/6_2_1.png)
+![](../../images/6_2_1.png)
 
 A point-to-point channel can have multiple recipients, but even so, each message is delivered to only one recipient. An example of such a channel is a cyclic router. Messages can be processed competitively by different recipients, but only one recipient will receive each specific message. This channel organization is shown in the figure.
 
-![](images/6_2_2.png)
+![](../../images/6_2_2.png)
 
 The channel has several recipients, but each message is delivered to only one of them. Channels of this type are used when the connections between senders and recipients are static - the sender knows which channel to use to send a message to one or another recipient.
 

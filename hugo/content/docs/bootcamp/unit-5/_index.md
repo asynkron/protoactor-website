@@ -14,10 +14,10 @@ Then we will show you how to organize routing in each of the three cases. If per
 
 ## Table of Contents
 
-1. [Router pattern.](lesson-1/README.md)
-2. [Load balancing with Proto.Actor routers.](lesson-2/README.md)
-3. [Pool Router.](lesson-3/README.md)
-4. [Group Router.](lesson-4/README.md)
-5. [ConsistentHashing Router.](lesson-5/README.md)
-6. [Implementation of the router pattern with using actors.](lesson-6/README.md)
+1. [Router pattern.](lesson-1)
+2. [Load balancing with Proto.Actor routers.](lesson-2)
+3. [Pool Router.](lesson-3)
+4. [Group Router.](lesson-4)
+5. [ConsistentHashing Router.](lesson-5)
+6. [Implementation of the router pattern with using actors.](lesson-6)
 

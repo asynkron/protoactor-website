@@ -25,7 +25,7 @@ The Merriam Webster dictionary defines reactive as *"ready to respond to externa
 
 Each of these characteristics is essential for reactive applications. They all depend on each other, but not as tiers of standard multi-level architecture. Instead, they describe properties that apply across the all technology stack:
 
-![](images/1_4_1.png)
+![](../../images/1_4_1.png)
 
 Next, we will look at each of these four characteristics in more detail and see how they relate to each other.
 
@@ -58,7 +58,7 @@ The need to eliminate the weakest link in the chain is well illustrated. by [Amd
 
 *Acceleration of a program by paralleling it is limited to a sequential part of the program. For example, if 95% of the computation volume can be paralleled, the theoretical maximum of acceleration cannot exceed 20, regardless of the number of processors used.*
 
-![](images/1_4_2.png)
+![](../../images/1_4_2.png)
 
 ## Scalability
 
@@ -86,7 +86,7 @@ In a reactive application, fault tolerance is not left "for later" but is part o
 
 To manage failures, we need a way to isolate them so that they don't spread to other healthy components, and monitor them from a safe location outside of the context in which failures may occur. One method that comes to mind is bulkheads that divide the system into compartments so that if one of the compartments is flooded (fails), it does not affect the other compartments in any way. This prevents the classic cascading failure problem and allows you to solve problems in isolation.
 
-![](images/1_4_3.png)
+![](../../images/1_4_3.png)
 
 The event-driven model, which gives scalability, also provides the necessary primitives to solve the problem of fault tolerance. Low coupling in the event-driven model provides us with fully isolated components where failures are encapsulated in messages along with the necessary details and forwarded to other components, which in turn analyze the errors and decide how to respond to them.
 
@@ -135,7 +135,7 @@ As an example, consider a responsive web application with "rich" clients (browse
 
 It now becomes clear how the four reactive whales: *event-driven*, *scalable*, *responsive* and *resilient* are linked to each other and form a single whole:
 
-![](images/1_4_4.png)
+![](../../images/1_4_4.png)
 
 Reactive applications represent a balanced approach to solving modern problems in the development of software systems. They are built on a framework *focused on events* and message passing, and provide tools for *scalability* and *fault tolerance*. On top of this, they support rich and *responsive* user interfaces. We expect the rapidly growing number of systems to be follow this Manifesto in the near future.
 

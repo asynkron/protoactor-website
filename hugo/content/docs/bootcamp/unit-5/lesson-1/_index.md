@@ -6,7 +6,7 @@ We will consider the router pattern on a specific example. This example will be 
 
 To solve this problem, we will use the "Router" template. As you can see in the figure, the router can send messages to different actors depending on the message content.
 
-![](images/5_1_1.png)
+![](../../images/5_1_1.png)
 
 There are many reasons to use logic to select the route you want the message to be sent on. But basically, there are three reasons for organizing message stream control in applications.
 

@@ -10,7 +10,7 @@ Before going deeper into scalability, we should take a brief look at the termino
 
 By node in this chapter we will mean an existing application that supports the ability to exchange data over a network. It is a connection point in the network topology. It is part of a distributed system. Several nodes can be run on one physical server or on several servers. The figure shows some typical network topologies.
 
-![](images/7_1_1.png)
+![](../../images/7_1_1.png)
 
 The node has a specific role in the distributed system. It is responsible for specific tasks. For example, a node may be part of a distributed database or one of several web servers that provide access to the system through a web interface.
 

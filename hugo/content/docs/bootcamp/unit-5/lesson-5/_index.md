@@ -12,7 +12,7 @@ To solve this problem, using traditional routers, we would have to resort to a r
 
 To do this, the router must identify the messages as similar. To do this, ConsistentHashing calculates the hash code for the message and maps it to one of the routes. The mapping process consists of several steps, as shown below.
 
-![](images/5_5_1.png)
+![](../../images/5_5_1.png)
 
 **Step 1** Converts the message into a message key object. Similar messages, for example, with the same identification number, will get the same keys. The key type is absolutely unimportant; the only limitation is that for similar messages, you always have to get the same keys objects. The keys for messages with different types must be different. In the Ptoto.Actor platform, the `IHashable()` interface, is used to convert the message into a key.
 
