@@ -24,7 +24,7 @@ Let's look at how we can use state snapshots in our actor system in practice. To
 
 The difference between these methods is that the `WithEventSourcingAndSnapshotting()` method saves events and takes periodic state snapshots according to the specified predicate.
 
-```c#
+```csharp
 public Calculator(IProvider provider)
 {
     _persistence = Persistence.WithEventSourcingAndSnapshotting(
@@ -39,7 +39,7 @@ public Calculator(IProvider provider)
 
 We will also need to add the ApplySnapshot()method to our class so that our actor can restore its state from the snapshot.
 
-```c#
+```csharp
 private void ApplySnapshot(Snapshot snapshot)
 {
     switch (snapshot)

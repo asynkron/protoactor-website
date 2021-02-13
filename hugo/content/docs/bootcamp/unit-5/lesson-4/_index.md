@@ -8,7 +8,7 @@ In this lesson, we will first create a simple router for the group. Then we will
 
 Groups are created almost like pools. The only difference is that when creating a pool, you need to specify the number of route instances, and when creating a group, you need to specify a list of routes.
 
-```c#
+```csharp
 var system = new ActorSystem();
 var context = new RootContext(system);
 var props = context.NewBroadcastGroup(

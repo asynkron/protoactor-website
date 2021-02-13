@@ -8,7 +8,7 @@ After that, we need to create a new actor that will be directly responsible for 
 
 First of all, let's add a constructor to our actor. In the constructor, we create an instance of the `Behavior()` class and initialize it with the default behavior.
 
-```c#
+```csharp
 public UserActor()
 {
     Console.WriteLine("Creating a UserActor");
@@ -19,13 +19,13 @@ public UserActor()
 
 Now let's create two methods to represent two different types of behavior. Behavior to play a movie and behavior to stop playing a movie. Keep in mind that any method that will be responsible for the behavior of the actor must implement a specific delegate.
 
-```c#
+```csharp
 public delegate Task Receive(IContext context);
 ```
 
 The first thing we need to do is add the private `Playing () ' method to our actor. This method will be a behavior for playing the movie.
 
-```c#
+```csharp
 private Task Playing(IContext context)
 {
     switch (context.Message)
@@ -51,7 +51,7 @@ After receiving a message, our method uses the `switch` operator to select the a
 
 It means that the next message will be processed not in the `Playing () ' method, and in the method `Stopped ()`. Recall that the `Stopped()` method is used to implement the behavior of stopping movie viewing. Let's see in this method more detail.
 
-```c#
+```csharp
 private Task Stopped(IContext context)
 {
     switch (context.Message)
@@ -75,7 +75,7 @@ As we can see in the code block responsible for processing the message 'PlayMovi
 
 As a result, our actor should look like this.
 
-```c#
+```csharp
 public class UserActor : IActor
 {
     private string _currentlyWatching;
@@ -131,7 +131,7 @@ public class UserActor : IActor
 
 Now, all we have to do is change the `Program()` class to send us the necessary messages.
 
-```c#
+```csharp
 class Program
 {
     static void Main(string[] args)

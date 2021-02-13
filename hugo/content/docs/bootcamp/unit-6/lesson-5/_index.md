@@ -10,7 +10,7 @@ EventStream is used in Proto.Actor to implement a queue of undelivered messages.
 
 Let's see at a little example. Let's create a simple actor called Echo that returns any messages back to the sender, and after it's started, we'll immediately send it a PoisonPill message. This will cause immediate shutdown of an actor work. You can see from the listing that the message can be received by subscribing to receive messages like `DeadLetterEvent()`.
 
-```c#
+```csharp
 static async Task Main(string[] args)
 {
     var system = new ActorSystem();
@@ -29,13 +29,13 @@ static async Task Main(string[] args)
 
 Messages sent to a terminated actor cannot be processed and the pid on that actor must no longer be used. When messages are sent to a terminated actor, they are placed in the DeadLetter queue. This confirms receipt of the message by our handler.
 
-```c#
+```csharp
 system.EventStream.Subscribe<DeadLetterEvent>(msg => Console.WriteLine($"Sender: {msg.Sender}, Pid: {msg.Pid}, Message: {msg.Message}"));
 ```
 
 The DeadLetter queue can also be used to store messages that have not been processed. But the decision about it is made at the level of each specific actor. The actor can determine that it cannot process the received message and does not know what to do with it. In this situation, the message can be sent to the undelivered message queue. The ActorSystem  has a link to the DeadLetter actor. When there is a need to send a message to the undelivered message queue, it can be passed to this actor:
 
-```c#
+```csharp
 System.DeadLetter.SendUserMessage(Self, msg);
 ```
 

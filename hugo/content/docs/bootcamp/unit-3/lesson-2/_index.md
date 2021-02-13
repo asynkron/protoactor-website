@@ -8,7 +8,7 @@ But before we begin, we need to make some changes to our project.
 
 First of all, let's add some additional film descriptions to our project.
 
-```c#
+```csharp
 system.Root.Send(pid, new PlayMovieMessage("The Movie", 44));
 system.Root.Send(pid, new PlayMovieMessage("The Movie 2", 54));
 system.Root.Send(pid, new PlayMovieMessage("The Movie 3", 64));
@@ -18,7 +18,7 @@ system.Root.Send(pid, new PlayMovieMessage("The Movie 4", 74));
 
 Next, let's add a new ColorConsole class, which will allow you to change the color of the message displayed to the console without extra work.
 
-```c#
+```csharp
 public static class ColorConsole
 {
     public static void WriteLineGreen(string message)
@@ -47,7 +47,7 @@ public static class ColorConsole
 
 And finally, we'll edit our actor a little so that it can use the `ColorConsole () ' class, output the message content to the console in yellow. And also process different types of messages in separate methods.
 
-```c#
+```csharp
 public class PlaybackActor : IActor
 {
     public PlaybackActor() => Console.WriteLine("Creating a PlaybackActor");
@@ -79,7 +79,7 @@ Now, after all the necessary preparations, we can begin to study the system mess
 
 The system message `Started` is used to inform our code the moment when the actor starts. Let's add the ability to process the `Started` message to the `ReceiveAsync ()` method.
 
-```c#
+```csharp
 public class PlaybackActor : IActor
 {
     public PlaybackActor() => Console.WriteLine("Creating a PlaybackActor");
@@ -102,7 +102,7 @@ public class PlaybackActor : IActor
 
 Now let's implement the `ProcessStartedMessage()` method in class `PlaybackActor`.
 
-```c#
+```csharp
 private void ProcessStartedMessage(Started msg)
 {
     ColorConsole.WriteLineGreen("PlaybackActor Started");
@@ -125,7 +125,7 @@ Unlike the `Started` message, working with the `Restarting` message will be slig
 
 First of all, we need to create a new message called `Recoverable`. This message will signal the child actor to generate an exception to simulate an actor's failure. Next, create the child actor `ChildActor`  itself and add the code for processing the `Restarting` and Recoverable messages to its `ReceiveAsync()` method.
 
-```c#
+```csharp
 public Task ReceiveAsync(IContext context)
 {
     switch (context.Message)
@@ -144,7 +144,7 @@ public Task ReceiveAsync(IContext context)
 
 
 
-```c#
+```csharp
 private void ProcessRestartingMessage(Restarting msg)
 {
     ColorConsole.WriteLineGreen("ChildActor Restarting");
@@ -153,7 +153,7 @@ private void ProcessRestartingMessage(Restarting msg)
 
 
 
-```c#
+```csharp
 private void ProcessRecoverableMessage(Recoverable msg)
 {
     throw new Exception();
@@ -162,7 +162,7 @@ private void ProcessRecoverableMessage(Recoverable msg)
 
 Now let's change the `Playback Actor ' so that it can accept our new messages.
 
-```c#
+```csharp
 public class PlaybackActor : IActor
 {
     public PlaybackActor() => Console.WriteLine("Creating a PlaybackActor");
@@ -217,7 +217,7 @@ In the `ProcessRecoverableMessage` method, we define whether our class has a chi
 
 Now, all we have to do is change the `Program ' class so that it can support the child actor monitoring strategy. You will learn more about it in the next lessons, but for now, just copy the following code into your app.
 
-```c#
+```csharp
 class Program
 {
     static void Main(string[] args)
@@ -263,7 +263,7 @@ Processing the actor stop may be necessary when you want to release the resource
 
 Let's implement the processing of the message `Stopping` in our actor. To do this, let's add the `Stopping` message processing to the `ReceiveAsync()` method. 
 
-```c#
+```csharp
 public Task ReceiveAsync(IContext context)
 {
     switch (context.Message)
@@ -286,7 +286,7 @@ public Task ReceiveAsync(IContext context)
 
 And let's implement method `ProcessStoppingMessage()` . This methos be will display a stop message on the console.
 
-```c#
+```csharp
 private void ProcessStoppingMessage(Stopping msg)
 {
     ColorConsole.WriteLineGreen("PlaybackActor Stopping");
@@ -295,7 +295,7 @@ private void ProcessStoppingMessage(Stopping msg)
 
 For stopping the actor, we need to use the `RootContex.Stop()` method and pass it the PID of the actor we want to stop. Let's change our `Program` class so that it can stop our actor.
 
-```c#
+```csharp
 class Program
 {
     static void Main(string[] args)

@@ -12,7 +12,7 @@ This is what the reactive programming manifesto says about messages. A message i
 
 Let's look at an example of what might look like a message class written in C#.
 
-```c#
+```csharp
 private class ExampleMessage
 {
     public int CustomerID { get; }

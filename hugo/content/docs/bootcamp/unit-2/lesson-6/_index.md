@@ -6,7 +6,7 @@ For this, we modify our PlaybackActor to respond to messages like string and int
 
 So, let's go to the source code of our application and see how we can send a couple of messages to our actor. To do this, we will need the link to our actor that we received in the previous lesson and the `Send` method that our actor system provides.
 
-```c#
+```csharp
 var pid = system.Root.Spawn(props);
 
 system.Root.Send(pid, "The Movie");
@@ -19,7 +19,7 @@ If we run our applications now, nothing will happen because the `ReceiveAsync` m
 
 So let's go to the `ReceiveAsync` method and implement the processing of our messages. First of all, we need to determine what type of message has come to us for processing. To do this, we need to extract the message from the `context.Message` property and pass it to the switch operator. For selecting an appropriate logic for message processing. 
 
-```c#
+```csharp
 public Task ReceiveAsync(IContext context)
 {
     switch (context.Message)
@@ -35,7 +35,7 @@ public Task ReceiveAsync(IContext context)
 
 Now let's implement the business logic. Our business logic will be very simple. We will just output the content of the message to the console.
 
-```c#
+```csharp
 public Task ReceiveAsync(IContext context)
 {
     switch (context.Message)

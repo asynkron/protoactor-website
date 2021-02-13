@@ -30,7 +30,7 @@ Work with the class ` Behavior() ` consists in transfer to it, methods realizing
 
 For our actor to use the `Behavior()` class when processing incoming messages, we need to pass all incoming messages to the `Behavior.ReceiveAsync()` method. We can do it in the following way.
 
-```c#
+```csharp
 public Task ReceiveAsync(IContext context) => Behavior.ReceiveAsync(context);
 ```
 

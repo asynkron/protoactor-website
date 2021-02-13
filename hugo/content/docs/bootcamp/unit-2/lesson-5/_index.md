@@ -6,7 +6,7 @@ So, in this lesson, we'll start by creating an actor. We will inherit it from th
 
 So the first thing we need to do is create a new class, let's name it PlaybackActor. Next, add a link to the Proto namespace, and then inherit our class from the IActor interface. After that, we need to implement the ReceiveAsync method from the IActor interface. The result is that our class should look like this.
 
-```c#
+```csharp
 using System;
 using System.Threading.Tasks;
 using Proto;
@@ -28,7 +28,7 @@ For the actor system to know that the actor has worked without any errors, you s
 
 After we have implemented the basis of our future actor, we will need to create an actor system where an instance of our actor will work. You can do this by creating an instance of the `ActorSystem()` class.
 
-```c#
+```csharp
 var system = new ActorSystem();
 ```
 
@@ -38,7 +38,7 @@ Next, we need to create a Props class to set the parameters for creating an inst
 
 Since in this example, we do not need to make any special settings. The process of creating a Props class will be straightforward. We will call the factory method `Props.FromProducer`. And we will pass on the actor as the argument of the method.
 
-```c#
+```csharp
 var props = Props.FromProducer(() => new PlaybackActor());
 ```
 
@@ -46,7 +46,7 @@ After we created the props class, which contains a description of the actor crea
 
 For this, we will use the factory method Spawn.
 
-```c#
+```csharp
 var pid = system.Root.Spawn(props);
 ```
 
@@ -54,7 +54,7 @@ As we can see here, all we need to do to create an instance of our actor and get
 
 At the end of the lesson, our code should look like this. 
 
-```c#
+```csharp
 using System;
 using System.Threading.Tasks;
 using Proto;

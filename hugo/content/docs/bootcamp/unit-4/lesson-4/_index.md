@@ -6,7 +6,7 @@ So, let's begin creating the final architecture for our application. In this les
 
 First of all, we will need to do a little preparatory work. First, we need to add the UserId to the `StopMovieMessage () ' message.
 
-```c#
+```csharp
 public class StopMovieMessage
 {
     public int UserId { get; private set; }
@@ -20,7 +20,7 @@ public class StopMovieMessage
 
 Now let's add UserId to the `UserActor()` class.
 
-```c#
+```csharp
  public class UserActor : IActor
  {
         private int _id;
@@ -33,7 +33,7 @@ Now let's add UserId to the `UserActor()` class.
 
 Next, we need to add a couple of messages to the Messages folder. The first message will be called `RequestActorPid()`. And it will will be used to request the Pid of the desired actor.
 
-```c#
+```csharp
 public class RequestActorPid
 {
 }
@@ -41,7 +41,7 @@ public class RequestActorPid
 
 The second message called `ResponseActorPid()` is used to respond to `RequestActorPid()` and contains the Pid of the desired actor.
 
-```c#
+```csharp
 public class ResponseActorPid
 {
     public PID Pid { get; }
@@ -55,7 +55,7 @@ public class ResponseActorPid
 
 Now we can start creating the `UserCoordinatorActor()` class. Let's go to the Actors folder and add the class `UserCoordinatorActor()`.
 
-```c#
+```csharp
 public class UserCoordinatorActor : IActor
 {
     private readonly Dictionary<int, PID> _users = new Dictionary<int, PID>();
@@ -110,7 +110,7 @@ Now we need to make a change to the `PlaybackActor()` so that it can create an i
 
 To do this, make the necessary changes to the `ProcessStartedMessage` method so that it creates a child actor `UserCoordinatorActor()` and saves the link immediately after it is created.
 
-```c#
+```csharp
  public class PlaybackActor : IActor
  {
         private PID _userCoordinatorActorRef;
@@ -126,7 +126,7 @@ To do this, make the necessary changes to the `ProcessStartedMessage` method so 
 
 And also add the RequestActorPid handler to `PlaybackActor()`.
 
-```c#
+```csharp
 public Task ReceiveAsync(IContext context)
 {
     switch (context.Message)
@@ -157,7 +157,7 @@ public Task ReceiveAsync(IContext context)
 
 So that 'PlaybackActor ()' can send a link to its child actor when requested.
 
-```c#
+```csharp
 private void ProcessRequestActorPidMessage(IContext context, RequestActorPidMessage msg)
 {
     context.Respond(new ResponseActorPidMessage(_userCoordinatorActorRef));
@@ -166,7 +166,7 @@ private void ProcessRequestActorPidMessage(IContext context, RequestActorPidMess
 
 Now, all we have to do is add the ability to manage our app using commands from the console. To do this, let's open our `Program()` class and make the necessary changes.
 
-```c#
+```csharp
 class Program
 {
     static async Task Main(string[] args)

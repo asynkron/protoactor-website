@@ -48,7 +48,7 @@ Thanks to the fact that we use gRPC, clients written in any of the programming l
 
 The server is a standard console application that links to our messaging library. 
 
-```c#
+```csharp
 class Program
 {
     static void Main(string[] args)
@@ -102,7 +102,7 @@ class Program
 
 As you can see, all we need to do to start receiving messages from the remote actor system is to create an instance of the `Remote()` class and run it by calling the `Start` method.
 
-```c#
+```csharp
 serialization.RegisterFileDescriptor(ChatReflection.Descriptor);
 var remote = new Remote(system, serialization);
 remote.Start("127.0.0.1", 8000);
@@ -116,7 +116,7 @@ Otherwise, the server actor is no different from standard actors.
 
 The client also is a console application and refers to a message library.
 
-```c#
+```csharp
 class Program
 {
     static void Main(string[] args)
@@ -184,7 +184,7 @@ class Program
 
 In turn, the client differs from the server in that in addition to creating an instance of the `Remote()`class, 
 
-```c#
+```csharp
 serialization.RegisterFileDescriptor(ChatReflection.Descriptor);
 var remote = new Remote(system, serialization);
 remote.Start("127.0.0.1", 0);
@@ -192,13 +192,13 @@ remote.Start("127.0.0.1", 0);
 
 it needs to create `PID()` pointing to the remote server.
 
-```c#
+```csharp
 var server = new PID("127.0.0.1:8000", "chatserver");
 ```
 
 After the client is initialized, commands are read from the console and then converted into messages and sent to the remote server.
 
-```c#
+```csharp
 while (true)
 {
     var text = Console.ReadLine();

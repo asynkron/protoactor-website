@@ -8,7 +8,7 @@ Let's look at routers based on the actor pool. When using a pool, you are not re
 
 Let's look at router creation using the example of the BroadcastPool.
 
-```c#
+```csharp
 private static readonly Props MyActorProps = Props.FromProducer(() => new MyActor());
 
 var system = new ActorSystem();

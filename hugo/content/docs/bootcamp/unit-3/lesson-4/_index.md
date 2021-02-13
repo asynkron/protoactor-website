@@ -10,13 +10,13 @@ Let's see how we can send a message `PoisonPill()` to our actor `PlaybackActor()
 
 Let's open our project and add the sending of the message `PoisonPill()` to the class `Program()`. You can do it with the help of 
 
-```c#
+```csharp
 system.Root.Poison(pid);
 ```
 
 As a result, we should get the following code.
 
-```c#
+```csharp
 class Program
 {
     static void Main(string[] args)
@@ -38,7 +38,7 @@ class Program
 
 Now we need to edit the `PlaybackActor() 'so that it can handle the `Stopped ()' message.
 
-```c#
+```csharp
 public class PlaybackActor : IActor
 {
     public PlaybackActor() => Console.WriteLine("Creating a PlaybackActor");

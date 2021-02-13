@@ -22,7 +22,7 @@ The first thing that catches your eye is using a virtual host. Couldn't you imme
 
 Creating an instance of the ConsistentHashing router is no different from creating other routers on the Proto.Actor platform.
 
-```c#
+```csharp
 var system = new ActorSystem();
 var context = new RootContext(system);
 var props = context.NewConsistentHashPool(MyActorProps, 5);

@@ -2,7 +2,7 @@
 
 As in the previous lesson, we will need to do some preparatory work. First of all, we need to create `PlaybackStatisticsActor()` the goal of this class is to create a child class `MoviePlayCounterActor()` and save a link to it.
 
-```c#
+```csharp
 public class PlaybackStatisticsActor : IActor
 {
     private PID _moviePlayCounterActorRef;
@@ -23,7 +23,7 @@ public class PlaybackStatisticsActor : IActor
 
 Next, we need to add a new message `IncrementPlayCountMessage()` which is used to notify the `MoviePlayCounterActor () ' actor about which movie was started.
 
-```c#
+```csharp
 public class IncrementPlayCountMessage
 {
     public string MovieTitle { get; }
@@ -37,7 +37,7 @@ public class IncrementPlayCountMessage
 
 Now we need to edit the "Stopped" behavior of the `UserActor () 'actor so that it sends the message' IncrementPlayCountMessage ()' to 'MoviePlayCounterActor ()' immediately after starting the movie.
 
-```c#
+```csharp
 private Task Stopped(IContext context)
 {
     switch (context.Message)
@@ -63,7 +63,7 @@ After this preparatory work, we can finally begin developing the actor `MoviePla
 
 To do this, add a new `MoviePlayCounterActor ()` class to the Actors folder.
 
-```c#
+```csharp
 public class MoviePlayCounterActor : IActor
 {
     private Dictionary<string, int> _moviePlayCounts = new Dictionary<string, int>();

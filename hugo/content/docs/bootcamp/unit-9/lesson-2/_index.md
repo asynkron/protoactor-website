@@ -48,7 +48,7 @@ message MultipliedEvent {
 
 Now, after we have defined the commands and events we need to add the `Persistence()` class to our actor. This class will be responsible for saving and replaying events.
 
-```c#
+```csharp
 public Calculator(IProvider provider)
 {
     _persistence = Persistence.WithEventSourcing(
@@ -60,7 +60,7 @@ public Calculator(IProvider provider)
 
 Then we add the ability to process commands to the `ReceiveAsync` method.
 
-```c#
+```csharp
 public async Task ReceiveAsync(IContext context)
 {
     switch (context.Message)
@@ -108,7 +108,7 @@ In order to be able to restore state our actor must call method `await _persiste
 
 To restore the state of the actor using events. The actor must contain an appropriate method for processing them.
 
-```c#
+```csharp
 private void ApplyEvent(Event @event)
 {
     switch (@event)
@@ -149,7 +149,7 @@ After we've looked at the key points, let's see how we can create an actor syste
 
 Let's see how we can use the built-in Proto.Actor provider for SQL Lite database in our actor system.
 
-```c#
+```csharp
 static void Main(string[] args)
 {
     var system = new ActorSystem();
@@ -175,7 +175,7 @@ static void Main(string[] args)
 
 As you can see from the above code, the only difference from the previous examples in this course is to create a provider `SqliteProvider()` of its configuration and pass it to the actor with support of Persistence.
 
-```c#
+```csharp
 var provider = new SqliteProvider(new SqliteConnectionStringBuilder { DataSource = "states.db" });
 var props = Props.FromProducer(() => new Calculator(provider));
 ```

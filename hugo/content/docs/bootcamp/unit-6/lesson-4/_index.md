@@ -4,13 +4,13 @@ In the Proto.Actor platform the EventStream class implements the support of "pub
 
 You can subscribe anywhere in the system where links to EventStream are available. To subscribe the actor to receive messages, you should invoke the Subscribe method of EventStream class. And to save the value returned by it. This value contains a full description of the just made subscription.
 
-```c#
+```csharp
 orderSubscription = Cluster.System.EventStream.Subscribe<Order>(msg => Console.WriteLine("message received"))
 ```
 
 When the subscription is no longer necessary, for example, when the gift campaign is over, you can use `Unsubscribe` method. In this example, we have canceled the subscription of the GiftModule component, and after calling this method, the actor will stop receiving Order messages.
 
-```c#
+```csharp
 orderSubscription.Unsubscribe()
 ```
 
@@ -18,7 +18,7 @@ It is all that is required to subscribe GiftModule component to receive Order me
 
 Publishing messages in EventStream is as easy as that; just call the Publish method, 
 
-```c#
+```csharp
 system.EventStream.Publish(msg);
 ```
 

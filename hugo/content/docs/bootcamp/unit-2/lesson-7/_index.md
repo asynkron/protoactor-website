@@ -16,7 +16,7 @@ Let's look at this process in more detail. In the previous lesson, we passed two
 
 First, let's add two properties to our user message, the first property of MovieTitle, which is a string describing the movie title. The second property, `UserId` contains a user ID.
 
-```c#
+```csharp
 public class PlayMovieMessage
 {
      public string MovieTitle { get; }
@@ -26,7 +26,7 @@ public class PlayMovieMessage
 
 Next, we need to add a class constructor that will initialize these properties with the passed values. In the end, we should get the following code.
 
-```c#
+```csharp
 public class PlayMovieMessage
 {
      public string MovieTitle { get; }
@@ -42,7 +42,7 @@ public class PlayMovieMessage
 
 After we have created a user message, let's change our code from the previous lesson to work with our custom message. To start with, change the `Program` class so it can send our message.
 
-```c#
+```csharp
 class Program
 {
     static void Main(string[] args)
@@ -62,7 +62,7 @@ class Program
 
 Next, let's change the PlaybackActor code so that it can recognize and process `PlayMovieMessage`.
 
-```c#
+```csharp
 public class PlaybackActor : IActor
 {
     public PlaybackActor() => Console.WriteLine("Creating a PlaybackActor");

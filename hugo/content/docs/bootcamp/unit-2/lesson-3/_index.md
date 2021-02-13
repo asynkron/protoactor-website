@@ -18,7 +18,7 @@ The last thing we should do is make the properties of our class read-only. And s
 
 At the end, our message should look like this.
 
-```c#
+```csharp
 private class Hello
 {
     public string Who { get; }
