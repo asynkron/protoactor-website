@@ -47,6 +47,7 @@ You can also learn Proto.Actor by doing the [**Proto.Actor Bootcamp**](bootcamp)
     * [Behaviors](behaviors.md) - How do I build state machines with actors?
     * [Middleware](middleware.md) - How do I intercept or observe messages between actors?
     * [Receive Timeout](receive-timeout.md) - How do I trigger code when actors go idle?
+    * [Futures (Go)](futures.md) - How do I react to task completions?
 * [Persistence](persistence.md) - How do I persist state for actors?
 * [Remote](remote.md) - How do I communicate with actors on other nodes?
     * [Message Serialization](serialization.md)
