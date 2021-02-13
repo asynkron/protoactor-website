@@ -13,10 +13,7 @@ tags: [protoactor, docs]
 * [Getting Started](getting-started.md)
 
 {{< note >}}
-You can also learn Proto.Actor by doing the **Proto.Actor Bootcamp**!
-
-https://github.com/AsynkronIT/protoactor-bootcamp
-
+You can also learn Proto.Actor by doing the [**Proto.Actor Bootcamp**](bootcamp)!
 {{</ note >}}
 
 ## Introduction
