@@ -8,7 +8,7 @@ Actors it's this is the place where our system works. Therefore it is in the act
 
 Here the first actor creates an instance of a message of type A, and passes it to the second actor.
 
-![](images/1_6_2.png)
+<img src="images/1_6_2.png" style="zoom:50%;" />
 
 The second actor then performs some processing, as a result of which it creates a new message with type B, and sends this message to two actors, in this case, actor three and actor four. 
 
