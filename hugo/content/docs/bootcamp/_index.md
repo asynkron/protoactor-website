@@ -125,7 +125,7 @@ This Github repository contains Visual Studio solution files and other assets yo
 Thus, if you want to follow the bootcamp we recommend doing the following:
 
 1. Sign up for [Github](https://github.com/), if you haven't already.
-2. [Fork this repository](https://github.com/petabridge/akka-bootcamp/fork) and clone your fork to your local machine.
+2. [Fork this repository](https://github.com/AsynkronIT/protoactor-bootcamp/fork) and clone your fork to your local machine.
 3. As you go through the project, keep a web browser tab open to the [Proto.Actor Bootcamp](https://github.com/AsynkronIT/protoactor-bootcamp/) so you can read all of the instructions clearly and easily.
 
 #### When you're doing the lessons...
