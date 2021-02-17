@@ -44,6 +44,12 @@ Message based systems should be about passing information, not passing complex O
 
 Proto.Actor also uses gRPC, leveraging HTTP/2 streams for network communication.
 
+## Supported Languages
+
+* dotnet - [protoactor-dotnet](https://github.com/AsynkronIT/protoactor-dotnet)
+* Go - [protoactor-go](https://github.com/AsynkronIT/protoactor-go)
+* Kotlin - [protoactor-kotlin](https://github.com/AsynkronIT/protoactor-kotlin)
+
 ## Scalable, distributed real-time transaction processing
 We believe that writing correct, concurrent, fault-tolerant and scalable applications is too hard.
 
@@ -54,8 +60,6 @@ By using the Actor Model, we raise the abstraction level and provide a better pl
 For fault-tolerance we adopt the "let it crash" model, which the telecom industry has used with great success to build applications that self-heal and systems that never stop. Actors also provide the abstraction for transparent distribution and the basis for truly scalable and fault-tolerant applications.
 
 Proto.Actor is Open Source and available under the [Apache 2 License](http://www.apache.org/licenses/LICENSE-2.0) -- [explained in plain english here](https://www.tldrlegal.com/l/apache2).
-
-Download from https://github.com/AsynkronIT/protoactor-go.
 
 ## A unique hybrid
 
