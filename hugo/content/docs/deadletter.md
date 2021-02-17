@@ -1,6 +1,5 @@
 ---
-layout: docs.hbs
-title: DeadLetters
+title: Dead Letters
 ---
 # Dead Letters
 Messages which cannot be delivered (and for which this can be ascertained) will be delivered to a synthetic actor called /deadLetters. This delivery happens on a best-effort basis; it may fail even within the local process (e.g. during actor termination). Messages sent via unreliable network transports will be lost without turning up as dead letters.
