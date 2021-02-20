@@ -18,10 +18,7 @@ Read more on Protobuf messages here: ...
 {{< tab "C#" >}}
 ```csharp
 // define a POCO message
-class Hello
-{
-    public string Who;
-}
+record Hello(string Who);
 ```
 {{</ tab >}}
 {{< tab "Go" >}}
@@ -97,10 +94,7 @@ var props = Props.FromProducer(() => new HelloActor());
 var pid = system.Root.Spawn(props);
 
 //send a message to the actor
-system.Root.Send(new Hello
-{
-    Who = "Alex"
-});
+system.Root.Send(new Hello("Alex"));
 ```
 {{</ tab >}}
 {{< tab "Go" >}}
