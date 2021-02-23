@@ -15,8 +15,8 @@ If your mind is a bit twisted by now, check out the sketch below:
 
 ![Proto.Remote](images/examples/remote.png)
 
-As stated by the original author of Proto.Actor Roger Johansson:
-> `Proto.Remote` manages all the magic of connections and serialization, making it so that client actor and server actor believe they are talking directly to each other.
+As stated by the founder of Proto.Actor Roger Johansson:
+> `Proto.Remote` manages all the complexity of connections and message serialization, making it so that client actor and server actor believe they are talking directly to each other.
 
 ### gRPC
 The way `Proto.Remote` accomplishes this is by using `gRPC` as an underlying transport that like we already mentioned deals with the messy networking details of service to service communication. Without going further into details it suffices to say that it leverages HTTP2 protocol streaming capability that in turn enables bidirectional streaming between clients and servers.
@@ -334,6 +334,6 @@ This brings us to the end of the tour of our chat example. Hope you enjoyed it.
 
 ## Useful Links
 - [Proto.Remote](/docs/remote/)
-- [gRpc](https://grpc.io/)
+- [gRPC](https://grpc.io/)
 - [Protocol Buffers](https://developers.google.com/protocol-buffers)
 - [Actor Context](/docs/context/)
