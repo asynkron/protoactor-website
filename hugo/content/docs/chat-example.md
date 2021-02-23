@@ -319,7 +319,7 @@ This is the main loop of the client program in which we listen for user input fr
 
 We basically have only a few cases here:
 
-First, we basically ignore hitting the return key by doing nothing.
+First, we simply ignore hitting the return key by doing nothing.
 
 Next, we check if the user has entered an exit command. If that's the case, we return from our main loop which in turn ends our program and shuts down the actor system.
 
