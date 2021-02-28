@@ -34,7 +34,7 @@ The core parts of Proto.Actor loosely follow the conceptual API of Akka.
 Proto.Actor was created by Roger Johansson, the original creator of Akka.NET.
 
 {{< note >}}
-Akka.NET was handed over to the Dotnet Foundation in 2016, and during the same time Lightbend, cresators of Scala Akka, obsoleted the Akka Classic API on which Akka.NET was built upon.
+Akka.NET was handed over to the Dotnet Foundation in 2016, and during the same time Lightbend, creators of Scala Akka, obsoleted the Akka Classic API on which Akka.NET was built upon.
 {{</ note >}}
 
 The reason for creating yet another actor model framework was due to the many design issues faced while building Akka.NET.
