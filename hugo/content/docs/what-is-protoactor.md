@@ -9,7 +9,7 @@ tags: [protoactor, docs]
 Proto.Actor is a **Next generation Actor Model framework**.
 
 Over the last few years we have seen two competing approaches of actors emerging.
-First we have the classical Erlang/Akka style actors, and later came the Microsoft Orleans style *"virtual actors"* or *"Grains"*.
+First we have the classical Erlang/Classic Akka style actors, and later came the Microsoft Orleans style *"virtual actors"* or *"Grains"*.
 These two ways both yield different benefits and drawbacks.
 
 Proto.Actor unifies both of these two ways of working under a common framework.
@@ -29,9 +29,10 @@ We are fully embracing this concept.
 Read more {{< link "Grains" "grains.md" >}}
 
 ## Relation To Akka and Akka.NET
-The core parts of Proto.Actor loosely follow the conceptual API of Akka.
+The core parts of Proto.Actor loosely follow the conceptual API of Akka Classic.
 
-Proto.Actor was created by Roger Johansson, the original creator of Akka.NET.
+Proto.Actor was created by Roger Johansson, the original creator of Akka.NET, which is now maintained and donated to the Dotnet Foundation.
+
 The reason for creating yet another actor model framework was due to the many design issues faced while building Akka.NET.
 Akka.NET required the team to build custom thread pools, custom network layers, custom serialization, custom configuration support and much more.
 All interesting topics on their own, but yield a huge cost in terms of development and maintenance hours.
