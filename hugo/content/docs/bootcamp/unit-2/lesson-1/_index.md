@@ -18,3 +18,4 @@ We should also make sure that external actors do not change the internal state o
 
 Later in this course, we will have an entire module on hierarchies and how to create hierarchies. 
 
+[Go ahead!](../lesson-2)

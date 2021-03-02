@@ -20,3 +20,4 @@ If the receiver is interested in receiving the message from the publisher, it su
 
 Since recipients can subscribe to themselves to receive messages from the channel by themselves, this solution has a lot of flexibility. A publisher doesn't need to know how many subscribers they have. It may even happen that at some point, it will not have a single subscriber.
 
+[Go ahead!](../lesson-4)

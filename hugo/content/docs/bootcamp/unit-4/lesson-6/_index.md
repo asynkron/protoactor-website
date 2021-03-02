@@ -36,3 +36,4 @@ The parent actor can also stop the child actor completely, which will result in 
 
 Finally, the parent actor can choose to delegate decision - making to a higher level, meaning that the decision about what to do is passed one level up the parent-child hierarchy. If the parent actor decides to move the decision to a higher level, the parent actor itself will be suspended. When a parent actor is suspended, all its child actors, in addition to the one that has already generated an exception, will also be suspended.
 
+[Go ahead!](../lesson-7)

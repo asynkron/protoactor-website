@@ -139,3 +139,4 @@ It now becomes clear how the four reactive whales: *event-driven*, *scalable*, *
 
 Reactive applications represent a balanced approach to solving modern problems in the development of software systems. They are built on a framework *focused on events* and message passing, and provide tools for *scalability* and *fault tolerance*. On top of this, they support rich and *responsive* user interfaces. We expect the rapidly growing number of systems to be follow this Manifesto in the near future.
 
+[Go ahead!](../lesson-5)

@@ -33,3 +33,5 @@ In this course, we will see how Proto.Actor isolates errors in a subset of the a
 ### Common Architecture.
 
 Finally. When we are using an actor model to represent our system. We speak a common language. So instead of talking about a lot of different ways to do the same things within an app, we have to learn a way to do these things using the actor model and stick to them.
+
+[Go ahead!](../lesson-2)

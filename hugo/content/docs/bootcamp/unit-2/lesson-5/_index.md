@@ -89,3 +89,5 @@ namespace MovieStreaming
 If you don't succeed, there is a ready-made solution in the lesson folder. You can always run it and compare it with yours.
 
 In the next lesson, we will add business logic to our actor.
+
+[Go ahead!](../lesson-6)

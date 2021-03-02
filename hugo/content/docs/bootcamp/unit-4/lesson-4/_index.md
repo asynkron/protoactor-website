@@ -242,3 +242,5 @@ When you re-enter the same command, you will receive an error message since the 
 If we want to stop it playing, we should type "stop".
 
 ![](../../images/4_3_4.png)
+
+[Go ahead!](../lesson-5)

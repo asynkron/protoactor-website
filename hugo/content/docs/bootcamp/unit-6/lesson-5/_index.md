@@ -39,3 +39,5 @@ The DeadLetter queue can also be used to store messages that have not been proce
 System.DeadLetter.SendUserMessage(Self, msg);
 ```
 
+[Go ahead!](../lesson-6)
+

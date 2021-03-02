@@ -56,3 +56,5 @@ If we launch our app now, we will see that the movie name and user id are displa
 ![](../../images/2_7_1.png)
 
 What if we want to combine the movie title and user ID? There are custom messages for this purpose, and we will look at them in more detail in the next lesson.
+
+[Go ahead!](../lesson-7)

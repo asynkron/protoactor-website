@@ -64,4 +64,6 @@ Let's launch our app and see what happened.
 
 ![](../../images/3_4_1.png)
 
-Как вы видите актор успешно завершил свою работу.
+As you can see, the actor succesfully completed job. 
+
+[Go ahead!](../lesson-5)

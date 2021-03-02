@@ -14,3 +14,4 @@ The second actor then performs some processing, as a result of which it creates 
 
 Note here that sending a message from one actor to another is an asynchronous operation. Therefore, once actor one sends a message of type A to actor two, the actor can continue its work. It means that actor one does not have to wait for actor two to finish processing the received message. 
 
+[Go ahead!](../lesson-7)

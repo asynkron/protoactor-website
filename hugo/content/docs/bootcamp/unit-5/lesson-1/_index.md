@@ -25,3 +25,5 @@ For example, when the camera is in reserved mode, all messages must be sent to d
 In all cases (regardless of the reason or specific logic used) the router must decide to which actor to send the message.
 
 In this module, we will consider different approaches to message routing. Along the way, we'll get acquainted with several more mechanisms of Proto.Actor platforms that can be useful not only for implementing routers but also for other processes, such as when necessary to process messages differently depending on the state of the actor. 
+
+[Go ahead!](../lesson-2)

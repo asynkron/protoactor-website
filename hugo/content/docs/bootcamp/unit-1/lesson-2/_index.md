@@ -33,3 +33,5 @@ Actors are well-suited for Business Intelligence and Data mining applications.
 ### Internet of Things.
 
 Gaining popularity sphere of the Internet of things is ideal for applying the actor model. For example, We can use an outgoing data stream from a sensor and represent it as an actor.
+
+[Go ahead!](../lesson-3)

@@ -16,3 +16,5 @@ The channel has several recipients, but each message is delivered to only one of
 
 Channels of this type are most often used in Proto.Actor, because actually PID is a point-to-point channel implementation. All messages sent are delivered to the one actor and in the same order as they were sent.
 
+[Go ahead!](../lesson-3)
+

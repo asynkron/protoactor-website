@@ -18,6 +18,8 @@ Sending local messages in General almost does not fail, because this is a normal
 
 Message loss can really be a problem when using remote actors. Failure to deliver messages to remote actors is more likely, especially if they are separated by unreliable networks. If someone pulls out an Ethernet cable or turns off the router power, the message will be lost. To solve this problem, Proto.Actor uses the **gRPC** library.
 
-** gRPC** is a high-performance framework developed by Google for remote procedure call (RPC), running on top of HTTP/2.
+**gRPC** is a high-performance framework developed by Google for remote procedure call (RPC), running on top of HTTP/2.
 
 gRPC is easy to use, great for creating distributed systems (microservices) and API. It has built-in support for load balancing, tracing, authentication, and service viability checks. It is possible to create client libraries for working with the backend in 10 languages. High performance is achieved through the use of HTTP/2 and Protocol Buffers.
+
+[To the next unit!](../../unit-7)
