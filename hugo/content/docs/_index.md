@@ -62,6 +62,7 @@ You can also learn Proto.Actor by doing the [**Proto.Actor Bootcamp**](bootcamp)
 * [Work Pulling Pattern](work-pulling.md)
 * [Limit Concurrency](limit-concurrency.md)
 * [Scheduling Periodic Messages](scheduling.md)
+* [Envelope Pattern](envelope-pattern.md)
 
 ## Additional Information
 
