@@ -497,7 +497,9 @@ pre {
   flex-wrap: wrap;
   margin-right: -12px;
   margin-left: -12px; }
-
+  @media (max-width: 960px) {
+    .row {
+      flex-direction: column; } }
 .no-gutters {
   margin-right: 0;
   margin-left: 0; }
