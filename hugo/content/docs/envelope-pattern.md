@@ -1,5 +1,7 @@
 # Envelope Pattern
 
+## Batching in event-driven architectures
+
 A common usecase for actor based event processing, is to comsume data from some form of queue or log, such as Rabbit MQ or Kafka.
 
 ## How the pattern works
