@@ -45,7 +45,7 @@ Read more: [Mailboxes](mailboxes.md)
 
 ## Children
 
-Each actor is potentially a supervisor: if it creates children for delegating sub-tasks, it will automatically supervise them. The list of children is maintained within the actor's context and the actor has access to it. Modifications to the list are done by creating `Context.Spawn(...)` or stopping `child.Stop()` children and these actions are reflected immediately. The actual creation and termination actions happen behind the scenes in an asynchronous way, so they do not “block” their supervisor.
+Each actor is potentially a supervisor: if it creates children for delegating sub-tasks, it will automatically supervise them. The list of children is maintained within the actor's context and the actor has access to it. Modifications to the list are done by creating `Context.Spawn(...)` or stopping `child.Stop()` children and these actions are reflected immediately. The actual creation and termination actions happen behind the scenes in an asynchronous way, so they do not "block" their supervisor.
 
 ## Supervisor Strategy
 
@@ -57,6 +57,12 @@ Read more: [Supervision](supervision.md)
 
 ## When an Actor Terminates
 
-Once an actor terminates, i.e. fails in a way which is not handled by a restart, stops itself or is stopped by its supervisor, it will free up its resources, draining all remaining messages from its mailbox into the system's “dead letter mailbox” which will forward them to the `EventStream` as `DeadLetters`. The mailbox is then replaced within the actor reference with a system mailbox, redirecting all new messages to the `EventStream` as `DeadLetters`. This is done on a best effort basis, though, do not rely on it in order to construct “guaranteed delivery”.
+Once an actor terminates, i.e. fails in a way which is not handled by a restart, stops itself or is stopped by its supervisor, it will free up its resources, draining all remaining messages from its mailbox into the system's “dead letter mailbox” which will forward them to the `EventStream` as `DeadLetters`. The mailbox is then replaced within the actor reference with a system mailbox, redirecting all new messages to the `EventStream` as `DeadLetters`. This is done on a best effort basis, though, do not rely on it in order to construct "guaranteed delivery".
 
 Read more: [Eventstream](eventstream.md), [Deadletter](deadletter.md)
+
+## Architectural Overview
+
+Schematic view of the Proto.Actor internals:
+
+![Cluster Events](images/actor-context-architecture.png)
