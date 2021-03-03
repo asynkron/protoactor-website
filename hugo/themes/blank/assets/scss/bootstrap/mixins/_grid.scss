@@ -20,11 +20,12 @@
   }
 }
 
-@mixin make-row($gutter: $grid-gutter-width) {
+@mixin make-row($gutter: $grid-gutter-width, $max-widths: $container-max-widths) {
   display: flex;
   flex-wrap: wrap;
   margin-right: -$gutter / 2;
   margin-left: -$gutter / 2;
+  @media (max-width: map-get($max-widths, "lg")) {  flex-direction: column; }
 }
 
 @mixin make-col-ready($gutter: $grid-gutter-width) {
