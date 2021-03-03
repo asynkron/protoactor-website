@@ -17,3 +17,5 @@ var moviePlayCounterActorPid = new PID(system.ProcessRegistry.Address, "$1/Movie
 ```
 
 Now we can use the resulting PID's to send messages to our actor. Regardless of where it is deployed and whether our actor is a child.
+
+[Go ahead!](../lesson-4)

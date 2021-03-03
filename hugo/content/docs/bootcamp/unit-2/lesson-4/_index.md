@@ -28,3 +28,5 @@ This is because behind the scenes, Proto.Actor must create special classes that 
 Using the Send method can also help to create more loosely coupled systems, whereas using the RequestAsync method, we link the sender and receiver in a bidirectional link, which makes our system more vulnerable.
 
 Therefore, the Send method will be used most of the time throughout the system. And the RequestAsync method is used only when it is absolutely necessary for system development.
+
+[Go ahead!](../lesson-5)

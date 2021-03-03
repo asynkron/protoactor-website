@@ -22,3 +22,4 @@ These messages have a UserId, and when they fall into `UserCoordinatorActor ()` 
 
 When `UserActor()` starts playing the movie, it will create an instance of the message `IncrementPlayCountMessage()` and send it `MoviePlayCounterActor()` . In turn, `MoviePlayCounterActor()` will increase the movie playback counter by one. This way, `MoviePlayCounterActor()` will track how many times each movie has been played back.
 
+[Go ahead!](../lesson-3)

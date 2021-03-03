@@ -21,3 +21,5 @@ After we have created root actors from the code of root actors, we can create th
 `context.Spawn(props);`
 
 Now that you've learned a bit more about the hierarchy of supervisors. Let's move on to the next lesson, where we'll see how to implement the actors' hierarchy in practice.
+
+[Go ahead!](../lesson-2)

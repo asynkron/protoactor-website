@@ -25,3 +25,5 @@ You can also use Proto.Actor on the client-side as a console application.  After
 #### WPF Application 
 
 In this type of app, we redirect user requests from the GUI to the actor system. This will allow us to create a reactive, parallel application. Where the task execution is entirely separate from the GUI.
+
+[Go ahead!](../lesson-4)

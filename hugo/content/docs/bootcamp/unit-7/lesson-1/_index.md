@@ -34,3 +34,5 @@ If we want to deploy our application on multiple servers to increase performance
 Because of these problems, the local programming model's usage in a distributed environment is failing. But Proto.Actor platform offers to use a distributed model for both kinds of environments - distributed and local. It is necessary to notice that the distributed programming model simplifies the creation of the distributed applications, but can make local programming the same difficult, as distributed.
 
 But times have changed. Two decades later, we have to deal with multi-core processors. And more and more tasks have to be solved in a distributed cloud. The advantages of using the distributed programming model to create local systems are that it simplifies competitive programming, as you could see in the previous chapters. We are already used to asynchronous interactions, have learned how to deal with partial failures, and are using a generalized approach to competitive execution, simplifying our programming for multi-processor systems and preparing us for the transition to a distributed environment.
+
+[Go ahead!](../lesson-2)

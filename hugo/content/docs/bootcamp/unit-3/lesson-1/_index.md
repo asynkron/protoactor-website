@@ -45,3 +45,5 @@ Graphically, the life cycle of an actor can be represented as follows.
 
 We will consider the processing of system messages of the actor's life cycle in the next lesson.
 
+[Go ahead!](../lesson-2)
+

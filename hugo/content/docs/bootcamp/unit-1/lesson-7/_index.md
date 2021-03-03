@@ -79,3 +79,5 @@ ince this strategy is crucial for the actor and its child actors, it cannot be c
 Given that there is only one such strategy for each actor, if it is necessary to apply different strategies for subordinate actors, they grouped under intermediate supervisor actors with the corresponding strategies. According to the division of tasks to subtasks., it is good practice to structure actor systems once again.
 
 Proto.Actor is asynchronous, non-blocking, and supports message exchange. It is scalable vertically as well as horizontally. To support fault tolerance, it has tracking mechanisms. It meets all the requirements for creating reactive systems.
+
+[Go ahead!](../lesson-8)

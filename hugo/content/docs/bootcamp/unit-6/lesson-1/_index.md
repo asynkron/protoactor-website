@@ -4,3 +4,4 @@ Let's begin our acquaintance with this module by describing the channel types us
 
 In this case, you will have to create several channels or use channels of the second type, **"publisher/subscriber "**. The main advantage of this type of channel is the ability to change recipients' composition during the application operation dynamically. Channels of this type in the Proto.Actor platform implement class `EventStream()`.
 
+[Go ahead!](../lesson-2)

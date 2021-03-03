@@ -37,3 +37,5 @@ The Proto.Actor platform has several built-in routers. Let's look at them in mor
 - Random — the recipient is selected at random.
 - Weighted round robin — the same as Round-robin, but you can adjust the frequency of sending messages to specific recipients using weighting factors.
 - Broadcast — the message is sent to all the actors in the group.
+
+[Go ahead!](../lesson-3)

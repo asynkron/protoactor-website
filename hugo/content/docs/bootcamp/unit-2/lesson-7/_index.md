@@ -88,3 +88,5 @@ If we run our application, we can make sure that it is no different from what we
 ![](../../images/2_8_2.png)
 
 Also, the Proto.Actor platform allows you to create messages based on gRPC technology, allowing actors written in different programming languages to communicate between themselves. But we will talk about this in the next lessons.
+
+[To the next unit!](../../unit-3)

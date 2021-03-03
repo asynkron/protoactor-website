@@ -19,3 +19,5 @@ The data processing application for a single purpose is an excellent example of 
 Don't pay much attention to the details yet, as they will all be discussed in detail throughout the module.
 
 And now let's move on to the implementation of our clustered word count application. In the next lesson, we will go deeper into the details of cluster membership and see how the lead and slave actors can find each other and collaborate to complete tasks.
+
+[Go ahead!](../lesson-2)

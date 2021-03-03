@@ -36,3 +36,4 @@ public Task ReceiveAsync(IContext context) => Behavior.ReceiveAsync(context);
 
 In the next lessons, we will look at real-life examples of how the `Behavior()` class can be used in our actors.
 
+[Go ahead!](../lesson-6)

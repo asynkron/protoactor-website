@@ -33,3 +33,5 @@ Proto.Actor allows us to create self-repairing systems. This is done using the c
 ### Ability to use multiple programming languages in a single application.
 
 A key feature of Proto.Actor is the ability to write a single application in multiple programming languages. Thanks to the use of gRPC, actors written in different programming languages can easily exchange messages with each other. For example. You can write app, split this app into client and server parts. Write the client part on ASP.NET Core, and the server part in Python. And communication between the server and client parts will be absolutely transparent for you.
+
+[Go ahead!](../lesson-6)

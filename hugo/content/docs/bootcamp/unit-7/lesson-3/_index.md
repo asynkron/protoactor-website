@@ -228,3 +228,5 @@ while (true)
 ```
 
 To get acquainted with the full version of this example, you can see in the source code examples directory of Proto.Actor platform.
+
+[To the next unit!](../../unit-8)

@@ -10,7 +10,7 @@ We'll see what happens when the actor's copy finishes working. And how do its de
 
 And at the end, you'll learn how the actor's behavior can be modified during execution, depending on the messages received, using the Behavior class. 
 
-## Оглавление
+## Table of Content
 
 1. [Actor Lifecycle.](lesson-1)
 2. [Actor Lifecycle Messages.](lesson-2)

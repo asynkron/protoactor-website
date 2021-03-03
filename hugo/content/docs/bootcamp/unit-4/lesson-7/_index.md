@@ -29,3 +29,5 @@ Unlike the OneForOneStrategy strategy, the AllForOneStrategy strategy applies th
 <img src="images/4_7_3.png" style="zoom:50%;" />
 
 The AllForOneStrategy strategy can be useful if we have child actors that are highly dependent on each other. For example, if an error occurred in one of the child actors, the other child actors would not be able to perform their work. Thus, AllForOneStrategy allows you to take corrective actions for all child actors, not just for the actor that failed.
+
+[To the next unit!](../../unit-5)
