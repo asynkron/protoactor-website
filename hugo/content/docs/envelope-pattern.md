@@ -8,10 +8,13 @@ A common usecase for actor based event processing, is to comsume data from some 
 
 ### Prefetch a batch of messages from the queue/log
 
-![Cluster Events](images/batching-1.png)
-
+![Cluster Events](images/batching-0.png)
 
 ### Group these messages based on the target actor
+
+![Cluster Events](images/batching-1.png)
+
+### Construct the Envelope messages
 
 ![Cluster Events](images/batching-2.png)
 
