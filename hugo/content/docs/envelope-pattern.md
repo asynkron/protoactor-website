@@ -40,7 +40,7 @@ Cons:
 
 At this point, we process each message in the envelope, but we only commit state back to our persistent store once we have processed all of the content.
 
-This strategy allows us to process a large number of messages at high throughput, while still guaranteeing persistence.
+This strategy allows us to process messages at high throughput, while still guaranteeing persistence.
 
 ![Cluster Events](images/batching-4.png)
 
