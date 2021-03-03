@@ -63,6 +63,7 @@ You can also learn Proto.Actor by doing the [**Proto.Actor Bootcamp**](bootcamp)
 * [Limit Concurrency](limit-concurrency.md)
 * [Scheduling Periodic Messages](scheduling.md)
 * [Envelope Pattern](envelope-pattern.md)
+* [Local Affinity](local-affinity.md)
 
 ## Additional Information
 
