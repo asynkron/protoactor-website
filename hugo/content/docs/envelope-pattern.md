@@ -4,6 +4,20 @@
 
 A common usecase for actor based event processing, is to comsume data from some form of queue or log, such as Rabbit MQ or Kafka.
 
+
+Requires:
+* Idempotency, message deduplication in actor
+
+Pros:
+* High throughput processing
+* Guaranteed successful delivery of messages (at least once)
+* Guaranteed successful state persistence
+
+Cons:
+* Higher latency due to batching
+* Idempotency state and logic can add complexity
+
+
 ## How the pattern works
 
 ### Prefetch a batch of messages from the queue/log
