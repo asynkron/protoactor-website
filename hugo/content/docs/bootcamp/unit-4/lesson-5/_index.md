@@ -94,3 +94,5 @@ public class MoviePlayCounterActor : IActor
 As you can see, the logic of this actor is straightforward. After receiving the `IncrementPlayCountMessage()` message, the corresponding movie is searched in `_moviePlayCounts` dictionary, and if there is one, the counter of this movie is increased by one.
 
 Let's run our application and look at the result.
+
+[Go ahead!](../lesson-6)

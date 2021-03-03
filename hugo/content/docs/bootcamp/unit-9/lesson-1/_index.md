@@ -55,3 +55,5 @@ It is safe to say that Event Sourcing technology requires some form of event ser
 In reality, Event Sourcing only provides a way to restore state from events; it does not solve the problem of creating specialized queries. A well-known area of application for specialized queries is event replication to a system optimized for analysis.
 
 In the next part, we will begin to design the calculator to lay the basis for further discussion.
+
+[Go ahead!](../lesson-2)

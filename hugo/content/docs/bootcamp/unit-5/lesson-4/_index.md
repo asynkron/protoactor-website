@@ -27,3 +27,5 @@ for (var i = 0; i < 10; i++)
 As you can see, setting up a group is almost the same as setting up a pool. Creating a group looks even easier than setting up a pool because there is no need to define how routes should be created. And since the group definition uses actor paths, you don't need to change anything to add remote actors, just add the full path to the remote actor:
 
 A router with a group is used almost like a pool. The only difference is that it completes the route. When the route entering the pool is terminated, the router detects this and removes it from the pool. A router for a group does not support this feature. When the route is terminated, the router will continue to send it messages because the router does not control routes, and perhaps at some point in the future the actor will be available.
+
+[Go ahead!](../lesson-5)

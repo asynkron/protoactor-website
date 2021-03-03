@@ -88,3 +88,5 @@ In our example with a traffic camera, the GetSpeed actor determined the speed. W
 - the router.
 
 Both components, GetSpeed and SpeedRouter, can be implemented in one actor. The actor first performs a processing task and determines by its result whether to send a message to the GetTime task or to delete it. The decision to implement these components in one actor or in two depends on the reusability requirements. If you want GetSpeed to be a separate function, we will not be able to combine both steps in the same actor. But if the processing actor also has to decide on further processing of the message, it will be easier to combine these two components. Another factor could be to separate the usual processing stream from the error processing stream for the GetSpeed component.
+
+[To the next unit!](../../unit-6)

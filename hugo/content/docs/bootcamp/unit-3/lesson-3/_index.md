@@ -25,3 +25,5 @@ If the child actors have their child actors, then the child actors will send a s
 Only after the child actors are completely stopped will the parent actor receive the `Stopped () ' message. This way we have an ordered and controlled way to stop actors.
 
 The Proto.Actor platform provides several ways to stop actors. But the main one is to call the `Stop(PID)` method with the actor's PID to be stopped.
+
+[Go ahead!](../lesson-4)

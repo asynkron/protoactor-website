@@ -117,3 +117,5 @@ Next, the compiler will generate a class that corresponds to the definition in t
 A detailed guide to protobuf syntax can be found at https://developers.google.com/protocol-buffers/docs/proto3 и https://developers.google.com/protocol-buffers/docs/csharptutorial
 
 Using this approach, we can abstract from a specific language and describe the server-client interaction in terms of the Proto. And then for each specific language (C#, Java, etc.) we can define the corresponding implementation.
+
+[Go ahead!](../lesson-4)

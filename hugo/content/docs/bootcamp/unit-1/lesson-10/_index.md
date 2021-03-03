@@ -19,3 +19,5 @@ One of the key concepts of the actor observation hierarchy is that we can pass m
 If this risky work causes any error, it will affect only this actor. The parent actors of this actor will not be affected and will not lose their inner state if their child actors fail.
 
 The supervisor hierarchy allows the system not only to handle errors but also to self-repair. 
+
+[Go ahead!](../lesson-11)

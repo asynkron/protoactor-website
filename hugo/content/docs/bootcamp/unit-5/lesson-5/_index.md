@@ -33,6 +33,8 @@ for (var i = 0; i < 10; i++)
 }
 ```
 
+[Go ahead!](../lesson-6)
+
 
 
 

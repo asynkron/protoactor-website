@@ -28,3 +28,4 @@ Now you know that Proto.Actor does not use direct links to other actors instead 
 
 In Proto.Actor, the primary way to get the PID of an actor, is to create a new actor. That is, after creating a child or root actor, Proto.Actor returns the PID of the newly created actor. You can use this PID to send messages to this actor.
 
+[Go ahead!](../lesson-3)

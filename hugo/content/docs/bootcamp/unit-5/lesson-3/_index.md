@@ -61,3 +61,5 @@ When one of the routes fails, only it will be restarted, and all others will con
 In this lesson, you learned how flexible pools could be. For example, you can change the number of routes and even the routing logic. And when there are multiple servers, you can easily create routes on different servers. 
 
 But sometimes the restrictions imposed by pools are too strict, and there is a desire to have more freedom in creating and managing routes. In this situation, you can use groups.
+
+[Go ahead!](../lesson-4)

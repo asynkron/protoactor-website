@@ -16,3 +16,4 @@ One of the main modules in the Proto.Actor platform is the Proto.Remote. As this
 
 - Using gRPC as an inter-service communication protocol - Allows you to combine actor systems written in different programming languages. Besides, gRPC can accelerate the productivity and efficiency of the microservice architecture many times by taking full responsibility for maintaining the communication channel between actor systems and data transfer.
 
+[Go ahead!](../lesson-3)

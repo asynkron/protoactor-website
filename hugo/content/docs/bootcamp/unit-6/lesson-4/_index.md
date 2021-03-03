@@ -27,3 +27,5 @@ After that, the msg message will be passed to all subscribed actors. In fact, th
 In Proto.Actor you can subscribe to several types of events at once. For example, our GiftModule component must also handle order cancellation messages, because in this case, the gift should not be sent. To do this, the GiftModule component must subscribe to EventStream to receive Order and Cancel messages. Both subscriptions are independent, i.e. after the cancellation of the Orders subscription, the Cancel message subscription will continue to be valid, and these messages will be delivered.
 
 Earlier we mentioned the advantages of loose coupling between sender and receiver, and the dynamic character of the "publisher/subscriber" channel. And since EventStream is available to all actors, it is also an excellent solution for cases when all messages from all over the local system must flow into one or more actors. Bright examples are the logging. All logs should flock to a single point and be written to a log file.
+
+[Go ahead!](../lesson-5)

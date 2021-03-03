@@ -19,3 +19,5 @@ We will review the methods contained in RootContext and ActorContext in more det
 ### Props
 
 This is a configuration class that allows you to set parameters for creating actors. Includes a lot of related information about creating an actor, for example. Which Task Manager to use or which mailbox to use, etc.
+
+[Go ahead!](../lesson-10)

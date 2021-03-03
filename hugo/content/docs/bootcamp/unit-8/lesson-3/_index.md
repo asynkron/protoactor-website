@@ -50,7 +50,7 @@ Unlike **Proto.Cluster.Consul** **Proto.Cluster.SingleRemoteInstance** does not 
 
 After we learned the basic theoretical concepts, let's try to create our first cluster based on **Proto.Cluster.SingleRemoteInstance**.
 
-
+[Go ahead!](../lesson-4)
 
 
 
