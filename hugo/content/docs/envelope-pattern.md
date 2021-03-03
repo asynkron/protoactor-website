@@ -2,7 +2,7 @@
 
 ## Batching in event-driven architectures
 
-A common usecase for actor based event processing, is to comsume data from some form of queue or log, such as Rabbit MQ or Kafka.
+A common use-case for actor-based event processing is to consume data from some form of queue or log, such as Rabbit MQ or Kafka.
 
 
 Requires:
@@ -10,8 +10,8 @@ Requires:
 
 Pros:
 * High throughput processing
-* Guaranteed successful delivery of messages (at least once)
-* Guaranteed successful state persistence
+* Guaranteed delivery of messages (at least once)
+* Guaranteed state persistence
 
 Cons:
 * Higher latency due to batching
@@ -40,7 +40,7 @@ Cons:
 
 At this point, we process each message in the envelope, but we only commit state back to our persistent store once we have processed all of the content.
 
-This allows us to process large number of messages at high throughput, while still guaranteeing persistence.
+This strategy allows us to process a large number of messages at high throughput, while still guaranteeing persistence.
 
 ![Cluster Events](images/batching-4.png)
 
