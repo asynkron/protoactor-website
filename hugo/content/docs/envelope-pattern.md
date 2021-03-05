@@ -4,6 +4,14 @@
 
 A common use-case for actor-based event processing is to consume data from some form of queue or log, such as Rabbit MQ or Kafka.
 
+If you use some form of persistence in your event processor, be it plain snapshots of state or event-sourcing, this can result in writes to the database for each message processed.
+One message goes in, you process it, you write the new state of your entity/actor back to the persistent store.
+
+This can result in bottlenecks in terms of writes against the persistent store.
+e.g. if you process 10 000 messages per second, that could result in 10 000 writes to the persistent store.
+
+This pattern limits the number of writes to the persistent store by grouping messages together, where you only write back once they are all processed, and then ack this back to the underlaying message queue/log you are using.
+
 
 Requires:
 * Idempotency, message deduplication in actor
