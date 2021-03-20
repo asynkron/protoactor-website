@@ -56,6 +56,12 @@ You can also learn Proto.Actor by doing the [**Proto.Actor Bootcamp**](bootcamp)
 * [Cluster](cluster.md) - How do I build clusters of actor nodes?
 * [SimpleScheduler](scheduling.md) - How do I send messages on a timer?
 
+## Observability
+
+* [Tracing](tracing.md)
+* [Metrics](metrics.md)
+* [Logging](logging.md)
+
 ## Useful Patterns
 
 * [Message Throttling](throttling.md)
