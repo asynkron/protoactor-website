@@ -47,7 +47,6 @@ You can also learn Proto.Actor by doing the [**Proto.Actor Bootcamp**](bootcamp)
     * [Router](routers.md) - How do I forward messages to to pools or groups of workers?
     * [Eventstream](eventstream.md) - How are infrastructure events managed?
     * [Behaviors](behaviors.md) - How do I build state machines with actors?
-    * [Stashing](stash.md) - How do I keep messages between actor restarts?
     * [Middleware](middleware.md) - How do I intercept or observe messages between actors?
     * [Receive Timeout](receive-timeout.md) - How do I trigger code when actors go idle?
     * [Futures (Go)](futures.md) - How do I react to task completions?
