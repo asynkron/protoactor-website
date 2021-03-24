@@ -13493,7 +13493,8 @@ h3, .h3 {
   color: #35383f; }
 
 .markdown-img {
-  max-height: 400px;
+  max-width: 100%;
+  max-height: 600px;
   margin-bottom: 24px; }
 
 .nav-link {

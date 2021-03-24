@@ -11,7 +11,7 @@ When creating an actor, you can inject middleware to intercept incoming and outg
 
 Receive middleware intercepts incoming messages. It is injected using the `Props.WithReceiveMiddleware()` method. Each middleware will be invoked in the order they were passed, and is responsible for invoking the next middleware.
 
-A receive middleware consists of a method/delegate which takes a `Receive` argument, which is the next middleware to invoke, and returns a `Receive` method. Together, the middlewares and the actor's `Receive` method form a chain, where each middleware should call the next and return it's result. The signature of a receive middleware is `Func<Receive, Receive>`.
+A receive middleware consists of a method/delegate which takes a `Receive` argument, which is the next middleware to invoke and returns a `Receive` method. Together, the middlewares and the actor's `Receive` method form a chain, where each middleware should call the next and return its result. The signature of a receive middleware is `Func<Receive, Receive>`.
 
 ### Example
 ```csharp
