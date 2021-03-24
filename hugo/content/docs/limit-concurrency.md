@@ -15,6 +15,7 @@ These worker actors can then interact with the limited resource.
 Because actors process one message at a time, we can guarantee that there will never be more than (in this case) three parallel requests to the limited resource at any given point in time.
 
 # Limit Concurrency using Routers
+## (This content is dated, pre ActorSystem, PullRequests are welcome)
 
 In this post we will explore how we can use the actor model and routers in Proto.Actor to limit concurrency.
 That is, we want to ensure that no more than X concurrent workers are working at the same time.
