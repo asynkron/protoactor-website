@@ -28,5 +28,10 @@ var res =
 
 ```
 
+{{< warning >}}
+The AsyncSemaphore only guards concurrency inside a single process.
+If your system uses scale-out, the semaphore will only guard for calls within the process on each instance.
+{{</ warning >}}
+
 Related:
 For other approaches to deal with similar problems, see [Collective reads and writes](collective-access.md)
