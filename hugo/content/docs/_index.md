@@ -63,7 +63,7 @@ You can also learn Proto.Actor by doing the [**Proto.Actor Bootcamp**](bootcamp)
 ### Utility features
 
 * [AsyncSemaphore](asyncsemaphore.md) - How do I limit concurrency to a given resource?
-* [BatchingMailbox](batching-mailbox.md) - How do I collect many events and process as one unit?
+* [BatchingMailbox](batching-mailbox.md) - How do I collect many events and process as single one unit?
 
 ## Observability
 
