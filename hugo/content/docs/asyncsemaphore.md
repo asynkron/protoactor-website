@@ -27,3 +27,6 @@ var res =
         await db.StringGetAsync("some key"));
 
 ```
+
+Related:
+For other approaches to deal with similar problems, see [Collective reads and writes](collective-access.md)
