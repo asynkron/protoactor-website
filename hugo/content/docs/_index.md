@@ -37,6 +37,8 @@ You can also learn Proto.Actor by doing the [**Proto.Actor Bootcamp**](bootcamp)
 
 ## Building Blocks
 
+### Core Features
+
 * [Actor](actors.md) - What are actors?
     * [Props](props.md) - How do I configure actors?
     * [Spawning Actors](spawn.md) - How do I instantiate actors?
@@ -57,6 +59,10 @@ You can also learn Proto.Actor by doing the [**Proto.Actor Bootcamp**](bootcamp)
     * [gRPC Compression](grpc-compression.md) - How do I use gRPC compression for remote communication?
 * [Cluster](cluster.md) - How do I build clusters of actor nodes?
 * [SimpleScheduler](scheduling.md) - How do I send messages on a timer?
+
+### Utility features
+
+* [AsyncSemaphore](asyncsemaphore.md) - How do I limit concurrency to a given resource?
 
 ## Observability
 
