@@ -5,7 +5,9 @@ The `Throttle` class is a utility class used to prevent event flooding.
 
 Setting up:
 
-```
+```csharp
+private readonly ShouldThrottle _shouldThrottle;
+/* ... */
 _shouldThrottle = Throttle.Create(
     10,
     TimeSpan.FromSeconds(5),
@@ -15,7 +17,7 @@ _shouldThrottle = Throttle.Create(
 
 Usage:
 
-```
+```csharp
 catch(Exception e)
 {
     if (_shouldThrottle().IsOpen())
