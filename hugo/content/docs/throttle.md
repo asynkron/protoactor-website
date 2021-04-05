@@ -1,6 +1,10 @@
 # Proto.Util.Throttle
 
 The `Throttle` class is a utility class used to prevent event flooding.
+The Throttle is similar to a _circuit breaker_, but instead of getting triggered by _failure_, it triggers by a _surge of events in a short time_.
+
+
+
 
 
 Setting up:
