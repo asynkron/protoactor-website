@@ -7,7 +7,9 @@ Setting up:
 
 ```csharp
 private readonly ShouldThrottle _shouldThrottle;
+
 /* ... */
+
 _shouldThrottle = Throttle.Create(
     10,
     TimeSpan.FromSeconds(5),
