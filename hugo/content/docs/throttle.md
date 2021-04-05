@@ -18,6 +18,8 @@ private readonly ShouldThrottle _shouldThrottle;
 _shouldThrottle = Throttle.Create( 
     10,                      // number of events/calls
     TimeSpan.FromSeconds(5), // in this duration
+
+    // callback for when valve opens back up again
     count => _logger.LogInformation("Throttled {LogCount} logs for component xyz", count)
 );
 ```
