@@ -70,7 +70,14 @@ You can also learn Proto.Actor by doing the [**Proto.Actor Bootcamp**](bootcamp)
 
 * [Tracing](tracing.md)
 * [Metrics](metrics.md)
+   * [Using custom metrics](custom-metrics.md)
 * [Logging](logging.md)
+
+## Extension models
+
+* [ActorSystem Extensions](actorsystem-extensions.md)
+* [Actor Extensions](actor-extensions.md)
+* [Context Decorator](context-decorator.md)
 
 ## Useful Patterns
 
