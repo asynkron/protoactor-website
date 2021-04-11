@@ -33,7 +33,7 @@ We see Proto.Actor being adopted by many large organizations in a wide range of 
 * Health Care
 * Data Analytics
 
-and many more. Any system with the need for high throughput and low latency is a good candidate for using Proto.Actor.
+And many more. Any system with the need for high throughput and low latency is a good candidate for using Proto.Actor.
 
 Actors let you manage service failures (Supervisors), load management (back-off strategies, timeouts and processing-isolation), as well as both horizontal and vertical scalability (add more cores and/or add more machines).
 
