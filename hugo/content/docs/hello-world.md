@@ -50,11 +50,11 @@ class HelloActor : IActor
         //the message we received
         var msg = context.Message; 
         //match message based on type
-        if (msg is Hello msg)
+        if (msg is Hello helloMsg)
         {
-            Console.WriteLine($"Hello {msg.Who}");
+            Console.WriteLine($"Hello {helloMsg.Who}");
         }
-        return Actor.Done;
+        return Task.CompletedTask;
     }
 }
 ```
@@ -94,7 +94,10 @@ var props = Props.FromProducer(() => new HelloActor());
 var pid = system.Root.Spawn(props);
 
 //send a message to the actor
-system.Root.Send(new Hello("Alex"));
+system.Root.Send(pid, new Hello("Alex"));
+
+//prevent application from shutting down before message is received
+Console.ReadLine();
 ```
 {{</ tab >}}
 {{< tab "Go" >}}

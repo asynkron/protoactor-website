@@ -37,6 +37,8 @@ You can also learn Proto.Actor by doing the [**Proto.Actor Bootcamp**](bootcamp)
 
 ## Building Blocks
 
+### Core Features
+
 * [Actor](actors.md) - What are actors?
     * [Props](props.md) - How do I configure actors?
     * [Spawning Actors](spawn.md) - How do I instantiate actors?
@@ -58,11 +60,24 @@ You can also learn Proto.Actor by doing the [**Proto.Actor Bootcamp**](bootcamp)
 * [Cluster](cluster.md) - How do I build clusters of actor nodes?
 * [SimpleScheduler](scheduling.md) - How do I send messages on a timer?
 
+### Utility features
+
+* [AsyncSemaphore](asyncsemaphore.md) - How do I limit concurrency to a given resource?
+* [BatchingMailbox](batching-mailbox.md) - How do I collect many events and process as single one unit?
+* [Throttle](throttle.md) - How do I throttle method calls?
+
 ## Observability
 
 * [Tracing](tracing.md)
 * [Metrics](metrics.md)
+   * [Using custom metrics](custom-metrics.md)
 * [Logging](logging.md)
+
+## Extension models
+
+* [ActorSystem Extensions](actorsystem-extensions.md)
+* [Actor Extensions](actor-extensions.md)
+* [Context Decorator](context-decorator.md)
 
 ## Useful Patterns
 
