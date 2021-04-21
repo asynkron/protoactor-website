@@ -84,11 +84,20 @@ service Hello {
 
 Once you have this, you can generate your code using protoc.
 
-**Windows**
+#### Generating code for Go
+
+##### Windows
+
 ```text
 protoc -I=. -I=%GOPATH%\src --gogoslick_out=. protos.proto 
 protoc -I=. -I=%GOPATH%\src --gorleans_out=. protos.proto 
 ```
+
+#### Generating code for .NET
+
+As of Release 0.17.0 of Proto.Cluster for .NET, you can reference the Nuget package `ProtoGrainGenerator`, and this will automatically generate the code for you.
+The code is generated under the `/obj` folder and hidden from the user, but included for compilation upon build.
+
 
 ## Implementing
 
