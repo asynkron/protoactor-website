@@ -4,8 +4,6 @@ In this lesson, we will consider the `PoisonPill()` message and how it differs f
 
 `Stop()` and `PoisonPill()` messages used to terminate the actor and stop the message queue. Both of these messages force the actor to stop processing incoming messages, and send a stop message to all of its child actors, and wait until they are finished. Then, send our code a message `Stopped()` that signals the actor's complete shutdown. Keep in mind that all future messages sent to our actor's address will be forwarded to dead letters mailbox.
 
-`Stop()` and `PoisonPill()` messages used to terminate the actor and stop the message queue. Both of these messages force the actor to stop processing incoming messages, and send a stop message to all of its child actors, and wait until they are finished. Then, send our code a message `Stopped()` that signals the actor's complete shutdown. Keep in mind that all future messages sent to our actor's address will be forwarded to dead letters mailbox.
-
 Let's see how we can send a message `PoisonPill()` to our actor `PlaybackActor()`.
 
 Let's open our project and add the sending of the message `PoisonPill()` to the class `Program()`. You can do it with the help of 
