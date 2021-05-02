@@ -10,7 +10,7 @@ Each actor has a unique PID that allows Proto.Actor to distinguish actors. When 
 
 ![](../../images/2_2_2.png)
 
-Thus, a PID is a layer of abstraction over an actors. And by having this level of abstraction, we can transfer references to actors throughout the system via messages. In addition to that, each actor has several special references to other actors.
+Thus, a PID is a layer of abstraction over an actor. And by having this level of abstraction, we can transfer references to actors throughout the system via messages. In addition to that, each actor has several special references to other actors.
 
 <img src="images/2_2_3.png" style="zoom:50%;" />
 

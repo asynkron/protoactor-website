@@ -92,7 +92,7 @@ The next line uses the **package** operator to define the package name:
 package greet;
 ```
 
-In this example, the package is called "great". Installing the package allows you to resolve name conflicts when there are entities with the same names.
+In this example, the package is called "greet". Installing the package allows you to resolve name conflicts when there are entities with the same names.
 
 Next starts the definition of used the messages:
 
