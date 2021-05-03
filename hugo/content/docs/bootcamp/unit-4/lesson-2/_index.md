@@ -4,7 +4,7 @@ So let's look at the hierarchy of actors that we will be creating throughout thi
 
 We will start creating our application with the actor that is at the top of the actor hierarchy. This actor will be called `PlaybackActor ()`. It will be responsible directly for playing movies. This actor will have two child actors. The first child actor called `UserCoordinatorActor()` is responsible for creating one or more `Useractors()`.
 
-We create an instance of ' UserActor()` for each end-user who watches the movie. We created the initial version of `UserActor () ' in the previous module.
+We create an instance of `UserActor()` for each end-user who watches the movie. We created the initial version of `UserActor ()` in the previous module.
 
 ![](../../images/4_2_1.png)
 
@@ -16,7 +16,7 @@ We also have a couple of messages `PlayMovieMessage()` and `StopMovieMessage()`.
 
 ![](../../images/4_2_3.png)
 
-These messages have a UserId, and when they fall into `UserCoordinatorActor ()` ` 'UserCoordinatorActor ()' will check if there is no suitable instance of `UserActor()` for this UserId, then `UserCoordinatorActor()` will create  apropriate `UserActor()`. And Next `UserCoordinatorActor () ' will send messages to the desired `UserActor()` to start or stop playback of the movie.
+These messages have a UserId, and when they fall into `UserCoordinatorActor ()`, `UserCoordinatorActor ()` will check if there is no suitable instance of `UserActor()` for this UserId, then `UserCoordinatorActor()` will create  apropriate `UserActor()`. And Next `UserCoordinatorActor ()` will send messages to the desired `UserActor()` to start or stop playback of the movie.
 
 ![](../../images/4_2_4.png)
 
