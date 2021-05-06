@@ -23,7 +23,7 @@ With such location transparency, multiple machines can collaborate with each oth
 ## Clustering
 While remoting is an important feature to build a scalable actor system, there still is room to improve the actor system’s availability as a whole. A sender enqueues a message to the remotely hosted actor’s mailbox, but the destination host’s availability is not always guaranteed. A hardware outage or power outage on a specific host may occur at any moment. As a matter of fact, even a daily operation such as application deployment may lower the service availability instantaneously. In such a case, messaging a remotely hosted actor results in a dead letter. To work as a distributed actor system, all machines must always be available and ready to interact with each other, or otherwise a messaging fails. Keeping a hundred percent availability for all time is not realistic or pragmatic.
 
-Clustering is built with a service discovery mechanism on top of the remoting feature to give extra robustness to work with the aforementioned availability issue. Multiple server instances work as a single cluster to provide specific types of actors. When one or more server instances go down, such an event is detected by the service discovery mechanism, and messages are always rooted to active actors on active instances.
+Clustering is built with a service discovery mechanism on top of the remoting feature to give extra robustness to work with the aforementioned availability issue. Multiple server instances work as a single cluster to provide specific types of actors. When one or more server instances go down, such an event is detected by the service discovery mechanism, and messages are always routed to active actors on active instances.
 
 ![Clustering](clustering.png)
 
