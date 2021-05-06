@@ -35,7 +35,7 @@ The following sections introduce some concepts and terms, how a specific actor i
 When an application process joins cluster membership, the application process is explicitly called a “member” This may be effectively equal to a server instance especially when one server instance hosts one application process. However, multiple application processes can technically run on a single server instance at the same time, so there still is a difference.
 
 ### Cluster Provider
-The core of clustering is cluster provider; this provides a consistent view of active nodes. Once the application process starts, the node constantly interacts with cluster provider to update its own availability and gets other nodes’ membership status. With the up-to-date topology view, proto.actor automatically distributes actors across cluster nodes based on partitioning by consistent hash.
+The core of clustering is cluster provider; this provides a consistent view of active nodes. Once the application process starts, the node constantly interacts with the cluster provider to update its own availability and gets other nodes’ membership status. With the up-to-date topology view, proto.actor automatically distributes actors across cluster nodes based on partitioning by consistent hash.
 
 Proto.Actor supports several cluster provider implementations:
 
@@ -65,7 +65,7 @@ https://dev.to/temporalio/the-curse-of-the-a-word-1o7i
 {{</ note >}}
 
 ### Activation
-As described in the above “virtual actor” section, an actor always exists. Instead of explicitly spawn a new actor, one may “activate” the destination actor by getting the PID of the destination actor. Proto.actor internally checks the existence of the destination actor and spawns one if one is not present.
+As described in the above “virtual actor” section, an actor always exists. Instead of explicitly spawning a new actor, one may “activate” the destination actor by getting the PID of the destination actor. Proto.actor internally checks the existence of the destination actor and spawns one if one is not present.
 
 An actor may disappear when a hosting node crashes, or an actor may stop itself when an idle interval with no message reception exceeds a certain period of time. Activation works well to re-spawn such actors with no extra care.
 
@@ -118,7 +118,7 @@ The below image describes how a grain is located. With the latest membership sha
 ![Initial State](clusteridentity1.png)
 
 ### Topology Update
-When the cluster membership is updated and the topology changes due to the Node B’s outage, all cluster members acquire such an event from the cluster provider. Each server instance then re-computes the hash value of its owning grains and checks if it still owns them. If a grain needs to be owned by another server instance, the ownership is transferred to the new owner. This guarantees that owners are always placed on each ideal node that is determined by consistent hashing while grain instances stay where they are currentlylocated.
+When the cluster membership is updated and the topology changes due to the Node B’s outage, all cluster members acquire such an event from the cluster provider. Each server instance then re-computes the hash value of its owning grains and checks if it still owns them. If a grain needs to be owned by another server instance, the ownership is transferred to the new owner. This guarantees that owners are always placed on each ideal node that is determined by consistent hashing while grain instances stay where they are currently located.
 
 ![Topology Update](clusteridentity2.png)
 
