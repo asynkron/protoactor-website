@@ -50,11 +50,11 @@ Proto.Actor supports several cluster provider implementations:
 Proto.Actor’s clustering mechanism borrows the idea of “virtual actor” from Microsoft Orleans, where developers are not obligated to handle an actor’s lifecycle. If the destination actor is not yet spawned when the first message is sent, proto.actor spawns one and lets this newborn actor handle the message; if the actor is already present, the existing actor simply receives the incoming message. From message sender’s point of view, the destination actor is always guaranteed to “exist” This is highly practical and works well with the clustering mechanism. An actor’s hosting node may crash at any moment, and the messages to that actor may be redirected to a new hosting node. If a developer must be aware of the actor’s lifecycle, a developer is obligated to be aware of such topology change to re-spawn the failing actor. The concept of virtual actor hides such complexity and eases the interaction.
 
 ### Grain
-With virtual actor model, an actor is specifically called a “grain.” However, the implementation of the grain is quite the same as any other actor. A notable difference is that proto.actor automatically spawns the grain on the initial message reception.
-
-> There are only two hard things in Computer Science: cache invalidation and naming things. -- Phil Karlton
+With virtual actor model, an actor is sometimes called a “Grain” However, the implementation of the grain is quite the same as any other actor. A notable difference is that proto.actor automatically spawns the grain on the initial message reception.
 
 {{< note >}}
+"There are only two hard things in Computer Science: cache invalidation and naming things. -- Phil Karlton"
+
 Proto.Actor **generally** use the name **"Virtual Actor"** for Cluster managed actors. and **generally** use the word **"Grain"** for the code generated typed virtual actors.
 
 This is far from perfect, but allows us to make some distinction between the different types.
