@@ -171,6 +171,8 @@ protos_protoactor.go contains a PongerActor struct in it, which receives the inc
 ### Ponger Interface
 Ponger interface is defined in protos_protoactor.go, of which a developer must provide an implementation to set up a ponger grain.
 
+{{< tabs >}}
+{{< tab "Go" >}}
 ```go
 // Ponger interfaces the services available to the Ponger
 type Ponger interface {
@@ -181,17 +183,25 @@ type Ponger interface {
 	
 }
 ```
+{{< tab "Go" >}}
+{{</ tab >}}
 
 A common method for initialization – `Init()` – is already implemented by `cluster.Grain` so a Ponger implementation can re-use this by embedding cluster.Grain as below:
 
+{{< tabs >}}
+{{< tab "Go" >}}
 ```go
 type ponger struct {
 	cluster.Grain
 }
 ```
+{{< tab "Go" >}}
+{{</ tab >}}
 
 However, `Terminate()`, `ReceiveDefault()` and `Ping()` still need to be implemented by a developer. `Terminate()` is called on passivation right before PongerActor stops and hence the subordinating ponger instance also must stop. ReceiveDefault() is a method to receive any message that are not expected to be handled in gRPC manner; Ping() is a method to recieve PingMessage and return PongMessage in gRPC manner.
 
+{{< tabs >}}
+{{< tab "Go" >}}
 ```go
 type ponger struct {
 	cluster.Grain
@@ -214,9 +224,13 @@ func (*ponger) Ping(ping *messages.PingMessage, ctx cluster.GrainContext) (*mess
 	return nil, nil
 }
 ```
+{{< tab "Go" >}}
+{{</ tab >}}
 
 Method implementations could be somewhat like below. Because the actor struct is already generated and exported to protos_protoactor.go by protoc-ge-gograinv2, the implementations are pretty simple.
 
+{{< tabs >}}
+{{< tab "Go" >}}
 ```go
 // Terminate takes care of the finalization.
 func (p *ponger) Terminate() {
@@ -254,10 +268,14 @@ func (*ponger) Ping(ping *messages.PingMessage, ctx cluster.GrainContext) (*mess
 	return pong, nil
 }
 ```
+{{< tab "Go" >}}
+{{</ tab >}}
 
 ### Overall ponger process
 To activate the ponger grain, a process must be defined as below code. Comments are added to each steps.
 
+{{< tabs >}}
+{{< tab "Go" >}}
 ```go
 package main
 
@@ -362,6 +380,8 @@ func main() {
 	<-finish
 }
 ```
+{{< tab "Go" >}}
+{{</ tab >}}
 
 ### Sender Implementation
 
@@ -370,6 +390,8 @@ func main() {
 For a message sender, protos_protoactor.go provides GetPongerGrainClient() function. By calling this function, one can acquire PongerGrainClient instance to initiate gRPC request with PongerGrainClient.Ping(). Making a request in gRPC manner is preferable while the fire-and-forget messaging method such as Context.Send() also works to send message to the destination grain. The gRPC request method calls Cluster.Call to get a hold of ponger grain’s PID, where it retries up to pre-defined threshold count to get the destination PID. As introduced in “Communication Protocol” section, the ownership of the grain may transfer at the same time as one sends a message to it. Retrial logic is vital to make sure the message is actually received by the destination grain. One can pass the retry setting
 The implementation can be somewhat like below:
 
+{{< tabs >}}
+{{< tab "Go" >}}
 ```go
 // Setup cluster
 c := cluster.Configure(...)
@@ -387,11 +409,15 @@ option := cluster.NewGrainCallOptions(c).WithRetry(3)
 // Make a request and receive a response
 pong, err := grain.Ping(ping, option)
 ```
+{{< tab "Go" >}}
+{{</ tab >}}
 
 ### Overall pinger process
 
 Below is the example code to run pinger actor.
 
+{{< tabs >}}
+{{< tab "Go" >}}
 ```go
 package main
 
@@ -485,7 +511,9 @@ func main() {
 	}
 }
 ```
+{{< tab "Go" >}}
+{{</ tab >}}
 
-Conclusion
+## Conclusion
 As illustrated in this article, clustering is a good way to scale the actor system and have higher availability. A developer can interact with actors in the same way as interacting with a local one because proto.actor takes care of locating the destination grain, grain activation, and data transport. Thanks to such architecture, a developer may concentrate on the business logic instead of designing an architecture from scratch.
 
