@@ -96,7 +96,7 @@ The complete code is located at github.com/oklahomer/protoactor-go-sender-exampl
 ## Message Definition
 Because messages are sent from one node to another over wire, they must be serializable. Proto.actor employs pre-existing, well-known Protocol Buffers for data serialization instead of inventing a new serialization protocol. Before getting started, be sure to install protoc and gogoprotobuf’s protoc-gen-gogoslick to generate Golang code. In addition to those tools, one proto.actor-specific tool is required. Run the below command to install the binary. A developer needs to specify dev branch by adding @dev at the end since this is not yet merged to master branch as of 2021-05-03.
 
-```
+```bash
 $ go get github.com/AsynkronIT/protoactor-go/protobuf/protoc-gen-gograinv2@dev
 ```
 
@@ -121,7 +121,7 @@ service Ponger {
 
 Name this file “protos.proto” and locate under cluster/messages. When the IDL file is ready, run the below command to generate required Go code. Two files other than the IDL – protos.pb.go and protos_protoactor.go – are generated.
 
-```
+```bash
 $ protoc --gogoslick_out=. ./cluster/messages/protos.proto
 $ protoc --gograinv2_out=. ./cluster/messages/protos.proto 
 $ tree ./cluster 
@@ -159,7 +159,7 @@ type Ponger interface {
 
 A common method for initialization – `Init()` – is already implemented by `cluster.Grain` so a Ponger implementation can re-use this by embedding cluster.Grain as below:
 
-```
+```go
 type ponger struct {
 	cluster.Grain
 }
