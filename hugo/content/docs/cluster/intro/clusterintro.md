@@ -12,18 +12,27 @@ With the power of actor model, a developer has easier access to concurrent progr
 ## Remoting
 While actor model eases the concurrent programming with mutatable states, the system is hard to scale as long as the actor system is hosted by a single machine. Remoting is a good solution to scale out the actor system among multiple machines.
 
-When one sends a message to a specific actor, the sender is not directly referring to the receiving actor itself. Instead, a reference to the actor is exposed to developers for messaging. This reference is called PID, which is short for “process id.” In proto.actor, the concept of “process” or “process id” is quite similar to that of Erlang. For those who are familiar with Akka’s actor model, `PID` can be equivalent to `ActorRef`.
+When one sends a message to a specific actor, the sender is not directly referring to the receiving actor itself. Instead, a reference to the actor is exposed to developers for messaging. This reference is called `PID`, which is short for “process id.” In Proto.Actor, the concept of “process” or “process id” is quite similar to that of Erlang. 
+For those who are familiar with Akka’s actor model, `PID` can be equivalent to `ActorRef`.
 
-This `PID` knows where the actual actor instance is located and how to communicate with it. The location may be within the same host machine; Maybe not. The important thing is that a sender does not have to pay extra attention to the data serialization/deserialization and data transport. In short, one can communicate with an actor hosted by another machine just like the way communicating with a locally hosted actor.
+This `PID` knows where the actual actor instance is located and how to communicate with it. 
+The location may be within the same host machine; Maybe not. The important thing is that a sender does not have to pay extra attention to the data serialization/deserialization and data transport. 
+In short, one can communicate with an actor hosted by another machine just like the way communicating with a locally hosted actor.
 
 With such location transparency, multiple machines can collaborate with each other and work as a single actor system. This is remoting – a key to scaling out the actor system.
 
 ![Remoting](remoting.png)
 
 ## Clustering
-While remoting is an important feature to build a scalable actor system, there still is room to improve the actor system’s availability as a whole. A sender enqueues a message to the remotely hosted actor’s mailbox, but the destination host’s availability is not always guaranteed. A hardware outage or power outage on a specific host may occur at any moment. As a matter of fact, even a daily operation such as application deployment may lower the service availability instantaneously. In such a case, messaging a remotely hosted actor results in a dead letter. To work as a distributed actor system, all machines must always be available and ready to interact with each other, or otherwise a messaging fails. Keeping a hundred percent availability for all time is not realistic or pragmatic.
+While remoting is an important feature to build a scalable actor system, there still is room to improve the actor system’s availability as a whole. 
+A sender enqueues a message to the remotely hosted actor’s mailbox, but the destination host’s availability is not always guaranteed. 
+A hardware outage or power outage on a specific host may occur at any moment. As a matter of fact, even a daily operation such as application deployment may lower the service availability instantaneously. 
+In such a case, messaging a remotely hosted actor results in a dead letter. 
+To work as a distributed actor system, all machines must always be available and ready to interact with each other, or otherwise a messaging fails. Keeping a hundred percent availability for all time is not realistic or pragmatic.
 
-Clustering is built with a service discovery mechanism on top of the remoting feature to give extra robustness to work with the aforementioned availability issue. Multiple server instances work as a single cluster to provide specific types of actors. When one or more server instances go down, such an event is detected by the service discovery mechanism, and messages are always routed to active actors on active instances.
+Clustering is built with a service discovery mechanism on top of the remoting feature to give extra robustness to work with the aforementioned availability issue. 
+Multiple server instances work as a single cluster to provide specific types of actors. 
+When one or more server instances go down, such an event is detected by the service discovery mechanism, and messages are always routed to active actors on active instances.
 
 ![Clustering](clustering.png)
 
@@ -35,7 +44,8 @@ The following sections introduce some concepts and terms, how a specific actor i
 When an application process joins cluster membership, the application process is explicitly called a “member” This may be effectively equal to a server instance especially when one server instance hosts one application process. However, multiple application processes can technically run on a single server instance at the same time, so there still is a difference.
 
 ### Cluster Provider
-The core of clustering is cluster provider; this provides a consistent view of active nodes. Once the application process starts, the node constantly interacts with the cluster provider to update its own availability and gets other nodes’ membership status. With the up-to-date topology view, proto.actor automatically distributes actors across cluster nodes based on partitioning by consistent hash.
+The core of clustering is cluster provider; this provides a consistent view of active nodes. Once the application process starts, the node constantly interacts with the cluster provider to update its own availability and gets other nodes’ membership status. 
+With the up-to-date topology view, Proto.Actor automatically distributes actors across cluster nodes based on partitioning by consistent hash.
 
 Proto.Actor supports several cluster provider implementations:
 
