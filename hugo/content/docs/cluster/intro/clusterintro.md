@@ -2,9 +2,12 @@
 
 # The Basic Ideas
 To better understand why and when clustering architecture should be adopted, the below subsections show the benefits of actor model in general, its remoting architecture, and its clustering architecture.
+![Actor Relations](actorrelations.png)
 
 ## Actor Model in General
 With the power of actor model, a developer has easier access to concurrent programming. A mutable state is encapsulated in an actor, and its messaging queue – a mailbox – guarantees messages are passed to the actor one at a time. The actor processes a corresponding task against the receiving message, updates its mutable state, and then receives the next message. Therefore only one job is run by an actor at any moment. This solves the difficulty of concurrency and mutable states, and lets developers concentrate on business logic.
+![Actor Model](actor.png)
+
 
 ## Remoting
 While actor model eases the concurrent programming with mutatable states, the system is hard to scale as long as the actor system is hosted by a single machine. Remoting is a good solution to scale out the actor system among multiple machines.
@@ -15,12 +18,14 @@ This PID knows where the actual actor instance is located and how to communicate
 
 With such location transparency, multiple machines can collaborate with each other and work as a single actor system. This is remoting – a key to scaling out the actor system.
 
+![Remoting](remoting.png)
+
 ## Clustering
 While remoting is an important feature to build a scalable actor system, there still is room to improve the actor system’s availability as a whole. A sender enqueues a message to the remotely hosted actor’s mailbox, but the destination host’s availability is not always guaranteed. A hardware outage or power outage on a specific host may occur at any moment. As a matter of fact, even a daily operation such as application deployment may lower the service availability instantaneously. In such a case, messaging a remotely hosted actor results in a dead letter. To work as a distributed actor system, all machines must always be available and ready to interact with each other, or otherwise a messaging fails. Keeping a hundred percent availability for all time is not realistic or pragmatic.
 
 Clustering is built with a service discovery mechanism on top of the remoting feature to give extra robustness to work with the aforementioned availability issue. Multiple server instances work as a single cluster to provide specific types of actors. When one or more server instances go down, such an event is detected by the service discovery mechanism, and messages are always rooted to active actors on active instances.
 
-
+![Clustering](clustering.png)
 
 The following sections introduce some concepts and terms, how a specific actor is located at a specific server instance before and after a topology change, and some executable code to work with clustering.
 
@@ -70,12 +75,17 @@ If a developer has experience working on storage sharding, one might be familiar
 ### Initial State
 The below image describes how a grain is located. With the latest membership shared by cluster provider, a message sender computes the hash value of the destination grain and elicits where the recipient grain’s owner exists based on the partitioning by consistent hash. Once the owner’s location is known, a sender sends an activation request to the owner. The owner receives the message and sees if the grain instance already exists. If exist, then return the PID of the grain; if not, then spawn one and returns its PID. This is the simplest form of identity lookup.
 
+![Initial State](clusteridentity1.png)
+
 ### Topology Update
 When the cluster membership is updated and the topology changes due to the Node B’s outage, all cluster members acquire such an event from the cluster provider. Each server instance then re-computes the hash value of its owning grains and checks if it still owns them. If a grain needs to be owned by another server instance, the ownership is transferred to the new owner. This guarantees that owners are always placed on each ideal node that is determined by consistent hashing while grain instances stay where they are currentlylocated.
+
+![Topology Update](clusteridentity2.png)
 
 ### Grain Re-activation
 After the topology refresh, a sender re-computes where the owner of Actor 2 exists. This sends an activation request to the new owner – node A –, and node A returns the PID of actor 2 on node D. The sender now can send a message to actor 2 on node D. In this way, the existing grain and its internal state is not re-located on topology change; only the ownership does.
 
+![Reactivation](clusteridentity3.png)
 
 
 For better performance, proto.actor internally caches the location of known grains and refresh this when topology view changes.
@@ -141,7 +151,7 @@ cluster
 #### PongerActor
 protos_protoactor.go contains a PongerActor struct in it, which receives the incoming message and makes a gRPC-based method call or simply proxies the message to a defaut message reception method. A developer only has to provide such methods by providing Ponger implementation.
 
-
+![Ponger Actor](requests.png)
 
 ### Ponger Interface
 Ponger interface is defined in protos_protoactor.go, of which a developer must provide an implementation to set up a ponger grain.
