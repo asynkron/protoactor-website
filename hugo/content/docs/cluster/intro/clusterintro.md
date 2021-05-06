@@ -183,8 +183,8 @@ type Ponger interface {
 	
 }
 ```
-{{< tab "Go" >}}
 {{</ tab >}}
+{{</ tabs >}}
 
 A common method for initialization – `Init()` – is already implemented by `cluster.Grain` so a Ponger implementation can re-use this by embedding cluster.Grain as below:
 
@@ -195,8 +195,8 @@ type ponger struct {
 	cluster.Grain
 }
 ```
-{{< tab "Go" >}}
 {{</ tab >}}
+{{</ tabs >}}
 
 However, `Terminate()`, `ReceiveDefault()` and `Ping()` still need to be implemented by a developer. `Terminate()` is called on passivation right before PongerActor stops and hence the subordinating ponger instance also must stop. ReceiveDefault() is a method to receive any message that are not expected to be handled in gRPC manner; Ping() is a method to recieve PingMessage and return PongMessage in gRPC manner.
 
@@ -224,8 +224,8 @@ func (*ponger) Ping(ping *messages.PingMessage, ctx cluster.GrainContext) (*mess
 	return nil, nil
 }
 ```
-{{< tab "Go" >}}
 {{</ tab >}}
+{{</ tabs >}}
 
 Method implementations could be somewhat like below. Because the actor struct is already generated and exported to protos_protoactor.go by protoc-ge-gograinv2, the implementations are pretty simple.
 
@@ -268,8 +268,8 @@ func (*ponger) Ping(ping *messages.PingMessage, ctx cluster.GrainContext) (*mess
 	return pong, nil
 }
 ```
-{{< tab "Go" >}}
 {{</ tab >}}
+{{</ tabs >}}
 
 ### Overall ponger process
 To activate the ponger grain, a process must be defined as below code. Comments are added to each steps.
@@ -380,8 +380,8 @@ func main() {
 	<-finish
 }
 ```
-{{< tab "Go" >}}
 {{</ tab >}}
+{{</ tabs >}}
 
 ### Sender Implementation
 
@@ -409,8 +409,8 @@ option := cluster.NewGrainCallOptions(c).WithRetry(3)
 // Make a request and receive a response
 pong, err := grain.Ping(ping, option)
 ```
-{{< tab "Go" >}}
 {{</ tab >}}
+{{</ tabs >}}
 
 ### Overall pinger process
 
@@ -511,8 +511,8 @@ func main() {
 	}
 }
 ```
-{{< tab "Go" >}}
 {{</ tab >}}
+{{</ tabs >}}
 
 ## Conclusion
 As illustrated in this article, clustering is a good way to scale the actor system and have higher availability. A developer can interact with actors in the same way as interacting with a local one because proto.actor takes care of locating the destination grain, grain activation, and data transport. Thanks to such architecture, a developer may concentrate on the business logic instead of designing an architecture from scratch.
