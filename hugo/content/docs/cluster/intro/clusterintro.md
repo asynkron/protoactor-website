@@ -206,6 +206,12 @@ cluster
 `Ponger` interface is defined in `protos_protoactor.go`, of which a developer must provide an implementation to set up a ponger grain.
 
 {{< tabs >}}
+{{< tab "C#" >}}
+```csharp
+///TODO: We take PullReqeusts...
+``` 
+{{</ tab >}}
+
 {{< tab "Go" >}}
 ```go
 // Ponger interfaces the services available to the Ponger
@@ -223,6 +229,11 @@ type Ponger interface {
 A common method for initialization – `Init()` – is already implemented by `cluster.Grain` so a `Ponger` implementation can re-use this by embedding cluster.Grain as below:
 
 {{< tabs >}}
+{{< tab "C#" >}}
+```csharp
+///TODO: We take PullReqeusts...
+``` 
+{{</ tab >}}
 {{< tab "Go" >}}
 ```go
 type ponger struct {
@@ -235,6 +246,11 @@ type ponger struct {
 However, `Terminate()`, `ReceiveDefault()` and `Ping()` still need to be implemented by a developer. `Terminate()` is called on passivation right before PongerActor stops and hence the subordinating ponger instance also must stop. `ReceiveDefault()` is a method to receive any message that are not expected to be handled in gRPC-like manner; `Ping()` is a method to recieve `PingMessage` and return `PongMessage` in gRPC-like manner.
 
 {{< tabs >}}
+{{< tab "C#" >}}
+```csharp
+///TODO: We take PullReqeusts...
+``` 
+{{</ tab >}}
 {{< tab "Go" >}}
 ```go
 type ponger struct {
@@ -264,6 +280,11 @@ func (*ponger) Ping(ping *messages.PingMessage, ctx cluster.GrainContext) (*mess
 Method implementations could be somewhat like below. Because the actor struct is already generated and exported to protos_protoactor.go by protoc-ge-gograinv2, the implementations are pretty simple.
 
 {{< tabs >}}
+{{< tab "C#" >}}
+```csharp
+///TODO: We take PullReqeusts...
+``` 
+{{</ tab >}}
 {{< tab "Go" >}}
 ```go
 // Terminate takes care of the finalization.
@@ -309,6 +330,11 @@ func (*ponger) Ping(ping *messages.PingMessage, ctx cluster.GrainContext) (*mess
 To activate the ponger grain, a process must be defined as below code. Comments are added to each steps.
 
 {{< tabs >}}
+{{< tab "C#" >}}
+```csharp
+///TODO: We take PullReqeusts...
+``` 
+{{</ tab >}}
 {{< tab "Go" >}}
 ```go
 package main
@@ -432,6 +458,11 @@ Retrial logic is vital to make sure the message is actually received by the dest
 The implementation can be somewhat like below:
 
 {{< tabs >}}
+{{< tab "C#" >}}
+```csharp
+///TODO: We take PullReqeusts...
+``` 
+{{</ tab >}}
 {{< tab "Go" >}}
 ```go
 // Setup cluster
@@ -458,6 +489,11 @@ pong, err := grain.Ping(ping, option)
 Below is the example code to run pinger actor.
 
 {{< tabs >}}
+{{< tab "C#" >}}
+```csharp
+///TODO: We take PullReqeusts...
+``` 
+{{</ tab >}}
 {{< tab "Go" >}}
 ```go
 package main
