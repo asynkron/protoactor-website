@@ -1,4 +1,4 @@
-#  How proto.actor's clustering works to achieve higher availability
+#  High Availability using Proto.Actor Clustering
 
 # The Basic Ideas
 To better understand why and when clustering architecture should be adopted, the below subsections show the benefits of actor model in general, its remoting architecture, and its clustering architecture.
