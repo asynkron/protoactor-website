@@ -44,8 +44,6 @@ Proto.Actor supports several cluster provider implementations:
 * **Automanaged - Go** … This does not use any centralized service discovery system, but instead each member ping each other to manage membership.
 * **Zookeeper - Go** … This implementation uses Apache Zookeeper for service discovery.
 
-
-
 ### Virtual Actor
 Proto.Actor’s clustering mechanism borrows the idea of “virtual actor” from Microsoft Orleans, where developers are not obligated to handle an actor’s lifecycle. If the destination actor is not yet spawned when the first message is sent, proto.actor spawns one and lets this newborn actor handle the message; if the actor is already present, the existing actor simply receives the incoming message. From message sender’s point of view, the destination actor is always guaranteed to “exist” This is highly practical and works well with the clustering mechanism. An actor’s hosting node may crash at any moment, and the messages to that actor may be redirected to a new hosting node. If a developer must be aware of the actor’s lifecycle, a developer is obligated to be aware of such topology change to re-spawn the failing actor. The concept of virtual actor hides such complexity and eases the interaction.
 
@@ -77,10 +75,33 @@ Proto.Actor lets a developer specify a timeout interval, where the virtual actor
 ### Kind
 To explicitly state which node is capable of providing what types of virtual actors, a developer needs to register the “kind” on cluster membership initiation. By registering the mapping of a kind and a corresponding virtual actor `Props`, the cluster provider knows the node is capable of hosting those specific kinds of actors, and the client can compute to which node it must send an activation request.
 
-### Identity Ownership
+### Identity Lookup
+Identity lookup (`IdentityLookup` interface), currently only exist for the .NET version of Proto.Actor.
+This allows the Proto.Cluster to use different strategies to locate virtual actors.
+The default, built in mechanism, is the `PartitionIdentityLookup`, which uses a distributed hashtable to locate the "Identity Owners", this is the same strategy that is used in Go, however not yet pluggable in that case.
+
+In addition, there are also database backed IdentityLookup implementations, specifically MongoDB and Redis.
+In these cases, instead of first locating the "Identity Owner" in order to locate a virtual actor in the cluster.
+The system queries the database to collect this information. the data is stored in a key value fashion. where the key is the `ClusterIdentity`, meaning the Identity and the Kind of the virtual actor, together with metadata and the actual `PID` of the current activation.
+
+This might sound as if it would introduce a lot of overhead to any interaction, however all of this information is cached and kept around until the cluster detects that it has to invalidate an entry in the cache.
+This cache is called a `PidCache` and lives inside the `Cluster` instance.
+
+{{< note >}}
+The reason to make identity lookup pluggable, is that the user can then decide on what guarantees and additional tools they can leverage.
+e.g. the PartitionIdentityLookup, is fast and easy to set up, but might in rare cases result in multiple activations of an actor. specifically during topology changes, and/or networking split brain scenarios.
+Different databases come with different consistency guarantees and the user is then free to chose whatever tool fit their usecase.
+Another additional benefit of the database backed IdentityLookups is that you can view the content in your standard development tools. e.g. view what actors exist, query, extract statistics etc from the identity lookup data in the database.
+{{</ note >}}
+
+### Identity Ownership 
+
+This section only applies to the default, partition based identity lookup;
+
 Other than the virtual actor itself, an “identity ownership” is an important concept to understand how virtual actors are located in one specific node. The cluster’s topology view changes when a node goes down or a new node is added to the cluster membership. One may assume that virtual actor must be relocated to another node because virtual actors are distributed by using consistent hashing. That, however, is a relatively complicated task. A virtual actor may have its own state and behavior, so serializing them and transferring that information to another node is difficult.
 
 Instead of transferring a virtual actor itself, proto.actor only transfers the “identity ownership” of the virtual actor. An owner knows where the actor is currently located. When sending a message to a specific actor, Proto.Actor calculates the location of the “identity owner” instead of the actor with consistent hashing, and then gets the actor’s address from the “identity owner”, Therefore, an owner and its subordinating actors do not necessarily exist on the same node. The later section covers how the ownership is transferred.
+
 
 ### Communication Protocol
 Because the topology view may change at any moment and the identity ownership can be transferred at any moment as well, the fire-and-forget model of messaging may fail from time to time. For example, one may send a message to a specific grain at the same time as the topology change. The ownership could be transferred when the message is received by the previous owner node. To make sure a message is delivered to the target virtual actor, a gRPC-based communication is available.
