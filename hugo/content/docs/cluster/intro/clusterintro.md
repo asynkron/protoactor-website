@@ -179,7 +179,7 @@ service Ponger {
 }
 ```
 
-Name this file “protos.proto” and locate under cluster/messages. When the IDL file is ready, run the below command to generate required Go code. Two files other than the IDL – protos.pb.go and protos_protoactor.go – are generated.
+Name this file `protos.proto` and locate under cluster/messages. When the IDL file is ready, run the below command to generate required Go code. Two files other than the IDL – `protos.pb.go` and `protos_protoactor.go` – are generated.
 
 ```bash
 $ protoc --gogoslick_out=. ./cluster/messages/protos.proto
@@ -199,12 +199,12 @@ cluster
 ### Grain Implementation
 
 #### PongerActor
-protos_protoactor.go contains a PongerActor struct in it, which receives the incoming message and makes a gRPC-based method call or simply proxies the message to a defaut message reception method. A developer only has to provide such methods by providing Ponger implementation.
+`protos_protoactor.go` contains a Ponger.Actor struct in it, which receives the incoming message and makes a method call to the corresponding interface method from the IDL definition, or simply proxies the message to a defaut message receive method. A developer only has to provide such methods by providing Ponger implementation.
 
 ![Ponger Actor](requests.png)
 
 ### Ponger Interface
-Ponger interface is defined in protos_protoactor.go, of which a developer must provide an implementation to set up a ponger grain.
+`Ponger` interface is defined in `protos_protoactor.go`, of which a developer must provide an implementation to set up a ponger grain.
 
 {{< tabs >}}
 {{< tab "Go" >}}
@@ -221,7 +221,7 @@ type Ponger interface {
 {{</ tab >}}
 {{</ tabs >}}
 
-A common method for initialization – `Init()` – is already implemented by `cluster.Grain` so a Ponger implementation can re-use this by embedding cluster.Grain as below:
+A common method for initialization – `Init()` – is already implemented by `cluster.Grain` so a `Ponger` implementation can re-use this by embedding cluster.Grain as below:
 
 {{< tabs >}}
 {{< tab "Go" >}}
@@ -233,7 +233,7 @@ type ponger struct {
 {{</ tab >}}
 {{</ tabs >}}
 
-However, `Terminate()`, `ReceiveDefault()` and `Ping()` still need to be implemented by a developer. `Terminate()` is called on passivation right before PongerActor stops and hence the subordinating ponger instance also must stop. ReceiveDefault() is a method to receive any message that are not expected to be handled in gRPC manner; Ping() is a method to recieve PingMessage and return PongMessage in gRPC manner.
+However, `Terminate()`, `ReceiveDefault()` and `Ping()` still need to be implemented by a developer. `Terminate()` is called on passivation right before PongerActor stops and hence the subordinating ponger instance also must stop. `ReceiveDefault()` is a method to receive any message that are not expected to be handled in gRPC-like manner; `Ping()` is a method to recieve `PingMessage` and return `PongMessage` in gRPC-like manner.
 
 {{< tabs >}}
 {{< tab "Go" >}}
