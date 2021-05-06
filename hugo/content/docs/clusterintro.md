@@ -102,7 +102,7 @@ $ go get github.com/AsynkronIT/protoactor-go/protobuf/protoc-gen-gograinv2@dev
 
 Below is an example of two messages: `PingMessage` and `PongMessage`. These two message definitions are sufficient to send ping and pong messages to each other. However, a service definition is required to utilize the gRPC-based messaging. That is Ponger. Ponger lets the caller send a `Ping` message with `SendPing()` method and the receiver sends back `Pong` message.
 
-```proto
+```protobuf
 syntax = "proto3";
 package messages;
 
