@@ -53,12 +53,14 @@ Proto.Actor’s clustering mechanism borrows the idea of “virtual actor” fro
 With virtual actor model, an actor is sometimes called a “Grain” However, the implementation of the grain is quite the same as any other actor. A notable difference is that proto.actor automatically spawns the grain on the initial message reception.
 
 {{< note >}}
-"There are only two hard things in Computer Science: cache invalidation and naming things. -- Phil Karlton"
-
+"There are only two hard things in Computer Science: cache invalidation and naming things." -- Phil Karlton
+<br/>
+<br/>
 Proto.Actor **generally** use the name **"Virtual Actor"** for Cluster managed actors. and **generally** use the word **"Grain"** for the code generated typed virtual actors.
 
 This is far from perfect, but allows us to make some distinction between the different types.
-
+<br/>
+<br/>
 **Sergey Bykov**, creator of Microsoft Orleans, wrote this about naming and actors:
 https://dev.to/temporalio/the-curse-of-the-a-word-1o7i
 {{</ note >}}
@@ -69,20 +71,21 @@ As described in the above “virtual actor” section, an actor always exists. I
 An actor may disappear when a hosting node crashes, or an actor may stop itself when an idle interval with no message reception exceeds a certain period of time. Activation works well to re-spawn such actors with no extra care.
 
 ### Passivation
-Once the grain is initialized by activation, the grain always exists because of the nature of the virtual actor. This, however, is not ideal in terms of limited server resources. Proto.actor lets a developer specify a timeout interval, where the grain terminates itself when this interval passes after the last message reception time.
+Once the virtual actor is initialized by an activation, it seems to always exist, because of the nature of the virtual actor. This, however, it is not always ideal in terms of limited server resources to keep a virtual actor around forever in memory.
+Proto.Actor lets a developer specify a timeout interval, where the virtual actor terminates itself when this interval passes after the last message reception time.
 
 ### Kind
-To explicitly state which node is capable of providing what types of grains, a developer needs to register the “kind” on cluster membership initiation. By registering the mapping of a kind and a corresponding grain construction function, the cluster provider knows the node is capable of hosting a set of grains, and the client can compute to which node it must send an activation request.
+To explicitly state which node is capable of providing what types of virtual actors, a developer needs to register the “kind” on cluster membership initiation. By registering the mapping of a kind and a corresponding virtual actor `Props`, the cluster provider knows the node is capable of hosting those specific kinds of actors, and the client can compute to which node it must send an activation request.
 
-### Ownership
-Other than a grain itself, an “ownership” is an important concept to understand how grains are located in one specific node. The cluster’s topology view changes when a node goes down or a new node is added to the cluster membership. One may assume that grain must be relocated to another node because grains are distributed by using consistent hashing. That, however, is a relatively complicated task. A grain may have its own state and behavior, so serializing them and transferring that information to another node is difficult.
+### Identity Ownership
+Other than the virtual actor itself, an “identity ownership” is an important concept to understand how virtual actors are located in one specific node. The cluster’s topology view changes when a node goes down or a new node is added to the cluster membership. One may assume that virtual actor must be relocated to another node because virtual actors are distributed by using consistent hashing. That, however, is a relatively complicated task. A virtual actor may have its own state and behavior, so serializing them and transferring that information to another node is difficult.
 
-Instead of transferring a grain itself, proto.actor only transfers the “ownership” of the grain. An owner knows where the grain is currently located. When sending a message to a specific grain, proto.actor calculates the location of the “owner” instead of the grain with consistent hashing, and then gets the grain’s address from the “owner.” Therefore, an owner and its subordinating grains do not necessarily exist on the same node. The later section covers how the ownership is transferred.
+Instead of transferring a virtual actor itself, proto.actor only transfers the “identity ownership” of the virtual actor. An owner knows where the actor is currently located. When sending a message to a specific actor, Proto.Actor calculates the location of the “identity owner” instead of the actor with consistent hashing, and then gets the actor’s address from the “identity owner”, Therefore, an owner and its subordinating actors do not necessarily exist on the same node. The later section covers how the ownership is transferred.
 
 ### Communication Protocol
-Because the topology view may change at any moment and the ownership can be transferred at any moment as well, the fire-and-forget model of messaging may fail from time to time. For example, one may send a message to a specific grain at the same time as the topology change. The ownership could be transferred when the message is received by the previous owner node. To make sure a message is delivered to the destination grain, a gRPC-based communication is available.
+Because the topology view may change at any moment and the identity ownership can be transferred at any moment as well, the fire-and-forget model of messaging may fail from time to time. For example, one may send a message to a specific grain at the same time as the topology change. The ownership could be transferred when the message is received by the previous owner node. To make sure a message is delivered to the target virtual actor, a gRPC-based communication is available.
 
-Once an IDL file for gRPC is given, a messaging method with a retrial logic is generated by proto.actor. This method computes the location of the ownership and sends an activation request again when the initial messaging fails due to the aforementioned ownership transfer. This gRPC-based communication gives more robustness, but the nature of the request/response communication model may affect performance. In such a case, a developer may simply send a message with the pre-defined messaging methods such as Context.Send(), Context.Request() and Context.RequestFuture().
+Once an IDL file for gRPC is given, a messaging method with a retrial logic is generated by Proto.Actor. This method computes the location of the ownership and sends an activation request again when the initial messaging fails due to the aforementioned ownership transfer. This gRPC-based communication gives more robustness, but the nature of the request/response communication model may affect performance. In such a case, a developer may simply send a message with the pre-defined messaging methods such as `Context.Send()`, `Context.Request()` and `Context.RequestFuture()`.
 
 ## Locating a Grain
 If a developer has experience working on storage sharding, one might be familiar with the idea of consistent hashing. This is a powerful mechanism to decide in a reproducible manner which node on a virtual ring topology has the ownership of a given “key,” and also requires a fewer re-location on topology change. Proto.actor employs this algorithm to decide where the grain – more precisely the owner – must be located.
