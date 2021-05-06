@@ -38,17 +38,12 @@ The core of clustering is cluster provider; this provides a consistent view of a
 
 Proto.Actor supports several cluster provider implementations:
 
-#### Go
+* **Consul - Go, .NET** … This implementation uses HashiCorp’s Consul for service discovery. This was the first implementation of cluster provider.
+* **Kubernetes - .NET** … This implementation uses the Kubernetes API to watch Pod changes, and registers the cluster metadata using Pod labels.
+* **etcd - Go** … This is an etcd version of cluster provider implementation. If one has experience with Kubernetes, this implementation may be easier to start with.
+* **Automanaged - Go** … This does not use any centralized service discovery system, but instead each member ping each other to manage membership.
+* **Zookeeper - Go** … This implementation uses Apache Zookeeper for service discovery.
 
-* **Consul** … This implementation uses HashiCorp’s Consul for service discovery. This was the first implementation of cluster provider.
-* **etcd** … This is an etcd version of cluster provider implementation. If one has experience with Kubernetes, this implementation may be easier to start with.
-* **Automanaged** … This does not use any centralized service discovery system, but instead each member ping each other to manage membership.
-* **Zookeeper** … This implementation uses Apache Zookeeper for service discovery.
-
-#### .NET
-
-* **Consul**
-* **Kubernetes** … This implementation uses the Kubernetes API to watch Pod changes, and registers the cluster metadata using Pod labels.
 
 
 ### Virtual Actor
