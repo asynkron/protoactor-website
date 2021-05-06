@@ -13494,7 +13494,6 @@ h3, .h3 {
 
 .markdown-img {
   max-width: 100%;
-  max-height: 600px;
   margin-bottom: 24px; }
 
 .nav-link {
