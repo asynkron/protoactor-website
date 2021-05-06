@@ -422,7 +422,14 @@ func main() {
 
 #### messages.GetPongerGrainClient()
 
-For a message sender, protos_protoactor.go provides GetPongerGrainClient() function. By calling this function, one can acquire PongerGrainClient instance to initiate gRPC request with PongerGrainClient.Ping(). Making a request in gRPC manner is preferable while the fire-and-forget messaging method such as Context.Send() also works to send message to the destination grain. The gRPC request method calls Cluster.Call to get a hold of ponger grain’s PID, where it retries up to pre-defined threshold count to get the destination PID. As introduced in “Communication Protocol” section, the ownership of the grain may transfer at the same time as one sends a message to it. Retrial logic is vital to make sure the message is actually received by the destination grain. One can pass the retry setting
+For a message sender, protos_protoactor.go provides GetPongerGrainClient() function. 
+By calling this function, one can acquire PongerGrainClient instance to initiate gRPC request with PongerGrainClient.Ping(). Making a request in gRPC manner is preferable while the fire-and-forget messaging method such as Context.Send() also works to send message to the destination grain. 
+
+![Ponger Client](pongerclient.png)
+
+The gRPC-like request method calls Cluster.Call to get a hold of ponger grain’s PID, where it retries up to pre-defined threshold count to get the destination PID. As introduced in “Communication Protocol” section, the ownership of the grain may transfer at the same time as one sends a message to it. 
+
+Retrial logic is vital to make sure the message is actually received by the destination grain. One can pass the retry setting
 The implementation can be somewhat like below:
 
 {{< tabs >}}
