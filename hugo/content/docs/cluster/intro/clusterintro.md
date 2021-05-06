@@ -5,7 +5,7 @@ To better understand why and when clustering architecture should be adopted, the
 ![Actor Relations](actorrelations.png)
 
 ## Actor Model in General
-With the power of actor model, a developer has easier access to concurrent programming. A mutable state is encapsulated in an actor, and its messaging queue – a mailbox – guarantees messages are passed to the actor one at a time. The actor processes a corresponding task against the receiving message, updates its mutable state, and then receives the next message. Therefore only one job is run by an actor at any moment. This solves the difficulty of concurrency and mutable states, and lets developers concentrate on business logic.
+With the power of actor model, a developer has easier access to concurrent programming. The actor can keep mutable state, and its messaging queue – a mailbox – guarantees messages are passed to the actor one at a time. The actor processes a corresponding task against the receiving message, updates its mutable state, and then receives the next message. Therefore only one job is run by an actor at any moment. This solves the difficulty of concurrency and mutable states, and lets developers concentrate on business logic.
 ![Actor Model](actor.png)
 
 
@@ -30,8 +30,9 @@ Clustering is built with a service discovery mechanism on top of the remoting fe
 The following sections introduce some concepts and terms, how a specific actor is located at a specific server instance before and after a topology change, and some executable code to work with clustering.
 
 ## Concepts and Terms
-Node
-When an application process joins cluster membership, the application process is explicitly called a “node.” This may be effectively equal to a server instance especially when one server instance hosts one application process. However, multiple application processes can technically run on a single server instance at the same time, so there still is a difference.
+
+### Member
+When an application process joins cluster membership, the application process is explicitly called a “member” This may be effectively equal to a server instance especially when one server instance hosts one application process. However, multiple application processes can technically run on a single server instance at the same time, so there still is a difference.
 
 ### Cluster Provider
 The core of clustering is cluster provider; this provides a consistent view of active nodes. Once the application process starts, the node constantly interacts with cluster provider to update its own availability and gets other nodes’ membership status. With the up-to-date topology view, proto.actor automatically distributes actors across cluster nodes based on partitioning by consistent hash.
