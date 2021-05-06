@@ -12,9 +12,9 @@ With the power of actor model, a developer has easier access to concurrent progr
 ## Remoting
 While actor model eases the concurrent programming with mutatable states, the system is hard to scale as long as the actor system is hosted by a single machine. Remoting is a good solution to scale out the actor system among multiple machines.
 
-When one sends a message to a specific actor, the sender is not directly referring to the receiving actor itself. Instead, a reference to the actor is exposed to developers for messaging. This reference is called PID, which is short for “process id.” In proto.actor, the concept of “process” or “process id” is quite similar to that of Erlang. For those who are familiar with Akka’s actor model, PID can be equivalent to ActorRef.
+When one sends a message to a specific actor, the sender is not directly referring to the receiving actor itself. Instead, a reference to the actor is exposed to developers for messaging. This reference is called PID, which is short for “process id.” In proto.actor, the concept of “process” or “process id” is quite similar to that of Erlang. For those who are familiar with Akka’s actor model, `PID` can be equivalent to `ActorRef`.
 
-This PID knows where the actual actor instance is located and how to communicate with it. The location may be within the same host machine; Maybe not. The important thing is that a sender does not have to pay extra attention to the data serialization/deserialization and data transport. In short, one can communicate with an actor hosted by another machine just like the way communicating with a locally hosted actor.
+This `PID` knows where the actual actor instance is located and how to communicate with it. The location may be within the same host machine; Maybe not. The important thing is that a sender does not have to pay extra attention to the data serialization/deserialization and data transport. In short, one can communicate with an actor hosted by another machine just like the way communicating with a locally hosted actor.
 
 With such location transparency, multiple machines can collaborate with each other and work as a single actor system. This is remoting – a key to scaling out the actor system.
 
@@ -43,7 +43,19 @@ Proto.Actor supports several cluster provider implementations:
 * Automanaged … This does not use any centralized service discovery system, but instead each member ping each other to manage membership.
 
 ### Virtual Actor
-Proto.actor’s clustering mechanism borrows the idea of “virtual actor” from Microsoft Orleans, where developers are not obligated to handle an actor’s lifecycle. If the destination actor is not yet spawned when the first message is sent, proto.actor spawns one and lets this newborn actor handle the message; if the actor is already present, the existing actor simply receives the incoming message. From message sender’s point of view, the destination actor is always guaranteed to “exist.” This is highly practical and works well with the clustering mechanism. An actor’s hosting node may crash at any moment, and the messages to that actor may be redirected to a new hosting node. If a developer must be aware of the actor’s lifecycle, a developer is obligated to be aware of such topology change to re-spawn the failing actor. The concept of virtual actor hides such complexity and eases the interaction.
+Proto.Actor’s clustering mechanism borrows the idea of “virtual actor” from Microsoft Orleans, where developers are not obligated to handle an actor’s lifecycle. If the destination actor is not yet spawned when the first message is sent, proto.actor spawns one and lets this newborn actor handle the message; if the actor is already present, the existing actor simply receives the incoming message. From message sender’s point of view, the destination actor is always guaranteed to “exist” This is highly practical and works well with the clustering mechanism. An actor’s hosting node may crash at any moment, and the messages to that actor may be redirected to a new hosting node. If a developer must be aware of the actor’s lifecycle, a developer is obligated to be aware of such topology change to re-spawn the failing actor. The concept of virtual actor hides such complexity and eases the interaction.
+
+### Grain
+With virtual actor model, an actor is specifically called a “grain.” However, the implementation of the grain is quite the same as any other actor. A notable difference is that proto.actor automatically spawns the grain on the initial message reception.
+
+> There are only two hard things in Computer Science: cache invalidation and naming things. -- Phil Karlton
+
+{{< note >}}
+Proto.Actor *generally* use the name *"Virtual Actor"* for Cluster managed actors. and *generally* use the word *"Grain"* for the code generated typed virtual actors.
+
+Sergey Bykov, creator of Microsoft Orleans, wrote this about naming and actors:
+https://dev.to/temporalio/the-curse-of-the-a-word-1o7i
+{{</ note >}}
 
 ### Activation
 As described in the above “virtual actor” section, an actor always exists. Instead of explicitly spawn a new actor, one may “activate” the destination actor by getting the PID of the destination actor. Proto.actor internally checks the existence of the destination actor and spawns one if one is not present.
@@ -52,9 +64,6 @@ An actor may disappear when a hosting node crashes, or an actor may stop itself 
 
 ### Passivation
 Once the grain is initialized by activation, the grain always exists because of the nature of the virtual actor. This, however, is not ideal in terms of limited server resources. Proto.actor lets a developer specify a timeout interval, where the grain terminates itself when this interval passes after the last message reception time.
-
-### Grain
-With virtual actor model, an actor is specifically called a “grain.” However, the implementation of the grain is quite the same as any other actor. A notable difference is that proto.actor automatically spawns the grain on the initial message reception.
 
 ### Kind
 To explicitly state which node is capable of providing what types of grains, a developer needs to register the “kind” on cluster membership initiation. By registering the mapping of a kind and a corresponding grain construction function, the cluster provider knows the node is capable of hosting a set of grains, and the client can compute to which node it must send an activation request.
@@ -240,7 +249,7 @@ func (*ponger) Ping(ping *messages.PingMessage, ctx cluster.GrainContext) (*mess
 }
 ```
 
-## Overall ponger process
+### Overall ponger process
 To activate the ponger grain, a process must be defined as below code. Comments are added to each steps.
 
 ```go
