@@ -54,6 +54,23 @@ Proto.Actor supports several cluster provider implementations:
 * **Automanaged - Go** … This does not use any centralized service discovery system, but instead each member ping each other to manage membership.
 * **Zookeeper - Go** … This implementation uses Apache Zookeeper for service discovery.
 
+#### Why externalize cluster logic?
+
+One of the key principles of Proto.Actor is to not re-invent what already exist.
+Tools like Consul, Kubernetes, Zookeeper etc. Already solve this problem, and they solve it very very good.
+These are battle tested products running in millions of installations.
+
+![Outer Cluster](outer-cluster.png)
+
+All of the hard problems with clustering is already solved here, and as long as Proto.Actor can consume this data provided by the cluster provider, we do not need to touch this area ourselves.
+
+#### Tools using internalized cluster logic
+
+Some other products in the same sphere as Proto.Actor, instead strive to solve everything on their own.
+
+
+![Outer Cluster](outer-cluster.png)
+
 ### Virtual Actor
 Proto.Actor’s clustering mechanism borrows the idea of “virtual actor” from Microsoft Orleans, where developers are not obligated to handle an actor’s lifecycle. If the destination actor is not yet spawned when the first message is sent, proto.actor spawns one and lets this newborn actor handle the message; if the actor is already present, the existing actor simply receives the incoming message. From message sender’s point of view, the destination actor is always guaranteed to “exist” This is highly practical and works well with the clustering mechanism. An actor’s hosting node may crash at any moment, and the messages to that actor may be redirected to a new hosting node. If a developer must be aware of the actor’s lifecycle, a developer is obligated to be aware of such topology change to re-spawn the failing actor. The concept of virtual actor hides such complexity and eases the interaction.
 
