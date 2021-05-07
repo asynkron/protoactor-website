@@ -67,7 +67,8 @@ All of the hard problems with clustering is already solved here, and as long as 
 #### Tools using internalized cluster logic
 
 Some other products in the same sphere as Proto.Actor, instead strive to solve everything on their own.
-
+One benefit of such approach is that they can run fully stand-alone, which can be valuable.
+But in the era of DevOps, containers and orchestrators, we are betting on hosted software, running in some form of environment that already provides this for us.
 
 ![Outer Cluster](outer-cluster.png)
 
