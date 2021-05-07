@@ -164,7 +164,7 @@ The below image describes how a grain is located. With the latest membership sha
 
 ### Topology Update
 When the cluster membership is updated and the topology changes due to, e.g. an outage of Member-2, all cluster members acquire such an event from the cluster provider. 
-Each server instance then synchronize with each other to take ownership of the actors whose hash they now algorithmically own. If a grain needs to be owned by another server instance, the ownership is transferred to the new owner. This guarantees that owners are always placed on each ideal member that is determined by consistent hashing while grain instances stay where they are currently located.
+Each member instance then synchronize with each other to take ownership of the actors whose hash that they now algorithmically own. If a grain needs to be owned by another server instance, the ownership is transferred to the new owner. This guarantees that owners are always placed on each ideal member that is determined by consistent hashing while grain instances stay where they are currently located.
 
 ![Partition Lookup](cluster-handover.png#small)
 
