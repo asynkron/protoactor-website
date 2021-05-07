@@ -154,7 +154,13 @@ If a developer has experience working on storage sharding, one might be familiar
 ### Initial State
 The below image describes how a grain is located. With the latest membership shared by cluster provider, a message sender computes the hash value of the destination grain and elicits where the recipient grain’s owner exists based on the partitioning by consistent hash. Once the owner’s location is known, a sender sends an activation request to the owner. The owner receives the message and sees if the grain instance already exists. If exist, then return the PID of the grain; if not, then spawn one and returns its PID. This is the simplest form of identity lookup.
 
-![Partition Lookup](cluster-lookup-call.png)
+#### Lookup PID
+
+![Partition Lookup](cluster-lookup.png)
+
+#### Make the call
+
+![Partition Lookup](cluster-call.png)
 
 ### Topology Update
 When the cluster membership is updated and the topology changes due to the Member B’s outage, all cluster members acquire such an event from the cluster provider. Each server instance then re-computes the hash value of its owning grains and checks if it still owns them. If a grain needs to be owned by another server instance, the ownership is transferred to the new owner. This guarantees that owners are always placed on each ideal member that is determined by consistent hashing while grain instances stay where they are currently located.
