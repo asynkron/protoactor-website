@@ -108,7 +108,7 @@ An actor may disappear when a hosting member crashes, or an actor may stop itsel
 Once the virtual actor is initialized by an activation, it seems to always exist, because of the nature of the virtual actor. This, however, it is not always ideal in terms of limited server resources to keep a virtual actor around forever in memory.
 Proto.Actor lets a developer specify a timeout interval, where the virtual actor terminates itself when this interval passes after the last message reception time.
 
-### Kind
+### Cluster Kind
 To explicitly state which member is capable of providing what types of virtual actors, a developer needs to register the “kind” on cluster membership initiation. By registering the mapping of a kind and a corresponding virtual actor `Props`, the cluster provider knows the member is capable of hosting those specific kinds of actors, and the client can compute to which member it must send an activation request.
 
 ### Identity Lookup
@@ -174,7 +174,7 @@ After the topology refresh, a sender re-computes where the owner of Actor 2 exis
 ![Partition Rebalance](cluster-rebalance.png#small)
 
 
-For better performance, proto.actor internally caches the location of known grains and refresh this when topology view changes.
+For better performance, Proto.Actor internally caches the location of known grains and refresh this when topology view changes, or upon detection of non-responsive grains.
 
 ### Messaging with a Grain
 With the basics introduced in the previous sections, this section works on a project where a pinger actor sends a “ping” message and a ponger grain sends back a “pong” message. In addition to simply sending an empty signal, a ping message contains a cumulative count of the ping messages being sent; pong message contains the count a ping message contained.
