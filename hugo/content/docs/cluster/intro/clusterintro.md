@@ -168,8 +168,8 @@ Each member instance then synchronize with each other to take ownership of the a
 
 ![Partition Handover](cluster-handover.png)
 
-### Grain Re-activation
-After the topology refresh, a sender re-computes where the owner of Actor 2 exists. This sends an activation request to the new owner – member A –, and member A returns the PID of actor 2 on member D. The sender now can send a message to actor 2 on member D. In this way, the existing grain and its internal state is not re-located on topology change; only the ownership does.
+### After Topology Update
+After the topology update, a sender re-computes where the owner of Actor "Alexey" exists. This sends an activation request to the new owner – Member 4 –, which then responds by returning the PID of actor "Alexey" on Member 3. The sender now can send a message to actor "Alexey" on Member 3. In this way, the existing virtual actor and its internal state is not re-located on topology change; only the ownership does.
 
 ![Partition Rebalance](cluster-rebalance.png)
 
