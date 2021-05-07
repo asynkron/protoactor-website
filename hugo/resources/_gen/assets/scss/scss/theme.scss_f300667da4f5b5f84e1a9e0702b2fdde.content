@@ -13392,7 +13392,7 @@ main a {
   font-weight: normal; }
 
 img[src$='#small'] {
-  max-height: 500px; }
+  max-height: 400px; }
 
 code {
   background-color: #f6f8fa;
