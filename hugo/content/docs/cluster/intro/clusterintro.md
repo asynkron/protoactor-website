@@ -56,13 +56,13 @@ Proto.Actor supports several cluster provider implementations:
 
 #### Why externalize cluster logic?
 
-One of the key principles of Proto.Actor is to not re-invent what already exist.
-Tools like Consul, Kubernetes, Zookeeper etc. Already solve this problem, and they solve it very very good.
+One of the core principles of Proto.Actor, is to not re-invent what already exist.
+Tools like Consul, Kubernetes, Zookeeper etc. Already solve this problem, and they solve it extremely well.
 These are battle tested products running in millions of installations.
 
-![Outer Cluster](outer-cluster.png#small)
-
 All of the hard problems with clustering is already solved here, and as long as Proto.Actor can consume this data provided by the cluster provider, we do not need to touch this area ourselves.
+
+![Outer Cluster](outer-cluster.png#small)
 
 #### Tools using internalized cluster logic
 
