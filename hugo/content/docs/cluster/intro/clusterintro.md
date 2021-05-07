@@ -166,12 +166,12 @@ The below image describes how a grain is located. With the latest membership sha
 When the cluster membership is updated and the topology changes due to, e.g. an outage of Member-2, all cluster members acquire such an event from the cluster provider. 
 Each member instance then synchronize with each other to take ownership of the actors whose hash that they now algorithmically own. If a grain needs to be owned by another server instance, the ownership is transferred to the new owner. This guarantees that owners are always placed on each ideal member that is determined by consistent hashing while grain instances stay where they are currently located.
 
-![Partition Lookup](cluster-handover.png#small)
+![Partition Handover](cluster-handover.png#small)
 
 ### Grain Re-activation
 After the topology refresh, a sender re-computes where the owner of Actor 2 exists. This sends an activation request to the new owner – member A –, and member A returns the PID of actor 2 on member D. The sender now can send a message to actor 2 on member D. In this way, the existing grain and its internal state is not re-located on topology change; only the ownership does.
 
-![Reactivation](clusteridentity3.png)
+![Partition Rebalance](cluster-rebalance.png#small)
 
 
 For better performance, proto.actor internally caches the location of known grains and refresh this when topology view changes.
