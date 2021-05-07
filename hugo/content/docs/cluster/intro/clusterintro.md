@@ -99,8 +99,10 @@ This cache is called a `PidCache` and lives inside the `Cluster` instance.
 
 {{< note >}}
 The reason to make identity lookup pluggable, is that the user can then decide on what guarantees and additional tools they can leverage.
+
 e.g. the PartitionIdentityLookup, is fast and easy to set up, but might in rare cases result in multiple activations of an actor. specifically during topology changes, and/or networking split brain scenarios.
 Different databases come with different consistency guarantees and the user is then free to chose whatever tool fit their usecase.
+
 Another additional benefit of the database backed IdentityLookups is that you can view the content in your standard development tools. e.g. view what actors exist, query, extract statistics etc from the identity lookup data in the database.
 {{</ note >}}
 
