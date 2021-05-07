@@ -43,8 +43,8 @@ The following sections introduce some concepts and terms, how a specific actor i
 When an application process joins cluster membership, the application process is explicitly called a “member” This may be effectively equal to a server instance especially when one server instance hosts one application process. However, multiple application processes can technically run on a single server instance at the same time, so there still is a difference.
 
 ### Cluster Provider
-The core of clustering is cluster provider; this provides a consistent view of active nodes. Once the application process starts, the node constantly interacts with the cluster provider to update its own availability and gets other nodes’ membership status. 
-With the up-to-date topology view, Proto.Actor automatically distributes actors across cluster nodes based on partitioning by consistent hash.
+The core of clustering is cluster provider; this provides a consistent view of active members. Once the application process starts, the member node constantly interacts with the cluster provider to update its own availability and gets other members' membership status. 
+With the up-to-date topology view, Proto.Actor automatically distributes actors across cluster members based on partitioning by consistent hash.
 
 Proto.Actor supports several cluster provider implementations:
 
@@ -60,7 +60,7 @@ One of the key principles of Proto.Actor is to not re-invent what already exist.
 Tools like Consul, Kubernetes, Zookeeper etc. Already solve this problem, and they solve it very very good.
 These are battle tested products running in millions of installations.
 
-![Outer Cluster](outer-cluster.png)
+![Outer Cluster](outer-cluster.png#small)
 
 All of the hard problems with clustering is already solved here, and as long as Proto.Actor can consume this data provided by the cluster provider, we do not need to touch this area ourselves.
 
@@ -70,10 +70,18 @@ Some other products in the same sphere as Proto.Actor, instead strive to solve e
 One benefit of such approach is that they can run fully stand-alone, which can be valuable.
 But in the era of DevOps, containers and orchestrators, we are betting on hosted software, running in some form of environment that already provides this for us.
 
-![Outer Cluster](inner-cluster.png)
+![Outer Cluster](inner-cluster.png#small)
 
 ### Virtual Actor
-Proto.Actor’s clustering mechanism borrows the idea of “virtual actor” from Microsoft Orleans, where developers are not obligated to handle an actor’s lifecycle. If the destination actor is not yet spawned when the first message is sent, proto.actor spawns one and lets this newborn actor handle the message; if the actor is already present, the existing actor simply receives the incoming message. From message sender’s point of view, the destination actor is always guaranteed to “exist” This is highly practical and works well with the clustering mechanism. An actor’s hosting node may crash at any moment, and the messages to that actor may be redirected to a new hosting node. If a developer must be aware of the actor’s lifecycle, a developer is obligated to be aware of such topology change to re-spawn the failing actor. The concept of virtual actor hides such complexity and eases the interaction.
+Proto.Actor’s clustering mechanism borrows the idea of “virtual actor” from Microsoft Orleans, where developers are not obligated to handle an actor’s lifecycle. 
+
+If the destination actor is not yet spawned when the first message is sent, proto.actor spawns one and lets this newborn actor handle the message; if the actor is already present, the existing actor simply receives the incoming message. 
+
+From message sender’s point of view, the destination actor is always guaranteed to “exist” This is highly practical and works well with the clustering mechanism. 
+
+An actor’s hosting member may crash at any moment, and the messages to that actor may be redirected to a new hosting member. 
+If a developer must be aware of the actor’s lifecycle, a developer is obligated to be aware of such topology change to re-spawn the failing actor. 
+The concept of virtual actor hides such complexity and eases the interaction.
 
 ### Grain
 With virtual actor model, an actor is sometimes called a “Grain” However, the implementation of the grain is quite the same as any other actor. A notable difference is that proto.actor automatically spawns the grain on the initial message reception.
@@ -94,14 +102,14 @@ https://dev.to/temporalio/the-curse-of-the-a-word-1o7i
 ### Activation
 As described in the above “virtual actor” section, an actor always exists. Instead of explicitly spawning a new actor, one may “activate” the destination actor by getting the PID of the destination actor. Proto.actor internally checks the existence of the destination actor and spawns one if one is not present.
 
-An actor may disappear when a hosting node crashes, or an actor may stop itself when an idle interval with no message reception exceeds a certain period of time. Activation works well to re-spawn such actors with no extra care.
+An actor may disappear when a hosting member crashes, or an actor may stop itself when an idle interval with no message reception exceeds a certain period of time. Activation works well to re-spawn such actors with no extra care.
 
 ### Passivation
 Once the virtual actor is initialized by an activation, it seems to always exist, because of the nature of the virtual actor. This, however, it is not always ideal in terms of limited server resources to keep a virtual actor around forever in memory.
 Proto.Actor lets a developer specify a timeout interval, where the virtual actor terminates itself when this interval passes after the last message reception time.
 
 ### Kind
-To explicitly state which node is capable of providing what types of virtual actors, a developer needs to register the “kind” on cluster membership initiation. By registering the mapping of a kind and a corresponding virtual actor `Props`, the cluster provider knows the node is capable of hosting those specific kinds of actors, and the client can compute to which node it must send an activation request.
+To explicitly state which member is capable of providing what types of virtual actors, a developer needs to register the “kind” on cluster membership initiation. By registering the mapping of a kind and a corresponding virtual actor `Props`, the cluster provider knows the member is capable of hosting those specific kinds of actors, and the client can compute to which member it must send an activation request.
 
 ### Identity Lookup
 Identity lookup (`IdentityLookup` interface), currently only exist for the .NET version of Proto.Actor.
@@ -130,18 +138,18 @@ Another additional benefit of the database backed IdentityLookups is that you ca
 
 This section only applies to the default, partition based identity lookup;
 
-Other than the virtual actor itself, an “identity ownership” is an important concept to understand how virtual actors are located in one specific node. The cluster’s topology view changes when a node goes down or a new node is added to the cluster membership. One may assume that virtual actor must be relocated to another node because virtual actors are distributed by using consistent hashing. That, however, is a relatively complicated task. A virtual actor may have its own state and behavior, so serializing them and transferring that information to another node is difficult.
+Other than the virtual actor itself, an “identity ownership” is an important concept to understand how virtual actors are located in one specific member. The cluster’s topology view changes when a member goes down or a new member is added to the cluster membership. One may assume that virtual actor must be relocated to another member because virtual actors are distributed by using consistent hashing. That, however, is a relatively complicated task. A virtual actor may have its own state and behavior, so serializing them and transferring that information to another member is difficult.
 
-Instead of transferring a virtual actor itself, proto.actor only transfers the “identity ownership” of the virtual actor. An owner knows where the actor is currently located. When sending a message to a specific actor, Proto.Actor calculates the location of the “identity owner” instead of the actor with consistent hashing, and then gets the actor’s address from the “identity owner”, Therefore, an owner and its subordinating actors do not necessarily exist on the same node. The later section covers how the ownership is transferred.
+Instead of transferring a virtual actor itself, proto.actor only transfers the “identity ownership” of the virtual actor. An owner knows where the actor is currently located. When sending a message to a specific actor, Proto.Actor calculates the location of the “identity owner” instead of the actor with consistent hashing, and then gets the actor’s address from the “identity owner”, Therefore, an owner and its subordinating actors do not necessarily exist on the same member. The later section covers how the ownership is transferred.
 
 
 ### Communication Protocol
-Because the topology view may change at any moment and the identity ownership can be transferred at any moment as well, the fire-and-forget model of messaging may fail from time to time. For example, one may send a message to a specific grain at the same time as the topology change. The ownership could be transferred when the message is received by the previous owner node. To make sure a message is delivered to the target virtual actor, a gRPC-based communication is available.
+Because the topology view may change at any moment and the identity ownership can be transferred at any moment as well, the fire-and-forget model of messaging may fail from time to time. For example, one may send a message to a specific grain at the same time as the topology change. The ownership could be transferred when the message is received by the previous owner member. To make sure a message is delivered to the target virtual actor, a gRPC-based communication is available.
 
 Once an IDL file for gRPC is given, a messaging method with a retrial logic is generated by Proto.Actor. This method computes the location of the ownership and sends an activation request again when the initial messaging fails due to the aforementioned ownership transfer. This gRPC-based communication gives more robustness, but the nature of the request/response communication model may affect performance. In such a case, a developer may simply send a message with the pre-defined messaging methods such as `Context.Send()`, `Context.Request()` and `Context.RequestFuture()`-Go / `Context.RequestAsync`-.NET.
 
 ## Locating a Virtual Actor
-If a developer has experience working on storage sharding, one might be familiar with the idea of consistent hashing. This is a powerful mechanism to decide in a reproducible manner which node on a virtual ring topology has the ownership of a given “key” and also requires a fewer re-location on topology change. Proto.Actor employs this algorithm to decide where the actor – more precisely the identity owner – must be located.
+If a developer has experience working on storage sharding, one might be familiar with the idea of consistent hashing. This is a powerful mechanism to decide in a reproducible manner which member on a virtual ring topology has the ownership of a given “key” and also requires a fewer re-location on topology change. Proto.Actor employs this algorithm to decide where the actor – more precisely the identity owner – must be located.
 
 ### Initial State
 The below image describes how a grain is located. With the latest membership shared by cluster provider, a message sender computes the hash value of the destination grain and elicits where the recipient grain’s owner exists based on the partitioning by consistent hash. Once the owner’s location is known, a sender sends an activation request to the owner. The owner receives the message and sees if the grain instance already exists. If exist, then return the PID of the grain; if not, then spawn one and returns its PID. This is the simplest form of identity lookup.
@@ -149,12 +157,12 @@ The below image describes how a grain is located. With the latest membership sha
 ![Initial State](clusteridentity1.png)
 
 ### Topology Update
-When the cluster membership is updated and the topology changes due to the Node B’s outage, all cluster members acquire such an event from the cluster provider. Each server instance then re-computes the hash value of its owning grains and checks if it still owns them. If a grain needs to be owned by another server instance, the ownership is transferred to the new owner. This guarantees that owners are always placed on each ideal node that is determined by consistent hashing while grain instances stay where they are currently located.
+When the cluster membership is updated and the topology changes due to the Member B’s outage, all cluster members acquire such an event from the cluster provider. Each server instance then re-computes the hash value of its owning grains and checks if it still owns them. If a grain needs to be owned by another server instance, the ownership is transferred to the new owner. This guarantees that owners are always placed on each ideal member that is determined by consistent hashing while grain instances stay where they are currently located.
 
 ![Topology Update](clusteridentity2.png)
 
 ### Grain Re-activation
-After the topology refresh, a sender re-computes where the owner of Actor 2 exists. This sends an activation request to the new owner – node A –, and node A returns the PID of actor 2 on node D. The sender now can send a message to actor 2 on node D. In this way, the existing grain and its internal state is not re-located on topology change; only the ownership does.
+After the topology refresh, a sender re-computes where the owner of Actor 2 exists. This sends an activation request to the new owner – member A –, and member A returns the PID of actor 2 on member D. The sender now can send a message to actor 2 on member D. In this way, the existing grain and its internal state is not re-located on topology change; only the ownership does.
 
 ![Reactivation](clusteridentity3.png)
 
@@ -175,7 +183,7 @@ Below is the detailed spec.
 The complete code is located at github.com/oklahomer/protoactor-go-sender-example.
 
 ## Message Definition
-Because messages are sent from one node to another over wire, they must be serializable. Proto.actor employs pre-existing, well-known Protocol Buffers for data serialization instead of inventing a new serialization protocol. Before getting started, be sure to install protoc and gogoprotobuf’s protoc-gen-gogoslick to generate Golang code. In addition to those tools, one proto.actor-specific tool is required. Run the below command to install the binary. A developer needs to specify dev branch by adding @dev at the end since this is not yet merged to master branch as of 2021-05-03.
+Because messages are sent from one member to another over wire, they must be serializable. Proto.actor employs pre-existing, well-known Protocol Buffers for data serialization instead of inventing a new serialization protocol. Before getting started, be sure to install protoc and gogoprotobuf’s protoc-gen-gogoslick to generate Golang code. In addition to those tools, one proto.actor-specific tool is required. Run the below command to install the binary. A developer needs to specify dev branch by adding @dev at the end since this is not yet merged to master branch as of 2021-05-03.
 
 ```bash
 $ go get github.com/AsynkronIT/protoactor-go/protobuf/protoc-gen-gograinv2@dev
@@ -434,11 +442,11 @@ func main() {
 	remoteConfig := remote.Configure("127.0.0.1", 8080)
 
 	// Configure cluster provider to work as a cluster member.
-	// This node uses port 6331 for cluster provider, and register itself -- localhost:6331" -- as cluster member.
+	// This member uses port 6331 for cluster provider, and register itself -- localhost:6331" -- as cluster member.
 	cp := automanaged.NewWithConfig(1*time.Second, 6331, "localhost:6331")
 
 	// Register an actor constructor for the Ponger kind.
-	// With this registration, the message sender and other cluster nodes know this node is capable of providing Ponger.
+	// With this registration, the message sender and other cluster members know this member is capable of providing Ponger.
 	// PongerActor will implicitly be initialized when the first message comes.
 	clusterKind := cluster.NewKind(
 		"Ponger",
@@ -453,7 +461,7 @@ func main() {
 	c := cluster.New(system, clusterConfig)
 
 	// Start as a cluster member.
-	// Use StartClient() when this process is not a member of cluster nodes but required to send messages to cluster grains.
+	// Use StartClient() when this process is not a member of cluster members but required to send messages to cluster grains.
 	c.Start()
 
 	// Run till signal comes
@@ -573,9 +581,9 @@ func main() {
 	remoteConfig := remote.Configure("127.0.0.1", 8081)
 
 	// Configure cluster on top of the above remote env
-	// This node uses port 6330 for cluster provider, and add ponger node -- localhost:6331 -- as member.
-	// With automanaged implementation, one must list up all known nodes at first place to ping each other.
-	// Note that this node itself is not registered as a member node because this only works as a client.
+	// This member uses port 6330 for cluster provider, and add ponger member -- localhost:6331 -- as member.
+	// With automanaged implementation, one must list up all known members at first place to ping each other.
+	// Note that this member itself is not registered as a member member because this only works as a client.
 	cp := automanaged.NewWithConfig(1*time.Second, 6330, "localhost:6331")
 	clusterConfig := cluster.Configure("cluster-example", cp, remoteConfig)
 	c := cluster.New(system, clusterConfig)

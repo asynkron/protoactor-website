@@ -35,6 +35,11 @@ main a {
 //     }
 // }
 
+img[src$='#small']
+{
+	max-height:500px;
+}
+
 code {
     background-color: #f6f8fa;
     border: 0;
