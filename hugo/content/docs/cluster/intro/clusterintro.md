@@ -70,7 +70,7 @@ Some other products in the same sphere as Proto.Actor, instead strive to solve e
 One benefit of such approach is that they can run fully stand-alone, which can be valuable.
 But in the era of DevOps, containers and orchestrators, we are betting on hosted software, running in some form of environment that already provides this for us.
 
-![Outer Cluster](outer-cluster.png)
+![Outer Cluster](inner-cluster.png)
 
 ### Virtual Actor
 Proto.Actor’s clustering mechanism borrows the idea of “virtual actor” from Microsoft Orleans, where developers are not obligated to handle an actor’s lifecycle. If the destination actor is not yet spawned when the first message is sent, proto.actor spawns one and lets this newborn actor handle the message; if the actor is already present, the existing actor simply receives the incoming message. From message sender’s point of view, the destination actor is always guaranteed to “exist” This is highly practical and works well with the clustering mechanism. An actor’s hosting node may crash at any moment, and the messages to that actor may be redirected to a new hosting node. If a developer must be aware of the actor’s lifecycle, a developer is obligated to be aware of such topology change to re-spawn the failing actor. The concept of virtual actor hides such complexity and eases the interaction.
