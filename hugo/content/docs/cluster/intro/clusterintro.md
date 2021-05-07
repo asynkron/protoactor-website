@@ -155,16 +155,18 @@ If a developer has experience working on storage sharding, one might be familiar
 The below image describes how a grain is located. With the latest membership shared by cluster provider, a message sender computes the hash value of the destination grain and elicits where the recipient grain’s owner exists based on the partitioning by consistent hash. Once the owner’s location is known, a sender sends an activation request to the owner. The owner receives the message and sees if the grain instance already exists. If exist, then return the PID of the grain; if not, then spawn one and returns its PID. This is the simplest form of identity lookup.
 
 #### Lookup PID
-
+Here we are trying to talk to an actor with the identity "Alexey".
+The hash of this identity is computed, and from that, we know which member is the owner of this identity.
+We call this owner in order to get a `PID` back where the actual virtual actor itself exists.
 ![Partition Lookup](cluster-lookup.png)
 
 #### Make a call
-
+Once we have the `PID` of the virtual actor, we can now make a direct call to it just like any other actor.
 ![Partition Lookup](cluster-call.png)
 
 ### Topology Update
-When the cluster membership is updated and the topology changes due to, e.g. an outage of Member-2, all cluster members acquire such an event from the cluster provider. 
-Each member instance then synchronize with each other to take ownership of the actors whose hash that they now algorithmically own. If a grain needs to be owned by another server instance, the ownership is transferred to the new owner. This guarantees that owners are always placed on each ideal member that is determined by consistent hashing while grain instances stay where they are currently located.
+When the cluster membership is updated and the topology changes for some reason, e.g. an outage of Member-2, all cluster members acquire such an event from the cluster provider. 
+Each member instance then synchronize with each other to take ownership of the actors whose hash that they now algorithmically own. If a actor needs to be owned by another server instance, the ownership is transferred to the new owner. This guarantees that owners are always placed on each ideal member that is determined by consistent hashing while actor instances stay where they are currently located.
 
 ![Partition Handover](cluster-handover.png)
 
