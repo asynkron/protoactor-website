@@ -74,7 +74,7 @@ The last part of the actor is the strategy for handling failures in child actors
 - to stop work of a subordinate actor;
 - pass the failure up (not recommended, used in exceptional situations).
 
-ince this strategy is crucial for the actor and its child actors, it cannot be changed after the actor created.
+Since this strategy is crucial for the actor and its child actors, it cannot be changed after the actor created.
 
 Given that there is only one such strategy for each actor, if it is necessary to apply different strategies for subordinate actors, they grouped under intermediate supervisor actors with the corresponding strategies. According to the division of tasks to subtasks., it is good practice to structure actor systems once again.
 

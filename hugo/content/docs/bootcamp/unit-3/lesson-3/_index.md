@@ -8,7 +8,7 @@ All messages sent to the stopped actor address will be redirected to a special c
 
 After the actor will be completely stopped, we will receive the system message Stopped() from now on our actor is dead.
 
-<img src="images/3_3_11.png" style="zoom:150%;" />
+<img src="images/3_3_11.png" style="zoom:40%;" />
 
 What happens if we stop an actor who has children actors? Let's send a stop message to our main actor and see what happens.
 
