@@ -29,11 +29,6 @@ They are spawned *somewhere* in your cluster, and their lifecycle is managed by 
 This means that you as a developer, don't have to care or know if the actor already exists or where it exists.
 You address it using its identity and kind and the cluster does the rest for you.
 
-### Partition Identity
-
-For more information about the details of cluster mechanics.
-See [Cluster Partitions](cluster-partitions.md)
-
 ## Cluster Architecture Overview
 
 ![Cluster Architecture](/images/cluster-architecture.png)
@@ -52,6 +47,9 @@ This allows the identity lookup strategy to be replaced.
 The built in, default is the PartitionIdentityLookup.
 
 * ##### `PartitionIdentityLookup` - Implementation
+  For more information about the details of cluster mechanics.
+  See [Cluster Partitions](cluster-partitions.md)
+
 
   * `PartitionIdentitySelector` - The hashing algorithm that decides the relation between Identity and Member
 
