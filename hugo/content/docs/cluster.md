@@ -38,6 +38,10 @@ See [Cluster Partitions](cluster-partitions.md)
 
 ** TODO **
 
+## Examples
+
+[Cluster Introduction](/docs/cluster/intro/clusterintro)
+
 ## FAQ
 
 ### Communicate with Virtual Actors
@@ -127,7 +131,3 @@ func init() {
 ```
 
 Show examples how to codegen grains
-
-## Hybrid Clusters: C#, Go and Kotlin
-
-//TODO
