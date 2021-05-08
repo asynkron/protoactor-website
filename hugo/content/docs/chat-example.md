@@ -7,6 +7,7 @@ layout: article
 author: "Anes Hasicic"
 authorimage: "/docs/images/authors/AnesHasicic.jpeg"
 authorsite: "https://aneshas.medium.com/"
+backgroundimage: "/docs/images/backgrounds/abstract2.png"
 ---
 # Chat Example Using Proto.Remote
 In this example, we are going to go beyond `Proto.Actor` and leverage `Proto.Remote` package in order to enable bidirectional communication between different actors in a client to server fashion.
