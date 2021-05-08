@@ -1,4 +1,4 @@
-#  High Availability using Proto.Actor Clustering
+#  High Availability using Proto.Cluster
 
 # The Basic Ideas
 To better understand why and when clustering architecture should be adopted, the below subsections show the benefits of actor model in general, its remoting architecture, and its clustering architecture.
@@ -100,7 +100,7 @@ https://dev.to/temporalio/the-curse-of-the-a-word-1o7i
 {{</ note >}}
 
 ### Activation
-As described in the above “virtual actor” section, an actor always exists. Instead of explicitly spawning a new actor, one may “activate” the destination actor by getting the PID of the destination actor. Proto.actor internally checks the existence of the destination actor and spawns one if one is not present.
+As described in the above “virtual actor” section, an actor always exists. Instead of explicitly spawning a new actor, one may “activate” the destination actor by getting the `PID` of the destination actor. Proto.actor internally checks the existence of the destination actor and spawns one if one is not present.
 
 An actor may disappear when a hosting member crashes, or an actor may stop itself when an idle interval with no message reception exceeds a certain period of time. Activation works well to re-spawn such actors with no extra care.
 
@@ -152,7 +152,7 @@ Once an IDL file for gRPC is given, a messaging method with a retrial logic is g
 If a developer has experience working on storage sharding, one might be familiar with the idea of consistent hashing. This is a powerful mechanism to decide in a reproducible manner which member on a virtual ring topology has the ownership of a given “key” and also requires a fewer re-location on topology change. Proto.Actor employs this algorithm to decide where the actor – more precisely the identity owner – must be located.
 
 ### Initial State
-The below image describes how a grain is located. With the latest membership shared by cluster provider, a message sender computes the hash value of the destination grain and elicits where the recipient grain’s owner exists based on the partitioning by consistent hash. Once the owner’s location is known, a sender sends an activation request to the owner. The owner receives the message and sees if the grain instance already exists. If exist, then return the PID of the grain; if not, then spawn one and returns its PID. This is the simplest form of identity lookup.
+The below image describes how a grain is located. With the latest membership shared by cluster provider, a message sender computes the hash value of the destination grain and elicits where the recipient grain’s owner exists based on the partitioning by consistent hash. Once the owner’s location is known, a sender sends an activation request to the owner. The owner receives the message and sees if the grain instance already exists. If exist, then return the `PID` of the grain; if not, then spawn one and returns its PID. This is the simplest form of identity lookup.
 
 #### Lookup PID
 Here we are trying to talk to an actor with the identity "Alexey".
@@ -171,7 +171,7 @@ Each member instance then synchronize with each other to take ownership of the a
 ![Partition Handover](cluster-handover.png)
 
 ### After Topology Update
-After the topology update, a sender re-computes where the owner of Actor "Alexey" exists. This sends an activation request to the new owner – Member 4 –, which then responds by returning the PID of actor "Alexey" on Member 3. The sender now can send a message to actor "Alexey" on Member 3. In this way, the existing virtual actor and its internal state is not re-located on topology change; only the ownership does.
+After the topology update, a sender re-computes where the owner of Actor "Alexey" exists. This sends an activation request to the new owner – Member 4 –, which then responds by returning the `PID` of actor "Alexey" on Member 3. The sender now can send a message to actor "Alexey" on Member 3. In this way, the existing virtual actor and its internal state is not re-located on topology change; only the ownership does.
 
 ![Partition Rebalance](cluster-rebalance.png)
 
@@ -192,7 +192,7 @@ Below is the detailed spec.
 The complete code is located at github.com/oklahomer/protoactor-go-sender-example.
 
 ## Message Definition
-Because messages are sent from one member to another over wire, they must be serializable. Proto.actor employs pre-existing, well-known Protocol Buffers for data serialization instead of inventing a new serialization protocol. Before getting started, be sure to install protoc and gogoprotobuf’s protoc-gen-gogoslick to generate Golang code. In addition to those tools, one proto.actor-specific tool is required. Run the below command to install the binary. A developer needs to specify dev branch by adding @dev at the end since this is not yet merged to master branch as of 2021-05-03.
+Because messages are sent from one member to another over wire, they must be serializable. Proto.Actor employs pre-existing, well-known Protocol Buffers for data serialization instead of inventing a new serialization protocol. Before getting started, be sure to install protoc and gogoprotobuf’s protoc-gen-gogoslick to generate Golang code. In addition to those tools, one proto.actor-specific tool is required. Run the below command to install the binary. A developer needs to specify dev branch by adding @dev at the end since this is not yet merged to master branch as of 2021-05-03.
 
 ```bash
 $ go get github.com/AsynkronIT/protoactor-go/protobuf/protoc-gen-gograinv2@dev
@@ -232,7 +232,7 @@ cluster
 1 directory, 3 files
 ```
 
-`protos_protoactor.go` defines Proto.actor-specific interface, struct, and function. They are covered in the below sections:
+`protos_protoactor.go` defines Proto.Actor-specific interface, struct, and function. They are covered in the below sections:
 
 ### Grain Implementation
 
@@ -506,7 +506,7 @@ The implementation can be somewhat like below:
 ```go
 // Setup cluster
 c := cluster.Configure(...)
-// Get PID of ponger grain
+// Get `PID` of ponger grain
 grain := messages.GetPongerGrainClient(clustr, "ponger-1")
 
 // Build a PingMessage payload and make a gRPC request.
@@ -631,5 +631,5 @@ func main() {
 {{</ tabs >}}
 
 ## Conclusion
-As illustrated in this article, clustering is a good way to scale the actor system and have higher availability. A developer can interact with actors in the same way as interacting with a local one because proto.actor takes care of locating the destination grain, grain activation, and data transport. Thanks to such architecture, a developer may concentrate on the business logic instead of designing an architecture from scratch.
+As illustrated in this article, clustering is a good way to scale the actor system and have higher availability. A developer can interact with actors in the same way as interacting with a local one because Proto.Actor takes care of locating the destination grain, grain activation, and data transport. Thanks to such architecture, a developer may concentrate on the business logic instead of designing an architecture from scratch.
 
