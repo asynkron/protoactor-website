@@ -42,13 +42,13 @@ See [Cluster Partitions](cluster-partitions.md)
 This allows the identity lookup strategy to be replaced.
 The built in, default is the PartitionIdentityLookup.
 
-#### PartitionIdentitySelector
+### PartitionIdentitySelector
 The hashing algorithm that decides the relation between Identity and Member
 
-#### PartitionPlacementActor
+### PartitionPlacementActor
 This actor manages the actual actor instances. it also knows which node owns the identity and can transfer actor identitiy ownership when topology changes
 
-#### PartitionIdentityActor
+### PartitionIdentityActor
 Manages the owned identities for a member.
 ### TopologyChange
 Consumed by all aspects of the cluster infrastructure to update caches, lookups, shutting down connections etc.
