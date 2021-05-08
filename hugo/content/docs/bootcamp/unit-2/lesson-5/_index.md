@@ -17,14 +17,14 @@ public class PlaybackActor : IActor
   
     public Task ReceiveAsync(IContext context)
     {
-        return Actor.Done;
+        return Task.CompletedTask;
     }
 }
 ```
 
 Please note that all the business logic of our actor will be located in the ReceiveAsync method.
 
-For the actor system to know that the actor has worked without any errors, you should return `Actor.Done` . At the end of our actor's work.
+For the actor system to know that the actor has worked without any errors, you should return `Task.CompletedTask` . At the end of our actor's work.
 
 After we have implemented the basis of our future actor, we will need to create an actor system where an instance of our actor will work. You can do this by creating an instance of the `ActorSystem()` class.
 

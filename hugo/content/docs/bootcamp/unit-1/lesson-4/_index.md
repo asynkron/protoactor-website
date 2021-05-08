@@ -20,7 +20,7 @@ The Merriam Webster dictionary defines reactive as *"ready to respond to externa
   Focus on scalability, competitive access to shared resources is minimized.
 - *react to failures*
   Fault-tolerant systems are created with the ability to recover at all levels.
-- react to users*
+- *react to users*
   Guaranteed response time, regardless of the load.
 
 Each of these characteristics is essential for reactive applications. They all depend on each other, but not as tiers of standard multi-level architecture. Instead, they describe properties that apply across the all technology stack:
@@ -44,7 +44,7 @@ In an event-driven application, components interact with each other by sending a
 - Asynchronous messaging means that an application is inherently highly competitive and can operate on a multi-core architecture without changes. Any CPU core can process any message, which gives more parallelization capabilities.
 - Non-blocking means being able to continue to run so that the application is *responsive* all the time, even in the crash or peak load conditions. For this purpose, all resources required for responsiveness, such as CPU, memory, and network, must not be monopolized. It will result in lower latency, higher throughput capacity, and better *scalability*.
 
-Traditional server architectures use shared mutable state and blocking operations on a thread. This makes it difficult to scale the system. The shared mutable state requires synchronization, which adds complexity and nondeterminism, making the code difficult to understand and maintain. Switching a tread to sleep mode requires using limited resources, and waking up operation cost is expensive.
+Traditional server architectures use shared mutable state and blocking operations on a thread. This makes it difficult to scale the system. The shared mutable state requires synchronization, which adds complexity and nondeterminism, making the code difficult to understand and maintain. Switching a thread to sleep mode requires using limited resources, and waking up operation cost is expensive.
 
 Separating event generation and processing, we allow the platform to take care of the details of synchronization and dispatching of events between threads. At the same time, we focus on higher-level abstractions and business logic. We think about from where and where events are sent and how components interact with each other instead of digging into low-level primitives like threads or locks.
 
@@ -72,7 +72,7 @@ Scalability also helps manage risk: too little hardware can lead to dissatisfact
 
 An event-oriented system based on asynchronous message passing is the basis of scalability. Loose coupling and location independence of components and subsystems allow you to deploy the system on multiple nodes while remaining within the same software model with the same semantics. When new nodes added, the throughput of the system increases. In terms of implementation, there should be no difference between deploying a system on more cores or more nodes in a cluster or data center. The application topology becomes a problem of configuration and/or adaptive runtime algorithms that monitor the system load. It is called [location transparency](http://en.wikipedia.org/wiki/Location_transparency).
 
-It is essential to understand that the goal is not to invent transparent distributed computing, distributed objects, or RPC communications — this has been tried before and failed. Instead, we should * cover the network* by presenting it directly in the software model via the asynchronous message mechanism. True scalability naturally relies on distributed computing and its inter-node interaction, which means traversing the network that is inherently [unreliable](http://aphyr.com/posts/288-the-network-is-reliable). Therefore, it is important to explicitly consider the limitations, trade-offs, and exception scenarios in the software model instead of hiding them behind a screen of leaky abstractions that supposedly try to "simplify" things. As a result, it is equally essential to provide yourself with software tools that contain the building blocks for solving typical problems in a distributed environment, such as consensus-building mechanisms or messaging interfaces that have a high level of reliability.
+It is essential to understand that the goal is not to invent transparent distributed computing, distributed objects, or RPC communications — this has been tried before and failed. Instead, we should *cover the network* by presenting it directly in the software model via the asynchronous message mechanism. True scalability naturally relies on distributed computing and its inter-node interaction, which means traversing the network that is inherently [unreliable](http://aphyr.com/posts/288-the-network-is-reliable). Therefore, it is important to explicitly consider the limitations, trade-offs, and exception scenarios in the software model instead of hiding them behind a screen of leaky abstractions that supposedly try to "simplify" things. As a result, it is equally essential to provide yourself with software tools that contain the building blocks for solving typical problems in a distributed environment, such as consensus-building mechanisms or messaging interfaces that have a high level of reliability.
 
 ## Fault tolerance
 
@@ -122,7 +122,7 @@ Observable models allow other systems to receive events when their state changes
 
 Event streams form the basic abstraction on which such relationships built. By keeping them reactive, we avoid blocking and allow conversions and communications to be asynchronous and non-blocking.
 
-Reactive applications must know about [algorithm orders](http://ru.wikipedia.org/wiki/ " O "_ball_and_ " o"small) to make sure that the event response time does not exceed O (1) or at least O(log n), regardless of the load. A zoom level can be enabled, but it should not depend on the number of clients, sessions, products, or transactions.
+Reactive applications must know about [algorithm orders](https://en.wikipedia.org/wiki/Big_O_notation) to make sure that the event response time does not exceed O (1) or at least O(log n), regardless of the load. A zoom level can be enabled, but it should not depend on the number of clients, sessions, products, or transactions.
 
 Here are a few strategies that will help to keep the latency is independent of the load profile:
 
