@@ -8,6 +8,8 @@ author: "Go Hagiwara"
 authorimage: "/docs/images/authors/oklahomer.jpeg"
 authorsite: "https://blog.oklahome.net/"
 backgroundimage: "/docs/images/backgrounds/abstract1.png"
+aliases:
+    - /docs/cluster/intro/clusterintro/
 ---
 # The Basic Ideas
 To better understand why and when clustering architecture should be adopted, the below subsections show the benefits of actor model in general, its remoting architecture, and its clustering architecture.
@@ -18,9 +20,6 @@ With the power of actor model, a developer has easier access to concurrent progr
 Read more: [Actors](/docs/actors/)
 
 ![Actor Model](actor.png)
-
-
-
 
 ## Remoting
 While actor model eases the concurrent programming with mutatable states, the system is hard to scale as long as the actor system is hosted by a single machine. Remoting is a good solution to scale out the actor system among multiple machines.
@@ -78,7 +77,7 @@ These are battle tested products running in millions of installations.
 
 All of the hard problems with clustering is already solved here, and as long as Proto.Actor can consume this data provided by the cluster provider, we do not need to touch this area ourselves.
 
-![Outer Cluster](outer-cluster.png#small)
+![Outer Cluster](outer-cluster.png)
 
 #### Tools using internalized cluster logic
 
@@ -86,7 +85,7 @@ Some other products in the same sphere as Proto.Actor, instead strive to solve e
 One benefit of such approach is that they can run fully stand-alone, which can be valuable.
 But in the age of DevOps, containers and orchestrators, we are betting on hosted software, running in some form of environment that already provides this information for us.
 
-![Outer Cluster](inner-cluster.png#small)
+![Outer Cluster](inner-cluster.png)
 
 ### Virtual Actor
 Proto.Actor’s clustering mechanism borrows the idea of “virtual actor” from Microsoft Orleans, where developers are not obligated to handle an actor’s lifecycle. 

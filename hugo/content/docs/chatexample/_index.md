@@ -8,6 +8,8 @@ author: "Anes Hasicic"
 authorimage: "/docs/images/authors/AnesHasicic.jpeg"
 authorsite: "https://aneshas.medium.com/"
 backgroundimage: "/docs/images/backgrounds/abstract2.png"
+aliases:
+    - /docs/chat-example/
 ---
 # Chat Example Using Proto.Remote
 In this example, we are going to go beyond `Proto.Actor` and leverage `Proto.Remote` package in order to enable bidirectional communication between different actors in a client to server fashion.
@@ -24,7 +26,7 @@ What `Proto.Remote` does for us is that it abstracts many of these issues away f
 
 If your mind is a bit twisted by now, check out the sketch below:
 
-![Proto.Remote](images/examples/remote.png)
+![Proto.Remote](remote.png)
 
 As stated by the founder of Proto.Actor Roger Johansson:
 > `Proto.Remote` manages all the complexity of connections and message serialization, making it so that client actor and server actor believe they are talking directly to each other.
@@ -43,7 +45,7 @@ We can then take these contracts and use gRPC in order to generate clients and s
 
 ## High-Level Overview of Our Chat Example
 You can find the example on github [here](https://github.com/aneshas/protoactor-dotnet/tree/chat-example-refactor/examples/Chat).
-![Proto.Remote](images/examples/chat-overview.png)
+![Proto.Remote](chat-overview.png)
 As shown in the picture, our chat example will consist of client and server actors distributed over the network communicating via `Proto.Remote` library.
 
 Since client and server parts of our example are in a client/server relationship (duh), each client actor will initiate a connection request towards the server by using its PID and in fact use the server as a kind of service.
@@ -194,7 +196,7 @@ Each time a connection request is received via `Connected` message, the incoming
 When a `SayRequest` message is received, the response is broadcasted back to all clients via `SayResponse` message. A similar thing happens with `NickRequest` message which is used to change the nick of the user and is then also sent back to all clients in the same fan-out fashion.
 
 ## Client
-![Proto.Remote](images/examples/chat-remote.png)
+![Proto.Remote](chat-remote.png)
 As shown in the picture, the task of the client application is to read command messages from the command line, parse and transform them into chat command messages which are then serialized and sent over the network by `Proto.Remote` and its underlying `gRPC` implementation.
 
 You can find the complete client example [here](https://github.com/aneshas/protoactor-dotnet/tree/chat-example-refactor/examples/Chat/Client)
