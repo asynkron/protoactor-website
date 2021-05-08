@@ -40,6 +40,7 @@ See [Cluster Partitions](cluster-partitions.md)
 
 ## Tutorials
 
+### Cluster Introduction
 [Cluster Introduction](/docs/cluster/intro/clusterintro)
 
 ## FAQ
