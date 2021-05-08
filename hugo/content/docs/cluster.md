@@ -38,7 +38,7 @@ See [Cluster Partitions](cluster-partitions.md)
 
 ** TODO **
 
-## Examples
+## Tutorials
 
 [Cluster Introduction](/docs/cluster/intro/clusterintro)
 
