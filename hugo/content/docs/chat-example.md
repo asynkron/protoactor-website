@@ -1,3 +1,13 @@
+---
+title: "Chat Example Using Proto.Remote"
+date: 2021-04-02T16:34:24+02:00
+draft: false
+tags: [protoactor, remote]
+layout: article
+author: "Anes Hasicic"
+authorimage: "/docs/images/authors/AnesHasicic.jpeg"
+authorsite: "https://aneshas.medium.com/"
+---
 # Chat Example Using Proto.Remote
 In this example, we are going to go beyond `Proto.Actor` and leverage `Proto.Remote` package in order to enable bidirectional communication between different actors in a client to server fashion.
 
