@@ -1,5 +1,13 @@
-#  High Availability using Proto.Cluster
-
+---
+title: "High Availability using Proto.Cluster"
+date: 2021-05-05T16:34:24+02:00
+draft: false
+tags: [protoactor, cluster]
+layout: article
+author: "Go Hagiwara"
+authorimage: "/docs/images/authors/oklahomer.jpeg"
+authorsite: "https://blog.oklahome.net/"
+---
 # The Basic Ideas
 To better understand why and when clustering architecture should be adopted, the below subsections show the benefits of actor model in general, its remoting architecture, and its clustering architecture.
 

@@ -1,0 +1,88 @@
+{{ define "main" }}
+<section class="p-0 border-top border-bottom bg-light row no-gutters">
+    <div class="col-lg-5 col-xl-6 order-lg-2">
+      <div class="divider divider-side transform-flip-y bg-light d-none d-lg-block"></div>
+      <img class="flex-fill" src="/docs/images/backgrounds/bg2.png" alt="blog.1.image">
+    </div>
+    <div class="col-lg-7 col-xl-6">
+      <div class="container min-vh-lg-70 d-flex align-items-center">
+        <div class="row justify-content-center">
+          <div class="col col-md-10 col-xl-9 py-4 py-sm-5">
+            <div class="my-4 my-md-5">
+              <div class="d-flex align-items-center mb-3 mb-xl-4">
+                {{ with .Params.tags }}                           
+                    {{ range . }}
+                    <a class="badge badge-danger badge-pill" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>&NonBreakingSpace;
+                    {{ end }}                            
+                {{ end }}
+
+                <div class="ml-3 text-small text-muted">{{ dateFormat "Monday, Jan 2, 2006" .Date }}</div>
+              </div>
+              <h1 class="display-4">
+                {{.Title}}
+          </h1>
+              <a href="{{.Params.authorsite}}" class="d-flex align-items-center">
+                <img src="{{.Params.authorimage}}" class="avatar avatar-sm">
+                <div class="h6 mb-0 ml-3">{{.Params.author}}</div>                
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+<section class="bg-white o-hidden pt-0 pb-0">
+    <div class="container">
+        
+        {{ partial "search" . }}
+
+        {{ partial "breadcrumbs" . }}
+
+        <div class="row">
+
+            <div class="col col-lg-9 mb-4 mb-lg-0" data-aos="fade-right">
+                <div class="">
+                    <main>
+                        <article>
+                            <div>
+                                {{ $content := .Content }}
+                                {{ $content = replace $content "<table" "<table class='table bg-white'" }}
+                                {{ $content = replace $content "<blockquote" "<blockquote class='blockquote my-4 my-md-5'" }}
+								
+								{{ safeHTML $content}}
+								
+                            </div>
+                            {{ with .Params.tags }}
+                            <div>
+
+                                {{ range . }}
+                                <a class="badge badge-primary badge-pill"
+                                    href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>
+                                {{ end }}
+
+                            </div>
+                            {{ end }}
+                        </article>
+                    </main>
+                </div>
+            </div>
+
+            <div class="col sticky-lg-top" data-aos="fade-left">
+                <div class="list-group mb-3 mb-md-4">
+                    <div class="list-group-item bg-light">
+                        <h6 class="mb-0">Topics</h6>
+                    </div>
+                    <div class="list-group-item p-0 ">
+                        {{ .TableOfContents }}
+                        </aside>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="divider divider-bottom bg-dark mt-5"></div>
+
+</section>
+
+{{ end }}
