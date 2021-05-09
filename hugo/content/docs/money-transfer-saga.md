@@ -200,10 +200,7 @@ ___
 Our Transfer Process is modeled as a state machine using the Behavior plugin. This allows us to swap out the message handling code depending on our current state. This is achieved by delegating to the Behavior class when handling messages:
   
 ```csharp
-public async Task ReceiveAsync(IContext context)
-{
-    await _behavior.ReceiveAsync(context);
-}
+public Task ReceiveAsync(IContext context) => _behavior.ReceiveAsync(context);
 ```
 Here the `TransferProcess`'s `ReceiveAsync` method just delegates to the Behavior's `ReceiveAsync` method.
   
