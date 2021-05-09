@@ -29,13 +29,19 @@ code[class*='language-']{
   background-color: unset;
 }
 
-article{
+article {
+  code[class*="language-"],
+    pre[class*="language-"] {    
+    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace !important;
+  }
+
   pre[class*='language-']{
-    border: 1px solid #f0f3f5;
+    border: 1px solid #00000005;
     border-radius: 3px;
     border-left-width: 10px; 
-    font-weight: normal;
-    font-size: 13.6px;
+    font-weight: normal !important;
+    font-size: 13.6px !important;
+    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace !important;
     padding: 10px;
     margin: 0;
     margin-bottom: 16px;
