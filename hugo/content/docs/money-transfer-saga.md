@@ -11,7 +11,6 @@ backgroundimage: "/docs/images/backgrounds/abstract3.png"
 ---
 
 # Money Transfer Saga 
-## (This content is dated, pre ActorSystem, PullRequests are welcome)
  
  - [Part 1 - The Scenario](#1)
  - [Part 2 - The Implementation](#2)
@@ -234,7 +233,7 @@ private async Task Starting(IContext context)
     }
 }
 
-private Props TryDebit(PID targetActor, decimal amount) => Actor
+private Props TryDebit(PID targetActor, decimal amount) => Props
             .FromProducer(() => new AccountProxy(targetActor, sender => new Debit(amount, sender)));
 ```
 
@@ -268,7 +267,7 @@ private Task AwaitingDebitConfirmation(IContext context)
     }
 }
 
-private Props TryCredit(PID targetActor, decimal amount) => Actor
+private Props TryCredit(PID targetActor, decimal amount) => Props
             .FromProducer(() => new AccountProxy(targetActor, sender => new Credit(amount, sender)));   
 ```
 
@@ -580,7 +579,7 @@ var retryAttempts = 10;
 var supervisionStrategy = new OneForOneStrategy((pid, reason) => 
     SupervisorDirective.Restart, retryAttempts)
 
-Actor.FromProducer(() => new TransferProcess(...)
+Props.FromProducer(() => new TransferProcess(...)
     .WithChildSupervisorStrategy(supervisionStrategy);
 ```
   
@@ -626,6 +625,7 @@ internal class Program
 {
     public static void Main(string[] args)
     {
+        var system = new ActorSystem();
         Console.WriteLine("Starting");
         var random = new Random();
         var numberOfTransfers = 1000;
@@ -635,11 +635,11 @@ internal class Program
         var busyProbability = 0.05;
         var provider = new InMemoryProvider();
 
-        var props = Actor.FromProducer(() => new Runner(numberOfTransfers, uptime, refusalProbability, busyProbability, retryAttempts, false))
+        var props = Props.FromProducer(() => new Runner(numberOfTransfers, uptime, refusalProbability, busyProbability, retryAttempts, false))
             .WithChildSupervisorStrategy(new OneForOneStrategy((pid, reason) => SupervisorDirective.Restart, retryAttempts, null));
         
         Console.WriteLine("Spawning runner");
-        var runner = Actor.SpawnNamed(props, "runner");
+        var runner = system.Root.SpawnNamed(props, "runner");
        
         Console.ReadLine();
     }
