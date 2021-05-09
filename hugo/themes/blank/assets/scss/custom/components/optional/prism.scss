@@ -51,7 +51,3 @@ article {
 pre[class*='language-']{
   padding: $spacer;
 }
-
-.token.property, .token.tag, .token.boolean, .token.number, .token.constant, .token.symbol, .token.deleted{
-  color: $code-color;
-}
