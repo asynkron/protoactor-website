@@ -29,7 +29,7 @@ backgroundimage: "/docs/images/backgrounds/abstract3.png"
  
 # Part 1 - The Scenario <a name="1"></a>
 The scenario here is a simple bank account transfer - we want to transfer €10 
-from Account1 to Account2. Each account has a starting balance of €10. If successful, Account1 will end with a balance of €0 and Account2 will have a balance of €20. Our aim is to have a transaction-like result for the account transfer process where even if one of the steps fails, the system is left in a consistent state (i.e. either the whole process fails, resulting in €10 in each account, or the process succeeds)
+from `Account1` to Account2. Each account has a starting balance of €10. If successful, `Account1` will end with a balance of €0 and `Account2` will have a balance of €20. Our aim is to have a transaction-like result for the account transfer process where even if one of the steps fails, the system is left in a consistent state (i.e. either the whole process fails, resulting in €10 in each account, or the process succeeds)
 
 On the face of it, this is a simple problem. However, things get more interesting when you consider each account as a remote service and thus subject to the usual issues associated with remote calls. The accounts can misbehave in a number of ways:
 * Refuse to process a request (for example, if an account has been suspended or closed for some reason)
@@ -38,27 +38,27 @@ On the face of it, this is a simple problem. However, things get more interestin
 * Return a "I'm busy" response
 * Be slow
 
-For our example, we have only a single area where a compensating action might need to be applied - if we are able to debit from Account1 but unable to credit Account2, the debit should be rolled back (a compensating action of crediting Account1 should be applied). Otherwise, Account1 will be €0 and Account2 will be €10, and €10 has been lost in the system.
+For our example, we have only a single area where a compensating action might need to be applied - if we are able to debit from `Account1` but unable to credit Account2, the debit should be rolled back (a compensating action of crediting `Account1` should be applied). Otherwise, `Account1` will be €0 and `Account2` will be €10, and €10 has been lost in the system.
 
 **There are many workflows for what seems a simple use case:**
-  1. Account1 processes successfully → `CREDIT ACCOUNT2`
-  2. Account1 refuses the debit request. → `STOP`
-  3. Account1 responds with "I'm busy" → `RETRY`
-  4. Account1 does not respond → `RETRY`
+  1. `Account1` processes successfully → `CREDIT ACCOUNT2`
+  2. `Account1` refuses the debit request. → `STOP`
+  3. `Account1` responds with "I'm busy" → `RETRY`
+  4. `Account1` does not respond → `RETRY`
   
-**If Account1 responds successfully, then we have the following possibilities**
+**If `Account1` responds successfully, then we have the following possibilities**
   
-  5. Account2 processes successfully → `SUCCESS`
-  6. Account2 refuses the credit request → `ROLLBACK DEBIT`
-  7. Account2 responds with "i'm busy" → `RETRY`
-  8. Account2 does not respond → `RETRY`
+  5. `Account2` processes successfully → `SUCCESS`
+  6. `Account2` refuses the credit request → `ROLLBACK DEBIT`
+  7. `Account2` responds with "i'm busy" → `RETRY`
+  8. `Account2` does not respond → `RETRY`
   
 **If we have to rollback the debit:**
   
-  8. Account1 processes successfully → `STOP`
-  9. Account1 refuses the credit request → `ESCALATE`
-  10. Account1 responds with "i'm busy" → `RETRY`
-  11. Account1 does not respond → `RETRY`
+  8. `Account1` processes successfully → `STOP`
+  9. `Account1` refuses the credit request → `ESCALATE`
+  10. `Account1` responds with "i'm busy" → `RETRY`
+  11. `Account1` does not respond → `RETRY`
   12. the TransferProcess saga itself crashes → `RESUME`
   
 Each of these possibilities requires handling. In situations where there is either a "i'm busy" response, or no response at all, we should retry the request. If the request is outright refused, there is no point in retrying, so we should stop or rollback the saga. 
