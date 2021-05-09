@@ -6,7 +6,7 @@ tags: [protoactor, patterns]
 author: Tom Liversidge 
 authorimage: "/docs/images/authors/TomLiversidge.jpeg"
 authorsite: "https://blog.oklahome.net/"
-backgroundimage: "/docs/images/backgrounds/moneytransfer.jpeg"
+backgroundimage: "/docs/images/backgrounds/bank.png"
 
 ---
 
