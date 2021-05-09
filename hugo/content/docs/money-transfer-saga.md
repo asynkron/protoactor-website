@@ -684,7 +684,7 @@ public Task ReceiveAsync(IContext context)
 }
 
 ```
-Once the `Runner` is started, it loops through the number of iterations and creates two `Account` actors and a `TransferProcess` actor each time, adding the `TransferProcess` PID to a `_transfers` collection. The `Runner` supervises the `TransferActor`, and is responsible for restarting it should it crash. Inside the `TransferProcess` actor, a call to `context.Send(context.Parent,...);` informs the `Runner` of the result. The `Runner` then waits to receive results back from the `TransferProcess` actors:
+Once the `Runner` is started, it loops through the number of iterations and creates two `Account` actors and a `TransferProcess` actor each time, adding the `TransferProcess` PID to a `_transfers` collection. The `Runner` supervises the `TransferActor`, and is responsible for restarting it should it crash. Inside the `TransferProcess` actor, a call to `context.Send(context.Parent,..);` informs the `Runner` of the result. The `Runner` then waits to receive results back from the `TransferProcess` actors:
 
 ```csharp
  public Task ReceiveAsync(IContext context)
