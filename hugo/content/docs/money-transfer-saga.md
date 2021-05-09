@@ -1,11 +1,12 @@
 ---
-layout: docs.hbs
 title: Money Transfer Saga
-year: 2017
-month: June
-day: 24
-author: tomliversidge
-post: true
+date: 2017-06-26
+layout: article
+author: Tom Liversidge 
+authorimage: "/docs/images/authors/TomLiversidge.jpeg"
+authorsite: "https://blog.oklahome.net/"
+backgroundimage: "/docs/images/backgrounds/abstract3.png"
+
 ---
 
 # Money Transfer Saga 
