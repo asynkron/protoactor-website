@@ -28,7 +28,7 @@
   /* Code blocks */
 pre[class*="language-"] {
 	overflow: auto;
-	background-color: #22272e;
+	background-color: #2c3038; /*not same color as github, but as dark of this theme*/
 }
  
  pre > code[class*="language-"] {

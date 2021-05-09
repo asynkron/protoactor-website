@@ -686,7 +686,7 @@ public Task ReceiveAsync(IContext context)
 Once the `Runner` is started, it loops through the number of iterations and creates two `Account` actors and a `TransferProcess` actor each time, adding the `TransferProcess` PID to a `_transfers` collection. The `Runner` supervises the `TransferActor`, and is responsible for restarting it should it crash. Inside the `TransferProcess` actor, a call to `context.Send(context.Parent,..);` informs the `Runner` of the result. The `Runner` then waits to receive results back from the `TransferProcess` actors:
 
 ```csharp
- public Task ReceiveAsync(IContext context)
+public Task ReceiveAsync(IContext context)
 {
     switch (context.Message)
     {
@@ -708,6 +708,7 @@ Once the `Runner` is started, it loops through the number of iterations and crea
             break;
             //...
     }
+    //...
 ```
 
 For each result type, a counter is incremented to track the different result types, then a completion check is performed to determine if all sagas have finished. If so, the results are outputted:
