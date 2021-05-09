@@ -40,29 +40,26 @@ On the face of it, this is a simple problem. However, things get more interestin
 
 For our example, we have only a single area where a compensating action might need to be applied - if we are able to debit from Account1 but unable to credit Account2, the debit should be rolled back (a compensating action of crediting Account1 should be applied). Otherwise, Account1 will be €0 and Account2 will be €10, and €10 has been lost in the system.
 
-There are many workflows for what seems a simple use case:
-  1. Account1 processes successfully -> `CREDIT ACCOUNT2`
-  2. Account1 refuses the debit request. -> `STOP`
-  3. Account1 responds with "I'm busy" -> `RETRY`
-  4. Account1 does not respond -> `RETRY`
+**There are many workflows for what seems a simple use case:**
+  1. Account1 processes successfully → `CREDIT ACCOUNT2`
+  2. Account1 refuses the debit request. → `STOP`
+  3. Account1 responds with "I'm busy" → `RETRY`
+  4. Account1 does not respond → `RETRY`
   
-If Account1 responds successfully, then we have the following possibilities
+**If Account1 responds successfully, then we have the following possibilities**
   
-  5. Account2 processes successfully -> `SUCCESS`
-  6. Account2 refuses the credit request -> `ROLLBACK DEBIT`
-  7. Account2 responds with "i'm busy" -> `RETRY`
-  8. Account2 does not respond -> `RETRY`
+  5. Account2 processes successfully → `SUCCESS`
+  6. Account2 refuses the credit request → `ROLLBACK DEBIT`
+  7. Account2 responds with "i'm busy" → `RETRY`
+  8. Account2 does not respond → `RETRY`
   
-If we have to rollback the debit:
+**If we have to rollback the debit:**
   
-  8. Account1 processes successfully -> `STOP`
-  9. Account1 refuses the credit request -> `ESCALATE`
-  10. Account1 responds with "i'm busy" -> `RETRY`
-  11. Account1 does not respond -> `RETRY`
-  
-and finally:
-  
-  12. the TransferProcess saga itself crashes -> `RESUME`
+  8. Account1 processes successfully → `STOP`
+  9. Account1 refuses the credit request → `ESCALATE`
+  10. Account1 responds with "i'm busy" → `RETRY`
+  11. Account1 does not respond → `RETRY`
+  12. the TransferProcess saga itself crashes → `RESUME`
   
 Each of these possibilities requires handling. In situations where there is either a "i'm busy" response, or no response at all, we should retry the request. If the request is outright refused, there is no point in retrying, so we should stop or rollback the saga. 
   
@@ -71,7 +68,6 @@ One situation that presents a problem is when we receive no reply to our request
 What if a compensating action fails? 
   
 ### Escalation 
-  
 In the preceding section we descovered scenarios where we are not sure what state the system is in. Even with retries and compensating actions, things can still go wrong. In an ideal world, these should be very rare! However, they can occur and in these cases it's best to have a fallback strategy, escalating the result of the saga to something else, quite possibly a manual / human process. 
    
 ### Atomicitiy
@@ -79,8 +75,7 @@ One thing a saga does not provide is atomicitiy. In the bank account example abo
   
 ___
   
-# Part 2 - Implementing the Money Transfer Saga  <a name="2"></a>
-  
+# Part 2 - Implementing the Money Transfer Saga  <a name="2"></a>  
 The implementation of the transfer process saga contains the following actors:
   
 * Account actor - this is a simulation of a troublesome remote service
@@ -88,7 +83,6 @@ The implementation of the transfer process saga contains the following actors:
 * AccountProxy actor - this has the sole purpose of attempting to communicate with Account actor
   
 ## Account actor
-  
 The Account actor simulates a remote bank account service:
 ```csharp
 public Task ReceiveAsync(IContext context)
@@ -243,9 +237,9 @@ Here we create an actor specifically to handle the debit attempt and transition 
 #### Awaiting Debit Confirmation
 
 In this state there are 3 possible transitions:
-* AwaitingDebitConfirmation -> `AwaitingCreditConfirmation`
-* AwaitingDebitConfirmation -> `Stop (ConsistentSystem)`
-* AwaitingDebitConfirmation -> `Stop (Unknown)`
+* AwaitingDebitConfirmation → `AwaitingCreditConfirmation`
+* AwaitingDebitConfirmation → `Stop (ConsistentSystem)`
+* AwaitingDebitConfirmation → `Stop (Unknown)`
 
 ```csharp
 private Task AwaitingDebitConfirmation(IContext context)
@@ -306,9 +300,9 @@ Receiving a `Terminated` message in the `AwaitingDebitConfirmation` state means 
 #### Awaiting Credit Confirmation
 
 Given a successful debit we transition to the `AwaitingCreditConfirmation` state. In this state there are 3 possible transitions:
-* AwaitingCreditConfirmation -> `Stop (Success)`
-* AwaitingCreditConfirmation -> `RollingBackDebit`
-* AwaitingCreditConfirmation -> `Stop (Unknown)`
+* AwaitingCreditConfirmation → `Stop (Success)`
+* AwaitingCreditConfirmation → `RollingBackDebit`
+* AwaitingCreditConfirmation → `Stop (Unknown)`
                                                                                   
 ```csharp
 private async Task AwaitingCreditConfirmation(IContext context)
@@ -366,8 +360,8 @@ Receiving a `Terminated` message in the `AwaitingCreditConfirmation` state means
 #### Rolling Back Debit
 
 If our debit was successful but our credit was refused, we transition to the `RollingBackDebit` state, where there are 2 possible transitions:
-* RollingBackDebit -> `Stop (ConsistentSystem)`
-* RollingBackDebit -> `Stop (Unknown)`
+* RollingBackDebit → `Stop (ConsistentSystem)`
+* RollingBackDebit → `Stop (Unknown)`
 
 ```csharp
 private async Task RollingBackDebit(IContext context)
