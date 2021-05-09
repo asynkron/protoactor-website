@@ -6,11 +6,12 @@ tags: [protoactor, patterns]
 author: Tom Liversidge 
 authorimage: "/docs/images/authors/TomLiversidge.jpeg"
 authorsite: "https://blog.oklahome.net/"
-backgroundimage: "/docs/images/backgrounds/abstract3.png"
+backgroundimage: "/docs/images/backgrounds/moneytransfer.jpeg"
 
 ---
 
 # Money Transfer Saga 
+## Intro
  
  - [Part 1 - The Scenario](#1)
  - [Part 2 - The Implementation](#2)
@@ -18,7 +19,7 @@ backgroundimage: "/docs/images/backgrounds/abstract3.png"
  - [Part 4 - Supervision, error kernels and idempotency](#4)
  - [Part 5 - Results](#5)
  
- The Saga pattern was first coined by Hector Garcia-Molina and Kenneth Salem in their paper, [Sagas](http://www.cs.cornell.edu/andru/cs711/2002fa/reading/sagas.pdf). Although originally described in the context of a database management system, the Saga pattern has gained popularity in a distributed systems context as a way to manage failures when dealing with multiple remote participants in a business process. The paper  describes a saga as 
+ The **Saga pattern** was first coined by **Hector Garcia-Molina** and **Kenneth Salem** in their paper, [Sagas](http://www.cs.cornell.edu/andru/cs711/2002fa/reading/sagas.pdf). Although originally described in the context of a database management system, the Saga pattern has gained popularity in a distributed systems context as a way to manage failures when dealing with multiple remote participants in a business process. The paper  describes a saga as 
  
  > a long-lived transaction that can be written as a sequence of transactions that can be interleaved with other transactions 
  
