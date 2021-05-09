@@ -104,16 +104,16 @@ public Task ReceiveAsync(IContext context)
 When a `Credit` or `Debit` request is received, we attempt to adjust the balance of the account. The attempt may fail for a number of reasons:
 
 ```csharp
-private Task AdjustBalance(PID replyTo, decimal amount)
+private Task AdjustBalance(IContext ctx, PID replyTo, decimal amount)
 {
     if (RefusePermanently())
     {
         _processedMessages.Add(replyTo, new Refused());
-        replyTo.Tell(new Refused());
+        ctx.Send(replyTo, new Refused());
     }
         
     if (Busy())
-        replyTo.Tell(new ServiceUnavailable());
+        ctx.Send(replyTo, new ServiceUnavailable());
     
     var behaviour = DetermineProcessingBehavior();
     if (behaviour == Behavior.FailBeforeProcessing)
@@ -128,7 +128,7 @@ private Task AdjustBalance(PID replyTo, decimal amount)
     if (behaviour == Behavior.FailAfterProcessing)
         return Failure(replyTo);
     
-    replyTo.Tell(new OK());
+    ctx.Send(replyTo, new OK());
     return Task.CompletedTask;
 }
 ```
@@ -155,16 +155,16 @@ class AccountProxy : IActor
         switch (context.Message)
         {
             case Started _:
-                _account.Tell(_createMessage(context.Self));
+                context.Send(_account,_createMessage(context.Self));
                 context.SetReceiveTimeout(TimeSpan.FromMilliseconds(100));
                 break;
             case OK msg:
                 context.CancelReceiveTimeout();
-                context.Parent.Tell(msg);
+                context.Send(context.Parent,msg);
                 break;
             case Refused msg:
                 context.CancelReceiveTimeout();
-                context.Parent.Tell(msg);
+                context.Send(context.Parent,msg);
                 break;
             // These represent a failed remote call
             case InternalServerError _:
@@ -594,12 +594,12 @@ public Task ReceiveAsync(IContext context)
     switch (context.Message)
     {
         case Credit msg when _processedMessages.ContainsKey(msg.ReplyTo):
-            replyTo.Tell(_processedMessages[replyTo]);
+            context.Send(replyTo,_processedMessages[replyTo]);
             return Task.CompletedTask;
         case Credit msg:
             _balance += amount;
             _processedMessages.Add(replyTo, new OK());
-            replyTo.Tell(new OK());
+            context.Send(replyTo,new OK());
             return Task.CompletedTask;
         //...
     }
@@ -684,7 +684,7 @@ public Task ReceiveAsync(IContext context)
 }
 
 ```
-Once the `Runner` is started, it loops through the number of iterations and creates two `Account` actors and a `TransferProcess` actor each time, adding the `TransferProcess` PID to a `_transfers` collection. The `Runner` supervises the `TransferActor`, and is responsible for restarting it should it crash. Inside the `TransferProcess` actor, a call to `context.Parent.Tell();` informs the `Runner` of the result. The `Runner` then waits to receive results back from the `TransferProcess` actors:
+Once the `Runner` is started, it loops through the number of iterations and creates two `Account` actors and a `TransferProcess` actor each time, adding the `TransferProcess` PID to a `_transfers` collection. The `Runner` supervises the `TransferActor`, and is responsible for restarting it should it crash. Inside the `TransferProcess` actor, a call to `context.Send(context.Parent,...);` informs the `Runner` of the result. The `Runner` then waits to receive results back from the `TransferProcess` actors:
 
 ```csharp
  public Task ReceiveAsync(IContext context)
