@@ -2,7 +2,7 @@
 title: "High Availability using Proto.Cluster"
 date: 2021-05-05T16:34:24+02:00
 draft: false
-tags: [protoactor, cluster]
+tags: [protoactor, cluster, Go]
 layout: article
 author: "Go Hagiwara"
 authorimage: "/docs/images/authors/oklahomer.jpeg"

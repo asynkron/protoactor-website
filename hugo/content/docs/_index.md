@@ -16,10 +16,6 @@ tags: [protoactor, docs]
 
 {{< article >}}
 
-{{< note >}}
-You can also learn Proto.Actor by doing the [**Proto.Actor Bootcamp**](bootcamp)!
-{{</ note >}}
-
 ## Introduction
 
 * [What is Proto.Actor?](what-is-protoactor.md)

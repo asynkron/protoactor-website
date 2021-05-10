@@ -2,12 +2,11 @@
 title: Money Transfer Saga
 date: 2017-06-26
 layout: article
-tags: [protoactor, patterns]
+tags: [protoactor, patterns, C#]
 author: Tom Liversidge 
 authorimage: "/docs/images/authors/TomLiversidge.jpeg"
 authorsite: "https://blog.oklahome.net/"
 backgroundimage: "/docs/images/backgrounds/bank2.png"
-
 ---
 
 # Money Transfer Saga 

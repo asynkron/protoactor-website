@@ -1,3 +1,13 @@
+---
+title: Proto.Actor Bootcamp
+date: 2020-07-2614
+layout: article
+tags: [protoactor, bootcamp, C#, series]
+author: Valentin Miroshnichenko
+authorimage: "/docs/images/authors/anon.png"
+authorsite: "https://blog.oklahome.net/"
+backgroundimage: "/docs/images/backgrounds/bootcamp.png"
+---
 # Proto.Actor Bootcamp
 
 Welcome to  [Proto.Actor](http://proto.actor/) Bootcamp. It is a free course for self-study.
