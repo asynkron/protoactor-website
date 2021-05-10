@@ -210,7 +210,18 @@ Below is the detailed spec.
 The complete code is located at github.com/oklahomer/protoactor-go-sender-example.
 
 ## Message Definition
-Because messages are sent from one member to another over wire, they must be serializable. Proto.Actor employs pre-existing, well-known Protocol Buffers for data serialization instead of inventing a new serialization protocol. Before getting started, be sure to install protoc and gogoprotobuf’s protoc-gen-gogoslick to generate Golang code. In addition to those tools, one proto.actor-specific tool is required. Run the below command to install the binary. A developer needs to specify dev branch by adding @dev at the end since this is not yet merged to master branch as of 2021-05-03.
+Because messages are sent from one member to another over wire, they must be serializable. Proto.Actor employs pre-existing, well-known Protocol Buffers for data serialization instead of inventing a new serialization protocol. 
+
+
+{{< tabs >}}
+{{< tab "C#" >}}
+  Add a file named `protos.proto` to your C# project.
+
+{{</ tab >}}
+
+{{< tab "Go" >}}
+
+Before getting started, be sure to install protoc and gogoprotobuf’s protoc-gen-gogoslick to generate Golang code. In addition to those tools, one proto.actor-specific tool is required. Run the below command to install the binary. A developer needs to specify dev branch by adding @dev at the end since this is not yet merged to master branch as of 2021-05-03.
 
 ```bash
 $ go get github.com/AsynkronIT/protoactor-go/protobuf/protoc-gen-gograinv2@dev
@@ -251,7 +262,8 @@ cluster
 ```
 
 `protos_protoactor.go` defines Proto.Actor-specific interface, struct, and function. They are covered in the below sections:
-
+{{</ tab >}}
+{{</ tabs >}}
 ### Grain Implementation
 
 #### PongerActor
