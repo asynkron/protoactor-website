@@ -29,14 +29,36 @@ They are spawned *somewhere* in your cluster, and their lifecycle is managed by 
 This means that you as a developer, don't have to care or know if the actor already exists or where it exists.
 You address it using its identity and kind and the cluster does the rest for you.
 
-### Partition Identity
+## Cluster Architecture Overview
 
-For more information about the details of cluster mechanics.
-See [Cluster Partitions](cluster-partitions.md)
+![Cluster Architecture](/images/cluster-architecture.png)
 
-### Persistent Identity
+### `IClusterProvider` - Interface
+This allows the membership logic to be replaced.
 
-** TODO **
+* ##### Consul Provider
+* ##### Kubernetes Provider
+* ##### Etcd Provider
+* ##### Self Managed Provider
+* ##### Zookeeper Provider
+
+### `IIdentityLookup` - Interface
+This allows the identity lookup strategy to be replaced.
+The built in, default is the PartitionIdentityLookup.
+
+* ##### `PartitionIdentityLookup` - Implementation
+  For more information about the details of cluster mechanics.
+  See [Cluster Partitions](cluster-partitions.md)
+
+
+  * `PartitionIdentitySelector` - The hashing algorithm that decides the relation between Identity and Member
+
+  * `PartitionPlacementActor` - This actor manages the actual actor instances. it also knows which node owns the identity and can transfer actor identitiy ownership when topology changes
+
+  * `PartitionIdentityActor` - Manages the owned identities for a member.
+### `TopologyUpdate` - EventStream message
+Consumed by all aspects of the cluster infrastructure to update caches, lookups, shutting down connections etc.
+
 
 ## Tutorials
 

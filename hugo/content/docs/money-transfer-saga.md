@@ -1,23 +1,27 @@
 ---
-layout: docs.hbs
 title: Money Transfer Saga
-year: 2017
-month: June
-day: 24
-author: tomliversidge
-post: true
+date: 2017-06-26
+layout: article
+tags: [protoactor, patterns]
+author: Tom Liversidge 
+authorimage: "/docs/images/authors/TomLiversidge.jpeg"
+authorsite: "https://blog.oklahome.net/"
+backgroundimage: "/docs/images/backgrounds/bank2.png"
+
 ---
 
 # Money Transfer Saga 
-## (This content is dated, pre ActorSystem, PullRequests are welcome)
+## Intro
  
  - [Part 1 - The Scenario](#1)
  - [Part 2 - The Implementation](#2)
  - [Part 3 - The Audit Log](#3)
  - [Part 4 - Supervision, error kernels and idempotency](#4)
  - [Part 5 - Results](#5)
+
+[Download Sourcecode](https://github.com/AsynkronIT/protoactor-dotnet/tree/dev/examples/Patterns/Saga)
  
- The Saga pattern was first coined by Hector Garcia-Molina and Kenneth Salem in their paper, [Sagas](http://www.cs.cornell.edu/andru/cs711/2002fa/reading/sagas.pdf). Although originally described in the context of a database management system, the Saga pattern has gained popularity in a distributed systems context as a way to manage failures when dealing with multiple remote participants in a business process. The paper  describes a saga as 
+ The **Saga pattern** was first coined by **Hector Garcia-Molina** and **Kenneth Salem** in their paper, [Sagas](http://www.cs.cornell.edu/andru/cs711/2002fa/reading/sagas.pdf). Although originally described in the context of a database management system, the Saga pattern has gained popularity in a distributed systems context as a way to manage failures when dealing with multiple remote participants in a business process. The paper  describes a saga as 
  
  > a long-lived transaction that can be written as a sequence of transactions that can be interleaved with other transactions 
  
@@ -28,7 +32,7 @@ post: true
  
 # Part 1 - The Scenario <a name="1"></a>
 The scenario here is a simple bank account transfer - we want to transfer €10 
-from Account1 to Account2. Each account has a starting balance of €10. If successful, Account1 will end with a balance of €0 and Account2 will have a balance of €20. Our aim is to have a transaction-like result for the account transfer process where even if one of the steps fails, the system is left in a consistent state (i.e. either the whole process fails, resulting in €10 in each account, or the process succeeds)
+from `Account1` to Account2. Each account has a starting balance of €10. If successful, `Account1` will end with a balance of €0 and `Account2` will have a balance of €20. Our aim is to have a transaction-like result for the account transfer process where even if one of the steps fails, the system is left in a consistent state (i.e. either the whole process fails, resulting in €10 in each account, or the process succeeds)
 
 On the face of it, this is a simple problem. However, things get more interesting when you consider each account as a remote service and thus subject to the usual issues associated with remote calls. The accounts can misbehave in a number of ways:
 * Refuse to process a request (for example, if an account has been suspended or closed for some reason)
@@ -37,31 +41,28 @@ On the face of it, this is a simple problem. However, things get more interestin
 * Return a "I'm busy" response
 * Be slow
 
-For our example, we have only a single area where a compensating action might need to be applied - if we are able to debit from Account1 but unable to credit Account2, the debit should be rolled back (a compensating action of crediting Account1 should be applied). Otherwise, Account1 will be €0 and Account2 will be €10, and €10 has been lost in the system.
+For our example, we have only a single area where a compensating action might need to be applied - if we are able to debit from `Account1` but unable to credit Account2, the debit should be rolled back (a compensating action of crediting `Account1` should be applied). Otherwise, `Account1` will be €0 and `Account2` will be €10, and €10 has been lost in the system.
 
-There are many workflows for what seems a simple use case:
-  1. Account1 processes successfully -> CREDIT ACCOUNT2
-  2. Account1 refuses the debit request. -> STOP
-  3. Account1 responds with "I'm busy" -> RETRY
-  4. Account1 does not respond -> RETRY
+**There are many workflows for what seems a simple use case:**
+  1. `Account1` processes successfully → `CREDIT ACCOUNT2`
+  2. `Account1` refuses the debit request. → `STOP`
+  3. `Account1` responds with "I'm busy" → `RETRY`
+  4. `Account1` does not respond → `RETRY`
   
-If Account1 responds successfully, then we have the following possibilities
+**If `Account1` responds successfully, then we have the following possibilities**
   
-  5. Account2 processes successfully -> SUCCESS
-  6. Account2 refuses the credit request -> ROLLBACK DEBIT
-  7. Account2 responds with "i'm busy" -> RETRY
-  8. Account2 does not respond -> RETRY
+  5. `Account2` processes successfully → `SUCCESS`
+  6. `Account2` refuses the credit request → `ROLLBACK DEBIT`
+  7. `Account2` responds with "i'm busy" → `RETRY`
+  8. `Account2` does not respond → `RETRY`
   
-If we have to rollback the debit:
+**If we have to rollback the debit:**
   
-  8. Account1 processes successfully -> STOP
-  9. Account1 refuses the credit request -> ESCALATE
-  10. Account1 responds with "i'm busy" -> RETRY
-  11. Account1 does not respond -> RETRY
-  
-and finally:
-  
-  12. the TransferProcess saga itself crashes -> RESUME
+  8. `Account1` processes successfully → `STOP`
+  9. `Account1` refuses the credit request → `ESCALATE`
+  10. `Account1` responds with "i'm busy" → `RETRY`
+  11. `Account1` does not respond → `RETRY`
+  12. the TransferProcess saga itself crashes → `RESUME`
   
 Each of these possibilities requires handling. In situations where there is either a "i'm busy" response, or no response at all, we should retry the request. If the request is outright refused, there is no point in retrying, so we should stop or rollback the saga. 
   
@@ -70,7 +71,6 @@ One situation that presents a problem is when we receive no reply to our request
 What if a compensating action fails? 
   
 ### Escalation 
-  
 In the preceding section we descovered scenarios where we are not sure what state the system is in. Even with retries and compensating actions, things can still go wrong. In an ideal world, these should be very rare! However, they can occur and in these cases it's best to have a fallback strategy, escalating the result of the saga to something else, quite possibly a manual / human process. 
    
 ### Atomicitiy
@@ -78,8 +78,7 @@ One thing a saga does not provide is atomicitiy. In the bank account example abo
   
 ___
   
-# Part 2 - Implementing the Money Transfer Saga  <a name="2"></a>
-  
+# Part 2 - Implementing the Money Transfer Saga  <a name="2"></a>  
 The implementation of the transfer process saga contains the following actors:
   
 * Account actor - this is a simulation of a troublesome remote service
@@ -87,7 +86,6 @@ The implementation of the transfer process saga contains the following actors:
 * AccountProxy actor - this has the sole purpose of attempting to communicate with Account actor
   
 ## Account actor
-  
 The Account actor simulates a remote bank account service:
 ```csharp
 public Task ReceiveAsync(IContext context)
@@ -108,16 +106,16 @@ public Task ReceiveAsync(IContext context)
 When a `Credit` or `Debit` request is received, we attempt to adjust the balance of the account. The attempt may fail for a number of reasons:
 
 ```csharp
-private Task AdjustBalance(PID replyTo, decimal amount)
+private Task AdjustBalance(IContext ctx, PID replyTo, decimal amount)
 {
     if (RefusePermanently())
     {
         _processedMessages.Add(replyTo, new Refused());
-        replyTo.Tell(new Refused());
+        ctx.Send(replyTo, new Refused());
     }
         
     if (Busy())
-        replyTo.Tell(new ServiceUnavailable());
+        ctx.Send(replyTo, new ServiceUnavailable());
     
     var behaviour = DetermineProcessingBehavior();
     if (behaviour == Behavior.FailBeforeProcessing)
@@ -132,7 +130,7 @@ private Task AdjustBalance(PID replyTo, decimal amount)
     if (behaviour == Behavior.FailAfterProcessing)
         return Failure(replyTo);
     
-    replyTo.Tell(new OK());
+    ctx.Send(replyTo, new OK());
     return Task.CompletedTask;
 }
 ```
@@ -159,16 +157,16 @@ class AccountProxy : IActor
         switch (context.Message)
         {
             case Started _:
-                _account.Tell(_createMessage(context.Self));
+                context.Send(_account,_createMessage(context.Self));
                 context.SetReceiveTimeout(TimeSpan.FromMilliseconds(100));
                 break;
             case OK msg:
                 context.CancelReceiveTimeout();
-                context.Parent.Tell(msg);
+                context.Send(context.Parent,msg);
                 break;
             case Refused msg:
                 context.CancelReceiveTimeout();
-                context.Parent.Tell(msg);
+                context.Send(context.Parent,msg);
                 break;
             // These represent a failed remote call
             case InternalServerError _:
@@ -202,10 +200,7 @@ ___
 Our Transfer Process is modeled as a state machine using the Behavior plugin. This allows us to swap out the message handling code depending on our current state. This is achieved by delegating to the Behavior class when handling messages:
   
 ```csharp
-public async Task ReceiveAsync(IContext context)
-{
-    await _behavior.ReceiveAsync(context);
-}
+public Task ReceiveAsync(IContext context) => _behavior.ReceiveAsync(context);
 ```
 Here the `TransferProcess`'s `ReceiveAsync` method just delegates to the Behavior's `ReceiveAsync` method.
   
@@ -232,7 +227,7 @@ private async Task Starting(IContext context)
     }
 }
 
-private Props TryDebit(PID targetActor, decimal amount) => Actor
+private Props TryDebit(PID targetActor, decimal amount) => Props
             .FromProducer(() => new AccountProxy(targetActor, sender => new Debit(amount, sender)));
 ```
 
@@ -242,9 +237,9 @@ Here we create an actor specifically to handle the debit attempt and transition 
 #### Awaiting Debit Confirmation
 
 In this state there are 3 possible transitions:
-* AwaitingDebitConfirmation -> AwaitingCreditConfirmation
-* AwaitingDebitConfirmation -> Stop (ConsistentSystem)
-* AwaitingDebitConfirmation -> Stop (Unknown)
+* AwaitingDebitConfirmation → `AwaitingCreditConfirmation`
+* AwaitingDebitConfirmation → `Stop (ConsistentSystem)`
+* AwaitingDebitConfirmation → `Stop (Unknown)`
 
 ```csharp
 private Task AwaitingDebitConfirmation(IContext context)
@@ -266,7 +261,7 @@ private Task AwaitingDebitConfirmation(IContext context)
     }
 }
 
-private Props TryCredit(PID targetActor, decimal amount) => Actor
+private Props TryCredit(PID targetActor, decimal amount) => Props
             .FromProducer(() => new AccountProxy(targetActor, sender => new Credit(amount, sender)));   
 ```
 
@@ -305,9 +300,9 @@ Receiving a `Terminated` message in the `AwaitingDebitConfirmation` state means 
 #### Awaiting Credit Confirmation
 
 Given a successful debit we transition to the `AwaitingCreditConfirmation` state. In this state there are 3 possible transitions:
-* AwaitingCreditConfirmation -> Stop (Success)
-* AwaitingCreditConfirmation -> RollingBackDebit
-* AwaitingCreditConfirmation -> Stop (Unknown)
+* AwaitingCreditConfirmation → `Stop (Success)`
+* AwaitingCreditConfirmation → `RollingBackDebit`
+* AwaitingCreditConfirmation → `Stop (Unknown)`
                                                                                   
 ```csharp
 private async Task AwaitingCreditConfirmation(IContext context)
@@ -365,8 +360,8 @@ Receiving a `Terminated` message in the `AwaitingCreditConfirmation` state means
 #### Rolling Back Debit
 
 If our debit was successful but our credit was refused, we transition to the `RollingBackDebit` state, where there are 2 possible transitions:
-* RollingBackDebit -> Stop (ConsistentSystem)
-* RollingBackDebit -> Stop (Unknown)
+* RollingBackDebit → `Stop (ConsistentSystem)`
+* RollingBackDebit → `Stop (Unknown)`
 
 ```csharp
 private async Task RollingBackDebit(IContext context)
@@ -578,7 +573,7 @@ var retryAttempts = 10;
 var supervisionStrategy = new OneForOneStrategy((pid, reason) => 
     SupervisorDirective.Restart, retryAttempts)
 
-Actor.FromProducer(() => new TransferProcess(...)
+Props.FromProducer(() => new TransferProcess(...)
     .WithChildSupervisorStrategy(supervisionStrategy);
 ```
   
@@ -598,12 +593,12 @@ public Task ReceiveAsync(IContext context)
     switch (context.Message)
     {
         case Credit msg when _processedMessages.ContainsKey(msg.ReplyTo):
-            replyTo.Tell(_processedMessages[replyTo]);
+            context.Send(replyTo,_processedMessages[replyTo]);
             return Task.CompletedTask;
         case Credit msg:
             _balance += amount;
             _processedMessages.Add(replyTo, new OK());
-            replyTo.Tell(new OK());
+            context.Send(replyTo,new OK());
             return Task.CompletedTask;
         //...
     }
@@ -624,6 +619,7 @@ internal class Program
 {
     public static void Main(string[] args)
     {
+        var system = new ActorSystem();
         Console.WriteLine("Starting");
         var random = new Random();
         var numberOfTransfers = 1000;
@@ -633,11 +629,11 @@ internal class Program
         var busyProbability = 0.05;
         var provider = new InMemoryProvider();
 
-        var props = Actor.FromProducer(() => new Runner(numberOfTransfers, uptime, refusalProbability, busyProbability, retryAttempts, false))
+        var props = Props.FromProducer(() => new Runner(numberOfTransfers, uptime, refusalProbability, busyProbability, retryAttempts, false))
             .WithChildSupervisorStrategy(new OneForOneStrategy((pid, reason) => SupervisorDirective.Restart, retryAttempts, null));
         
         Console.WriteLine("Spawning runner");
-        var runner = Actor.SpawnNamed(props, "runner");
+        var runner = system.Root.SpawnNamed(props, "runner");
        
         Console.ReadLine();
     }
@@ -687,10 +683,10 @@ public Task ReceiveAsync(IContext context)
 }
 
 ```
-Once the `Runner` is started, it loops through the number of iterations and creates two `Account` actors and a `TransferProcess` actor each time, adding the `TransferProcess` PID to a `_transfers` collection. The `Runner` supervises the `TransferActor`, and is responsible for restarting it should it crash. Inside the `TransferProcess` actor, a call to `context.Parent.Tell();` informs the `Runner` of the result. The `Runner` then waits to receive results back from the `TransferProcess` actors:
+Once the `Runner` is started, it loops through the number of iterations and creates two `Account` actors and a `TransferProcess` actor each time, adding the `TransferProcess` PID to a `_transfers` collection. The `Runner` supervises the `TransferActor`, and is responsible for restarting it should it crash. Inside the `TransferProcess` actor, a call to `context.Send(context.Parent,..);` informs the `Runner` of the result. The `Runner` then waits to receive results back from the `TransferProcess` actors:
 
 ```csharp
- public Task ReceiveAsync(IContext context)
+public Task ReceiveAsync(IContext context)
 {
     switch (context.Message)
     {
@@ -712,6 +708,7 @@ Once the `Runner` is started, it loops through the number of iterations and crea
             break;
             //...
     }
+    //...
 ```
 
 For each result type, a counter is incremented to track the different result types, then a completion check is performed to determine if all sagas have finished. If so, the results are outputted:

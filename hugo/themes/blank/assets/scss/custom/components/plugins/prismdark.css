@@ -1,0 +1,134 @@
+/**
+ * GHColors theme by Avi Aryan (http://aviaryan.in)
+ * Inspired by Github syntax coloring
+ */
+
+ code[class*="language-"],
+ pre[class*="language-"] {
+	 color: #c3d0dc;
+	 font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+	 direction: ltr;
+	 text-align: left;
+	 white-space: pre;
+	 word-spacing: normal;
+	 word-break: normal;
+	 font-size: 13.6px;
+	 line-height: 1.2em;
+ 
+	 -moz-tab-size: 4;
+	 -o-tab-size: 4;
+	 tab-size: 4;
+ 
+	 -webkit-hyphens: none;
+	 -moz-hyphens: none;
+	 -ms-hyphens: none;
+	 hyphens: none;
+ }
+
+  /* Code blocks */
+pre[class*="language-"] {
+	overflow: auto;
+	background-color: #2c3038; /*not same color as github, but as dark of this theme*/
+}
+ 
+ pre > code[class*="language-"] {
+	 font-size: 1em;
+ }
+ 
+ pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+ code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+	 background: #c0dffc;
+ }
+ 
+ pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+ code[class*="language-"]::selection, code[class*="language-"] ::selection {
+	 background: #b3d4fc;
+ }
+ 
+
+ 
+ /* Inline code */
+ :not(pre) > code[class*="language-"] {
+	 padding: .2em;
+	 padding-top: 1px;
+	 padding-bottom: 1px;
+	 background: #f8f8f8;
+	 border: 1px solid #dddddd;
+ }
+ 
+ .token.comment,
+ .token.prolog,
+ .token.doctype,
+ .token.cdata {
+	 color: #768390;
+ }
+ 
+ .token.namespace {
+	 opacity: .7;
+ }
+ 
+ .token.string,
+ .token.attr-value {
+	 color: #f47067;
+ }
+ 
+ .token.punctuation,
+ .token.operator {
+	 color: #adbac7; /* no highlight */
+ }
+ 
+ .token.entity,
+ .token.url,
+ .token.symbol,
+ .token.number,
+ .token.boolean,
+ .token.variable,
+ .token.constant,
+ .token.property,
+ .token.regex,
+ .token.inserted {
+	 color: #36acaa;
+ }
+ 
+ .token.atrule,
+ .token.keyword,
+ .token.attr-name,
+ .language-autohotkey .token.selector {
+	 color: #f47067;
+ }
+ 
+
+ .token.function,
+ .token.deleted,
+ .language-autohotkey .token.tag {
+	 color:#dcbdfb;
+ }
+
+
+ 
+ .token.class-name {
+	color: #dcbdfb;	
+ }
+
+ .token.tag,
+ .token.selector,
+ .language-autohotkey .token.keyword {
+	 color: #00009f;
+ }
+ 
+
+ .token.bold {
+	 font-weight: bold;
+ }
+ 
+ .token.italic {
+	 font-style: italic;
+ }
+
+ .token.property, .token.tag, .token.boolean, .token.number, .token.constant, .token.symbol, .token.deleted {
+	color: #6cb6ff; 
+}
+
+.token.string, .token.attr-value {
+    color: #96d0ff;
+}
