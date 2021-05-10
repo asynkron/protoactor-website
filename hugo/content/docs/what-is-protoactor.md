@@ -22,11 +22,11 @@ This is a game changer in the field of actor systems, **you are now free to pick
 
 ## Relation to Microsoft Orleans
 Proto.Actor is based on the same conceptual distributed hash table and automatic placement strategies as Microsoft Orleans.
-The cluster Grains are also similar in the sense that they use an RPC based interface.
+The cluster virtual actors are also similar in the sense that they use an RPC based interface.
 The virtual actor model has proven to be very successful and is here to stay.
 We are fully embracing this concept.
 
-Read more {{< link "Grains" "grains.md" >}}
+Read more [Proto.Cluster](cluster)
 
 ## Relation To Akka and Akka.NET
 The core parts of Proto.Actor loosely follow the conceptual API of Akka.
