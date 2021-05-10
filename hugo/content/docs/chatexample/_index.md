@@ -2,7 +2,7 @@
 title: "Chat Example Using Proto.Remote"
 date: 2021-04-02T16:34:24+02:00
 draft: false
-tags: [protoactor, remote, C#]
+tags: [protoactor, remote, dotnet]
 layout: article
 author: "Anes Hasicic"
 authorimage: "/docs/images/authors/AnesHasicic.jpeg"

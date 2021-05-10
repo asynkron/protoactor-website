@@ -2,7 +2,7 @@
 title: Proto.Actor Bootcamp
 date: 2020-07-2614
 layout: article
-tags: [protoactor, bootcamp, C#, series]
+tags: [protoactor, bootcamp, dotnet, series]
 author: Valentin Miroshnichenko
 authorimage: "/docs/images/authors/anon.png"
 authorsite: "https://github.com/Valentin-Miroshnichenko"
