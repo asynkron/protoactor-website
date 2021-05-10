@@ -5,7 +5,7 @@ layout: article
 tags: [protoactor, bootcamp, C#, series]
 author: Valentin Miroshnichenko
 authorimage: "/docs/images/authors/anon.png"
-authorsite: "https://blog.oklahome.net/"
+authorsite: "https://github.com/Valentin-Miroshnichenko"
 backgroundimage: "/docs/images/backgrounds/bootcamp.png"
 ---
 # Proto.Actor Bootcamp
