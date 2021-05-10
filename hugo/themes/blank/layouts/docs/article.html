@@ -12,7 +12,7 @@
               <div class="d-flex align-items-center mb-3 mb-xl-4">
                 {{ with .Params.tags }}                           
                     {{ range . }}
-                    <a class="badge badge-danger badge-pill" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>&NonBreakingSpace;
+                    <a class="badge badge-primary badge-pill" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>&NonBreakingSpace;
                     {{ end }}                            
                 {{ end }}
 
