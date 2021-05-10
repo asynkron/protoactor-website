@@ -11,9 +11,10 @@ tags: [protoactor, docs]
 
 * [Hello World](hello-world.md)
 * [Getting Started](getting-started.md)
-* [Chat Example](chat-example)
-* [Cluster Example](clusterintro) 
-* [Money Transfer Saga](money-transfer-saga.md)
+
+## Articles
+
+{{< article >}}
 
 {{< note >}}
 You can also learn Proto.Actor by doing the [**Proto.Actor Bootcamp**](bootcamp)!

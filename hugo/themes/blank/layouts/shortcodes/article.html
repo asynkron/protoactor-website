@@ -1,0 +1,44 @@
+<div clss="container">
+
+    {{ range .Site.AllPages }}
+    {{ if eq .Layout "article" }}
+    <div class="row">
+        <div class="p-0 bg-light row no-gutters mb-2">
+            <div class="col-lg-3 col-xl-3">
+                <img class="flex-fill rounded" src="{{.Params.backgroundimage}}" >                
+            </div>
+            <div class="col-lg-9 col-xl-9">
+                <div class="container d-flex align-items-center">
+                    <div class="row justify-content-center" style="width: 100%;">
+                        <div class="col col-md-10 col-xl-9 py-1">
+                            <div class="my-2 my-md-2">
+                                <div class="d-flex align-items-center mb-3 mb-xl-4">
+                                    {{ with .Params.tags }}
+                                    {{ range . }}
+                                    <a class="badge badge-primary badge-pill" href="{{ " /tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>&NonBreakingSpace;
+                                    {{ end }}
+                                    {{ end }}
+
+                                    <div class="ml-3 text-small text-muted">{{ dateFormat "Monday, Jan 2, 2006" .Date }}
+                                    </div>
+                                </div>
+                                <h5>
+                                    <a href="{{.Permalink}}" class="d-flex align-items-center h5">
+                                    {{.Title}}
+                                    </a>
+                                </h5>
+                                <a href="{{.Params.authorsite}}" class="d-flex align-items-center">
+                                    <img src="{{.Params.authorimage}}" class="avatar avatar-xs">
+                                    <div class="h6 mb-0 ml-3">{{.Params.author}}</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ end }}
+    {{ end }}
+
+</div>
