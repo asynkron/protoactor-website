@@ -35,7 +35,7 @@ You can find the example on github [here](https://github.com/aneshas/protoactor-
 ![Proto.Remote](images/examples/chat-overview.png)
 As shown in the picture, our chat example will consist of client and server actors distributed over the network communicating via `Proto.Remote` library.
 
-Since client and server parts of our example are in a client/server relationship (duh), each client actor will initiate a connection request towards the server by using its PID and in fact use the server as a kind of service.
+Since client and server parts of our example are in a client/server relationship (duh), each client actor will initiate a connection request towards the server by using its `PID` and in fact use the server as a kind of service.
 
 The server in turn will keep track of all client PIDs and use them in order to be able to broadcast incoming messages in a fan-out fashion to all known clients (including the sender).
 
@@ -178,7 +178,7 @@ context.SpawnNamed(
 For this example, we are going to use a quick and convenient way of creating an actor from a function which is provided by `Props.FromFunc` method. We are going to spawn the actor in the root context (the top-level actor system).
 
 The actor func takes closure over the `clients` hash set which is used to keep track of all connected clients.\
-Each time a connection request is received via `Connected` message, the incoming client PID is added to the set and a response message is sent back to the sender.
+Each time a connection request is received via `Connected` message, the incoming client `PID` is added to the set and a response message is sent back to the sender.
 
 When a `SayRequest` message is received, the response is broadcasted back to all clients via `SayResponse` message. A similar thing happens with `NickRequest` message which is used to change the nick of the user and is then also sent back to all clients in the same fan-out fashion.
 
@@ -244,7 +244,7 @@ You can notice that the client actor is pretty straightforward in that it only l
 Now let's take a look at how we can resolve the server `PID` and establish a connection to it.
 
 ### Resolving Server PID
-Resolving server PID is as easy as calling `FromAddress` factory method on `PID` class supplying it with the combination of `host:port` and the `name/id` of the server actor we spawned earlier.
+Resolving server `PID` is as easy as calling `FromAddress` factory method on `PID` class supplying it with the combination of `host:port` and the `name/id` of the server actor we spawned earlier.
 {{< tabs >}}
 {{< tab "C#" >}}
 ```csharp
@@ -254,7 +254,7 @@ server = PID.FromAddress("127.0.0.1:8000", "chatserver");
 {{</ tabs >}}
 Now that we have resolved and obtained the server `PID`, we are able to transparently send messages back and forth via our local actor system.
 ### Connecting to Server
-As per our previously established protobuf contract, we initiate a connection to the server by sending the initial `Connect` message which contains the PID of our client actor, which will subsequently be used by the server actor to respond to us thus establishing a two-way connection.
+As per our previously established protobuf contract, we initiate a connection to the server by sending the initial `Connect` message which contains the `PID` of our client actor, which will subsequently be used by the server actor to respond to us thus establishing a two-way connection.
 {{< tabs >}}
 {{< tab "C#" >}}
 ```csharp
@@ -323,7 +323,7 @@ First, we simply ignore hitting the return key by doing nothing.
 
 Next, we check if the user has entered an exit command. If that's the case, we return from our main loop which in turn ends our program and shuts down the actor system.
 
-If the user tries to change the default nick by using /nick command, we parse the new nick, pack it inside of `NickRequest` message and send it over to the server via our root context. Notice how we transparently send the message here by only providing the server PID and the message it self is then automatically routed to the correct actor by Proto.Remote.
+If the user tries to change the default nick by using /nick command, we parse the new nick, pack it inside of `NickRequest` message and send it over to the server via our root context. Notice how we transparently send the message here by only providing the server `PID` and the message it self is then automatically routed to the correct actor by Proto.Remote.
 
 At last, if the user types in some unstructured text we it is a chat message pass it along as such to the server via SayRequest message. Remember that we wired up our client actor to receive messages from the server and print them out to the console.
 
