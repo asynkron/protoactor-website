@@ -1,4 +1,4 @@
-# Proto.Actor Bootcamp - Module 8: Proto.Actor Cluster.
+# Module 8: Proto.Actor Cluster.
 ## Concepts you'll learn.
 
 In Chapter 7, you learned how to create distributed applications with a fixed number of nodes. The static membership approach is simple but does not have a ready-made load-balancing or fault-tolerance solution. A cluster allows you to dynamically increase and decrease the number of nodes used by a distributed application and eliminates the fear of having a single point of failure.

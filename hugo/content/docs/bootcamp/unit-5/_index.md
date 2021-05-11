@@ -1,4 +1,4 @@
-# Proto.Actor Bootcamp - Module 5: Message Routing.
+# Module 5: Message Routing.
 
 ## Concepts you'll learn.
 

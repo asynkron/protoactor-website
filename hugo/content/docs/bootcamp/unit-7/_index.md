@@ -1,4 +1,4 @@
-# Proto.Actor Bootcamp - Module 7: Proto.Actor Remote.
+# Module 7: Proto.Actor Remote.
 
 ## Concepts you'll learn.
 

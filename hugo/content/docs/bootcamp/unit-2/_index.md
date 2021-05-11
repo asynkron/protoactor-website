@@ -1,4 +1,4 @@
-# Proto.Actor Bootcamp - Module 2 Defining and using actors and messages.
+# Module 2 Defining and using actors and messages.
 
 ## Concepts you'll learn.
 

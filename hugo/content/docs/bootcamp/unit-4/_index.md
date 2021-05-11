@@ -1,4 +1,4 @@
-# Proto.Actor Bootcamp - Module 4: Creating actor hierarchy and error handling.
+# Module 4: Creating actor hierarchy and error handling.
 
 ## Concepts you'll learn.
 

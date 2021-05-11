@@ -1,4 +1,4 @@
-# Proto.Actor Bootcamp - Module 3 Understanding Actor Lifecycles and states.
+# Module 3 Understanding Actor Lifecycles and states.
 ## Concepts you'll learn.
 
 In this module, we will learn what the actor's life cycle is and how to save and restore its internal state. You will learn what stages of the actor's life cycle the actor goes through. And how you can process these stages by processing the corresponding messages.

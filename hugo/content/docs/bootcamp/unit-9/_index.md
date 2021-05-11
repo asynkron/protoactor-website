@@ -1,4 +1,4 @@
-# Proto.Actor Bootcamp - Module 9: Persistence Actor.
+# Module 9: Persistence Actor.
 
 ## Concepts you'll learn.
 

@@ -1,4 +1,4 @@
-# Proto.Actor Bootcamp - Module 6: Message channels.
+# Module 6: Message channels.
 
 ## Concepts you'll learn.
 
