@@ -9,22 +9,19 @@ tags: [protoactor, docs]
 
 ## TLDR; Just show me the code!
 
-* [Hello World](hello-world.md)
-* [Getting Started](getting-started.md)
-* [Chat Example](chat-example)
-* [Cluster Example](clusterintro) 
-* [Money Transfer Saga](money-transfer-saga.md)
+* [Hello World](hello-world)
+* [Getting Started](getting-started)
 
-{{< note >}}
-You can also learn Proto.Actor by doing the [**Proto.Actor Bootcamp**](bootcamp)!
-{{</ note >}}
+## Articles
+
+{{< article >}}
 
 ## Introduction
 
-* [What is Proto.Actor?](what-is-protoactor.md)
-* [Why Proto.Actor](why-protoactor.md)
-* [Design Principles](design-principles.md)
-* [Features](features.md)
+* [What is Proto.Actor?](what-is-protoactor)
+* [Why Proto.Actor](why-protoactor)
+* [Design Principles](design-principles)
+* [Features](features)
 
 ## Concepts
 
