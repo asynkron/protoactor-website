@@ -60,3 +60,24 @@ For this reason we chose to keep them separate, yet similar from an API perspect
 A completely valid scenario might be that you want to spawn an actor on a very specific node, and it should work just like any other actor, then you can do this using Proto.Remote.
 
 While if you in the same application, also want to leverage virtual actors, with the rich set of features they provide, you would do this using Proto.Cluster.
+
+### How does this compare to Erlang or Akka?
+
+Proto.Actor has chosen a far less complex approach for remote spawning, or "remote deploy" as it is called in the Akka world.
+
+Erlang has its own VM, and is capable of passing entire programs over the wire to other nodes in order to spawn processes remotely.
+
+Akka allows the developer to pass `Props` over the wire and spawn actors remotely that way.
+
+Conceptually these approaches are interesting and flexible.
+
+The downside however is that this requires a fair amount of dark magic to work in an environment such as the JVM/.NET or Go. 
+You need to have a serializer that is capable of serializing entire objects graphs of arbitrary objects. objects that in many times are not to be considered "messages" and designed for serialization.
+Objects that may or may not be safe to deserialize on the other end.
+
+More on this topic here [Harmful Magic Serializers](serialization#harmful-magic-serializers)
+
+Proto.Actor aims to be closer to the microservice world, each node announces to the `ClusterProvider` what kind of actors it is capable of spawning using service discovery.
+
+There is no way for a remote node to spawn or even pass anything unexpected on another node.
+
