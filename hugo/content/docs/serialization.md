@@ -20,9 +20,7 @@ In the .NET space, the most known magic serializer is the now obsolete `BinaryFo
 These types of serializers often write some form of "manifest" when serializing some user defined type.
 This manifest often points to e.g. a fully qualified type name of the object that was serialized.
 
-{{< warning >}}
 **This opens up an attack vector into systems using those serializers, as an attacker may pass a harmful payload, containing a type-name that was not intended to be used for deserialization.**
-{{</ warning >}}
 
 You can read more about this specific issue here:
 [https://docs.microsoft.com/en-us/visualstudio/code-quality/ca2300?view=vs-2019](https://docs.microsoft.com/en-us/visualstudio/code-quality/ca2300?view=vs-2019)
