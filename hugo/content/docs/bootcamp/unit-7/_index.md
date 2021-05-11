@@ -1,7 +1,5 @@
 # Proto.Actor Bootcamp - Module 7: Proto.Actor Remote.
 
-<img src="images/protowhite.png" alt="protowhite" style="float: left; zoom: 20%;" />
-
 ## Concepts you'll learn.
 
 So far, we have considered the methods of creating a system of actors on only one node. In this chapter, we will learn techniques and examples of horizontal scaling applications using the Proto.Actor platform.

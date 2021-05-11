@@ -1,7 +1,5 @@
 # Proto.Actor Bootcamp - Module 6: Message channels.
 
-<img src="images/protowhite.png" alt="protowhite" style="float: left; zoom: 20%;" />
-
 ## Concepts you'll learn.
 
 In this module, we will consider the channels that can be used to transfer messages between actors. At first, we will get acquainted with two types of channels: "point-to-point" and "publisher/subscriber". We have used point-to-point channels in all previous examples in this course, but sometimes we need a more flexible way to send messages to recipients. 

@@ -1,7 +1,5 @@
 # Proto.Actor Bootcamp - Module 5: Message Routing.
 
-<img src="images/protowhite.png" alt="protowhite" style="float: left; zoom: 20%;" />
-
 ## Concepts you'll learn.
 
 Message routers are necessary when you need to organize scalability management. For example, to handle the increased load, you need to create multiple instances of the same actor, and the router will decide to which instance to send the next message. We will begin this module by describing the "Router" template and learn about the three reasons for using routing to control message stream:

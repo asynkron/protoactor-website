@@ -1,7 +1,5 @@
 # Proto.Actor Bootcamp - Module 2 Defining and using actors and messages.
 
-<img src="images/protowhite.png" alt="protowhite" style="float: left; zoom: 20%;" />
-
 ## Concepts you'll learn.
 
 In the previous module, we learned about the actors and messages.  In this module, we will look more detailed at how we can create and use the actors and messages. 

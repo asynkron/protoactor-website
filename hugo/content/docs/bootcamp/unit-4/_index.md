@@ -1,7 +1,5 @@
 # Proto.Actor Bootcamp - Module 4: Creating actor hierarchy and error handling.
 
-<img src="images/protowhite.png" alt="protowhite" style="float: left; zoom: 20%;" />
-
 ## Concepts you'll learn.
 
 In this module, we will learn how to create a hierarchy of actors and how to restore actors after a failure. To demonstrate the features of the Proto.Actor platform, we will create our streaming system for watching movies based on the actor hierarchy. You'll see how Proto.Actor takes on all the low-level work of supporting the actor hierarchy and recovering actors after a crash. 

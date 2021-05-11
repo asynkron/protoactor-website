@@ -1,7 +1,5 @@
 # Proto.Actor Bootcamp - Module 9: Persistence Actor.
 
-<img src="images/protowhite.png" alt="protowhite" style="float: left; zoom: 20%;" />
-
 ## Concepts you'll learn.
 
 The actor state stored in RAM is lost when the actor is stopped or restarted or when the entire actor system is stopped or restarted. In this chapter, we will describe how to ensure that this state is preserved using the Proto.Persistence module.
