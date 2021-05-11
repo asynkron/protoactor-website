@@ -37,7 +37,7 @@ Other offenders are Json.NET when `TypeNameHandling` is set to something other t
 Our own serializer **Wire**, discontinued for this reason.
 And the **AkkaDotNet/Hyperion** fork of Wire.
 
-Github issued Security advisory: https://github.com/AsynkronIT/Wire/security/advisories/GHSA-hpw7-3vq3-mmv6
+**Github issued Security advisory: [Wire/security/advisories/GHSA-hpw7-3vq3-mmv6](https://github.com/AsynkronIT/Wire/security/advisories/GHSA-hpw7-3vq3-mmv6)**
 
 ## Useful Links
 
