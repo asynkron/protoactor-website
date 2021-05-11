@@ -19,15 +19,7 @@ In Proto.Actor messages are simple objects:
 {{< tabs >}}
 {{< tab "C#" >}}
 ```csharp
-public class MyMessage
-{
-    public MyMessage(string name)
-    {
-        Name = name;
-    }
-
-    public string Name {get;private set;}
-}
+public record MyMessage(string Name);
 ```
 {{</ tab >}}
 {{< tab "Go" >}}
