@@ -13,8 +13,9 @@ Or, on the C#-`ClusterConfig`/ Go-`cluster.Config` objects using `WithClusterKin
 
 This is essentially a dictionary mapping from string, the Kind, to a `Props` which tells the remote and cluster modules how to configure and spawn an actor of that "kind".
 
-### Remote Spawn using Proto.Remote
+## Remote Spawn using Proto.Remote
 
+### Registration
 {{< tabs >}}
 {{< tab "C#" >}}
 ```csharp
@@ -25,15 +26,32 @@ var config = GrpcCoreRemoteConfig
 ```
 {{</ tab >}}
 {{< tab "Go" >}}
-```csharp
+```go
 var config = remote.Configure(advertisedHost, 12000)
     .WithRemoteKind("echo", actor.FromProducer(someProducer));
 ```
 {{</ tab >}}
 {{</ tabs >}}
 
-### Remote Spawn using Proto.Cluster
+### Client Usage
 
+{{< tabs >}}
+{{< tab "C#" >}}
+```csharp
+var pid = system.Remote().Spawn("kind");
+```
+{{</ tab >}}
+{{< tab "Go" >}}
+```go
+pid := remoter.Spawn("kind")
+```
+{{</ tab >}}
+{{</ tabs >}}
+
+
+## Remote Spawn using Proto.Cluster
+
+### Registration
 {{< tabs >}}
 {{< tab "C#" >}}
 ```csharp
@@ -42,14 +60,31 @@ var config = ClusterConfig.Setup(....)
 ```
 {{</ tab >}}
 {{< tab "Go" >}}
-```csharp
+```go
 var config = cluster.Configure(...)
     .WithClusterKind("echo", actor.FromProducer(someProducer));
 ```
 {{</ tab >}}
 {{</ tabs >}}
 
-### Why the separation of the two?
+### Client Usage
+
+Note how we are not touching any `PID` here, instead all of the resolution of virtual actors is hidden from the developer behind the cluster API.
+
+{{< tabs >}}
+{{< tab "C#" >}}
+```csharp
+var res = cluster.RequestAsync("MyActor","MyKind", msg, CancellationTokens.WithTimeout(2000));
+```
+{{</ tab >}}
+{{< tab "Go" >}}
+```go
+res := cluster.Call("MyActor","MyKind", msg)
+```
+{{</ tab >}}
+{{</ tabs >}}
+
+## Why the separation of the two?
 
 If Proto.Remote and Proto.Cluster configure remote spawning the same way, why separate the two?
 
@@ -61,7 +96,7 @@ A completely valid scenario might be that you want to spawn an actor on a very s
 
 While if you in the same application, also want to leverage virtual actors, with the rich set of features they provide, you would do this using Proto.Cluster.
 
-### How does this compare to Erlang or Akka?
+## How does this compare to Erlang or Akka?
 
 Proto.Actor has chosen a far less complex approach for remote spawning, or "remote deploy" as it is called in the Akka world.
 
