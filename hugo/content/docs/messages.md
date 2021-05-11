@@ -57,7 +57,7 @@ public class MyMessage
     public string Name {get;private set;}
 }
 
-public class Hi{}
+public record Hi;
 
 /* actor definition */
 public class MyActor : IActor
