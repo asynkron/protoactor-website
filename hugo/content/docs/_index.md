@@ -9,8 +9,8 @@ tags: [protoactor, docs]
 
 ## TLDR; Just show me the code!
 
-* [Hello World](hello-world.md)
-* [Getting Started](getting-started.md)
+* [Hello World](hello-world)
+* [Getting Started](getting-started)
 
 ## Articles
 
@@ -18,10 +18,10 @@ tags: [protoactor, docs]
 
 ## Introduction
 
-* [What is Proto.Actor?](what-is-protoactor.md)
-* [Why Proto.Actor](why-protoactor.md)
-* [Design Principles](design-principles.md)
-* [Features](features.md)
+* [What is Proto.Actor?](what-is-protoactor)
+* [Why Proto.Actor](why-protoactor)
+* [Design Principles](design-principles)
+* [Features](features)
 
 ## Concepts
 
