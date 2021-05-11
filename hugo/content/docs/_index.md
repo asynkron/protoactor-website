@@ -53,7 +53,7 @@ tags: [protoactor, docs]
 * [Persistence](persistence.md) - How do I persist state for actors?
 * [Remote](remote.md) - How do I communicate with actors on other nodes?
     * [Message Serialization](serialization.md)
-    * [Remote Deployment](remote-deploy.md) - How do I spawn actors on other nodes?
+    * [Remote Spawning](remote-spawn.md) - How do I spawn actors on other nodes?
     * [gRPC Compression](grpc-compression.md) - How do I use gRPC compression for remote communication?
 * [Cluster](cluster.md) - How do I build clusters of actor nodes?
 * [SimpleScheduler](scheduling.md) - How do I send messages on a timer?
