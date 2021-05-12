@@ -16,7 +16,7 @@ To free space in the storage, the Persistent actor can delete old snapshots base
 
 #### Deleting an event.
 
-Usually in applications, deleting events is not used at all, or it is used in combination with snapshots. Since by deleting events, you lose the history of how the state of the actor changed before it reached the current state. However, if you need to delete events for some reason, you can use the `DeleteEventsAsync () ' method and pass the index of the required event.
+Usually in applications, deleting events is not used at all, or it is used in combination with snapshots. Since by deleting events, you lose the history of how the state of the actor changed before it reached the current state. However, if you need to delete events for some reason, you can use the `DeleteEventsAsync()` method and pass the index of the required event.
 
 #### Practical implementation.
 
@@ -37,7 +37,7 @@ public Calculator(IProvider provider)
 }
 ```
 
-We will also need to add the ApplySnapshot()method to our class so that our actor can restore its state from the snapshot.
+We will also need to add the `ApplySnapshot()` method to our class so that our actor can restore its state from the snapshot.
 
 ```csharp
 private void ApplySnapshot(Snapshot snapshot)
@@ -55,4 +55,5 @@ private void ApplySnapshot(Snapshot snapshot)
 }
 ```
 
+{{< listfiles "dotnet" >}}
 

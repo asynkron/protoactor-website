@@ -182,4 +182,6 @@ var props = Props.FromProducer(() => new Calculator(provider));
 
 And so let's sum up. Each command in our calculator actor becomes an event and is logged, and then a new calculation result is written to the `_result` variable.
 
+{{< listfiles "dotnet" >}}
+
 [Go ahead!](../lesson-3)

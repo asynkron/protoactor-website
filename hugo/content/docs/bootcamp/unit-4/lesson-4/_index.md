@@ -243,4 +243,6 @@ If we want to stop it playing, we should type "stop".
 
 ![](../../images/4_3_4.png)
 
+{{< listfiles "dotnet" >}}
+
 [Go ahead!](../lesson-5)

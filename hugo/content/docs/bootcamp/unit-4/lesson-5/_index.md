@@ -95,4 +95,6 @@ As you can see, the logic of this actor is straightforward. After receiving the 
 
 Let's run our application and look at the result.
 
+{{< listfiles "dotnet" >}}
+
 [Go ahead!](../lesson-6)

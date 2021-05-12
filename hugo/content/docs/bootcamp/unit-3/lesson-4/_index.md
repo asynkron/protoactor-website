@@ -64,4 +64,6 @@ Let's launch our app and see what happened.
 
 As you can see, the actor succesfully completed job. 
 
+{{< listfiles "dotnet" >}}
+
 [Go ahead!](../lesson-5)

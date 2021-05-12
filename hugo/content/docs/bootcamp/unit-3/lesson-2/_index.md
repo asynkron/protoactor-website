@@ -338,5 +338,7 @@ Now that we launch our application and press any key, we will see that our actor
 
 ![](../../images/3_2_4.png)
 
+{{< listfiles "dotnet" >}}
+
 [Go ahead!](../lesson-3)
 

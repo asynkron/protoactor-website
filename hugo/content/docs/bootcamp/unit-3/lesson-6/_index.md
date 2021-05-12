@@ -167,4 +167,6 @@ Let's run our program and see what did we get.
 
 ![](../../images/3_6_1.png)
 
+{{< listfiles "dotnet" >}}
+
 [To the next unit!](../../unit-4)
