@@ -10,6 +10,8 @@ backgroundimage: "/docs/images/backgrounds/bootcamp.png"
 ---
 # Proto.Actor Bootcamp
 
+{{< bootcamp >}}
+
 Welcome to  [Proto.Actor](http://proto.actor/) Bootcamp. It is a free course for self-study.
 
 This training course consists of nine main parts, during which you will learn how to create fully functional, real-world programs using Proto.Actor  actors and many other components of the Proto.Actor Framework.
