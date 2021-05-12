@@ -2,7 +2,7 @@
 
 The Event Sourcing technology (event history) appeared quite a long time ago. We will look at a simple example that demonstrates the difference between storing event history and simple records with status information. In this example, we implement a calculator that should only remember the last calculated result.
 
-#### Updating records.
+## Updating records.
 
 Updating records is the simplest method used when using database SQL for operational processing transactions (Online Transaction Processing, OLTP). Picture 1 shows how you can use SQL instructions insert and update to save the calculation results in the calculator.
 
@@ -18,7 +18,7 @@ If you want to know what calculations the user performed, you will have to save 
 
 ![](../../images/9_1_2.png)
 
-#### Saving the state without changes
+## Saving the state without changes
 
 The idea of Event Sourcing technology (history of events) is described below. Instead of storing the last result in a single record, all successfully performed operations can be logged as events. The event must describe exactly what is happening; in this case we will store the name of the operation and its argument. Again, the example uses simple SQL instructions; the log is organized as a simple table in a database. In the Fig. 3 shows the instructions, remembering the entire history of calculations.
 
@@ -34,11 +34,11 @@ Now let's see how a calculator reconstructs the last known state based on an eve
 
 As you can see, Event Sourcing is a simple technology. In the next section, we will see how this technology can be used to save the actor state.
 
-#### Which solution is "easier"?
+## Which solution is "easier"?
 
 The CRUD style solution is perfect for a simple calculator. It requires less storage space, and restoring the last result is easier. We used the calculator application only to highlight the differences between the two approaches. The publicly available variable state is our enemy. Saving it in a database does not solve the problem. Interactions with the database are becoming more and more complicated when using CRUD operations without control—the combination of actors and the Proto.Persistence module provides an easy way to implement Event Sourcing technology without requiring a lot of effort from the programmer, as you will see later in this module.
 
-#### Event Sourcing for actors
+## Event Sourcing for actors
 
 One of the most significant advantages of Event Sourcing (history of events) is the separation of write and read operations with the database in two stages. Reading from the journal occurs only when the state of the stored actor is restored. After recovery, the actor continues to act as usual: processes messages and stores its state in memory, simultaneously storing the events in permanent storage.
 

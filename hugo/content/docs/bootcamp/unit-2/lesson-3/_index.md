@@ -8,7 +8,7 @@ The difference between these ways of creating messages is that when you create a
 
 Since the main feature of the Proto.Actor platform is the ability to write actors in different programming languages. You should always try to use Protobuf for writing messages. And use C# only in extraordinary cases. To allow your system to interact with actors in other programming languages in the future.
 
-#### How to create a message with using C#.
+## How to create a message with using C#.
 
 So, to start, we'll create a simple class in our IDE, unlike creating an actor, where we had to inherit from a special base class. The message class does not need to inherit from any base class or interface.
 
@@ -36,7 +36,7 @@ The main rule is that we should not pass a variable state between actors. One of
 
 Therefore, we must create immutable messages. In other words, our messages must be thread-safe. It will allow us to transmit them anywhere in the system without having to worry about ssharing the variable states between actors. 
 
-#### How to create a message using gRPC and Protobuf.
+## How to create a message using gRPC and Protobuf.
 
 **gRPC** is a high-performance framework developed by Google for Remote Procedure Call (RPC) that running on top of HTTP/2.
 

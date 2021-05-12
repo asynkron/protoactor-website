@@ -10,15 +10,15 @@ When the condition for saving a snapshot is triggered, processing of incoming me
 
 During a state restore, the last saved state snapshot is used for initialization. Once the status snapshot has been uploaded, it starts loading and processing events that occur after the last saved status snapshot. To restore the actor to its current (i.e. last) state.
 
-#### Deleting a snapshot.
+## Deleting a snapshot.
 
 To free space in the storage, the Persistent actor can delete old snapshots based on the index of that snapshot. All you need to do is call the `DeleteSnapshotsAsync()` method and pass the unnecessary state's index.
 
-#### Deleting an event.
+## Deleting an event.
 
 Usually in applications, deleting events is not used at all, or it is used in combination with snapshots. Since by deleting events, you lose the history of how the state of the actor changed before it reached the current state. However, if you need to delete events for some reason, you can use the `DeleteEventsAsync()` method and pass the index of the required event.
 
-#### Practical implementation.
+## Practical implementation.
 
 Let's look at how we can use state snapshots in our actor system in practice. To do this, let's rewrite a little bit of the example from the last lesson so that it can to support working with state snapshots. We need to change the constructor of our calculator by replacing the call of the `WithEventSourcing()` method with the `WithEventSourcingAndSnapshotting()` method.
 

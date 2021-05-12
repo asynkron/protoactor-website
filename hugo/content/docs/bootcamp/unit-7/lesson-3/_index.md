@@ -2,7 +2,7 @@
 
 To understand how to work with **Proto.Remote**, let's create a chat that will use **Proto.Remote** to transfer messages between chat members. This application will consist of three components. This is the server, client, and library of the messages.
 
-#### Library with messages.
+## Library with messages.
 
 We will begin the discussion of our example by looking at the message library. These messages will be used to exchange data between chat members. All we need to do to create a message library is to create a new project and add the following code to it.
 
@@ -44,7 +44,7 @@ message NickResponse {
 
 Thanks to the fact that we use gRPC, clients written in any of the programming languages supported by the Proto.Actor platform can become members of our chat room.
 
-#### Creation of a server
+## Creation of a server
 
 The server is a standard console application that links to our messaging library. 
 
