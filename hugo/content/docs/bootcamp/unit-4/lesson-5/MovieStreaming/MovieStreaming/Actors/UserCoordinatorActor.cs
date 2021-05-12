@@ -29,7 +29,7 @@ namespace MovieStreaming.Actors
                     ProcessStopMovieMessage(context, msg);
                     break;
             }
-            return Actor.Done;
+            return Task.CompletedTask;
         }
 
         private void ProcessPlayMovieMessage(IContext context, PlayMovieMessage msg)

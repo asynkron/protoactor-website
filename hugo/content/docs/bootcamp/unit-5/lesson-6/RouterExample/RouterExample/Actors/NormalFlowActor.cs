@@ -15,7 +15,7 @@ namespace RouterExample.Actors
             {
                 Console.WriteLine($"Normal Flow Actor get a message: {r}");
             }
-            return Actor.Done;
+            return Task.CompletedTask;
         }
     }
 }

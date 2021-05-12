@@ -2,7 +2,7 @@
 
 In the previous lesson, we created an actor system, and an instance of our actor inside that system. In this lesson, we will learn how to send and respond to messages within the actor system.
 
-For this, we modify our PlaybackActor to respond to messages like string and int types. Next, we will use the Send method to send a message to our actor.
+For this, we modify our PlaybackActor to respond to messages like string and int types. Next, we will use the `Send` method to send a message to our actor.
 
 So, let's go to the source code of our application and see how we can send a couple of messages to our actor. To do this, we will need the link to our actor that we received in the previous lesson and the `Send` method that our actor system provides.
 
@@ -29,7 +29,7 @@ public Task ReceiveAsync(IContext context)
         case int userId:
             break;
     }
-    return Actor.Done;
+    return Task.CompletedTask;
 }
 ```
 
@@ -47,7 +47,7 @@ public Task ReceiveAsync(IContext context)
             Console.WriteLine($"Received user ID {userId}");
             break;
     }
-    return Actor.Done;
+    return Task.CompletedTask;
 }
 ```
 

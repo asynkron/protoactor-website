@@ -53,7 +53,7 @@ public class PlaybackActor : IActor
                 Console.WriteLine("actor is Stopped");
                 break;
         }
-        return Actor.Done;
+        return Task.CompletedTask;
     }
 }
 ```

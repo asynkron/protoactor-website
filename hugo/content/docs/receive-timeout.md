@@ -27,7 +27,7 @@ var props = Props.FromFunc(context =>
             Console.WriteLine("ReceiveTimeout");
             break;        
     }
-    return Actor.Done;
+    return Task.CompletedTask;
 });
 ```
 {{</ tab >}}

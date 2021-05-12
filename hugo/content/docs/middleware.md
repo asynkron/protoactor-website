@@ -17,7 +17,7 @@ A receive middleware consists of a method/delegate which takes a `Receive` argum
 ```csharp
 var props = Actor.FromFunc(c => {
         Console.WriteLine("actor");
-        return Actor.Done;
+        return Task.CompletedTask;
     })
     .WithReceiveMiddleware(
         next => async context =>
@@ -47,7 +47,7 @@ A difference for sender middleware is that the message is wrapped in a `MessageE
 ```csharp
 var props = Actor.FromFunc(c => {
         Console.WriteLine("actor");
-        return Actor.Done;
+        return Task.CompletedTask;
     })
     .WithSenderMiddleware(
         next => async (context, target, envelope) =>

@@ -19,7 +19,7 @@ var props = Actor.FromProducer(() => new MyActor());
 var props = Actor.FromFunc(context =>
     {
         Console.WriteLine($"Received message {context.Message}");
-        return Actor.Done;
+        return Task.CompletedTask;
     });
 ```
 

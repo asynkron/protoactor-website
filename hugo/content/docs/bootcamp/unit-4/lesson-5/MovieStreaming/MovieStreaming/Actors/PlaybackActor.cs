@@ -41,7 +41,7 @@ namespace MovieStreaming.Actors
                     ProcessRequestActorPidMessage(context, msg);
                     break;
             }
-            return Actor.Done;
+            return Task.CompletedTask;
         }
 
         private void ProcessStartedMessage(IContext context, Started msg)

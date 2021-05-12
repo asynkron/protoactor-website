@@ -66,7 +66,7 @@ namespace MovieStreaming
         public PlaybackActor() => Console.WriteLine("Creating a PlaybackActor");
         public Task ReceiveAsync(IContext context)
         {
-            return Actor.Done;
+            return Task.CompletedTask;
         }
     }
 

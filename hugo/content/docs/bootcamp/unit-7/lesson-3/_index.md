@@ -91,7 +91,7 @@ class Program
                     }
                     break;
             }
-            return Actor.Done;
+            return Task.CompletedTask;
         });
 
         context.SpawnNamed(props, "chatserver");
@@ -143,7 +143,7 @@ class Program
                     Console.WriteLine($"{nickResponse.OldUserName} is now {nickResponse.NewUserName}");
                     break;
             }
-            return Actor.Done;
+            return Task.CompletedTask;
         });
 
         var client = context.Spawn(props);

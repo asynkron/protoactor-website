@@ -41,7 +41,7 @@ namespace MovieStreaming.Actors
                     break;
             }
 
-            return Actor.Done;
+            return Task.CompletedTask;
         }
 
         private Task Playing(IContext context)
@@ -61,7 +61,7 @@ namespace MovieStreaming.Actors
                     break;
             }
 
-            return Actor.Done;
+            return Task.CompletedTask;
         }
     }
 }

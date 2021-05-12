@@ -23,7 +23,7 @@ namespace MovieStreaming.Actors
                     Console.WriteLine("actor is Stopped");
                     break;
             }
-            return Actor.Done;
+            return Task.CompletedTask;
         }
     }
 }

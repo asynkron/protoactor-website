@@ -19,7 +19,7 @@ namespace MovieStreaming.Actors
                     ProcessRecoverableMessage(msg);
                     break;
             }
-            return Actor.Done;
+            return Task.CompletedTask;
         }
 
         private void ProcessRecoverableMessage(Recoverable msg)

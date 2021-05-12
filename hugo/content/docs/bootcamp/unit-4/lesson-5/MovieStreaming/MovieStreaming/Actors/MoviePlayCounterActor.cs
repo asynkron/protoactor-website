@@ -18,7 +18,7 @@ namespace MovieStreaming.Actors
                     ProcessIncrementPlayCountMessage(msg);
                     break;
             }
-            return Actor.Done;
+            return Task.CompletedTask;
         }
 
         private void ProcessIncrementPlayCountMessage(IncrementPlayCountMessage message)

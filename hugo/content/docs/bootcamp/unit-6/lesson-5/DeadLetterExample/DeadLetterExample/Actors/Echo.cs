@@ -11,7 +11,7 @@ namespace DeadLetterExample.Actors
         public Task ReceiveAsync(IContext context)
         {
             context.Respond(context.Message);
-            return Actor.Done;
+            return Task.CompletedTask;
         }
     }
 }

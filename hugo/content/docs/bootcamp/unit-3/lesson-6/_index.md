@@ -41,7 +41,7 @@ private Task Playing(IContext context)
     }
     ColorConsole.WriteLineCyan("UserActor has now become Playing");
 
-    return Actor.Done;
+    return Task.CompletedTask;
 }
 ```
 
@@ -67,7 +67,7 @@ private Task Stopped(IContext context)
      }
      ColorConsole.WriteLineCyan("UserActor has now become Stopped");
 
-     return Actor.Done;
+     return Task.CompletedTask;
 }
 ```
 
@@ -106,7 +106,7 @@ public class UserActor : IActor
         }
         ColorConsole.WriteLineCyan("UserActor has now become Stopped");
 
-        return Actor.Done;
+        return Task.CompletedTask;
     }
 
     private Task Playing(IContext context)
@@ -124,7 +124,7 @@ public class UserActor : IActor
         }
         ColorConsole.WriteLineCyan("UserActor has now become Playing");
 
-        return Actor.Done;
+        return Task.CompletedTask;
     }
 }
 ```

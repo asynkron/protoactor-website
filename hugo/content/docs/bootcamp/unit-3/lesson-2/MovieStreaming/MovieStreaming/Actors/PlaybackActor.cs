@@ -31,7 +31,7 @@ namespace MovieStreaming.Actors
                     ProcessStoppingMessage(msg);
                     break;
             }
-            return Actor.Done;
+            return Task.CompletedTask;
         }
 
         private void ProcessStartedMessage(Started msg)

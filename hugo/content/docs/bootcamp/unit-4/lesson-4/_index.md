@@ -72,7 +72,7 @@ public class UserCoordinatorActor : IActor
                 ProcessStopMovieMessage(context, msg);
                 break;
         }
-        return Actor.Done;
+        return Task.CompletedTask;
     }
 
     private void ProcessPlayMovieMessage(IContext context, PlayMovieMessage msg)
@@ -151,7 +151,7 @@ public Task ReceiveAsync(IContext context)
             ProcessRequestActorPidMessage(context, msg);
             break;
      }
-     return Actor.Done;
+     return Task.CompletedTask;
 }
 ```
 

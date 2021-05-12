@@ -75,7 +75,7 @@ public class MyActor : IActor
                 Console.WriteLine( $"Hi {lastActorName}!");
                 break,
         }
-        return Actor.Done;
+        return Task.CompletedTask;
     }
 }
 

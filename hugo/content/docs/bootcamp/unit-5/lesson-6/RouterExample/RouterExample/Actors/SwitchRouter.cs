@@ -39,7 +39,7 @@ namespace RouterExample.Actors
                     break;
             }
 
-            return Actor.Done;
+            return Task.CompletedTask;
         }
 
         private Task Off(IContext context)
@@ -59,7 +59,7 @@ namespace RouterExample.Actors
                     break;
             }
 
-            return Actor.Done;
+            return Task.CompletedTask;
         }
     }
 }

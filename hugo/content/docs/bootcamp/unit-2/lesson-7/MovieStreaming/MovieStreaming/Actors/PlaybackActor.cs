@@ -19,7 +19,7 @@ namespace MovieStreaming.Actors
                     Console.WriteLine($"Received user ID {msg.UserId}");
                     break;
             }
-            return Actor.Done;
+            return Task.CompletedTask;
         }
     }
 }

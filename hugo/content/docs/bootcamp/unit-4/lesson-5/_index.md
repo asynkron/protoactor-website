@@ -16,7 +16,7 @@ public class PlaybackStatisticsActor : IActor
                 _moviePlayCounterActorRef = context.Spawn(props);
                 break;
         }
-        return Actor.Done;
+        return Task.CompletedTask;
     }
 }
 ```
@@ -55,7 +55,7 @@ private Task Stopped(IContext context)
             ColorConsole.WriteLineCyan("UserActor has now become Stopped");
             break;
     }
-    return Actor.Done;
+    return Task.CompletedTask;
 }
 ```
 
@@ -75,7 +75,7 @@ public class MoviePlayCounterActor : IActor
                 ProcessIncrementPlayCountMessage(msg);
                 break;
         }
-        return Actor.Done;
+        return Task.CompletedTask;
     }
 
     private void ProcessIncrementPlayCountMessage(IncrementPlayCountMessage message)

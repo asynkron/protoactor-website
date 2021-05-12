@@ -94,7 +94,7 @@ public class ThrottledActor : IActor
     private Task ThrottledReceiveAsync(object message)
     {
         Console.WriteLine("Got Message " + message);
-        return Actor.Done;
+        return Task.CompletedTask;
     }
 }
 ```

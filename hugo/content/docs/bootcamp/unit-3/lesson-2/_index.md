@@ -59,7 +59,7 @@ public class PlaybackActor : IActor
                 ProcessPlayMovieMessage(msg);
                 break;
         }
-        return Actor.Done;
+        return Task.CompletedTask;
     }
 
     private void ProcessPlayMovieMessage(PlayMovieMessage msg)
@@ -95,7 +95,7 @@ public class PlaybackActor : IActor
                 ProcessPlayMovieMessage(msg);
                 break;
         }
-        return Actor.Done;
+        return Task.CompletedTask;
     }
 }
 ```
@@ -138,7 +138,7 @@ public Task ReceiveAsync(IContext context)
             ProcessRecoverableMessage(msg);
             break;
     }
-    return Actor.Done;
+    return Task.CompletedTask;
 }
 ```
 
@@ -182,7 +182,7 @@ public class PlaybackActor : IActor
                 ProcessRecoverableMessage(context, msg);
                 break;
         }
-        return Actor.Done;
+        return Task.CompletedTask;
    }
 
     private void ProcessStartedMessage(Started msg)
@@ -280,7 +280,7 @@ public Task ReceiveAsync(IContext context)
             ProcessStoppingMessage(msg);
             break;
     }
-    return Actor.Done;
+    return Task.CompletedTask;
 }
 ```
 

@@ -76,7 +76,7 @@ public class PlaybackActor : IActor
                 Console.WriteLine($"Received user ID {msg.UserId}");
                 break;
         }
-        return Actor.Done;
+        return Task.CompletedTask;
     }
 }
 ```

@@ -50,7 +50,7 @@ public class SwitchRouter : IActor
                 context.Forward(_normalFlow);
                 break;
         }
-        return Actor.Done;
+        return Task.CompletedTask;
     }
 
     private Task Off(IContext context)
@@ -69,7 +69,7 @@ public class SwitchRouter : IActor
                 context.Forward(_cleanUp);
                 break;
         }
-        return Actor.Done;
+        return Task.CompletedTask;
     }
 }
 ```

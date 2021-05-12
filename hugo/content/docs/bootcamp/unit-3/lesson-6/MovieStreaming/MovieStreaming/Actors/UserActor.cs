@@ -37,7 +37,7 @@ namespace MovieStreaming.Actors
             }
             ColorConsole.WriteLineCyan("UserActor has now become Stopped");
 
-            return Actor.Done;
+            return Task.CompletedTask;
         }
 
         private Task Playing(IContext context)
@@ -55,7 +55,7 @@ namespace MovieStreaming.Actors
             }
             ColorConsole.WriteLineCyan("UserActor has now become Playing");
 
-            return Actor.Done;
+            return Task.CompletedTask;
         }
     }
 }

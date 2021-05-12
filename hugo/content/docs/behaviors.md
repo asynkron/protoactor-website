@@ -69,7 +69,7 @@ private Task Off(IContext context)
             break;
     }
     
-    return Actor.Done;
+    return Task.CompletedTask;
 }
 ```
 If you touch the light when it is switched on, it is hot. If you press the light switch again, it turns off:
@@ -88,7 +88,7 @@ private Task On(IContext context)
             break;
     }
     
-    return Actor.Done;
+    return Task.CompletedTask;
 }
 ```
 
@@ -105,7 +105,7 @@ public Task ReceiveAsync(IContext context)
         case HitWithHammer _:
             context.Respond("Smashed!");
             _behavior.Become(Smashed);
-            return Actor.Done;
+            return Task.CompletedTask;
     }
     // if not handled, use behavior specific
     return _behavior.ReceiveAsync(context);
@@ -131,7 +131,7 @@ private Task Smashed(IContext context)
         	break;
     }
     
-    return Actor.Done;
+    return Task.CompletedTask;
 }
 ```
 
