@@ -1,0 +1,35 @@
+<div clss="container">
+
+    {{ range .Site.AllPages }}
+    {{ if eq .Layout "article" }}
+    <div class="row mb-3">
+        <div class="col-lg-7 col-xl-7">
+            <h5>
+                <a href="{{.Permalink}}" class="d-flex align-items-center h5">
+                    {{.Title}}
+                </a>
+            </h5>
+            <div class=" d-flex align-items-left">
+
+
+                {{ with .Params.tags }}
+                {{ range . }}
+                <a class="badge badge-primary badge-pill" href="{{ " /tags/" | relLangURL }}{{ . | urlize }}">{{ .
+                    }}</a>&NonBreakingSpace;
+                {{ end }}
+                {{ end }}
+
+            </div>
+        </div>
+        <div class="col-lg-5 col-xl-5">
+            <a href="{{.Params.authorsite}}" class="d-flex align-items-center">
+                <img src="{{.Params.authorimage}}" class="avatar avatar-xs">
+                <div class="h6 mb-0 ml-3">{{.Params.author}}</div>
+            </a>
+        </div>
+
+    </div>
+    {{ end }}
+    {{ end }}
+
+</div>

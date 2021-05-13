@@ -14,7 +14,7 @@ tags: [protoactor, docs]
 
 ## Articles
 
-{{< article >}}
+{{< article-clean >}}
 
 ## Introduction
 
