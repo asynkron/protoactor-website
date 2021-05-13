@@ -46,10 +46,6 @@ In addition to **Proto.Cluster.Consul** in Proto.Actor platform there is a secon
 
 ![](../../images/8_3_2.png)
 
-Unlike **Proto.Cluster.Consul** **Proto.Cluster.SingleRemoteInstance** does not support automatic node detection protocol, so it needs to explicitly specify the host name and port number of the reference node to join. 
-
-After we learned the basic theoretical concepts, let's try to create our first cluster based on **Proto.Cluster.SingleRemoteInstance**.
-
 [Go ahead!](../lesson-4)
 
 

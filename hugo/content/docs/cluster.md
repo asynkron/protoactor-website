@@ -53,7 +53,7 @@ The built in, default is the PartitionIdentityLookup.
 
   * `PartitionIdentitySelector` - The hashing algorithm that decides the relation between Identity and Member
 
-  * `PartitionPlacementActor` - This actor manages the actual actor instances. it also knows which node owns the identity and can transfer actor identitiy ownership when topology changes
+  * `PartitionPlacementActor` - This actor manages the actual actor instances. it also knows which member owns the identity and can transfer actor identitiy ownership when topology changes
 
   * `PartitionIdentityActor` - Manages the owned identities for a member.
 ### `TopologyUpdate` - EventStream message
