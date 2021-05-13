@@ -69,7 +69,7 @@ Lifecycle monitoring is implemented using a `Terminated` message to be received 
 
 Monitoring is particularly useful if a supervisor cannot simply restart its children and has to terminate them, e.g. in case of errors during actor initialization. In that case it should monitor those children and re-create them or schedule itself to retry this at a later time.
 
-Another common use case is that an actor needs to fail in the absence of an external resource, which may also be one of its own children. If a third party terminates a child by way of the `pid.Stop()` method or sending a `PoisonPill`, the supervisor might well be affected.
+Another common use case is that an actor needs to fail in the absence of an external resource, which may also be one of its own children. If a third party terminates a child by way of the `context.Stop(pid)` method or sending a `context.Poison(pid)`, or their .NET Async counterparts, the supervisor might well be affected.
 
 ### One-For-One Strategy vs. All-For-One Strategy
 
@@ -80,5 +80,3 @@ There are two classes of supervision strategies which come with Proto.Actor: `On
 The `AllForOneStrategy` is applicable in cases where the ensemble of children has such tight dependencies among them, that a failure of one child affects the function of the others, i.e. they are inextricably linked. Since a restart does not clear out the mailbox, it often is best to terminate the children upon failure and re-create them explicitly from the supervisor (by watching the children's lifecycle); otherwise you have to make sure that it is no problem for any of the actors to receive a message which was queued before the restart but processed afterwards.
 
 ![All for one](images/allforone.png)
-
-Normally stopping a child (i.e. not in response to a failure) will not automatically terminate the other children in an all-for-one strategy; this can easily be done by watching their lifecycle: if the `Terminated` message is not handled by the supervisor, it will throw a `DeathPactException` which (depending on its supervisor) will restart it, and the default `PreRestart` action will terminate all children. Of course this can be handled explicitly as well.
