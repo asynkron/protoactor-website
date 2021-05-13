@@ -188,7 +188,7 @@ this you should only rely on The [General Rules]().
 ### Reliability of Local Message Sends
 
 The Proto.Actor test suite relies on not losing messages in the local context (and for
-non-error condition tests also for remote deployment), meaning that we
+non-error condition tests also for remote spawning), meaning that we
 actually do apply the best effort to keep our tests stable. A local `Send`
 operation can however fail for the same reasons as a normal method call can on
 the CLR:

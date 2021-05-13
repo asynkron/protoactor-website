@@ -8,7 +8,7 @@ One of the main modules in the Proto.Actor platform is the Proto.Remote. As this
 
 - Location transparency - Thanks to the fact that the Proto.Actor platform uses PIDs for process identification. Your code will look the same regardless of whether it works with a local or remote process. Thus, the location of the actor you are interacting with is completely transparent to your code.
 
-- Remote deployment - Everything you need to interact with a remote actor located anywhere in the world. It is to create a new PID and specify its IP address and ID. 
+- Remote spawning - Everything you need to interact with a remote actor located anywhere in the world. It is to create a new PID and specify its IP address and ID. 
 
   ```csharp
   var server = new PID("127.0.0.1:8000", "chatserver");

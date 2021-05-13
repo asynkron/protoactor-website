@@ -18,7 +18,7 @@ Thanks to the fact that we work with high levels of abstraction such as actors, 
 
 The concept of location transparency, which we will focus on in more detail, essentially means that it does not matter where the individual actor instances are. They can be on one machine or another computer. 
 
-Proto.Actor also provides a simple remote deployment model in which we use the configuration to specify where we want our actor to be created.
+Proto.Actor also provides a simple remote spawn model to spawn actors on remote or cluster members.
 
 ### High performance.
 
