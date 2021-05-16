@@ -7,7 +7,7 @@ layout: article
 author: "Go Hagiwara"
 authorimage: "/docs/images/authors/oklahomer.jpeg"
 authorsite: "https://blog.oklahome.net/"
-backgroundimage: "/docs/images/backgrounds/abstract1.png"
+backgroundimage: "/docs/images/backgrounds/cluster.png"
 aliases:
     - /docs/cluster/intro/clusterintro/
 ---
