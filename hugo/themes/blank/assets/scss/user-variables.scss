@@ -12,6 +12,17 @@ $primary:       #0088cc;
 $primary-2:     #006598;
 $primary-3:     #003e5c;
 
+$proto-purple-2:     #382a5d;
+$proto-purple-3:     #32234f;
+
+.bg-proto-purple-2 {
+    background-color: $proto-purple-2;
+}
+
+.bg-proto-purple-3 {
+    background-color: $proto-purple-3;
+}
+
 // Do not change or remove the $theme-color-scheme or $theme-colors maps below
 
 $theme-color-scheme: (
