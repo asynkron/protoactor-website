@@ -6,13 +6,26 @@ tags: []
 layout: empty
 ---
 
-<section  class="mt-0 p-0 " style="height:256px;background-image: url(/assets/img/asynkron/colors.png);background-size: cover;background-position: center;;overflow:hidden;background-attachment: fixed;" >
-  <img src="/assets/img/asynkron/sun.png" data-jarallax-element="100" style="position: absolute;top:-200px;left:20%;width:750px">
+<section class="mt-0 p-0 " style="height:380px;overflow: hidden;">
+  <video autoplay muted loop id="myVideo" style="width: 100%;object-fit: fill;top: -210px;    position: relative;">
+    <source src="/assets/img/asynkron/retro.mp4" type="video/mp4">
+  </video>
 </section>
 
 <section class="mt-0 p-0 bg-white">
   <div class="row p-0 m-0  ">
-    <div class="col bg-primary">
+    <div class="col bg-primary-2">
+      <div class="content p-4 text-center text-white">
+        <img class="icon icon-lg bg-white" src="/assets/img/icons/theme/general/half-heart.svg" alt="Icon"
+          data-inject-svg />
+        <h4>Cloud Native</h4>
+        <p>
+          Built on cloud native technologies.
+          Taking advantage of proven stability and performance.
+        </p>
+      </div>
+    </div>
+    <div class="col bg-primary-3">
       <div class="content p-4 text-center text-white">
         <img class="icon icon-lg bg-white" src="/assets/img/icons/theme/files/share.svg" alt="Icon" data-inject-svg />
         <h4>Simple Concurrency & Distribution</h4>
@@ -21,30 +34,24 @@ layout: empty
         </p>
       </div>
     </div>
+
     <div class="col bg-primary-2">
       <div class="content p-4 text-center text-white">
-        <img class="icon icon-lg bg-white" src="/assets/img/icons/theme/communication/sending.svg" alt="Icon" data-inject-svg />
+        <img class="icon icon-lg bg-white" src="/assets/img/icons/theme/communication/sending.svg" alt="Icon"
+          data-inject-svg />
         <h4>Extreme Performance</h4>
         <p>
-          Capable of more than two million messages per second between processes
+          Capable of millions of messages per second cross-process communication
         </p>
       </div>
     </div>
-    <div class="col bg-primary">
+    <div class="col bg-primary-3">
       <div class="content p-4 text-center text-white">
-        <img class="icon icon-lg bg-white" src="/assets/img/icons/theme/general/shield-check.svg" alt="Icon" data-inject-svg />
+        <img class="icon icon-lg bg-white" src="/assets/img/icons/theme/general/shield-check.svg" alt="Icon"
+          data-inject-svg />
         <h4>Resilient by Design</h4>
         <p>
           Write systems that self-heal using supervisor hierarchies.
-        </p>
-      </div>
-    </div>
-    <div class="col bg-primary-2">
-      <div class="content p-4 text-center text-white">        
-        <img class="icon icon-lg bg-white" src="/assets/img/icons/theme/general/half-heart.svg" alt="Icon" data-inject-svg />
-        <h4>Built on standards</h4>
-        <p>
-          Proto.Actor is built ontop of Googles gRPC and Protobuf, taking advantage of proven stability and performance.
         </p>
       </div>
     </div>
