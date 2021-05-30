@@ -7,7 +7,7 @@ layout: empty
 ---
 
 <section class="mt-0 p-0 "
-  style="height:380px;overflow: hidden;border-top:8px solid #fff;border-bottom:8px solid #fff;">
+  style="height:380px;overflow: hidden;border-top:8px solid #22252b;border-bottom:8px solid #22252b;">
   <video autoplay muted loop class="video" style="width: 100%;object-fit: fill;">
     <source src="/assets/img/asynkron/retro.mp4" type="video/mp4">
   </video>
@@ -57,5 +57,105 @@ layout: empty
       </div>
     </div>
   </div>
+
+</section>
+
+<section class="bg-light o-hidden pt-5 pb-5">
+  <div class="container">
+    <div class="row section-title justify-content-center mb-4">
+      <div class="col-md-10 col-lg-9 col-xl-8">
+        <h3 class="display-4">Get in touch</h3>
+        <div class="lead">Get in touch with our Customer Service.<br>
+          Simply complete the following form, and click the Submit button. We look forward to assisting you.</div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-9 col-xl-8">
+        <form novalidate="" name="contact" netlify action="confirmation.html">
+          <div class="form-row">
+            <div class="col-sm">
+              <div class="form-group">
+                <label for="contact-name">Your Name</label>
+                <input type="text" name="contact-name" class="form-control" id="contact-name" required="">
+                <div class="invalid-feedback">
+                  Please type your name.
+                </div>
+              </div>
+            </div>
+            <div class="col-sm">
+              <div class="form-group">
+                <label for="contact-email">Email Address</label>
+                <input type="email" name="contact-email" class="form-control" id="contact-email"
+                  placeholder="you@website.com" required="">
+                <div class="invalid-feedback">
+                  Please provide your email address.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-sm">
+              <div class="form-group">
+                <label for="contact-company">Company (optional)</label>
+                <input type="text" name="contact-company" class="form-control" id="contact-company">
+              </div>
+            </div>
+            <div class="col-sm">
+              <div class="form-group">
+                <label for="contact-phone">Phone (optional)</label>
+                <input type="tel" name="contact-phone" class="form-control" id="contact-phone">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="contact-message">Message</label>
+            <textarea id="contact-message" name="contact-message" rows="10" class="form-control" required=""></textarea>
+            <div class="invalid-feedback">
+              Please tell us a little more.
+            </div>
+          </div>
+          <div class="form-row">
+
+          </div>
+          <div class="form-row">
+            <div class="col">
+              <div class="d-none alert alert-success" role="alert" data-success-message="">
+                Thanks, a member of our team will be in touch shortly.
+              </div>
+              <div class="d-none alert alert-danger" role="alert" data-error-message="">
+                Please fill all fields correctly.
+              </div>
+              <div class="d-flex justify-content-end">
+                <button class="btn btn-primary btn-loading" type="submit" data-loading-text="Sending">
+                  <!-- Icon for loading animation -->
+                  <svg class="icon bg-white" width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <title>Icon For Loading</title>
+                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                      <g>
+                        <polygon points="0 0 24 0 24 24 0 24" opacity="0"></polygon>
+                      </g>
+                      <path
+                        d="M12,4 L12,6 C8.6862915,6 6,8.6862915 6,12 C6,15.3137085 8.6862915,18 12,18 C15.3137085,18 18,15.3137085 18,12 C18,10.9603196 17.7360885,9.96126435 17.2402578,9.07513926 L18.9856052,8.09853149 C19.6473536,9.28117708 20,10.6161442 20,12 C20,16.418278 16.418278,20 12,20 C7.581722,20 4,16.418278 4,12 C4,7.581722 7.581722,4 12,4 Z"
+                        fill="#000000" fill-rule="nonzero"
+                        transform="translate(12.000000, 12.000000) scale(-1, 1) translate(-12.000000, -12.000000) ">
+                      </path>
+                    </g>
+                  </svg>
+                  <span>Send Message</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="bg-light o-hidden pt-0 pb-0">
+
+  <div class="divider divider-bottom bg-dark mt-5"></div>
 
 </section>
