@@ -12,6 +12,14 @@
 
 Learn how to leverage programming abstractions such as actors, grains, persistence and pubsub to built highly scalable, realtime, systems.
 
+* Stream processing
+* Digital Twins
+* Design patterns and optimizations
+    * Local affinity
+    * Message deduplication
+    * Persistence patterns
+    
+
 ### Deployment - Kubernetes
 
 Learn the best ways to deploy, run and monitor your Proto.Actor systems in a Kubernetes environment.
