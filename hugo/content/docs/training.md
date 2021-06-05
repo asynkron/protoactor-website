@@ -15,6 +15,7 @@ Learn how to leverage programming abstractions such as actors, grains, persisten
 * Actors, Virtual Actors and Grains
 * Stream processing
 * Digital Twins
+* Cluster-based microservices
 * Observability
     * Metrics
     * Tracing
