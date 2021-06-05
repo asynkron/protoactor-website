@@ -22,6 +22,8 @@ Learn how to leverage programming abstractions such as actors, grains, persisten
     * Tracing
     * Logging    
 * Stream processing
+    * Cluster PubSub
+    * Queue and Log integration    
 * Digital Twins
 * Cluster-based microservices
 * Cluster Configuration
