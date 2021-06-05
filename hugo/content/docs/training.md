@@ -12,6 +12,8 @@
 
 Learn how to leverage programming abstractions such as actors, grains, persistence and pubsub to built highly scalable, realtime, systems.
 
+**Agenda**
+
 * Actors, Virtual Actors and Grains
 * Design patterns and optimizations
     * Local affinity
