@@ -14,7 +14,7 @@ Learn how to leverage programming abstractions such as actors, grains, persisten
 
 **Agenda**
 
-* Actors, Virtual Actors and Grains
+* Building Blocks; Actors, Virtual Actors, and Grains
 * Design patterns and optimizations
     * Local affinity
     * Message deduplication
@@ -23,9 +23,11 @@ Learn how to leverage programming abstractions such as actors, grains, persisten
     * Metrics
     * Tracing
     * Logging    
+    * DataDog / Grafana integration
 * Stream processing
     * Cluster PubSub
     * Queue and Log integration    
+* Realtime Data Visualizations
 * Digital Twins
 * Cluster-based microservices
 * Cluster Configuration
