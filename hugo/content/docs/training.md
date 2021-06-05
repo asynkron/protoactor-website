@@ -12,13 +12,14 @@
 
 Learn how to leverage programming abstractions such as actors, grains, persistence and pubsub to built highly scalable, realtime, systems.
 
+* Actors, Virtual Actors and Grains
 * Stream processing
 * Digital Twins
 * Design patterns and optimizations
     * Local affinity
     * Message deduplication
     * Persistence patterns
-    
+
 
 ### Deployment - Kubernetes
 
