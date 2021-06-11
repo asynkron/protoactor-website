@@ -55,7 +55,8 @@ tags: [protoactor, docs]
     * [Message Serialization](serialization.md)
     * [Remote Spawning](remote-spawn.md) - How do I spawn actors on other nodes?
     * [gRPC Compression](grpc-compression.md) - How do I use gRPC compression for remote communication?
-* [Cluster](cluster.md) - How do I build clusters of actor nodes?    
+* [Cluster](cluster.md) - How do I build clusters of actor nodes?
+    * [Gossip](gossip.md) - How can I share state across cluster members?
 * [SimpleScheduler](scheduling.md) - How do I send messages on a timer?
 
 ### Utility features
