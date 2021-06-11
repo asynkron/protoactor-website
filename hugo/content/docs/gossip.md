@@ -41,3 +41,10 @@ Gissip between member nodes occur at intervals and target members are picked at 
 
 
 ![Gossip](/images/gossipfanout.png)
+
+
+## Sending User State
+
+To set cluster state, there is a `Cluster.Gossip.SetKey(key, value)` method.
+This method takes a key for the state you wish to set, e.g. "MyState" and a value, in the form of a `Protobuf.Any` message.
+Once set, the cluster will start to sync this information over to other cluster members.
