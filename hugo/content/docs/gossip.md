@@ -2,7 +2,7 @@
 
 
 ## GossipState
-Each member has a `GossipState`, this state is made up of a dict of `MemberId` to `GossipMemberState` objects
+Each member has a `GossipState`, this state is made up of a dictionary of `MemberId` to `GossipMemberState` objects
 `GossipMemberState` objects are in turn dictionaries of keys, system and user defined, mapping to a `Protobuf.Any` state.
 
 This means we can have a `GossipMemberState` object for "member123".
@@ -20,7 +20,7 @@ To get a complete view of say banned-members, we could take the banned-member en
 Each member has a dictionary of *committed offsets* for itself, and all other known members.
 These offsets represent the highest `SequenceNumber` this node have seen for a given key.
 
-Keys are made up of `MemberId` and StateEntryKey
+Keys are made up of `MemberId` and `StateEntryKey`
 
 e.g.
 * **"Member1234.topology" : 123**
