@@ -32,7 +32,7 @@ The sender member can _know_ that some state has been transmitted to the target,
 
 
 
-![Gossip](/images/gossipoffsets.png)
+![Gossip Offsets](/images/gossipoffsets.png)
 
 
 ## Gossip fan-out
@@ -40,7 +40,7 @@ The sender member can _know_ that some state has been transmitted to the target,
 Gissip between member nodes occur at intervals and target members are picked at random with a selection of `ClusterConfig.GossipFanout` number of members.
 
 
-![Gossip](/images/gossipfanout.png)
+![Gossip Fanout](/images/gossipfanout.png)
 
 
 ## Sending User State
