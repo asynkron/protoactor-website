@@ -9,13 +9,15 @@ tags: [protoactor, docs]
 
 ## Virtual Actors, aka. Grains
 
-Proto.Cluster leverages the *"Virtual Actor Model"*, which was pioneered by Microsoft Orleans.
+Proto.Cluster leverages the _"Virtual Actor Model"_, which was pioneered by Microsoft Orleans.
 Unlike the traditional Actor Model used in Erlang or Akka, where developers must care about actor lifecycles, placement and failures.
 The virtual actor model instead focus on ease of use, high availability where most of the complexity have been abstracted away from the developer.
 
-> The Microsoft Orleans website describes this as *A straightforward approach to building distributed, high-scale applications in .NET*.
+> The Microsoft Orleans website describes this as _A straightforward approach to building distributed, high-scale applications in .NET_.
 
-Proto.Actor combines this way of clustering, with the traditional actor model to combine the best of both worlds.
+![grains](/images/grains.png)
+
+**Proto.Actor** combines this way of clustering, with the traditional actor model to combine the best of both worlds.
 This allows us to create huge clusters of stateful services where the virtual actors acts as entry points which in turn can contain entire graphs of local actors.
 
 This offers us a unique way to optimize for data locality, while still offering ease of use at scale.
@@ -24,7 +26,7 @@ Just like everything else in Proto.Actor where we have re-used proven technologi
 Instead, we leverage proven technologies such as Consul, ETCD or Kubernetes to power our Cluster member management.
 
 The short version of what virtual actors are, is that they are abstractions on top of plain actors.
-They are spawned *somewhere* in your cluster, and their lifecycle is managed by the cluster instead of you.
+They are spawned _somewhere_ in your cluster, and their lifecycle is managed by the cluster instead of you.
 
 This means that you as a developer, don't have to care or know if the actor already exists or where it exists.
 You address it using its identity and kind and the cluster does the rest for you.
@@ -34,35 +36,39 @@ You address it using its identity and kind and the cluster does the rest for you
 ![Cluster Architecture](/images/cluster-architecture.png)
 
 ### `IClusterProvider` - Interface
+
 This allows the membership logic to be replaced.
 
-* ##### Consul Provider
-* ##### Kubernetes Provider
-* ##### Etcd Provider
-* ##### Self Managed Provider
-* ##### Zookeeper Provider
+- ##### Consul Provider
+- ##### Kubernetes Provider
+- ##### Etcd Provider
+- ##### Self Managed Provider
+- ##### Zookeeper Provider
 
 ### `IIdentityLookup` - Interface
+
 This allows the identity lookup strategy to be replaced.
 The built in, default is the PartitionIdentityLookup.
 
-* ##### `PartitionIdentityLookup` - Implementation
+- ##### `PartitionIdentityLookup` - Implementation
+
   For more information about the details of cluster mechanics.
   See [Cluster Partitions](cluster-partitions.md)
 
+  - `PartitionIdentitySelector` - The hashing algorithm that decides the relation between Identity and Member
 
-  * `PartitionIdentitySelector` - The hashing algorithm that decides the relation between Identity and Member
+  - `PartitionPlacementActor` - This actor manages the actual actor instances. it also knows which member owns the identity and can transfer actor identitiy ownership when topology changes
 
-  * `PartitionPlacementActor` - This actor manages the actual actor instances. it also knows which member owns the identity and can transfer actor identitiy ownership when topology changes
+  - `PartitionIdentityActor` - Manages the owned identities for a member.
 
-  * `PartitionIdentityActor` - Manages the owned identities for a member.
 ### `TopologyUpdate` - EventStream message
-Consumed by all aspects of the cluster infrastructure to update caches, lookups, shutting down connections etc.
 
+Consumed by all aspects of the cluster infrastructure to update caches, lookups, shutting down connections etc.
 
 ## Tutorials
 
 ### Cluster Introduction
+
 [Cluster Introduction](/docs/cluster/intro/clusterintro)
 
 ## FAQ
@@ -104,7 +110,7 @@ message AddResponse {
 }
 
 service Hello {
-  rpc SayHello (HelloRequest) returns (HelloResponse) {} 
+  rpc SayHello (HelloRequest) returns (HelloResponse) {}
   rpc Add(AddRequest) returns (AddResponse) {}
 }
 ```
@@ -116,15 +122,14 @@ Once you have this, you can generate your code using protoc.
 ##### Windows
 
 ```text
-protoc -I=. -I=%GOPATH%\src --gogoslick_out=. protos.proto 
-protoc -I=. -I=%GOPATH%\src --gorleans_out=. protos.proto 
+protoc -I=. -I=%GOPATH%\src --gogoslick_out=. protos.proto
+protoc -I=. -I=%GOPATH%\src --gorleans_out=. protos.proto
 ```
 
 #### Generating code for .NET
 
 As of Release 0.17.0 of Proto.Cluster for .NET, you can reference the Nuget package `ProtoGrainGenerator`, and this will automatically generate the code for you.
 The code is generated under the `/obj` folder and hidden from the user, but included for compilation upon build.
-
 
 ## Implementing
 
@@ -145,7 +150,7 @@ func (*hello) Add(r *AddRequest) *AddResponse {
 	return &AddResponse{Result: r.A + r.B}
 }
 
-//Register what implementation GAM should use when 
+//Register what implementation GAM should use when
 //creating actors for a certain grain type.
 func init() {
 	//apply DI and setup logic
