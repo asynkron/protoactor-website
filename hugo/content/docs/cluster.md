@@ -41,6 +41,7 @@ This allows the membership logic to be replaced.
 
 - ##### Consul Provider
 - ##### Kubernetes Provider
+- ##### AWS ECS Provider
 - ##### Etcd Provider
 - ##### Self Managed Provider
 - ##### Zookeeper Provider
