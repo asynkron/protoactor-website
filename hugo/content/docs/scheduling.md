@@ -28,7 +28,7 @@ scheduler
 Another option if you want to perform some form of action after a given period of time is:
 
 ```csharp
-context.AwaitTask(Task.Delay(1000), t => {
+context.ReenterAfter(Task.Delay(1000), t => {
      //do stuff after 1000ms w/o blocking the actor while waiting
 });
 ```
