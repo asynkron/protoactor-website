@@ -4,7 +4,7 @@ title: Props
 ---
 
 # Props
-The Props are used to configure and construct the Actor and it's Context.
+The Props are used to configure and construct the Actor and its Context.
 
 ## Creating Props
 The simplest way is to use one the Actor convenience methods, `FromProducer()` or `FromFunc()`. E.g.:
