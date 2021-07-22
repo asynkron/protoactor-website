@@ -62,7 +62,7 @@ We have covered the benefits of using an Opentracing and its basic concept and t
 
 In order to start working with Proto.Opentracing you need to install the Proto.Opentracing package. To do this, you must install Visual Studio at least the 2019 version and .Net Core 3.0.
 
-In Proto.Opentracing you can create a local tracer or use a global tracer instance. Tracer allows to create scopes for send, receive, request, forward message functions. Depending on the function, a Span is created, which is marked with different tags, such as MessageType, TargetPID, SenderPID, ActorPID, ActorType. Proto.Opentracing allows to log errors, create custom Spans, and work with baggage. Let’s look at all these features in more detail.
+In Proto.Opentracing you can create a local tracer or use a global tracer instance. Tracer allows to create scopes for send, receive, request, forward message functions. Depending on the function, a Span is created, which is marked with different tags, such as `MessageType`, `TargetPID`, `SenderPID`, `ActorPID`, `ActorType`. Proto.Opentracing allows to log errors, create custom Spans, and work with baggage. Let’s look at all these features in more detail.
 
 ### Setup tracing for Proto.Actor
 
@@ -94,7 +94,7 @@ public static void SetupSpan(ISpan span, object message)
 }
 ```
 
-In this example, we first check if the Span is null. If not, then create a log, in which we write the message that was passed to the function, and also add a tag that indicates that the Span belongs to the send function.
+In this example, we first check if the Span is `null`. If not, then create a log, in which we write the message that was passed to the function, and also add a tag that indicates that the Span belongs to the send function.
 
 In Proto.Opentracing there is a function for logging exceptions that occur in some methods. This function writes the name, message, and stack trace of the exception to the log.
 
