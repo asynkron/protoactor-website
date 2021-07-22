@@ -66,7 +66,7 @@ In Proto.Opentracing you can create a local tracer or use a global tracer instan
 
 ### Setup tracing for Proto.Actor
 
-In order to use Proto.Opentracing with Proto.Actor first you need to create Proto.Actor and call extension method WithOpenTracing().
+In order to use Proto.Opentracing with Proto.Actor first you need to create Proto.Actor and call extension method `WithOpenTracing()`.
 
 ```csharp
 var props = Props
@@ -75,7 +75,7 @@ var props = Props
     .WithOpenTracing();
 ```
 
-This method has optional parameters: `sendSpanSetup`, `receiverSpanSetup`, and `tracer`. The sendSpanSetup is a delegate that is used for building scope for send, request, and forward methods. The receiverSpanSetup is used for building the scope for receive method. If you do not pass these parameters, then in both cases the defaultSpanSetup will be used.
+This method has optional parameters: `sendSpanSetup`, `receiverSpanSetup`, and `tracer`. The sendSpanSetup is a delegate that is used for building scope for send, request, and forward methods. The `receiverSpanSetup` is used for building the scope for receive method. If you do not pass these parameters, then in both cases the defaultSpanSetup will be used.
 
 An example of a function that creates a spanSetup:
 
@@ -98,7 +98,7 @@ In this example, we first check if the Span is null. If not, then create a log, 
 
 In Proto.Opentracing there is a function for logging exceptions that occur in some methods. This function writes the name, message, and stack trace of the exception to the log.
 
-Another parameter of the method WithOpenTracing() that we have not covered is a tracer.
+Another parameter of the method `WithOpenTracing()` that we have not covered is a tracer.
 You can use different tracers for different purposes. For example, a tracer for endpoints, a tracer for a database, a tracer for credentials. If you do not want to create a tracer, then Proto.Opentracing will use the global tracer. The global tracer works like a global instance and can be called from anywhere. The global tracer transfers all operations to another tracer, which will be registered in the future.
 
 In Proto.Opentracing tracer injects a Span Context, which contains important information for tracing, in textmap format. You can extract this context to get the data you need in the right place in the program as shown in the example below.
