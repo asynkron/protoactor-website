@@ -2,9 +2,12 @@
 layout: docs.hbs
 title: Getting started
 ---
+
 # Getting started with Proto.Actor
 
 This tutorial is intended to give an introduction to using Proto.Actor by creating a simple greeter actor using C#.
+
+![props](images/Getting-Started-all-blue.png)
 
 ## Set up your project
 
@@ -104,7 +107,7 @@ namespace ConsoleApplication11
                 // Tell the actor to respond
                 // to the Greet message
                 var greet = (Greet)ctx.Message;
-                Console.WriteLine("Hello {0}", greet.Who)); 
+                Console.WriteLine("Hello {0}", greet.Who));
             }
         }
     }
@@ -150,7 +153,7 @@ namespace ConsoleApplication11
                 // Tell the actor to respond
                 // to the Greet message
                 var greet = (Greet)ctx.Message;
-                Console.WriteLine("Hello {0}", greet.Who)); 
+                Console.WriteLine("Hello {0}", greet.Who));
             }
         }
     }
