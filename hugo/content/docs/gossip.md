@@ -1,6 +1,6 @@
 # Cluster Gossip
 
-![props](images/Gossip-all-blue.png)
+<img src="../images/Gossip-all-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
 
 ## GossipState
 

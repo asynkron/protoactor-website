@@ -8,7 +8,7 @@ title: Props
 The Props are used to configure and construct the Actor and its Context.
 A form of blueprint on how to assemble an actor.
 
-![props](images/Props-all-blue.png)
+<img src="../images/Props-all-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
 
 ## Creating Props
 

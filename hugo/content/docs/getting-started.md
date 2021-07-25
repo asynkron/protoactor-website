@@ -7,7 +7,7 @@ title: Getting started
 
 This tutorial is intended to give an introduction to using Proto.Actor by creating a simple greeter actor using C#.
 
-![props](images/Getting-Started-all-blue.png)
+<img src="../images/Getting-Started-all-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
 
 ## Set up your project
 

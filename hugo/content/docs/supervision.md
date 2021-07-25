@@ -9,7 +9,7 @@ tags: [protoactor, docs]
 
 This document outlines the concept behind supervision and what that means for your Proto.Actor actors at run-time.
 
-![props](images/Supervision-all-blue.png)
+<img src="../images/Supervision-all-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
 
 ## What Supervision Means
 
