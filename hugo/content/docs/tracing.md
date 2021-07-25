@@ -115,6 +115,28 @@ A context is a tool that allows you to create, run and communicate with actors. 
 Proto.Opentracing allows use of distributed tracing for `IRootContext`. To do this you need to call the extension methods
 `rootContext.WithOpenTracing()`
 
+###Using Jaeger to view the tracing logs
+
+Opentracing does not provide an opportunity to view the tracing logs. But it is compatible with many distributive tracing systems such as CNCF Jaeger, LightStep, Instana, Apache SkyWalking, inspectIT, stagemonitor, Datadog, Wavefront by VMware, Elastic APM. These systems offer a user-friendly UI for viewing tracing logs.
+
+Let's take a look at how to view the tracing logs generated using Opentracing in Jaeger. First, you need to download and run Jaeger. You can do it in several ways.
+1. Download executable binaries from [here](https://www.jaegertracing.io/download/#binaries). Then run the file *jaeger-all-in-one.exe* from the binaries archive.
+2. Download pre-built docker image using command `docker pull jaegertracing/all-in-one:1.24`. In order to run Jaeger from the docker image, run the following command 
+```docker run -d --name jaeger \
+  -e COLLECTOR_ZIPKIN_HOST_PORT=:9411 \
+  -p 5775:5775/udp \
+  -p 6831:6831/udp \
+  -p 6832:6832/udp \
+  -p 5778:5778 \
+  -p 16686:16686 \
+  -p 14268:14268 \
+  -p 14250:14250 \
+  -p 9411:9411 \
+  jaegertracing/all-in-one:1.24
+```
+
+To access the Jaeger UI go to [http://localhost:16686]. In the Jaeger UI on the left side of the screen, you can select the service for which you want to view the tracing logs and click the **Find Tracers** button. After that Jaeger will show a list of all tracers that were made on the backend for selected service.
+
 ### Conclusion
 
-In this article, we examined what Proto.OpenTracing is, the main advantages of its usage, and how to apply it to a Proto.Actor. Try Proto.OpenTracing for your applications and debug and monitor complex distributed programs easily and fast.
+In this article, we examined what Proto.OpenTracing is, the main advantages of its usage, how to apply it to a Proto.Actor, and how to view the tracing logs in Jaeger. Try Proto.OpenTracing for your applications and debug and monitor complex distributed programs easily and fast.
