@@ -115,7 +115,7 @@ A context is a tool that allows you to create, run and communicate with actors. 
 Proto.Opentracing allows use of distributed tracing for `IRootContext`. To do this you need to call the extension methods
 `rootContext.WithOpenTracing()`
 
-###Using Jaeger to view the tracing logs
+### Using Jaeger to view the tracing logs
 
 Opentracing does not provide an opportunity to view the tracing logs. But it is compatible with many distributive tracing systems such as CNCF Jaeger, LightStep, Instana, Apache SkyWalking, inspectIT, stagemonitor, Datadog, Wavefront by VMware, Elastic APM. These systems offer a user-friendly UI for viewing tracing logs.
 
@@ -135,7 +135,7 @@ Let's take a look at how to view the tracing logs generated using Opentracing in
   jaegertracing/all-in-one:1.24
 ```
 
-To access the Jaeger UI go to [http://localhost:16686]. In the Jaeger UI on the left side of the screen, you can select the service for which you want to view the tracing logs and click the **Find Tracers** button. After that Jaeger will show a list of all tracers that were made on the backend for selected service.
+To access the Jaeger UI go to [http://localhost:16686](http://localhost:16686). In the Jaeger UI on the left side of the screen, you can select the service for which you want to view the tracing logs and click the **Find Tracers** button. After that Jaeger will show a list of all tracers that were made on the backend for selected service.
 
 ### Conclusion
 
