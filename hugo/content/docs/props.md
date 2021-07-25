@@ -4,17 +4,24 @@ title: Props
 ---
 
 # Props
+
 The Props are used to configure and construct the Actor and its Context.
+A form of blueprint on how to assemble an actor.
+
+<img src="../images/Props-all-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
 
 ## Creating Props
+
 The simplest way is to use one the Actor convenience methods, `FromProducer()` or `FromFunc()`. E.g.:
 
 **From an actor producer delegate**
+
 ```csharp
 var props = Actor.FromProducer(() => new MyActor());
 ```
 
 **From an actor receive delegate**
+
 ```csharp
 var props = Actor.FromFunc(context =>
     {
@@ -30,11 +37,11 @@ Props exposes a number of methods for customizing the Actor. The following examp
 ```csharp
 var props = new Props()
     // the producer is a delegate that returns a new instance of an IActor
-    .WithProducer(() => new MyActor()) 
+    .WithProducer(() => new MyActor())
     // the default dispatcher uses the thread pool and limits throughput to 300 messages per mailbox run
-    .WithDispatcher(new ThreadPoolDispatcher { Throughput = 300 }) 
+    .WithDispatcher(new ThreadPoolDispatcher { Throughput = 300 })
     // the default mailbox uses unbounded queues
-    .WithMailbox(() => UnboundedMailbox.Create()) 
+    .WithMailbox(() => UnboundedMailbox.Create())
     // the default strategy restarts child actors a maximum of 10 times within a 10 second window
     .WithChildSupervisorStrategy(new OneForOneStrategy((who, reason) => SupervisorDirective.Restart, 10, TimeSpan.FromSeconds(10)))
     // middlewares can be chained to intercept incoming and outgoing messages
