@@ -6,7 +6,9 @@ title: Open Tracing Usage
 
 ## Introduction
 
-In concurrent and distributed systems development, it is necessary to perform tracing for many reasons. Here are some of them: to find the cause and localize various bugs, to find the parts of the program that are slow, to track the workflow of the program, to measure the speed of execution of queries to the database, to better understand how different services interact with each other. In complex multithreaded applications, it is very important to keep track of the order in which various actions are performed. The use of a tracer helps developers to significantly reduce the time and effort for detecting and fixing problem areas in the code.
+In concurrent and distributed systems development, observability is an essential feature.
+One way to improve observability is to use some form of distributed tracing.
+Distributed tracing is generally a good tool that can help find the cause and localize various bugs, to find the parts of the program that are slow, to track the workflow of the program, to measure the speed of execution of queries to the database, to better understand how different services interact with each other. In complex multithreaded applications, it is very important to keep track of the order in which various actions are performed. The use of a tracer helps developers to significantly reduce the time and effort for detecting and fixing problem areas in the code.
 
 Actor systems in general, due to their concurrent and distributed nature can sometimes be hard to debug. In this case, it is convenient to use a tracing system. Proto.Opentracing has been developed for this purpose. In this article, we will take a look at what Proto.Opentracing is and how to use it for Proto.Actor.
 
