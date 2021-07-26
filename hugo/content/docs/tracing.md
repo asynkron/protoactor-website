@@ -124,7 +124,7 @@ Let's take a look at how to view the tracing logs generated using Opentracing in
 1. Download executable binaries from [here](https://www.jaegertracing.io/download/#binaries). Then run the file _jaeger-all-in-one.exe_ from the binaries archive.
 2. Download pre-built docker image using command `docker pull jaegertracing/all-in-one:1.24`. In order to run Jaeger from the docker image, run the following command
 
-```
+```csharp
 docker run -d --name jaeger \
   -e COLLECTOR_ZIPKIN_HOST_PORT=:9411 \
   -p 5775:5775/udp \
