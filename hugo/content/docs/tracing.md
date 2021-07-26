@@ -14,7 +14,7 @@ Actor systems in general, due to their concurrent and distributed nature can som
 
 ## What is Proto.Opentracing
 
-Proto.Opentracing is the Opentracing implementation for Proto.Actor. Opentracing is a distributed tracing API that offers developers a standardized approach to tracing. It has its own specification, which does not depend on the programming language. It is implementation independent and can be used along with various distributed tracing systems.
+Proto.Opentracing is a set of middlewares for Proto.Actor, these middlewares integrate the Proto.Actor message receive pipeline with Opentracing. Opentracing is a distributed tracing API that offers developers a standardized approach to tracing. It has its own specification, which does not depend on the programming language. It is implementation independent and can be used along with various distributed tracing systems.
 
 ## Opentracing concepts and terminology
 
