@@ -48,10 +48,10 @@ and baggage items.
 
 **The scope** allows you to manage the state of Spans. It can activate and deactivate them since at the current time only one Span can be active.
 
-## Main advantages of using Opentracing
+## Benefits of using Opentracing
 
-- Opentracing can be used with different distributed tracing systems, such as Zipkin, Jaeger, LightStep, DataDog, and others.
-- It provides a standardized way to collect and map data from asynchronous threads.
+- Opentracing can be used with different distributed tracing systems, such as Zipkin, Jaeger, LightStep, DataDog, and many others.
+- It provides a standardized way to collect and map data from asynchronous interactions.
 - Opentracing allows you to constantly collect up-to-date data from the runtime.
 - Opentracing allows you to transfer data between different threads and processes.
 
