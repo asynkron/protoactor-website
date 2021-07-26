@@ -117,12 +117,15 @@ Proto.Opentracing allows use of distributed tracing for `IRootContext`. To do th
 
 ### Using Jaeger to view the tracing logs
 
-Opentracing does not provide an opportunity to view the tracing logs. But it is compatible with many distributive tracing systems such as CNCF Jaeger, LightStep, Instana, Apache SkyWalking, inspectIT, stagemonitor, Datadog, Wavefront by VMware, Elastic APM. These systems offer a user-friendly UI for viewing tracing logs.
+Opentracing in itself does not provide a way to view the tracing logs. But it is compatible with many distributed tracing systems such as: CNCF Jaeger, LightStep, Instana, Apache SkyWalking, inspectIT, stagemonitor, Datadog, Wavefront by VMware, Elastic APM. These systems offer a user-friendly UI for viewing tracing logs.
 
 Let's take a look at how to view the tracing logs generated using Opentracing in Jaeger. First, you need to download and run Jaeger. You can do it in several ways.
-1. Download executable binaries from [here](https://www.jaegertracing.io/download/#binaries). Then run the file *jaeger-all-in-one.exe* from the binaries archive.
-2. Download pre-built docker image using command `docker pull jaegertracing/all-in-one:1.24`. In order to run Jaeger from the docker image, run the following command 
-```docker run -d --name jaeger \
+
+1. Download executable binaries from [here](https://www.jaegertracing.io/download/#binaries). Then run the file _jaeger-all-in-one.exe_ from the binaries archive.
+2. Download pre-built docker image using command `docker pull jaegertracing/all-in-one:1.24`. In order to run Jaeger from the docker image, run the following command
+
+```
+docker run -d --name jaeger \
   -e COLLECTOR_ZIPKIN_HOST_PORT=:9411 \
   -p 5775:5775/udp \
   -p 6831:6831/udp \
