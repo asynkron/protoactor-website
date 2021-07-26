@@ -1,3 +1,7 @@
+---
+title: Open Tracing Usage
+---
+
 # How to use Proto.Opentracing
 
 ## Introduction
