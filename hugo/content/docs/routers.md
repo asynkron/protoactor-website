@@ -1,6 +1,8 @@
 # Routers
 
-A *router* is a special type of actor whose job is to route messages to other actors called *routees*. Different routers use different *strategies* to route messages efficiently.
+A _router_ is a special type of actor whose job is to route messages to other actors called _routees_. Different routers use different _strategies_ to route messages efficiently.
+
+<img src="../images/Router-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
 
 Routers can be used inside or outside of an actor, and you can manage the routees yourself or use a self contained router actor with configuration capabilities, and can also [resize dynamically](#dynamically-resizable-pools) under load.
 
@@ -16,6 +18,7 @@ The special [Broadcast Message](#broadcast-messages) will be sent to all routees
 The example below shows how to deploy 5 workers using a round robin router:
 
 Example in C#
+
 ```cs
 //pool of 5 workers
 var props = system.Root.NewRoundRobinPool(MyActorProps, 5);
@@ -28,7 +31,7 @@ There are two types of routers:
 
 ### Pools
 
-Router "Pools" are routers that create their own worker actors, that is; you provide the *number of instances* as a parameter to the router and the router will handle routee creation by itself.
+Router "Pools" are routers that create their own worker actors, that is; you provide the _number of instances_ as a parameter to the router and the router will handle routee creation by itself.
 
 ### Groups
 
@@ -42,9 +45,9 @@ Most routing strategies listed below are available in both types. Some of them m
 
 Routers are implemented as actors, so a router is supervised by it's parent, and they may supervise children.
 
-*Group routers* use routees created somewhere else, it doesn't have children of its own. If a routee dies, a group router will have no knowledge of it.
+_Group routers_ use routees created somewhere else, it doesn't have children of its own. If a routee dies, a group router will have no knowledge of it.
 
-*Pool routers* on the other hand create their own children. The router is therefore also the routee's supervisor.
+_Pool routers_ on the other hand create their own children. The router is therefore also the routee's supervisor.
 
 By default, pool routers use a custom strategy that only returns `Escalate` for all exceptions, the router supervising the failing worker will then escalate to it's own parent, if the parent of the router decides to restart the router, all the pool workers will also be recreated as a result of this.
 
@@ -153,7 +156,7 @@ Most messages sent to router will be forwarded according to router's routing log
 
 ### Broadcast Messages
 
-A `Broadcast` message can be used to send message to __all__ routees of a router. When a router receives `Broadcast` message, it will broadcast that message's __payload__ to all routees, no matter how that router normally handles its messages.
+A `Broadcast` message can be used to send message to **all** routees of a router. When a router receives `Broadcast` message, it will broadcast that message's **payload** to all routees, no matter how that router normally handles its messages.
 
 Here is an example of how to send a message to every routee of a router.
 

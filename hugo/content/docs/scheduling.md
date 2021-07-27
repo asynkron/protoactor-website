@@ -7,6 +7,8 @@ tags: [protoactor, docs]
 
 # Scheduling Messages
 
+<img src="../images/Scheduling-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
+
 In C#, we provide the `SimpleScheduler` implementation of the `ISimpleScheduler`interface.
 This allows you to do operations such as `ScheduleTellOnce`, `ScheduleRequestOnce` and `ScheduleTellRepeatedly`
 
@@ -33,6 +35,5 @@ context.ReenterAfter(Task.Delay(1000), t => {
 });
 ```
 
-This will asynchronously wait for the task to complete, then send a message back to the actor itself, containing the 
+This will asynchronously wait for the task to complete, then send a message back to the actor itself, containing the
 block of code to execute within the actors concurrency constraint.
-
