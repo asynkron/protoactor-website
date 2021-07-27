@@ -1,6 +1,6 @@
 # Remote Spawn
 
-<img src="../images/Spawning-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
+<img src="../images/Remote-spawn-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
 
 Remote Spawning means the act of `Spawn`-ing an actor on another host/member in a distributed setting.
 (For more information about Spawning, see [Spawn](spawn.md))
