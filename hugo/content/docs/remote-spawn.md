@@ -1,8 +1,11 @@
 # Remote Spawn
 
-Remote Spawning means the act of `Spawn`-ing an actor on another host/member in a distributed setting.
+<img src="../images/Spawning-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
 
-In Proto.Actor you can do this using both the Proto.Remote, and the Proto.Cluster modules.
+Remote Spawning means the act of `Spawn`-ing an actor on another host/member in a distributed setting.
+(For more information about Spawning, see [Spawn](spawn.md))
+
+In Proto.Actor you can do this using both the **Proto.Remote**, and the **Proto.Cluster** modules.
 The way to do it are basically the same, with some small differences.
 
 To register what kinds of actors can be spawned remote or in a cluster, you register the actor types, or "kinds" as they are called here to not conflate with other terminology.
@@ -16,20 +19,25 @@ This is essentially a dictionary mapping from string, the Kind, to a `Props` whi
 ## Remote Spawn using Proto.Remote
 
 ### Registration
+
 {{< tabs >}}
 {{< tab "C#" >}}
+
 ```csharp
 var config = GrpcCoreRemoteConfig
     .BindTo(advertisedHost, 12000)
     .WithProtoMessages(MyMessagesReflection.Descriptor)
     .WithRemoteKind("echo", Props.FromProducer(() => new EchoActor()));
 ```
+
 {{</ tab >}}
 {{< tab "Go" >}}
+
 ```go
 var config = remote.Configure(advertisedHost, 12000)
     .WithRemoteKind("echo", actor.FromProducer(someProducer));
 ```
+
 {{</ tab >}}
 {{</ tabs >}}
 
@@ -37,33 +45,41 @@ var config = remote.Configure(advertisedHost, 12000)
 
 {{< tabs >}}
 {{< tab "C#" >}}
+
 ```csharp
 var pid = system.Remote().Spawn("kind");
 ```
+
 {{</ tab >}}
 {{< tab "Go" >}}
+
 ```go
 pid := remoter.Spawn("kind")
 ```
+
 {{</ tab >}}
 {{</ tabs >}}
-
 
 ## Remote Spawn using Proto.Cluster
 
 ### Registration
+
 {{< tabs >}}
 {{< tab "C#" >}}
+
 ```csharp
 var config = ClusterConfig.Setup(....)
     .WithClusterKind("echo", Props.FromProducer(() => new EchoActor()));
 ```
+
 {{</ tab >}}
 {{< tab "Go" >}}
+
 ```go
 var config = cluster.Configure(...)
     .WithClusterKind("echo", actor.FromProducer(someProducer));
 ```
+
 {{</ tab >}}
 {{</ tabs >}}
 
@@ -73,14 +89,18 @@ Note how we are not touching any `PID` here, instead all of the resolution of vi
 
 {{< tabs >}}
 {{< tab "C#" >}}
+
 ```csharp
 var res = cluster.RequestAsync("MyActor","MyKind", msg, CancellationTokens.WithTimeout(2000));
 ```
+
 {{</ tab >}}
 {{< tab "Go" >}}
+
 ```go
 res := cluster.Call("MyActor","MyKind", msg)
 ```
+
 {{</ tab >}}
 {{</ tabs >}}
 
@@ -106,7 +126,7 @@ Akka allows the developer to pass `Props` over the wire and spawn actors remotel
 
 Conceptually these approaches are interesting and flexible.
 
-The downside however is that this requires a fair amount of dark magic to work in an environment such as the JVM/.NET or Go. 
+The downside however is that this requires a fair amount of dark magic to work in an environment such as the JVM/.NET or Go.
 You need to have a serializer that is capable of serializing entire objects graphs of arbitrary objects. objects that in many times are not to be considered "messages" and designed for serialization.
 Objects that may or may not be safe to deserialize on the other end.
 
@@ -115,4 +135,3 @@ More on this topic here [Harmful Magic Serializers](serialization#harmful-magic-
 Proto.Actor aims to be closer to the microservice world, each node announces to the `ClusterProvider` what kind of actors it is capable of spawning using service discovery.
 
 There is no way for a remote node to spawn or even pass anything unexpected on another node.
-
