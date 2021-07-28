@@ -11,6 +11,15 @@ title: Actor Lifecycle
 
 After an actor has been spawned, it goes through a lifecycle involving a number of possible states and actions. In the most basic case, a spawned actor is first created, or "incarnated", sent a `Started` message and will keep running until the application shuts down. There are however a few circumstances under which the lifecycle will be different.
 
+## Actor States:
+
+- Incarnated - Pseudo state - Actor is being constructed, not yet alive
+- Started - Pseudo state - Actor is alive, and receives initial `Started` message
+- `Alive` - Actor is alive, the normal running state
+- `Stopping` - Actor is shutting down, preparing to be stopped
+- `Restarting` - Actor is shutting down, preparing to restart
+- `Stopped` - Actor is fully stopped and about to be removed from the system
+
 ## Stopping actors
 
 An actor can also be stopped intentionally by calling the `PID.Stop()` method.
