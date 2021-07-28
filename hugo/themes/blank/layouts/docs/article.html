@@ -1,7 +1,7 @@
 {{ define "main" }}
-<section class="p-0 bg-primary text-white row no-gutters">
+<section class="p-0 bg-primary-2 text-white row no-gutters">
     <div class="col-lg-5 col-xl-6 order-lg-2">
-      <div class="divider divider-side transform-flip-y bg-primary d-none d-lg-block"></div>
+      <div class="divider divider-side transform-flip-y bg-primary-2 d-none d-lg-block"></div>
       <img class="flex-fill" src="{{.Params.backgroundimage}}" alt="blog.1.image">
     </div>
     <div class="col-lg-7 col-xl-6">
@@ -22,7 +22,7 @@
                 {{.Title}}
           </h1>
               <a href="{{.Params.authorsite}}" class="d-flex align-items-center">
-                <img src="{{.Params.authorimage}}" class="avatar avatar-sm">
+                <img src="{{.Params.authorimage}}" class="avatar avatar">
                 <div class="h5 mb-0 ml-3">{{.Params.author}}</div>                
               </a>
             </div>
