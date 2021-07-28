@@ -11,14 +11,13 @@ This tutorial is intended to give an introduction to using Proto.Actor by creati
 
 ## Set up your project
 
-Start visual studio and create a new C# Console Application.
-Once we have our console application, we need to open up the Package Manager Console and type:
+First, we need to start Visual Studio and create a new C# Console Application. Once we have our console application, we need to install Proto.Actor package. In order to do this open up the Package Manager Console and type:
 
 ```PM
 PM> Install-Package Proto.Actor
 ```
 
-Then we need to add the relevant using statements:
+Then we need to add ```using Proto.Actor``` statement:
 
 ```csharp
 using System;
@@ -43,7 +42,8 @@ namespace ConsoleApplication11
 
 ## Create your first actor
 
-First, we need to create a message type that our actor will respond to:
+First, let's create a class `Greet`. This class is the message type that will be sent to the actor and that the actor will respond. The instance of the message class must be immutable. You can read more about what messages are in Proto.Actor [here](https://proto.actor/docs/bootcamp/unit-1/lesson-8/). 
+In the class `Greet`, we create the property `Who`, which has a public getter and a private setter. The property will be set in the constructor when creating an instance of the class. This way we can guarantee that the `Who` property will not change after the creation of the instance of class `Greet`.
 
 ```csharp
 using System;
@@ -75,7 +75,7 @@ namespace ConsoleApplication11
 }
 ```
 
-Once we have the message type, we can create our actor:
+Once we have the message type, we can create our actor. To do this, we create class `GreetingActor` that inherits from the `IActor` interface. In this class, we need to implement an asynchronous method `ReceiveAsync` that has `IContext` parameter. If the incoming `IContext` contains a message of the `Greet` type, then we need to respond to it. Otherwise, no action is required.
 
 ```csharp
 using System;
@@ -121,7 +121,7 @@ namespace ConsoleApplication11
 }
 ```
 
-Now it's time to consume our actor, we do so by calling `Spawn`
+Now it's time to consume our actor, we do so by calling `Spawn`. First, let's create `Props` that determine how the actor will be created. Read more about [what Prop is](https://proto.actor/docs/props/). Then spawn the actor using created `Props` and send a message of `Greet` type to it.
 
 ```csharp
 using System;
