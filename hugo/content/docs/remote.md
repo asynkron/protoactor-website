@@ -2,6 +2,12 @@
 
 Scale out your actor systems over network using gRPC streaming.
 
+## Location Transparency
+
+blabla short intro to location transparency.
+
+for more info, see link to location-transparency.md
+
 <img src="../images/Remote-2-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
 
 ## Configuration
