@@ -2,7 +2,10 @@
 layout: docs.hbs
 title: Actor Lifecycle
 ---
+
 # Actor Lifecycle
+
+<img src="../images/LifeCycle-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
 
 <!-- Todo: Document which system messages can be handled by an actor. Started/Stopping/Restarting... -->
 
@@ -30,9 +33,9 @@ In this case the actor will first be sent a `Restarting` message notifying it th
 
 ## Handling lifecycle events
 
-* `Started` is the first message received by an actor after it spawns or is restarted. Handle this message if you need to setup an initial state for the actor, e.g. load data from a database.
-* `Restarting` is sent when an actor is about to restart, and `Stopping` is sent when an actor is about to be stopped. In both cases the actor object will be destroyed, so you should handle these messages if you need to execute some teardown logic to do a graceful shutdown, e.g. persist your state to a database.
-* `Stopped` is sent when an actor has stopped and the actor and it's related objects detached from the system. At this stage the actor can no longer send or receive any messages, and after the message has been processed the objects will be up for garbage collection.
+- `Started` is the first message received by an actor after it spawns or is restarted. Handle this message if you need to setup an initial state for the actor, e.g. load data from a database.
+- `Restarting` is sent when an actor is about to restart, and `Stopping` is sent when an actor is about to be stopped. In both cases the actor object will be destroyed, so you should handle these messages if you need to execute some teardown logic to do a graceful shutdown, e.g. persist your state to a database.
+- `Stopped` is sent when an actor has stopped and the actor and it's related objects detached from the system. At this stage the actor can no longer send or receive any messages, and after the message has been processed the objects will be up for garbage collection.
 
 ## Flow diagram
 

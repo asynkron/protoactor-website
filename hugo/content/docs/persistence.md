@@ -5,15 +5,17 @@ title: Persistence
 
 # Persistence
 
+<img src="../images/Persistence-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
+
 You can choose to have actors persist their state by using the `Proto.Persistence` module. This allows an actor to recover it’s state when it is started and supports three modes of operation:
 
-- Event Sourcing 
+- Event Sourcing
 - Snapshotting
 - Event Sourcing with Snapshotting
 
 ## Event Sourcing
 
-When using event sourcing, each state change is modelled as an event that is applied to the actor both during the recovery phase and when running live. The Persistence plugin takes an `Action<Event> applyEvent` method as a parameter that is called whenever an event is saved, or loaded from the underlying storage during recovery. It is important that all state changes are defined in this `ApplyEvent` method, including transitioning to different behaviors. 
+When using event sourcing, each state change is modelled as an event that is applied to the actor both during the recovery phase and when running live. The Persistence plugin takes an `Action<Event> applyEvent` method as a parameter that is called whenever an event is saved, or loaded from the underlying storage during recovery. It is important that all state changes are defined in this `ApplyEvent` method, including transitioning to different behaviors.
 
 ### Example
 
@@ -40,9 +42,9 @@ public class Counter : IActor
     }
     //...
 }
-``` 
+```
 
-Here we use the static `WithEventSourcing` method to create our instance of the `Persistence` class, passing in a `eventStore`, `actorId` and `ApplyEvent` method. We'll get to the `ApplyEvent` method below, but for now know that you pass in an implementation of `IEventStore`, which represents the underlying storage system used to support persistence and an `actorId` that should be a unique identifier for the actor. 
+Here we use the static `WithEventSourcing` method to create our instance of the `Persistence` class, passing in a `eventStore`, `actorId` and `ApplyEvent` method. We'll get to the `ApplyEvent` method below, but for now know that you pass in an implementation of `IEventStore`, which represents the underlying storage system used to support persistence and an `actorId` that should be a unique identifier for the actor.
 
 Our `Counter` actor only supports two messages:
 
@@ -77,11 +79,12 @@ private void ApplyEvent(Event @event)
     }
 }
 ```
+
 It is inside the `ApplyEvent` method that any state changes for the actor occur - here we simply add the amount from the `Added` message to our current value.
 
 ## Snapshotting
 
-When configured to just use snapshotting, this is the equivalent of only ever saving the _current_ state of the actor, i.e. no audit log of changes is kept.   
+When configured to just use snapshotting, this is the equivalent of only ever saving the _current_ state of the actor, i.e. no audit log of changes is kept.
 
 We can rewrite the `Counter` example above to only use snapshotting:
 
@@ -127,7 +130,7 @@ Here we are using the static `WithSnapshotting` method to create the `Persistenc
 
 ## Event Sourcing and Snapshotting
 
-We can use both event sourcing and snapshotting together. When used in this manner, snapshotting becomes a performance optimisation for cases when you have large numbers of events to replay to rebuild the state of your actor. When `RecoverStateAsync` is called, if there are any snapshots saved, then the most recent one will be loaded along with any events that occured _after_ the snapshot was taken. The `Persistence` plugin manages this tracking internally through the use of an index that is incremented for each saved event. Any time a snapshot is taken, it is tied to index of the actor at that time. 
+We can use both event sourcing and snapshotting together. When used in this manner, snapshotting becomes a performance optimisation for cases when you have large numbers of events to replay to rebuild the state of your actor. When `RecoverStateAsync` is called, if there are any snapshots saved, then the most recent one will be loaded along with any events that occured _after_ the snapshot was taken. The `Persistence` plugin manages this tracking internally through the use of an index that is incremented for each saved event. Any time a snapshot is taken, it is tied to index of the actor at that time.
 
 We can rewrite the `Counter` example above to use event sourcing with snapshotting:
 
@@ -170,7 +173,7 @@ internal class Counter : IActor
             	if (msg.Amount > 0)
             	{
                     await _persistence.PersistEventAsync(new Added { Amount = msg.Amount });
-                    if (ShouldTakeSnapshot()) 
+                    if (ShouldTakeSnapshot())
                     {
                         await _persistence.PersistSnapshotAsync(_value);
                     }
@@ -178,7 +181,7 @@ internal class Counter : IActor
                 break;
         }
     }
-    
+
     private bool ShouldTakeSnapshot()
     {
         // some logic to determine whether to take a snapshot or not
@@ -192,11 +195,11 @@ Now when the `Counter` actor is started, any snapshots that have been saved will
 
 You can optionally specify an `ISnapshotStrategy` to auto-save snapshots when saving an event. The provided strategies are:
 
-* `EventTypeStrategy` - saves a snapshot based on the type of event saved
-* `IntervalStrategy` - saves a snapshot at a regular interval based on the number of events saved, i.e. every 100 events
-* `TimeStrategy` - saves a snapshot at a regular interval based on time, i.e. wait at least 6 hours between snapshots
+- `EventTypeStrategy` - saves a snapshot based on the type of event saved
+- `IntervalStrategy` - saves a snapshot at a regular interval based on the number of events saved, i.e. every 100 events
+- `TimeStrategy` - saves a snapshot at a regular interval based on time, i.e. wait at least 6 hours between snapshots
 
-On saving an event, the `Persistence` module will save a snapshot if the `ShouldTakeSnapshot` method of the `ISnapshotStrategy` returns true. 
+On saving an event, the `Persistence` module will save a snapshot if the `ShouldTakeSnapshot` method of the `ISnapshotStrategy` returns true.
 
 ```csharp
 internal class Counter : IActor
@@ -211,7 +214,7 @@ internal class Counter : IActor
     }
 
     // ApplyEvent() and ApplySnapshot() unchanged
-    
+
     public async Task ReceiveAsync(IContext context)
     {
         switch (context.Message)
@@ -231,4 +234,3 @@ internal class Counter : IActor
 ```
 
 Here we pass in a strategy saying to save a snapshot every 10 events. Note we have removed the manual saving of snapshots, as this is now taken care of internally through the use of the snapshot strategy
-
