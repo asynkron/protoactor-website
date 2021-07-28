@@ -7,7 +7,7 @@ layout: article
 author: "Anes Hasicic"
 authorimage: "/docs/images/authors/AnesHasicic.jpeg"
 authorsite: "https://aneshas.medium.com/"
-backgroundimage: "/docs/images/Remote-blue.png"
+backgroundimage: "/docs/images/Remote-2-blue.png"
 aliases:
   - /docs/chat-example/
 ---
