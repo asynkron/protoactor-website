@@ -47,14 +47,15 @@ var config = remote.Configure(advertisedHost, 12000)
 {{< tab "C#" >}}
 
 ```csharp
-var pid = system.Remote().Spawn("kind");
+var result = await system.Remote().SpawnNamedAsync("remoteaddress", "actor name", "actor kind", timeout);
+var pid = result.Pid;
 ```
 
 {{</ tab >}}
 {{< tab "Go" >}}
 
 ```go
-pid := remoter.Spawn("kind")
+pid := remoter.Spawn("remoteaddress", "actor name", "actor kind")
 ```
 
 {{</ tab >}}

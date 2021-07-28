@@ -8,12 +8,11 @@
 
 Protocol buffers, or Protobuf for short, are Google's language-neutral, platform-neutral, extensible mechanism for serializing structured data – think XML, but smaller, faster, and simpler. You define how you want your data to be structured once, then you can use special generated source code to easily write and read your structured data to and from a variety of data streams and using a variety of languages.
 
-
 ## Security
 
 ### Harmful "Magic Serializers"
 
-The term *"Magic Serializers"* means serializers that heavily rely on reflection in order to serialize or deserialize whatever types are passed to them.
+The term _"Magic Serializers"_ means serializers that heavily rely on reflection in order to serialize or deserialize whatever types are passed to them.
 
 In the .NET space, the most known magic serializer is the now obsolete `BinaryFormatter`.
 
