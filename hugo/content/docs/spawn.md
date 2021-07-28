@@ -5,17 +5,22 @@ title: Spawning Actors
 
 # Spawning Actors
 
+<img src="../images/Spawning-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
+
 Spawning an actor consists of two steps:
+
 1. Create Props that define how the actor should be created. See [Props](props.md).
 2. Spawn the actor using the Props
 
 There are three primary ways to spawn actors:
+
 ```csharp
 var system = new ActorSystem();
 var pid1 = system.Root.Spawn(props); // spawn an actor with an auto-generated name
 var pid2 = system.Root.SpawnPrefix(props, "prefix"); // spawn an actor with a prefix followed by an auto-generated name
 var pid3 = system.Root.SpawnNamed(props, "my-actor"); // spawn an actor with an exact name
 ```
+
 {{< note >}}
 If an actor already exists with the specified name, this will throw a `ProcessNameExistException`.
 {{</ note >}}

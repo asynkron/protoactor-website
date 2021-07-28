@@ -5,7 +5,11 @@ title: Behaviors
 
 # Behaviors
 
-Actors can change their behavior at any time. This is achieved through the Behavior class included with the core Proto.Actor library. We're going to use the example of modelling a light bulb to demonstrate this: 
+Actors can change their behavior at any time. This is achieved through the Behavior class included with the core Proto.Actor library.
+
+<img src="../images/Behaviors-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
+
+We're going to use the example of modelling a light bulb to demonstrate this:
 
 ```csharp
 public class LightBulb : IActor
@@ -32,9 +36,9 @@ public Task ReceiveAsync(IContext context)
 
 There are three methods available for changing behaviors:
 
-* `Become` simply sets the passed `Receive` method as the current behavior, replacing the default method.
-* `BecomeStacked` pushes the passed `Receive` method onto the behavior stack, but preserves the previous behavior.
-* `UnbecomeStacked` reverts to the previously used behavior.
+- `Become` simply sets the passed `Receive` method as the current behavior, replacing the default method.
+- `BecomeStacked` pushes the passed `Receive` method onto the behavior stack, but preserves the previous behavior.
+- `UnbecomeStacked` reverts to the previously used behavior.
 
 ### Become
 
@@ -68,10 +72,11 @@ private Task Off(IContext context)
             context.Respond("Cold");
             break;
     }
-    
+
     return Task.CompletedTask;
 }
 ```
+
 If you touch the light when it is switched on, it is hot. If you press the light switch again, it turns off:
 
 ```csharp
@@ -87,7 +92,7 @@ private Task On(IContext context)
             context.Respond("Hot!");
             break;
     }
-    
+
     return Task.CompletedTask;
 }
 ```
@@ -111,6 +116,7 @@ public Task ReceiveAsync(IContext context)
     return _behavior.ReceiveAsync(context);
 }
 ```
+
 In this example we return from the `HitWithHammer` case to prevent the message being handled by the specific state we are in. If you want to to handle it globally as well as delegate to the specific behavior just don't return.
 
 We can also now handle the cases where somebody tries to turn on or touch the light bulb after it has been smashed, or replaces the bulb:
@@ -130,7 +136,7 @@ private Task Smashed(IContext context)
         	_behavior.Become(Off);
         	break;
     }
-    
+
     return Task.CompletedTask;
 }
 ```
@@ -139,9 +145,9 @@ private Task Smashed(IContext context)
 
 This example shows how to use the `BecomeStacked` and `UnbecomeStacked` methods. When the actor calls `UnbecomeStacked` in `Receive2` it reverts back to `Receive`.
 
-
 {{< tabs >}}
 {{< tab "C#" >}}
+
 ```csharp
 public Task Receive(IContext context)
 {
@@ -153,8 +159,10 @@ public Task Receive2(IContext context)
     _behavior.UnbecomeStacked(); // behavior will revert back to Receive
 }
 ```
+
 {{</ tab >}}
 {{< tab "Go" >}}
+
 ```go
 func (state *BecomeActor) Receive(context actor.Context) {
     context.BecomeStacked(state.Receive2)
@@ -164,5 +172,6 @@ func (state *BecomeActor) Receive2(context actor.Context) {
     context.UnbecomeStacked()
 }
 ```
+
 {{</ tab >}}
 {{</ tabs >}}
