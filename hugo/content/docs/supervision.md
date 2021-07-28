@@ -9,14 +9,16 @@ tags: [protoactor, docs]
 
 This document outlines the concept behind supervision and what that means for your Proto.Actor actors at run-time.
 
+<img src="../images/Supervision-all-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
+
 ## What Supervision Means
 
 Supervision describes a dependency relationship between actors: the supervisor delegates tasks to subordinates and therefore must respond to their failures. When a subordinate detects a failure (i.e. throws an exception), it suspends itself and all its subordinates and sends a message to its supervisor, signaling failure. Depending on the nature of the work to be supervised and the nature of the failure, the supervisor has a choice of the following four options:
 
-* **Resume** the subordinate, keeping its accumulated internal state
-* **Restart** the subordinate, clearing out its accumulated internal state
-* **Stop** the subordinate permanently
-* **Escalate** the failure to the next parent in the hierarchy, thereby failing itself
+- **Resume** the subordinate, keeping its accumulated internal state
+- **Restart** the subordinate, clearing out its accumulated internal state
+- **Stop** the subordinate permanently
+- **Escalate** the failure to the next parent in the hierarchy, thereby failing itself
 
 It is important to always view an actor as part of a supervision hierarchy, which explains the existence of the fourth choice (as a supervisor also is subordinate to another supervisor higher up) and has implications on the first three: resuming an actor resumes all its subordinates, restarting an actor entails restarting all its subordinates (but see below for more details), similarly terminating an actor will also terminate all its subordinates. It should be noted that the default behavior of the `Restarting` event of actors is to terminate all its children before restarting, but this hook can be overridden; the recursive restart applies to all children left after this hook has been executed.
 
@@ -40,14 +42,13 @@ This means that both actors and non actors can be supervisors.
 
 At the top of Proto.Actor are N number of non actor based supervisors.
 
-
 ## What Restarting Means
 
 When presented with an actor which failed while processing a certain message, causes for the failure fall into three categories:
 
-* Systematic (i.e. programming) error for the specific message received
-* (Transient) failure of some external resource used during processing the message
-* Corrupt internal state of the actor
+- Systematic (i.e. programming) error for the specific message received
+- (Transient) failure of some external resource used during processing the message
+- Corrupt internal state of the actor
 
 Unless the failure is specifically recognizable, the third cause cannot be ruled out, which leads to the conclusion that the internal state needs to be cleared out. If the supervisor decides that its other children or itself is not affected by the corruption—e.g. because of conscious application of the error kernel pattern—it is therefore best to restart the child. This is carried out by creating a new instance of the underlying Actor class and replacing the failed instance with the fresh one inside the child's `PID`; the ability to do this is one of the reasons for encapsulating actors within special references. The new actor then resumes processing its mailbox, meaning that the restart is not visible outside of the actor itself with the notable exception that the message during which the failure occurred is not re-processed.
 
