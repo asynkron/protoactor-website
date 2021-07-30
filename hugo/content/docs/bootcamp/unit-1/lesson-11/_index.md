@@ -26,7 +26,7 @@ Proto.Cluster.* used for creating a cluster.
 
 #### Proto.OpenTracing
 
-This package allows you to debug actors using the [Open Tracking library](https://opentracing.io/)
+This package allows you to debug actors using the [Open Tracing library](https://opentracing.io/)
 
 [To the next unit!](../../unit-2)
 
