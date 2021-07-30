@@ -7,6 +7,8 @@ tags: [protoactor, docs]
 
 # Proto.Cluster
 
+<img src="../images/Cluster-2-blue.png" >
+
 ## Virtual Actors, aka. Grains
 
 Proto.Cluster leverages the _"Virtual Actor Model"_, which was pioneered by Microsoft Orleans.

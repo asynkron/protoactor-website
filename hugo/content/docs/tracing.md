@@ -4,6 +4,8 @@ title: Open Tracing Usage
 
 # Distributed tracing with Proto.Actor
 
+<img src="../images/Tracing-blue.png" >
+
 ## Introduction
 
 In concurrent and distributed systems development, observability is an essential feature.
