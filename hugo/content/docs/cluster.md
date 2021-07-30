@@ -9,7 +9,7 @@ tags: [protoactor, docs]
 
 <img src="../images/Cluster-2-blue.png" style="max-height:500px;margin-bottom:20px;margin-left:20px">
 
-<small>_[Homage to Proto.Actors Swedish roots, Swedish midsummer ring dance - Connected Cluster Actors]_</small>
+<small>[Homage to Proto.Actors Swedish roots, Swedish midsummer ring dance - Connected Cluster Actors]</small>
 
 ## Virtual Actors, aka. Grains
 
