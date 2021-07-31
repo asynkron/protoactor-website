@@ -2,25 +2,45 @@
 
 Scale out your actor systems over network using gRPC streaming.
 
-## Location Transparency
+In this article, we will explore what Proto.Remote is and how it helps us to create distributed systems in which actors are located on different machines connected by a network.
 
-blabla short intro to location transparency.
-
-for more info, see link to location-transparency.md
+Proto.Remote abstracts many of the issues, such as serialization and communication over the network away from us, and lets us concentrate on the important thing, which is our application and our problem domain.
 
 <img src="../images/Remote-2-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
 
+## Location Transparency
+
+The term **location transparency** is used in programming when the user or application does not know where the resource is located but only knows its name. A resource can be requested by name, and the system must be able to translate it into a unique identifier, which will then be associated with resource location. Proto.Remote offers location transparency that enables us to treat communication between actors on different machines the same as communication between actors in the local system. The picture below shows how the Proto.Remote works. 
+
+<img src="../images/remote.png">
+
+For more info see [Location Transparency](https://proto.actor/docs/location-transparency/).
+
 ## Configuration
 
-//intro
+To get started with Proto.Remote, we need to configure the host address, register Protobuf messages, and Remote kinds. Below we will look at each action in detail.
 
 ### Network
 
-describe how to set up the local endpoint
-install proto.remote, proto.remote.grpcnet or proto.remote.grpccore
+First, we need to install several packages. If we are using the .Net Framework, then we should install *Proto.Remote* and *Proto.Remote.Grpcnet* packages. If we are using the .Net Core Framework, we need to install the *Proto.Remote* and *Proto.Remote.Grpccore* packages. To do this in Visual Studio open the Package Manager Console and type first 
 
-describe how to use the various .BindTo / BindToLocalhost etc.
-describe that port 0 means any free port
+```Install-Package Proto.Remote
+```
+
+then type
+
+```Install-Package Proto.Remote.Grpcnet
+``` 
+
+or
+
+```Install-Package Proto.Remote.Grpccore
+```
+
+depending on the platform we are using.
+
+To create Proto.Remote configuration that binds to a specified host address on a specified port we need to use method `BindTo(host, port)` from static class `GrpcCoreRemoteConfig` or `GrpcNetRemoteConfig`. We can also create a configuration that binds to the localhost address by calling the method `BindToLocalHost(port)`. In both methods, the parameter `port` is optional. By default, it is 0, which means that any free port will be used.
+
 
 ```csharp
 var config = GrpcCoreRemoteConfig
@@ -33,8 +53,9 @@ var config = GrpcCoreRemoteConfig
 
 ### Registering Protobuf Messages
 
-describe how to define a protobuf message
-describe how to set up build time compilation of protobuf messages using Google.Grpc.Toools nuget
+Protobuf is an interface definition language that defines contracts between services (messages and endpoints) in a natural language. We can take these contracts and use gRPC to generate clients and servers in different languages and take care of all of the underlying transport mechanisms and serialization/deserialization of those messages.
+
+If we want to define a Protobuf message that has one string, then we need to create a .proto file with the content as shown below.
 
 ```protobuf
 syntax = "proto3";
@@ -46,9 +67,16 @@ message SomeMessage {
 }
 ```
 
-For more information on Protobuf [read more](https://developers.google.com/protocol-buffers/docs/overview).
+To generate code for working with message types created in a .proto file first we need to download [protocol buffer compiler protoc](https://developers.google.com/protocol-buffers/docs/downloads) and follow the instructions in the [README](https://github.com/protocolbuffers/protobuf/blob/master/examples/README.md). Then we run the compiler, specifying the directory where the source code of our application is located, the directory where we want to place the generated code, and the path to the `.proto` file. In this case, we need to call the following command: 
 
-describe how to register userdefined protobuf messages for Proto.Remote
+```protoc -I=$SRC_DIR --csharp_out=$DST_DIR $SRC_DIR/name.proto
+```
+
+This command generates a library in C# which contains message classes and can be used as a reference from our client and server implementations. If we want to generate code in another programming language, just replace the option `--csharp_out` with the one we need.
+
+For more information on Protobuf read [Protocol Buffers](https://developers.google.com/protocol-buffers/docs/overview).
+
+In order to tell the configuration factory where to find the message from our Protobuf definition, we need to call the static method `WithProtoMessages` from class `RemoteConfigExtensions` and pass to it a descriptor with the namespace.
 
 ```csharp
 var config = GrpcCoreRemoteConfig
@@ -57,12 +85,13 @@ var config = GrpcCoreRemoteConfig
     .WithProtoMessages(MyMessagesReflection.Descriptor);
 ```
 
-link to serialization.md for more info
+Read more about [Protobuf](https://proto.actor/docs/serialization/).
 
 ### Registering Remote Kinds
 
-describe what remote kinds are
-describe how to set up a remote kind.
+Proto.Remote allows us to spawn Proto actors that are located on different machines in a distributed system. In order to do this, we need to register the kinds of actors that can be spawned remotely.
+
+To register what kind of actor can be called, we need to use the static method `WithRemoteKids` from class `RemoteConfigExtensions` and pass to it the name of the "kind" and a `Props`. This method creates a dictionary that maps the kind of an actor to `Props` and tells the Remote module how to set up and spawn an actor of that kind.
 
 ```csharp
 var config = GrpcCoreRemoteConfig
@@ -72,12 +101,13 @@ var config = GrpcCoreRemoteConfig
     .WithRemoteKind("echo", Props.FromProducer(() => new EchoActor()));
 ```
 
-link to remote-spawn.md for more info
+You can read more about remote spawning [here](https://proto.actor/docs/remote-spawn/).
 
 ### Configure gRPC Compression
 
-describe how to configure grpc compression for optimized bandwith
-describe that this is optional and might not always have the desired outcome, it depends on workload and message size
+Proto.Remote allows bidirectional streaming between client and server using the gRPC framework. To optimize our bandwidth, we can configure gRPC compression. In order to do this, we need to call the static method `WithChannelOptions` and pass to it `GrpcChannelOptions` with created `GzipCompressionProvider` and select the compression level.
+
+Compression is optional and might not always have the desired outcome. The bandwidth also depends on the workload and on the message size.
 
 ```csharp
 var remoteConfig =
@@ -95,20 +125,19 @@ var remoteConfig =
     );
 ```
 
-link to grpc-compression.md
+You can read more about gPRC compression [here](https://proto.actor/docs/grpc-compression/).
 
 ## Usage
 
-fluff-intro, this is how you communicate between two or more nodes using Proto.Remote
+In this section, we will look at how using just a few simple commands from Proto.Remote package we can create actors and organize communication between them in a distributed system.
 
 ### Spawning remote actors
 
-fluff-intro, this is how you spawn and send to the remote actor
+After we have completed all the necessary configuration, all that remains is to spawn an actor using the `SpawnNamedAsync` method and send a message to it using the `context.Send` method. See the example below:
 
 ```csharp
 var result = await system.Remote().SpawnNamedAsync("remoteaddress", "actor name", "actor kind", timeout);
 context.Send(result.Pid, message);
 ```
 
-blablabla, for a more complete example on how to use Proto.Remote, see the Proto.Remote Chat article here:
-[Chat example using Proto.Remote](/docs/chatexample/)
+In this article, we have examined what Proto.Remote is, how to configure it to spawn a Proto.Actor on a remote machine, how to spawn an actor and send a message to it using a Proto.Remote. For a more complete example of how to use Proto.Remote, see the article [Chat example using Proto.Remote](https://proto.actor/docs/chatexample/).
