@@ -39,6 +39,9 @@ If your system falls over and doesn't run properly, it might be tempting to blam
 Dispatchers are configured via `Props` like so:
 
 ```csharp
+//throughput means number of messages in a single go, before yielding the thread back
+var dispatcher = new ThreadPoolDispatcher(throughput = 100);
+//define a props using MyActor, and the above dispatcher
 var props = Props.FromProducer(() => new MyActor()).WithDispatcher(dispatcher);
 ```
 
