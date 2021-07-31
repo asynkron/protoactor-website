@@ -29,9 +29,9 @@ There are some other common reasons to select a different dispatcher. These reas
 - allow actors to execute in a specific `SyncrhonizationContext`; (.NET specific)
 
 {{< note >}}
-Consider using custom dispatchers for special cases only. Correctly configuring dispatchers requires some understanding of
-how the framework works. Custom dispatchers _should not_ be considered the default solution for performance problems.
-It's considered normal for complex applications to have one or a few custom dispatchers, it's not usual for most or all actors in a system to require a custom dispatcher configuration.
+Consider using custom dispatchers for special cases only.
+The most common configuration change would be the Throughput setting on the `ThreadPoolDispatcher`, where you might have to tune the number of messages a specific actor type process in a single run of the dispatcher.
+If your system falls over and doesn't run properly, it might be tempting to blame the dispatchers, this is very likely NOT the issue. but rather bad design of workloads and actor interactions.
 {{</ note >}}
 
 ## Configuring Dispatchers
