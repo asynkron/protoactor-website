@@ -24,18 +24,15 @@ To get started with Proto.Remote, we need to configure the host address, registe
 
 First, we need to install several packages. If we are using the .Net Framework, then we should install *Proto.Remote* and *Proto.Remote.Grpcnet* packages. If we are using the .Net Core Framework, we need to install the *Proto.Remote* and *Proto.Remote.Grpccore* packages. To do this in Visual Studio open the Package Manager Console and type first 
 
-```Install-Package Proto.Remote
-```
+`Install-Package Proto.Remote`
 
 then type
 
-```Install-Package Proto.Remote.Grpcnet
-``` 
+`Install-Package Proto.Remote.Grpcnet` 
 
 or
 
-```Install-Package Proto.Remote.Grpccore
-```
+`Install-Package Proto.Remote.Grpccore`
 
 depending on the platform we are using.
 
@@ -69,8 +66,7 @@ message SomeMessage {
 
 To generate code for working with message types created in a .proto file first we need to download [protocol buffer compiler protoc](https://developers.google.com/protocol-buffers/docs/downloads) and follow the instructions in the [README](https://github.com/protocolbuffers/protobuf/blob/master/examples/README.md). Then we run the compiler, specifying the directory where the source code of our application is located, the directory where we want to place the generated code, and the path to the `.proto` file. In this case, we need to call the following command: 
 
-```protoc -I=$SRC_DIR --csharp_out=$DST_DIR $SRC_DIR/name.proto
-```
+`protoc -I=$SRC_DIR --csharp_out=$DST_DIR $SRC_DIR/name.proto`
 
 This command generates a library in C# which contains message classes and can be used as a reference from our client and server implementations. If we want to generate code in another programming language, just replace the option `--csharp_out` with the one we need.
 
