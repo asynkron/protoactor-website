@@ -175,6 +175,12 @@ https://github.com/AsynkronIT/protoactor-dotnet/issues/948
 
 ### Proto.Actor
 
+name: "protoactor_threadpool_latency_duration_seconds",
+type: Histogram,
+labels: id, kind
+
+maybe list these in a table with name, type, label and description columns?
+
 ### Proto.Remote
 
 ### Proto.Cluster
