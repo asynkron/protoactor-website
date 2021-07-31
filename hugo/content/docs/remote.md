@@ -12,7 +12,7 @@ Proto.Remote abstracts many of the issues, such as serialization and communicati
 
 The term **location transparency** is used in programming when the user or application does not know where the resource is located but only knows its name. A resource can be requested by name, and the system must be able to translate it into a unique identifier, which will then be associated with resource location. Proto.Remote offers location transparency that enables us to treat communication between actors on different machines the same as communication between actors in the local system. The picture below shows how the Proto.Remote works. 
 
-<img src="../images/remote.png">
+<img src="../images/remote.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
 
 For more info see [Location Transparency](https://proto.actor/docs/location-transparency/).
 
