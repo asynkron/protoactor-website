@@ -1,7 +1,12 @@
 # Metrics
 
-//TODO: intro about metrics, what metrics are in general, what different metric products there are
-//describe that it is essential for any distributed system to be able to write its metrics to such system to make it possible to observe such system.
+Nowadays there are a lot of complex distributed systems, and every day their number is increasing. When developing such systems, it is important to strive for the highest possible performance. But how can we assess the performance of a system? There are special metrics for this.
+
+Metrics are numerical data that are calculated or aggregated over a period of time. Metrics give us an idea of ​​the current and historical state of the system. They can be used for statistical analysis, to predict the future behavior of the system.
+
+There are many different types of metrics that can be used for monitoring the performance of distributed systems. For example, latency, bandwidth, error, saturation, traffic, etc. For each distributed system, we need to choose a list of metrics that suit it exactly.
+
+For convenient graphical display and analysis of metrics, we should use monitoring systems such as Grafana, Prometheus. These systems allow us to create dashboards and display specific metrics over a given period of time. For each distributed system, it is necessary to be able to store metrics into monitoring systems for their further analysis.
 
 ## Ubiquitous Metrics - The metrics abstraction used by Proto.Actor
 
@@ -173,14 +178,69 @@ In addition, we provide a few "fake" configurators, which either do nothing, or 
 List all the metric names and based on module:
 https://github.com/AsynkronIT/protoactor-dotnet/issues/948
 
-### Proto.Actor
+### Proto.Actor Metrics
 
-name: "protoactor_threadpool_latency_duration_seconds",
-type: Histogram,
-labels: id, kind
+| Name                                             | Type      | Labels                              |
+|--------------------------------------------------|-----------|-------------------------------------|
+| protoactor_threadpool_latency_duration_seconds   | Histogram | id, address                         |
+| protoactor_deadletter_count                      | Count     | id, address, messagetype            |
+| protoactor_actor_spawn_count                     | Count     | id, address, actortype              |
+| protoactor_actor_stopped_count                   | Count     | id, address, actortype              |
+| protoactor_actor_restarted_count                 | Count     | id, address, actortype              |
+| protoactor_actor_failure_count                   | Count     | id, address, actortype              |
+| protoactor_actor_mailbox_length                  | Gauge     | id, address, actortype              |
+| protoactor_actor_messagereceive_duration_seconds | Histogram | id, address, actortype, messagetype |
+| protoactor_future_started_count                  | Count     | id, address                         |
+| protoactor_future_timedout_count                 | Count     | id, address                         |
+| protoactor_future_completed_count                | Count     | id, address                         |
 
-maybe list these in a table with name, type, label and description columns?
+### Proto.Remote Metrics
 
-### Proto.Remote
+| Name                                    | Type  | Labels                          |
+|-----------------------------------------|-------|---------------------------------|
+| protoremote_message_serialize_count     | Count | id, address, messagetype        |
+| protoremote_message_deserialize_count   | Count | id, address, messagetype        |
+| protoremote_kind_count                  | Count | id, address                     |
+| protoremote_spawn_count                 | Count | id, address, kind               |
+| protoremote_endpoint_connected_count    | Count | id, address, destinationaddress |
+| protoremote_endpoint_disconnected_count | Count | id, address, destinationaddress |
 
-### Proto.Cluster
+### Proto.Cluster Metrics
+
+| Name                                                    | Type      | Labels                                           |
+|---------------------------------------------------------|-----------|--------------------------------------------------|
+| protocluster_virtualactors                              | Gauge     | id, address, clusterkind                         |
+| protocluster_virtualactor_spawn_duration_seconds        | Histogram | id, address, clusterkind                         |
+| protocluster_virtualactor_requestasync_duration_seconds | Histogram | id, address, clusterkind, messagetype, pidsource |
+| protocluster_virtualactor_requestasync_retry_count      | Count     | id, address, clusterkind, messagetype            |
+| protocluster_topology_events                            | Gauge     | id, address, membershiphashcode                  |
+| protocluster_resolve_pid_duration_seconds               | Histogram | id, address, clusterkind                         |
+
+## Running monitoring systems using Docker
+
+In this section, we will examine how to run Prometheus and Grafana locally using Docker. This is very easy to do, just run one Docker command.
+
+### Running Prometheus
+
+First, you need to download the Docker image using command:
+
+`docker pull prom/prometheus`
+
+In order to run Prometheus on Docker use the following command
+
+`docker run -p 9090:9090 prom/prometheus`
+
+This command starts Prometheus with initial configuration on port 9090. Read more about running Prometheus [here](https://prometheus.io/docs/prometheus/latest/installation/#using-docker).
+
+### Running Grafana
+
+Select the version of Grafana you need and download the corresponding Docker image using the command:
+
+`docker pull grafana/grafana:<version>`
+
+To run Grafana use the following command
+
+`docker run -d -p 3000:3000 grafana/grafana`
+
+Read more about running Grafana using Docker [here](https://grafana.com/docs/grafana/latest/installation/docker/).
+
