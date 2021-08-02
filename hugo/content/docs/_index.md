@@ -51,6 +51,7 @@ tags: [protoactor, docs]
   - [Receive Timeout](receive-timeout.md) - How do I trigger code when actors go idle?
   - [Futures (Go)](futures.md) - How do I react to task completions?
   - [Dispatchers](dispatchers.md) - How do I tweak how and where actors execute?
+  - [Dependency Injection (.NET)](di.md) - How do I configure actors using Dependency Injection?
 - [Persistence](persistence.md) - How do I persist state for actors?
 - [Remote](remote.md) - How do I communicate with actors on other nodes?
   - [Message Serialization](serialization.md)
