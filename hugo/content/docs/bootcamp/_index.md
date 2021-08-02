@@ -8,13 +8,14 @@ authorimage: "/docs/images/authors/anon.png"
 authorsite: "https://github.com/Valentin-Miroshnichenko"
 backgroundimage: "/docs/images/backgrounds/bootcamp.png"
 ---
+
 # Proto.Actor Bootcamp
 
 {{< bootcamp >}}
 
-Welcome to  [Proto.Actor](http://proto.actor/) Bootcamp. It is a free course for self-study.
+Welcome to [Proto.Actor](http://proto.actor/) Bootcamp. It is a free course for self-study.
 
-This training course consists of nine main parts, during which you will learn how to create fully functional, real-world programs using Proto.Actor  actors and many other components of the Proto.Actor Framework.
+This training course consists of nine main parts, during which you will learn how to create fully functional, real-world programs using Proto.Actor actors and many other components of the Proto.Actor Framework.
 
 We will start with the basics of actors and gradually approach more complex examples.
 
@@ -69,11 +70,11 @@ In this module, you will learn how to create a self-recovering system.
 
 1. [Supervisor and actor hierarchy.](unit-4/lesson-1)
 2. [Overview of the application that demonstrates the supervisor's capabilities and the actors hierarchy.](unit-4/lesson-2)
-5. [Actor's address and PID.](unit-4/lesson-3)
-6. [Creating UserCoordinatorActor.](unit-4/lesson-4)
-7. [Creating MoviePlayCounterActor.](unit-4/lesson-5)
-8. [How parent actors are watching over their children actors.](unit-4/lesson-6)
-9. [Strategies to control the state of children's actors.](unit-4/lesson-7)
+3. [Actor's address and PID.](unit-4/lesson-3)
+4. [Creating UserCoordinatorActor.](unit-4/lesson-4)
+5. [Creating MoviePlayCounterActor.](unit-4/lesson-5)
+6. [How parent actors are watching over their children actors.](unit-4/lesson-6)
+7. [Strategies to control the state of children's actors.](unit-4/lesson-7)
 
 ### Module 5 Message Routing
 
@@ -112,19 +113,19 @@ In module 8, you learned how to create distributed applications with a fixed num
 1. [Why do you need clusters.](unit-8/lesson-1)
 2. [Membership in the cluster..](unit-8/lesson-2)
 3. [Joining to the cluster.](unit-8/lesson-3)
-5. [Processing tasks in the Cluster.](unit-8/lesson-4)
-6. [Running a Cluster.](unit-8/lesson-5)
-7. [How to distribute tasks by using routers.](unit-8/lesson-6)
-8. [Reliable task processing.](unit-8/lesson-7)
-9. [Cluster Testing.](unit-8/lesson-8)
+4. [Processing tasks in the Cluster.](unit-8/lesson-4)
+5. [Running a Cluster.](unit-8/lesson-5)
+6. [How to distribute tasks by using routers.](unit-8/lesson-6)
+7. [Reliable task processing.](unit-8/lesson-7)
+8. [Cluster Testing.](unit-8/lesson-8)
 
 ### Module 9 Persistence Actor
 
 The actor state contained in RAM will be lost when the actor will be stopping or restarting or when the actor system will be stopped or restarted. In this chapter, we will show you how to save this state using the Proto.Actor Persistence module:
 
 1. [What is Event Sourcing.](unit-9/lesson-1)
-5. [Persistence actors.](unit-9/lesson-2)
-8. [Snapshotting.](unit-9/lesson-3)
+2. [Persistence actors.](unit-9/lesson-2)
+3. [Snapshotting.](unit-9/lesson-3)
 
 ## How to get started
 
