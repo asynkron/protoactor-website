@@ -12,6 +12,8 @@ Thanks to the fact that the Proto.Actor platform uses PIDs for process identific
 ### Remote spawning
 Everything you need to interact with a remote actor located anywhere in the world. It is to create a new PID and specify its IP address and ID. 
 
+//TODO: this section is incorrect. Fix it
+
   ```csharp
   var server = new PID("127.0.0.1:8000", "chatserver");
   ```
