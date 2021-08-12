@@ -89,6 +89,7 @@ tags: [protoactor, docs]
 - [Scheduling Periodic Messages](scheduling.md)
 - [Envelope Pattern](envelope-pattern.md)
 - [Local Affinity](local-affinity.md)
+- [Placement Strategies](placement-strategies.md)
 
 ## Additional Information
 
