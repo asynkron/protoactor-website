@@ -42,6 +42,7 @@ tags: [protoactor, docs]
   - [Spawning Actors](spawn.md) - How do I instantiate actors?
   - [PID](pid.md) - How do I communicate with actors?
   - [Context](context.md) - What are actor and root contexts?
+    - [ReenterAfter](reenter.md) - How do I handle reentrancy in actors?
   - [Mailboxes](mailboxes.md) - How does the actor process messages?
   - [Deadletter](deadletter.md) - What happens to lost messages?
   - [Router](routers.md) - How do I forward messages to to pools or groups of workers?
