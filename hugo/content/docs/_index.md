@@ -90,6 +90,8 @@ tags: [protoactor, docs]
 - [Envelope Pattern](envelope-pattern.md)
 - [Local Affinity](local-affinity.md)
 - [Placement Strategies](placement-strategies.md)
+- [Coordinated Persistence](coordinated-persistence.md)
+- [Batched Persistence](batched-persistence.md)
 
 ## Additional Information
 
