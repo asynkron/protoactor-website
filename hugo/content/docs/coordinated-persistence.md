@@ -17,3 +17,15 @@ e.g. using MongoDB or Redis.
 
 The main benefit here is that you can have exactly one write, coordinated with underlying messaging infrastructure.
 e.g. writing a single batch of changes before committing offsets to say Kafka.
+
+Requires:
+
+- A central point of message Fan-out
+
+Pros:
+
+- A single write to data store for a batch of messages
+
+Cons:
+
+- Blurred responsibility of where data access is performed
