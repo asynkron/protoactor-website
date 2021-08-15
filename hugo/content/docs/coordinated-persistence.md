@@ -14,3 +14,6 @@ you instead pass back the data that should be persisted, be it domain events or 
 
 The benefit here is that you can now collect all those state changes together, and write them using a batch operation to the data store.
 e.g. using MongoDB or Redis.
+
+The main benefit here is that you can have exactly one write, coordinated with underlaying messaging infrastructure.
+e.g. writing a single batch of changes before committing offsets to say Kafka.
