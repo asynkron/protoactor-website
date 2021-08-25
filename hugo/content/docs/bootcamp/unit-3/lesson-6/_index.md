@@ -23,7 +23,7 @@ Now let's create two methods to represent two different types of behavior. Behav
 public delegate Task Receive(IContext context);
 ```
 
-The first thing we need to do is add the private `Playing () ' method to our actor. This method will be a behavior for playing the movie.
+The first thing we need to do is add the private `Playing()` method to our actor. This method will be a behavior for playing the movie.
 
 ```csharp
 private Task Playing(IContext context)
@@ -49,7 +49,7 @@ After receiving a message, our method uses the `switch` operator to select the a
 
 `_behavior.Become(Stopped);`
 
-It means that the next message will be processed not in the `Playing () ' method, and in the method `Stopped ()`. Recall that the `Stopped()` method is used to implement the behavior of stopping movie viewing. Let's see in this method more detail.
+It means that the next message will be processed not in the `Playing()` method, and in the method `Stopped()`. Recall that the `Stopped()` method is used to implement the behavior of stopping movie viewing. Let's see in this method more detail.
 
 ```csharp
 private Task Stopped(IContext context)
@@ -71,7 +71,7 @@ private Task Stopped(IContext context)
 }
 ```
 
-As we can see in the code block responsible for processing the message 'PlayMovieMessage ()' there is a code for switching the behavior to the `Playing 'behavior. In turn, the `Playing' behavior will switch to the `Stopped` behavior under certain conditions. In other words, our actor is a classical finite state machine with two States.
+As we can see in the code block responsible for processing the message `PlayMovieMessage()` there is a code for switching the behavior to the `Playing` behavior. In turn, the `Playing` behavior will switch to the `Stopped` behavior under certain conditions. In other words, our actor is a classical finite state machine with two States.
 
 As a result, our actor should look like this.
 
