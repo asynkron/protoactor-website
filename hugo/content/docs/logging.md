@@ -9,6 +9,7 @@ In Proto.Actor .NET, Logging is configured via the static `Proto.Log` setting.
 ```csharp
 public static void SetupLogger()
 {
+    //Configure ProtoActor to use Console logger
     Proto.Log.SetLoggerFactory(
         LoggerFactory.Create(l => l.AddConsole().SetMinimumLevel(LogLevel.Error)));
 }
