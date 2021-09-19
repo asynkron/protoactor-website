@@ -7,7 +7,7 @@ title: Persistence
 
 <img src="../images/Persistence-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
 
-You can choose to have actors persist their state by using the `Proto.Persistence` module. This allows an actor to recover it’s state when it is started and supports three modes of operation:
+You can choose to have actors persist their state by using the `Proto.Persistence` module. This allows an actor to recover its state when it is started and supports three modes of operation:
 
 - Event Sourcing
 - Snapshotting
