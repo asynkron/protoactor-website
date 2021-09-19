@@ -44,7 +44,7 @@ public class SwitchRouter : IActor
                 Console.WriteLine("Received on while already in on state");
                 break;
             case RouteStateOff msg:
-                _behavior.Become(On);
+                _behavior.Become(Off);
                 break;
             default:
                 context.Forward(_normalFlow);
