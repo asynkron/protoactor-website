@@ -27,7 +27,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 //Add these two lines
-using Proto.Actor;
+using Proto;
 
 namespace ConsoleApplication11
 {
@@ -52,7 +52,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Proto.Actor;
+using Proto;
 
 namespace ConsoleApplication11
 {
@@ -84,7 +84,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Proto.Actor;
+using Proto;
 
 namespace ConsoleApplication11
 {
@@ -102,13 +102,13 @@ namespace ConsoleApplication11
     {
         public Task ReceiveAsync(IContext ctx)
         {
-            if (ctx.Message is Greet)
+            if (ctx.Message is Greet greet)
             {
                 // Tell the actor to respond
                 // to the Greet message
-                var greet = (Greet)ctx.Message;
-                Console.WriteLine("Hello {0}", greet.Who));
+                Console.WriteLine("Hello {0}", greet.Who)); 
             }
+            return Task.CompletedTask;
         }
     }
 
@@ -148,13 +148,13 @@ namespace ConsoleApplication11
     {
         public Task ReceiveAsync(IContext ctx)
         {
-            if (ctx.Message is Greet)
+            if (ctx.Message is Greet greet)
             {
                 // Tell the actor to respond
                 // to the Greet message
-                var greet = (Greet)ctx.Message;
-                Console.WriteLine("Hello {0}", greet.Who));
+                Console.WriteLine("Hello {0}", greet.Who)); 
             }
+            return Task.CompletedTask;
         }
     }
 
@@ -167,7 +167,7 @@ namespace ConsoleApplication11
             var greeter = system.Root.Spawn(props);
 
             // Send a message to the actor
-            system.Root.Send(new Greet("World"));
+            system.Root.Send(greeter, new Greet("World"));
 
             // This prevents the app from exiting
             // before the async work is done
