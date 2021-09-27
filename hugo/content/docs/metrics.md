@@ -176,7 +176,7 @@ In addition, we provide a few "fake" configurators, which either do nothing, or 
 ## Built in metrics in Proto.Actor
 
 List all the metric names and based on module:
-https://github.com/AsynkronIT/protoactor-dotnet/issues/948
+https://github.com/asynkron/protoactor-dotnet/issues/948
 
 ### Proto.Actor Metrics
 
