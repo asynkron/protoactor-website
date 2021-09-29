@@ -51,9 +51,9 @@ Proto.Actor also uses gRPC, leveraging HTTP/2 streams for network communication.
 
 ## Supported Languages
 
-* dotnet - [protoactor-dotnet](https://github.com/AsynkronIT/protoactor-dotnet)
-* Go - [protoactor-go](https://github.com/AsynkronIT/protoactor-go)
-* Kotlin - [protoactor-kotlin](https://github.com/AsynkronIT/protoactor-kotlin)
+* dotnet - [protoactor-dotnet](https://github.com/asynkron/protoactor-dotnet)
+* Go - [protoactor-go](https://github.com/asynkron/protoactor-go)
+* Kotlin - [protoactor-kotlin](https://github.com/asynkron/protoactor-kotlin)
 
 ## Scalable, distributed real-time transaction processing
 We believe that writing correct, concurrent, fault-tolerant and scalable applications is too hard.
