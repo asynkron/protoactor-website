@@ -15,10 +15,10 @@ This can be retreived the following way in your service definition:
 ```yml
 env:
   - name: PROTOPORT
-    value: "8080"            //this is the port we bind to
+    value: "8080"            #this is the port we bind to
   - name: PROTOHOST
-    value: "0.0.0.0"         //this is the Host we bind to, inside the container
-  - name: "ADVERTISED_HOST"  //this is the Host we expose outwards, to the cluster
+    value: "0.0.0.0"         #this is the Host we bind to, inside the container
+  - name: "ADVERTISED_HOST"  #this is the Host we expose outwards, to the cluster
     valueFrom:
       fieldRef:
         fieldPath: status.podIP
@@ -62,5 +62,5 @@ roleRef:
   name: proto-cluster
 subjects:
   - kind: ServiceAccount
-    name: SomeServiceAccount //this is the service account that should have this role applied
+    name: SomeServiceAccount #this is the service account that should have this role applied
 ```    
