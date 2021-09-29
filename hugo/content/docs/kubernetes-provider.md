@@ -12,7 +12,7 @@ Your service will also have to expose an "Advertised Host", this is the address 
 
 This can be retreived the following way in your service definition:
 
-```
+```yml
 env:
   - name: PROTOPORT
     value: "8080"            //this is the port we bind to
@@ -29,7 +29,7 @@ env:
 The service will also need some extra permissions inside Kubernetes in order to read and write metadata to its own Pods.
 The role will need the following permissions:
 
-```
+```yml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
