@@ -24,7 +24,7 @@ env:
         fieldPath: status.podIP
 ```                 
 
-## Role Bindings
+## Role Definition
 
 The service will also need some extra permissions inside Kubernetes in order to read and write metadata to its own Pods.
 The role will need the following permissions:
@@ -48,3 +48,19 @@ rules:
       - watch
       - patch
 ```      
+
+## Role Binding
+
+```yml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: proto-cluster
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: proto-cluster
+subjects:
+  - kind: ServiceAccount
+    name: SomeServiceAccount //this is the service account that should have this role applied
+```    
