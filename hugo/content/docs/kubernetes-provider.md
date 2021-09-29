@@ -14,11 +14,11 @@ This can be retreived the following way in your service definition:
 
 ```yml
 env:
-  - name: PROTOPORT
+  - name: PROTO_PORT
     value: "8080"            #this is the port we bind to
-  - name: PROTOHOST
+  - name: PROTO_HOST
     value: "0.0.0.0"         #this is the Host we bind to, inside the container
-  - name: "ADVERTISED_HOST"  #this is the Host we expose outwards, to the cluster
+  - name: "PROTO_ADVERTISED_HOST"  #this is the Host we expose outwards, to the cluster
     valueFrom:
       fieldRef:
         fieldPath: status.podIP
