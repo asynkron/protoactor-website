@@ -12,15 +12,15 @@ However, progress does not stand still. The application architecture has evolved
 
 ## Reactive applications
 
-The Merriam Webster dictionary defines reactive as *"ready to respond to external events»* , which means that the components are always active and always ready to receive messages. This definition reveals the essence of reactive applications, focusing on systems that:
+The Merriam Webster dictionary defines reactive as *"ready to respond to external events"* , which means that the components are always active and always ready to receive messages. This definition reveals the essence of reactive applications, focusing on systems that:
 
-- *react to events*
+- **react to events:**
   Event orientation means having the following qualities.
-- *react to increased load*
+- **react to increased load:**
   Focus on scalability, competitive access to shared resources is minimized.
-- *react to failures*
+- **react to failures:**
   Fault-tolerant systems are created with the ability to recover at all levels.
-- *react to users*
+- **react to users:**
   Guaranteed response time, regardless of the load.
 
 Each of these characteristics is essential for reactive applications. They all depend on each other, but not as tiers of standard multi-level architecture. Instead, they describe properties that apply across the all technology stack:
