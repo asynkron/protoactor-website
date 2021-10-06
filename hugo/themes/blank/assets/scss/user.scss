@@ -193,4 +193,10 @@ h3, .h3 {
     width: 100% !important;
   }
 
-  
+/* target the go ahead button */
+article>div:last-of-type>p:last-of-type>a:last-of-type{
+    @extend .btn,.btn-primary,.float-right;
+    &:after{
+      content: " →";  
+    }
+}
