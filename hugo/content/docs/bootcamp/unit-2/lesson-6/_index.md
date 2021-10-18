@@ -1,4 +1,4 @@
-# Lesson 6: Defining Which Messages an Actor will processing.
+# Lesson 6: Defining Which Messages an Actor will process.
 
 In the previous lesson, we created an actor system, and an instance of our actor inside that system. In this lesson, we will learn how to send and respond to messages within the actor system.
 
