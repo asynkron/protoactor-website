@@ -2,7 +2,7 @@
 
 In this lesson, we will consider how to process system messages that represent different stages of the actor's life cycle.
 
-In this demo application, we will be gradually add handlers for various stages of the PlaybackActor lifecycle.
+In this demo application, we will be gradually adding handlers for various stages of the PlaybackActor lifecycle.
 
 But before we begin, we need to make some changes to our project.
 
