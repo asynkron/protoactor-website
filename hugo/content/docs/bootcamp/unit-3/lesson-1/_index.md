@@ -6,7 +6,7 @@ Let's start studying this module by considering the stages of the actor's life c
 
 At the start stage, the actor initialized in our actor system. In other words, the instance of our actor is created, and a link to it saved in our actor system.
 
-After the actor was created, the actor system will send to our actor a system message Started. What to run the method `ProcessMessageAsync()`. That allows you to process the start stage of the actor.
+After the actor was created, the actor system will send to our actor a system message Started which will cause the method `ProcessMessageAsync()` to be invoked. This allows you to process the start stage of the actor.
 
 ### Stage № 2 Receiving Messages.
 
