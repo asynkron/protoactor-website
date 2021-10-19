@@ -47,7 +47,9 @@ First, let's take a look at how to configure a Proto.Actor to use DI. We need to
 services.AddSingleton(serviceProvider => new ActorSystem().WithServiceProvider(serviceProvider));
 ```
 
-Then we register the service of `DependencyInjectedActor` type with a transient lifetime. 
+Then register all actors with a transient lifetime.
+
+For example, if we have an actor of type `DependencyInjectedActor`, register the type with a transient lifetime. 
 
 ```csharp
 services.AddTransient<DependencyInjectedActor>();
