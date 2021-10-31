@@ -10,7 +10,7 @@ For example, we have an actor who has three types of behavior. Behavior A, B, an
 
 <img src="images/3_5_2.png" style="zoom:50%;" />
 
-When we create an instance of our doctor, it is automatically initialized by behavior A. When the actor receives the first message, and it will be processed according to the logic of behavior A.
+When we create an instance of our actor, it is automatically initialized by behavior A. When the actor receives the first message, and it will be processed according to the logic of behavior A.
 
 <img src="images/3_5_3.png" style="zoom:50%;" />
 
