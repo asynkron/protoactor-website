@@ -4,7 +4,7 @@ Let's start by looking at the steps necessary to create an actor. Let's also loo
 
 The first thing we need to do is create a new class in our IDE for our actor. This class will define our actor, which will be later used in our actor system. 
 
-Next, we must inherit our class from the Proto.Actor base class. After this Proto.Actor Platform will be able to create and manage instances of our actor.
+Next, we must have our class implement the `Proto.IActor` interface. After this, the Proto.Actor platform will be able to create and manage instances of our actor.
 
 The last thing we need to do is define what types of messages our actor can be handling, and then write handlers for these message types.
 
