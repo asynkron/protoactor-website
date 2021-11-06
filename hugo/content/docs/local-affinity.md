@@ -12,7 +12,6 @@ tags: [protoactor, docs]
 Local Affinity placement enables us to place virtual actors in the locality to some other resource.
 In this example, we place the virtual actors close to an Apache Kafka consumer. The actors on the same cluster member, will only be actors that consume messages from the partitions of this specific Kafka consumer.
 
-
 ![Actor](images/local-affinity-1.png)
 
 ### Scale up or down

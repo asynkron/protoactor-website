@@ -10,7 +10,7 @@ One message goes in, you process it, you write the new state of your entity/acto
 This can result in bottlenecks in terms of writes against the persistent store.
 e.g. if you process 10 000 messages per second, that could result in 10 000 writes to the persistent store.
 
-This pattern limits the number of writes to the persistent store by grouping messages together, where you only write back once they are all processed, and then ack this back to the underlaying message queue/log you are using.
+This pattern limits the number of writes to the persistent store by grouping messages together, where you only write back once they are all processed, and then ack this back to the underlying message queue/log you are using.
 
 
 Requires:

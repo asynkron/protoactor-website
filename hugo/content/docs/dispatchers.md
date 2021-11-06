@@ -4,7 +4,7 @@ title: Dispatchers
 
 # Dispatchers
 
-## What Do Dispatchers Do?
+## What do dispatchers do?
 
 Dispatchers are responsible for scheduling all code that run inside the `ActorSystem`.
 Dispatchers are one of the most important parts of Proto.Actor, as they control the throughput and
@@ -34,7 +34,7 @@ The most common configuration change would be the Throughput setting on the `Thr
 If your system falls over and doesn't run properly, it might be tempting to blame the dispatchers, this is very likely NOT the issue. but rather bad design of workloads and actor interactions.
 {{</ note >}}
 
-## Configuring Dispatchers
+## Configuring dispatchers
 
 Dispatchers are configured via `Props` like so:
 
@@ -45,7 +45,7 @@ var dispatcher = new ThreadPoolDispatcher(throughput = 100);
 var props = Props.FromProducer(() => new MyActor()).WithDispatcher(dispatcher);
 ```
 
-#### Built-in Dispatchers
+#### Built-in dispatchers
 
 Some dispatchers are available out-of-the-box for convenience.
 

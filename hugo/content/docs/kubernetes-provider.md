@@ -1,16 +1,16 @@
+---
+title: Kubernetes Provider
+---
+
 # Kubernetes Provider
-
-
-
 
 ## Advertised Host
 
-When running a Proto Cluster inside Kubernetes, there will be a local address on which the service is listening to, meaning the address inside the container.
-e.g. `0.0.0.0` in order to bind to all available network interfaces.
+When running a Proto Cluster inside Kubernetes, there will be a local address on which the service is listening to, meaning the address inside the container, e.g. `0.0.0.0` in order to bind to all available network interfaces.
 
 Your service will also have to expose an "Advertised Host", this is the address which is exposed to the other cluster members, the address that points to the specific Pod of a cluster member.
 
-This can be retreived the following way in your service definition:
+This can be retrieved the following way in your service definition:
 
 ```yml
 env:

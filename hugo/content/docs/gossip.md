@@ -1,3 +1,7 @@
+---
+title: Cluster Gossip
+---
+
 # Cluster Gossip
 
 A **gossip protocol** is a procedure or process of computer peer-to-peer communication that is based on the way epidemics spread.Some distributed systems use peer-to-peer gossip to ensure that data is disseminated to all members of a group. Some ad-hoc networks have no central registry and the only way to spread common data is to rely on each member to pass it along to their neighbours. The term **epidemic protocol** is sometimes used as a synonym for a **gossip protocol**, as gossip spreads information in a manner similar to the spread of a virus in a biological community.
@@ -20,12 +24,12 @@ State is always defined per member, allowing us to know what other members see a
 
 To get a complete view of say banned-members, we could take the banned-member entry from each member, and merge those results. giving us an eventual consistent set of banned members.
 
-![Gossip](/images/gossip.png)
+![Gossip](images/gossip.png)
 
 ### Committed Offsets
 
 Each member has a dictionary of _committed offsets_ for itself, and all other known members.
-These offsets represent the highest `SequenceNumber` this node have seen for a given key.
+These offsets represent the highest `SequenceNumber` this node has seen for a given key.
 
 Keys are made up of `MemberId` and `StateEntryKey`
 
@@ -38,15 +42,15 @@ During the gossip transmission, the sender member will transfer a delta of all s
 
 The sender member can _know_ that some state has been transmitted to the target, we know this via the `CommittedOffsets`, the sender does not however know if any of the state after this point, has already been transmitted by any other node, unless they have gossipped this to the sender that is.
 
-![Gossip Offsets](/images/gossipoffsets.png)
+![Gossip Offsets](images/gossipoffsets.png)
 
 ### Gossip fan-out
 
-Gissip between member nodes occur at intervals and target members are picked at random with a selection of `ClusterConfig.GossipFanout` number of members.
+Gossip between member nodes occur at intervals and target members are picked at random with a selection of `ClusterConfig.GossipFanout` number of members.
 
-![Gossip Fanout](/images/gossipfanout.png)
+![Gossip Fan-out](images/gossipfanout.png)
 
-### Sending User State
+### Sending user state
 
 To set cluster state, there is a `Cluster.Gossip.SetKey(key, value)` method.
 This method takes a key for the state you wish to set, e.g. "MyState" and a value, in the form of a `Protobuf.Any` message.

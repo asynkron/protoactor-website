@@ -17,11 +17,12 @@ Proto.Actor is a unified runtime and programming model for:
 
 With one thing to learn and admin, with high cohesion and coherent semantics.
 
-Proto.Actor is a very scalable piece of software; not only in the context of performance, but also in the size of applications it is useful for. The core of Proto.Actor, Proto.Actor-Actor, is very small and it can easily be dropped into an existing project where you need asynchronicity and lockless concurrency without hassle.
+Proto.Actor is a very scalable piece of software; not only in the context of performance, but also in the size of applications it is useful for. The core of Proto.Actor, Proto.Actor-Actor, is very small, and it can easily be dropped into an existing project where you need asynchronicity and lockless concurrency without hassle.
 
-You can choose to include only the parts of Proto.Actor you need in your application or you can use the whole package with persistence and clustering.
+You can choose to include only the parts of Proto.Actor you need in your application, or you can use the whole package with persistence and clustering.
 
 ## What's a good use case for Proto.Actor?
+
 We see Proto.Actor being adopted by many large organizations in a wide range of industries:
 
 * Investment and Merchant Banking

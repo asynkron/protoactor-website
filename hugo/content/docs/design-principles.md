@@ -28,6 +28,7 @@ Don't try to hide serialization.
 Serialization is an explicit concern, messages should be clearly defined contracts and not arbitrary platform specific objects.
 
 ###  Be fast
+
 Don't trade performance for magic API trickery.
 
 ## Outcome

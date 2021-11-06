@@ -10,8 +10,12 @@ The EventStream is used internally in Proto.Actor to broadcast framework events.
 **Events**
 * `actor.DeadLetter`
 
-When a message is sent to a non existing `actor.PID`, the message will be forwarded to the `actor.EventStream` as a `actor.DeadLetter`.
-This can be used to monitor if your system holds on to broken/expired `actor.PID`s
+When a message is sent to a non-existing `actor.PID`, the message will be forwarded to the `actor.EventStream` as a `actor.DeadLetter`.
+This can be used to monitor if your system holds on to broken/expired `actor.PID`s.
+
+{{< note >}}
+Learn more about DeadLetters [here](deadletter.md).
+{{</ note >}}
 
 ## Remote termination
 **Events**

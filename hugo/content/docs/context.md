@@ -7,7 +7,7 @@ tags: [protoactor, docs]
 
 # Context
 
-Proto.Actor provides two forms of Context, a `RootContext` and an `ActorContext`. These contexts are composed from various functionality provided by distinct facets. Both types of context implement `Spawner`, `Stopper`, `Info` and `Sender` facets, while the `ActorContext` implements additional facets.
+Proto.Actor provides two forms of Context, a `RootContext` and an `ActorContext`. These contexts are composed of various functionality provided by distinct facets. Both types of context implement `Spawner`, `Stopper`, `Info` and `Sender` facets, while the `ActorContext` implements additional facets.
 
 ## Root Context Facets
 

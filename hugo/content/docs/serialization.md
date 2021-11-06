@@ -1,3 +1,7 @@
+---
+title: Serialization
+---
+
 # Serialization
 
 > In computing, serialization is the process of translating a data structure or object state into a format that can be stored (for example, in a file or memory data buffer) or transmitted (for example, across a computer network) and reconstructed later (possibly in a different computer environment)
@@ -38,7 +42,7 @@ And the **AkkaDotNet/Hyperion** fork of Wire.
 
 **Github issued Security advisory: [Wire/security/advisories/GHSA-hpw7-3vq3-mmv6](https://github.com/asynkron/Wire/security/advisories/GHSA-hpw7-3vq3-mmv6)**
 
-## Useful Links
+## Useful links
 
 An excellent talk on this subject can be found here:
 

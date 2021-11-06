@@ -1,4 +1,6 @@
-
+---
+title: Cluster Partitions
+---
 
 ## Consul Cluster
 
@@ -32,7 +34,7 @@ By matching the hash-code against the hash ring, we can see that the member clos
 What is important to understand here is that the member "E" in this case, do not own the **actor**, just the **name** "Roger".
 
 The Actor itself is then spawned or "activated" somewhere in the cluster.
-This might seem strange at first, why do we need this two step structure for locating actors?
+This might seem strange at first, why do we need this two-step structure for locating actors?
 
 ![Actor Placement](images/actorplacement.png)
 
@@ -52,7 +54,7 @@ In this specific case, even if all members except B and F leaves, the specific a
 
 ![Complete Failure](images/completefailure.png)
 
-## Multiple Activations
+## Multiple activations
 
 One drawback of this approach is what is known as **Multiple Activations**
 

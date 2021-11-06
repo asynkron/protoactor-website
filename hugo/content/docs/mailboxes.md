@@ -18,7 +18,7 @@ Fundamentally, the following rules apply to the actor mailbox:
 * Message receive is done sequentially by the actor. other rules can apply for special mailboxes, e.g. priority mailboxes.
 * Mailboxes are never shared between actors
 
-By default an unbounded mailbox is used, this means any number of messages can be enqueued into the mailbox.
+By default, an unbounded mailbox is used, this means any number of messages can be enqueued into the mailbox.
 
 ## Changing the mailbox
 
@@ -41,11 +41,9 @@ props := actor.FromProducer(MyActorProducer)
 
 ## Unbounded Mailbox
 
-The unbounded mailbox is a convenient default but in a scenario where messages are added to the mailbox faster than the actor can process them, this can lead to the application running out of memory. For this reason a bounded mailbox can be specified, the bounded mailbox will pass new messages to deadletters when the mailbox is full.
+The unbounded mailbox is a convenient default but in a scenario where messages are added to the mailbox faster than the actor can process them, this can lead to the application running out of memory. For this reason a bounded mailbox can be specified, the bounded mailbox will pass new messages to [dead-letters](deadletter.md) when the mailbox is full.
 
 ## Bounded Mailbox
-
-
 
 ### Dropping Tail Mailbox
 

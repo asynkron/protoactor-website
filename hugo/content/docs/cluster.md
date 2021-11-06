@@ -1,5 +1,5 @@
 ---
-title: "Grains"
+title: "Proto.Cluster"
 date: 2020-05-28T16:34:24+02:00
 draft: false
 tags: [protoactor, docs]
@@ -7,7 +7,7 @@ tags: [protoactor, docs]
 
 # Proto.Cluster
 
-<img src="../images/Cluster-2-blue.png" style="max-height:500px;margin-bottom:20px;margin-left:20px">
+![proto.cluster](images/Cluster-2-blue.png)
 
 <small>[Homage to Proto.Actors Swedish roots, Swedish midsummer ring dance - Connected Cluster Actors]</small>
 
@@ -19,7 +19,7 @@ The virtual actor model instead focus on ease of use, high availability where mo
 
 > The Microsoft Orleans website describes this as _A straightforward approach to building distributed, high-scale applications in .NET_.
 
-![grains](/images/grains.png)
+![grains](images/grains.png)
 
 **Proto.Actor** combines this way of clustering, with the traditional actor model to combine the best of both worlds.
 This allows us to create huge clusters of stateful services where the virtual actors acts as entry points which in turn can contain entire graphs of local actors.
@@ -37,14 +37,14 @@ You address it using its identity and kind and the cluster does the rest for you
 
 ## Cluster Architecture Overview
 
-![Cluster Architecture](/images/cluster-architecture.png)
+![Cluster Architecture](images/cluster-architecture.png)
 
 ### `IClusterProvider` - Interface
 
 This allows the membership logic to be replaced.
 
 - ##### Consul Provider
-- ##### Kubernetes Provider
+- ##### [Kubernetes Provider](kubernetes-provider.md)
 - ##### AWS ECS Provider
 - ##### Etcd Provider
 - ##### Self Managed Provider
@@ -53,7 +53,7 @@ This allows the membership logic to be replaced.
 ### `IIdentityLookup` - Interface
 
 This allows the identity lookup strategy to be replaced.
-The built in, default is the PartitionIdentityLookup.
+The built-in, default is the PartitionIdentityLookup.
 
 - ##### `PartitionIdentityLookup` - Implementation
 
@@ -62,7 +62,7 @@ The built in, default is the PartitionIdentityLookup.
 
   - `PartitionIdentitySelector` - The hashing algorithm that decides the relation between Identity and Member
 
-  - `PartitionPlacementActor` - This actor manages the actual actor instances. it also knows which member owns the identity and can transfer actor identitiy ownership when topology changes
+  - `PartitionPlacementActor` - This actor manages the actual actor instances. it also knows which member owns the identity and can transfer actor identity ownership when topology changes
 
   - `PartitionIdentityActor` - Manages the owned identities for a member.
 

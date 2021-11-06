@@ -9,9 +9,9 @@ tags: [protoactor, docs]
 
 This document outlines the concept behind supervision and what that means for your Proto.Actor actors at run-time.
 
-<img src="../images/Supervision-all-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
+![supervision](images/Supervision-all-blue.png)
 
-## What Supervision Means
+## What Supervision means
 
 Supervision describes a dependency relationship between actors: the supervisor delegates tasks to subordinates and therefore must respond to their failures. When a subordinate detects a failure (i.e. throws an exception), it suspends itself and all its subordinates and sends a message to its supervisor, signaling failure. Depending on the nature of the work to be supervised and the nature of the failure, the supervisor has a choice of the following four options:
 
@@ -33,7 +33,7 @@ ordered relative to ordinary messages. In general, the user cannot influence the
 failure notifications. For details and example see the Discussion: Message Ordering section.
 {{</ warning >}}
 
-## The Top-Level Supervisors
+## The top-level Supervisors
 
 ![Top level supervisors](images/error-kernel.png)
 
@@ -42,7 +42,7 @@ This means that both actors and non actors can be supervisors.
 
 At the top of Proto.Actor are N number of non actor based supervisors.
 
-## What Restarting Means
+## What Restarting means
 
 When presented with an actor which failed while processing a certain message, causes for the failure fall into three categories:
 
@@ -62,9 +62,9 @@ The precise sequence of events during a restart is the following:
 6. Send restart request to all children which were not killed in step 3; restarted children will follow the same process recursively, from step 2
 7. Resume the actor.
 
-## What Lifecycle Monitoring Means
+## What Lifecycle Monitoring means
 
-In contrast to the special relationship between parent and child described above, each actor may monitor any other actor. Since actors emerge from creation fully alive and restarts are not visible outside of the affected supervisors, the only state change available for monitoring is the transition from alive to dead. Monitoring is thus used to tie one actor to another so that it may react to the other actor's termination, in contrast to supervision which reacts to failure.
+In contrast to the special relationship between parent and child described above, each actor may monitor any other actor. Since actors emerge from creation fully alive and restarts are not visible outside the affected supervisors, the only state change available for monitoring is the transition from alive to dead. Monitoring is thus used to tie one actor to another so that it may react to the other actor's termination, in contrast to supervision which reacts to failure.
 
 Lifecycle monitoring is implemented using a `Terminated` message to be received by the monitoring actor. In order to start listening for Terminated messages, invoke `Context.Watch(targetPID)`. To stop listening, invoke `Context.Unwatch(targetPID)`. One important property is that the message will be delivered irrespective of the order in which the monitoring request and target's termination occur, i.e. you still get the message even if at the time of registration the target is already dead.
 
@@ -72,12 +72,12 @@ Monitoring is particularly useful if a supervisor cannot simply restart its chil
 
 Another common use case is that an actor needs to fail in the absence of an external resource, which may also be one of its own children. If a third party terminates a child by way of the `context.Stop(pid)` method or sending a `context.Poison(pid)`, or their .NET Async counterparts, the supervisor might well be affected.
 
-### One-For-One Strategy vs. All-For-One Strategy
+### One-For-One strategy vs All-For-One strategy
 
 There are two classes of supervision strategies which come with Proto.Actor: `OneForOneStrategy` and `AllForOneStrategy`. Both are configured with a mapping from exception type to supervision directive (see above) and limits on how often a child is allowed to fail before terminating it. The difference between them is that the former applies the obtained directive only to the failed child, whereas the latter applies it to all siblings as well. Normally, you should use the `OneForOneStrategy`, which also is the default if none is specified explicitly.
 
 ![One for one](images/oneforone.png)
 
-The `AllForOneStrategy` is applicable in cases where the ensemble of children has such tight dependencies among them, that a failure of one child affects the function of the others, i.e. they are inextricably linked. Since a restart does not clear out the mailbox, it often is best to terminate the children upon failure and re-create them explicitly from the supervisor (by watching the children's lifecycle); otherwise you have to make sure that it is no problem for any of the actors to receive a message which was queued before the restart but processed afterwards.
+The `AllForOneStrategy` is applicable in cases where the ensemble of children has such tight dependencies among them, that a failure of one child affects the function of the others, i.e. they are inextricably linked. Since a restart does not clear out the mailbox, it is often best to terminate the children upon failure and re-create them explicitly from the supervisor (by watching the children's lifecycle); otherwise you have to make sure that it is no problem for any of the actors to receive a message which was queued before the restart but processed afterwards.
 
 ![All for one](images/allforone.png)

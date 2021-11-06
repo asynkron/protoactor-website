@@ -2,8 +2,10 @@
 layout: docs.hbs
 title: Receive timeout
 ---
+
 ## Receive timeout
-The `Context.SetReceiveTimeout` defines the inactivity timeout after which the sending of a `ReceiveTimeout` message is triggered. When specified, the receive function should be able to handle an `ReceiveTimeout` message.
+
+The `Context.SetReceiveTimeout` defines the inactivity timeout after which the sending of a `ReceiveTimeout` message is triggered. When specified, the Receive function should be able to handle an `ReceiveTimeout` message.
 
 {{< note >}}
 Please note that the receive timeout might fire and enqueue the ReceiveTimeout message right after another message was enqueued; hence it is not guaranteed that upon reception of the receive timeout there must have been an idle period beforehand as configured via this method.
@@ -55,7 +57,7 @@ Should the actor receive any message during this time, the timer will also reset
 
 Meaning, `ReceiveTimeout` will only be received after at not receiving any messages for at least the time of the duration.
 
-## Non influencing messages
+## Non-influencing messages
 
 There is a way to still send messages to an actor without resetting the receive-timeout timer.
 You can do this by marking your message as `NoInfluence`.

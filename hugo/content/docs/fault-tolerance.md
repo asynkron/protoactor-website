@@ -45,11 +45,12 @@ The child actor is stopped if the limit is exceeded.
 
 This is the piece which maps child failure types to their corresponding directives.
 
-> **Note**<br/>
+{{< note >}}
 If the strategy is declared inside the supervising actor (as opposed to
 within a companion object) its decider has access to all internal state of
 the actor in a thread-safe fashion, including obtaining a reference to the
 currently failed child (available as the ``sender`` of the failure message).
+{{</ note >}}
 
 ### Default Supervisor Strategy
 

@@ -1,10 +1,14 @@
+---
+title: Logging
+---
+
 # Logging
 
-## Configuring Logging on .NET
+## Configuring logging on .NET
 
 In Proto.Actor .NET, Logging is configured via the static `Proto.Log` setting.
 
-### Using Console
+### Using console
 
 ```csharp
 public static void SetupLogger()

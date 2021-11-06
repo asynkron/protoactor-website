@@ -1,3 +1,7 @@
+---
+title: Dependency Injection
+---
+
 # Dependency Injection
 
 In object-oriented programming, if a class contains objects of another class, then these objects are called dependencies. When instantiating a class, you must also instantiate all dependencies. Creating them directly in the class can be quite inflexible since in this case they cannot change during runtime and in order to create a new dependency, you need to recreate the dependent object.

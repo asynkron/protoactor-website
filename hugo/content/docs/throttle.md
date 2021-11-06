@@ -1,10 +1,14 @@
+---
+title: Throttle
+---
+
 # Proto.Util.Throttle
 
 The `Throttle` class is a utility class used to prevent event flooding.
 The Throttle is similar to a **circuit breaker**, but instead of getting triggered by **failure**, it triggers by a **surge of events in a short time**.
 
 This can be very useful in scenarios where you consume large number of events, be it from an HTTP endpoint, or a message queue or log such as RabbitMQ or Kafka.
-Under normal conditions, you might want to fully log error events if something fails during processing, but incase there is a flood of errors, you might not want to fill up your log system with thousands or millions of log entries.
+Under normal conditions, you might want to fully log error events if something fails during processing, but in case there is a flood of errors, you might not want to fill up your log system with thousands or millions of log entries.
 Here is where you can benefit from using the `Throttle` class.
 
 

@@ -1,3 +1,7 @@
+---
+title: Context Decorator
+---
+
 # Context Decorator
 
 Context Decorators allow developers to surround actors with custom functionality, this could be anything from custom message receive logic, to intercepting outgoing calls from the context.
@@ -9,6 +13,5 @@ To apply context decorators to an actor, use the `Props.WithContextDecorator` me
 ## Conceptual overview
 
 This overview aims to show how the different extension points of Proto.Actor interact together.
-
 
 ![Context Decorator](images/middleware.png)

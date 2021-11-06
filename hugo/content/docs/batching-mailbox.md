@@ -1,3 +1,7 @@
+---
+title: Batching Mailbox
+---
+
 # Proto.Mailbox.BatchingMailbox
 
 `BatchingMailbox` is a message queue that collects messages from one or more sources and then group them together into a `MessageBatch` message, before handing the batch over to the assigned `IMessageInvoker`.¨
