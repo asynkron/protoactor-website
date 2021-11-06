@@ -1,8 +1,11 @@
+---
+title: AsyncSemaphore
+---
+
 # Proto.Util.AsyncSemaphore
 
-
-`AsyncSemaphore` is a utility type that helps limit the number of concurrent usages of a given resource.
-eg. limit the number of concurrent requests to a database.
+`AsyncSemaphore` is a utility type that helps limit the number of concurrent usages of a given resource,
+e.g. limit the number of concurrent requests to a database.
 
 This is especially useful for actor systems, where a cold-start of a system might bring thousands of actors back to life.
 If you were to allow all these actors to individually request a database, the database could easily become overloaded.

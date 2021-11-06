@@ -5,7 +5,7 @@ title: Spawning Actors
 
 # Spawning Actors
 
-<img src="../images/Spawning-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
+![spawning](images/Spawning-blue.png)
 
 Spawning an actor consists of two steps:
 

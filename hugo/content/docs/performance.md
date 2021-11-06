@@ -1,5 +1,5 @@
 ---
-title: "Proto.Actor Documentation"
+title: "Performance"
 date: 2020-05-28T16:34:24+02:00
 draft: false
 tags: [protoactor, docs]
@@ -24,13 +24,13 @@ your framework supports.
 
 ## Inproc PingPong
 
-This test is similar to the remote pingpong, the difference is that there is a single node and
+This test is similar to the remote ping-pong, the difference is that there is a single node and
 there may be more than two actors, usually CPU-Count or CPU-Count * 2.
 Messages may or may not be serialized. Both Proto.Actor and Akka.NET supports passing messages by reference
 to optimize in-process performance.
 
 ## SkyNet
 
-https://github.com/atemerev/skynet
+[https://github.com/atemerev/skynet]
 
-Creates an actor (goroutine, whatever), which spawns 10 new actors, each of them spawns 10 more actors, etc. until one million actors are created on the final level. Then, each of them returns back its ordinal number (from 0 to 999999), which are summed on the previous level and sent back upstream, until reaching the root actor. (The answer should be 499999500000).
+Creates an actor (goroutine, whatever), which spawns 10 new actors, each of them spawns 10 more actors, etc. until one million actors are created on the final level. Then, each of them returns its ordinal number (from 0 to 999999), which are summed on the previous level and sent back upstream, until reaching the root actor. (The answer should be 499999500000).

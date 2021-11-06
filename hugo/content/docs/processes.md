@@ -1,8 +1,12 @@
+---
+title: Processes
+---
+
 # Actor, Process, PIDs, what does it mean?
 
-Some of the terminology comes from Erlang and some from Carl Hewitts paper on the actor model.
+Some terminology comes from Erlang and some from Carl Hewitts paper on the actor model.
 
-First of all, a process in Erlang, is not the same as an OS process.
+First, a process in Erlang, is not the same as an OS process.
 An OS process, is generally a service or application running on your machine, that is, the entire thing.
 
 Stopping this process means that the entire service or application stops.

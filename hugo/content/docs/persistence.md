@@ -233,4 +233,8 @@ internal class Counter : IActor
 }
 ```
 
-Here we pass in a strategy saying to save a snapshot every 10 events. Note we have removed the manual saving of snapshots, as this is now taken care of internally through the use of the snapshot strategy
+Here we pass in a strategy saying to save a snapshot every 10 events. 
+
+{{< note >}}
+We have removed the manual saving of snapshots, as this is now taken care of internally through the use of the snapshot strategy.
+{{</ note >}}

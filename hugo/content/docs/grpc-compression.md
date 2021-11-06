@@ -1,7 +1,10 @@
+---
+title: gRPC Compression
+---
+
 # gRPC Compression
 
-Configure gRPC compression for Proto.Remote
-
+Configure gRPC compression for Proto.Remote:
 
 ```csharp
 var remoteConfig = 

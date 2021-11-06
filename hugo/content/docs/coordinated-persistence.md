@@ -1,9 +1,13 @@
+---
+title: Coordinated Persistence
+---
+
 # Coordinated Persistence
 
 Coordinated persistence is a pattern that allows you to limit the number of writes to a database by collecting data that should be written, and writing it in a single operation.
 
-Using persistent actors, where each actor either uses the built-in Proto.Persistence or custom data access logic, there could be a large number of writes to the data store if each actor independently and concurrently tries to store its' own data.
-There are many ways to deal with this issue, e.g. using an [AsyncSemaphore](async-semaphore.md), or a [BatchWriter](batch-writer.md) strategy.
+Using persistent actors, where each actor either uses the built-in Proto.Persistence or custom data access logic, there could be a large number of writes to the data store if each actor independently and concurrently tries to store its own data.
+There are many ways to deal with this issue, e.g. using an [AsyncSemaphore](asyncsemaphore.md), or a [BatchWriter](batched-persistence.md) strategy.
 
 Coordinated Persistence is yet another strategy for the same scenario.
 

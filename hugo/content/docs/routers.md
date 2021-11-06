@@ -1,10 +1,14 @@
+---
+title: Routers
+---
+
 # Routers
 
 A _router_ is a special type of actor whose job is to route messages to other actors called _routees_. Different routers use different _strategies_ to route messages efficiently.
 
-<img src="../images/Router-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
+![routers](images/Router-blue.png)
 
-Routers can be used inside or outside of an actor, and you can manage the routees yourself or use a self contained router actor with configuration capabilities.
+Routers can be used inside or outside an actor, and you can manage the routees yourself or use a self-contained router actor with configuration capabilities.
 
 Proto.Actor comes with several useful routers you can choose right out of the box, according to your application's needs. But it is also possible to create your own.
 
@@ -15,9 +19,9 @@ The special [Broadcast Message](#broadcast-messages) will be sent to all routees
 
 ## Deployment
 
-The example below shows how to deploy 5 workers using a round robin router:
+The example below shows how to deploy 5 workers using a round-robin router:
 
-Example in C#
+Example in C#:
 
 ```cs
 //pool of 5 workers
@@ -43,13 +47,13 @@ Most routing strategies listed below are available in both types. Some of them m
 
 #### Supervision
 
-Routers are implemented as actors, so a router is supervised by it's parent, and they may supervise children.
+Routers are implemented as actors, so a router is supervised by its parent, and they may supervise children.
 
 _Group routers_ use routees created somewhere else, it doesn't have children of its own. If a routee dies, a group router will have no knowledge of it.
 
 _Pool routers_ on the other hand create their own children. The router is therefore also the routee's supervisor.
 
-By default, pool routers use a custom strategy that only returns `Escalate` for all exceptions, the router supervising the failing worker will then escalate to it's own parent, if the parent of the router decides to restart the router, all the pool workers will also be recreated as a result of this.
+By default, pool routers use a custom strategy that only returns `Escalate` for all exceptions, the router supervising the failing worker will then escalate to its own parent, if the parent of the router decides to restart the router, all the pool workers will also be recreated as a result of this.
 
 ## Routing Strategies
 
@@ -66,7 +70,7 @@ These are the routing strategies provided by Proto.Actor out of the box.
 `RoundRobinPool` defined in code:
 
 ```cs
-//pool of 5 workers
+// pool of 5 workers
 var props = system.Root.NewRoundRobinPool(MyActorProps, 5);
 var pid = system.Root.Spawn(props);
 ```

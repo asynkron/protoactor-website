@@ -1,16 +1,16 @@
 ---
-title: Open Tracing Usage
+title: Distributed Tracing
 ---
 
 # Distributed tracing with Proto.Actor
 
-<img src="../images/Tracing-blue.png" >
+![tracing](images/Tracing-blue.png)
 
 ## Introduction
 
-In concurrent and distributed systems development, observability is an essential feature.
+In concurrent and distributed system development, observability is an essential feature.
 One way to improve observability is to use some form of distributed tracing.
-Distributed tracing is generally a good tool that can help find the cause and localize various bugs, to find the parts of the program that are slow, to track the workflow of the program, to measure the speed of execution of queries to the database, to better understand how different services interact with each other. In complex multithreaded applications, it is very important to keep track of the order in which various actions are performed. The use of a tracer helps developers to significantly reduce the time and effort for detecting and fixing problem areas in the code.
+Distributed tracing is generally a good tool that can help find the cause and localize various bugs, to find the parts of the program that are slow, to track the workflow of the program, to measure the speed of execution of queries to the database, to better understand how different services interact with each other. In complex multi-threaded applications, it is very important to keep track of the order in which various actions are performed. The use of a tracer helps developers to significantly reduce the time and effort for detecting and fixing problem areas in the code.
 
 Actor systems in general, due to their concurrent and distributed nature can sometimes be hard to debug. In this case, it is convenient to use a distributed tracing system. Proto.OpenTracing has been developed for this purpose. In this article, we will take a look at what Proto.OpenTracing is and how to use it for Proto.Actor.
 
@@ -154,4 +154,4 @@ To access the Jaeger UI go to [http://localhost:16686](http://localhost:16686). 
 
 ### Conclusion
 
-In this article, we examined what Proto.OpenTracing is, the main advantages of its usage, how to apply it to a Proto.Actor, and how to view the tracing logs in Jaeger. Try Proto.OpenTracing for your applications and debug and monitor complex distributed programs easily and fast.
+In this article, we examined what Proto.OpenTracing is, the main advantages of its usage, how to apply it to Proto.Actor, and how to view the tracing logs in Jaeger. Try Proto.OpenTracing for your applications and debug and monitor complex distributed programs easily and fast.

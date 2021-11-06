@@ -86,7 +86,7 @@ var config = cluster.Configure(...)
 
 ### Client Usage
 
-Note how we are not touching any `PID` here, instead all of the resolution of virtual actors is hidden from the developer behind the cluster API.
+Note how we are not touching any `PID` here, instead all the resolution of virtual actors is hidden from the developer behind the cluster API.
 
 {{< tabs >}}
 {{< tab "C#" >}}

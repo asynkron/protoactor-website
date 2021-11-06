@@ -1,3 +1,6 @@
+---
+title: Limit Concurrency
+---
 
 # Limit Concurrency
 
@@ -15,12 +18,14 @@ These worker actors can then interact with the limited resource.
 Because actors process one message at a time, we can guarantee that there will never be more than (in this case) three parallel requests to the limited resource at any given point in time.
 
 # Limit Concurrency using Routers
-## (This content is dated, pre ActorSystem, PullRequests are welcome)
+
+<<{ warning }>>
+This content is dated, pre ActorSystem, PullRequests are welcome
+<<{/ warning }>
 
 In this post we will explore how we can use the actor model and routers in Proto.Actor to limit concurrency.
 That is, we want to ensure that no more than X concurrent workers are working at the same time.
 This can be useful when working with some form of expensive or limited resource, or when you want to scale up and maximize CPU core utilization.
-
 
 First, let's define a struct that will represent some form of work:
 ```go
@@ -41,7 +46,7 @@ func doWork(ctx actor.Context) {
 ```
 
 As seen above, we have to cast the current message into a `*workItem` pointer.
-Go lacks generics and an actor can handle many different message types, this is why messages in Proto.Actor are of type `interface{}`.
+Go lacks generics and an actor can handle many message types, this is why messages in Proto.Actor are of type `interface{}`.
 (Proto.Actor also work with typed "Grains", more on that in another post)
 
 Once we have received a message of the correct type, we can now perform some sort of work.
@@ -74,7 +79,7 @@ Then we call `actor.Spawn` to creates an instance of the actor, this is similar 
 The `actor.PID` returned by `Spawn` is an identifier for the actor, and can be used to enqueue messages to the actors mailbox,
 We do this by calling `pid.Tell(message)`.
 
-Now we can send messages asynchrounusly to our actor, and the actor can process the messages one by one.
+Now we can send messages asynchronously to our actor, and the actor can process the messages one by one.
 
 But what if we want to limit concurrency to any other number than 1?
 

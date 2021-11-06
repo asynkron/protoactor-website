@@ -66,18 +66,18 @@ three basic categories:
   exactly one delivery is made to the recipient; the message can neither be
   lost nor duplicated.
 
-The first one is the cheapest—highest performance, least implementation
-overhead—because it can be done in a fire-and-forget fashion without keeping
+The first one is the cheapest with the highest performance, also with the least implementation
+overhead, because it can be done in a fire-and-forget fashion without keeping
 state at the sending end or in the transport mechanism. The second one requires
 retries to counter transport losses, which means keeping state at the sending
 end and having an acknowledgement mechanism at the receiving end. The third is
-most expensive—and has consequently worst performance—because in addition to
+most expensive—and has consequently the worst performance—because in addition to
 the second it requires state to be kept at the receiving end in order to filter
 out duplicate deliveries.
 
 ## Discussion: Why No Guaranteed Delivery?
 
-At the core of the problem lies the question what exactly this guarantee shall
+At the core of the problem lies the question of what exactly this guarantee shall
 mean:
 
 1. The message is sent out on the network?
@@ -174,7 +174,7 @@ particular:
 The reason for this is that internal system messages has their own mailboxes therefore the ordering of enqueue calls of
 a user and system message cannot guarantee the ordering of their dequeue times.
 
-## The Rules for In-App (Local) Message Sends
+## The rules for In-App (local) message sends
 
 ### Be careful what you do with this section!
 
@@ -185,7 +185,7 @@ patterns local to some actors) in order to be fit for running on a cluster of
 machines. Our credo is “design once, deploy any way you wish”, and to achieve
 this you should only rely on The [General Rules]().
 
-### Reliability of Local Message Sends
+### Reliability of local message sends
 
 The Proto.Actor test suite relies on not losing messages in the local context (and for
 non-error condition tests also for remote spawning), meaning that we
@@ -209,9 +209,9 @@ exception while processing, that notification goes to the supervisor instead.
 This is in general not distinguishable from a lost message for an outside
 observer.
 
-### Ordering of Local Message Sends
+### Ordering of local message sends
 
-Assuming strict FIFO mailboxes the abovementioned caveat of non-transitivity of
+Assuming strict FIFO mailboxes the aforementioned caveat of non-transitivity of
 the message ordering guarantee is eliminated under certain conditions. As you
 will note, these are quite subtle as it stands, and it is even possible that
 future performance optimizations will invalidate this whole paragraph. The
@@ -244,11 +244,10 @@ As a speculative view into the future it might be possible to support this order
 
 ## Higher-level abstractions
 
-
 Based on a small and consistent tool set in ProtoActor's core, Proto.Actor also provides
 powerful, higher-level abstractions on top it.
 
-### Messaging Patterns
+### Messaging patterns
 
 As discussed above a straight-forward answer to the requirement of reliable
 delivery is an explicit ACK–RETRY protocol. In its simplest form this requires
@@ -298,50 +297,10 @@ An example implementation of this pattern is shown at :ref:`mailbox-acking`.
 
 ## Dead Letters
 
-Messages which cannot be delivered (and for which this can be ascertained) will
-be delivered to a synthetic actor called `/deadLetters`. This delivery
-happens on a best-effort basis; it may fail even within a single application in the local machine (e.g.
-during actor termination). Messages sent via unreliable network transports will
-be lost without turning up as dead letters.
+Messages which cannot be delivered are called `DeadLetters`. 
 
-### What Should I Use Dead Letters For?
+Read more about DeadLetter messages in a [dedicated article](deadletter.md).
 
-The main use of this facility is for debugging, especially if an actor send
-does not arrive consistently (where usually inspecting the dead letters will
-tell you that the sender or recipient was set wrong somewhere along the way).
-In order to be useful for this purpose it is good practice to avoid sending to
-deadLetters where possible, i.e. run your application with a suitable dead
-letter logger (see more below) from time to time and clean up the log output.
-This exercise—like all else—requires judicious application of common sense: it
-may well be that avoiding to send to a terminated actor complicates the
-sender's code more than is gained in debug output clarity.
-
-The dead letter service follows the same rules with respect to delivery
-guarantees as all other message sends, hence it cannot be used to implement
-guaranteed delivery.
-
-### How do I Receive Dead Letters?
-
-An actor can subscribe to class `DeadLetter` on the event
-stream, see [[event stream]] for how to do that. The subscribed actor will then receive all dead
-letters published in the (local) system from that point onwards. Dead letters
-are not propagated over the network, if you want to collect them in one place
-you will have to subscribe one actor per network node and forward them
-manually. Also consider that dead letters are generated at that node which can
-determine that a send operation is failed, which for a remote send can be the
-local system (if no network connection can be established) or the remote one
-(if the actor you are sending to does not exist at that point in time).
-
-### Dead Letters Which are (Usually) not Worrisome
-
-Every time an actor does not terminate by its own decision, there is a chance
-that some messages which it sends to itself are lost. There is one which
-happens quite easily in complex shutdown scenarios that is usually benign:
-seeing a `Terminate` message dropped means that two
-termination requests were given, but of course only one can succeed. In the
-same vein, you might see `Terminated` messages from children
-while stopping a hierarchy of actors turning up in dead letters if the parent
-is still watching the child when the parent terminates.
 
 .. _Erlang documentation: http://www.erlang.org/faq/academic.html
 .. _Nobody Needs Reliable Messaging: http://www.infoq.com/articles/no-reliable-messaging

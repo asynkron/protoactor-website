@@ -1,3 +1,7 @@
+---
+title: Communication
+---
+
 # How actors communicate with each other
 
 {{< note >}}
@@ -23,10 +27,10 @@ Use `RequestFuture()` for local message passing. `Context.Sender()` does not ret
 
 ## Remote
 - remote/messages ... Contain Protobuf serializable message structures.
-- rmeote/remote-pong ... A process that returns pong message to sender.
+- remote/remote-pong ... A process that returns pong message to sender.
 - remote/remote-ping-send ... A process that sends message to pong actor by Send(). The recipient cannot refer to the sender actor.
 - remote/remote-ping-request ... A process that sends message to pong actor by Request(). The recipient actor can refer to the sender actor.
-- remote/remote-poing-future ... A process that sends message to pong actor by RequestFuture(). Context.Sender() does not return the PID of sender actor but that of actor.Future.
+- remote/remote-ping-future ... A process that sends message to pong actor by RequestFuture(). Context.Sender() does not return the PID of sender actor but that of actor.Future.
 
 ## Cluster Grain
 - cluster/messages ... Contain Protobuf serializable message structures and generated actor.Actor implementation for gRPC based communication.

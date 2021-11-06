@@ -7,7 +7,7 @@ title: Behaviors
 
 Actors can change their behavior at any time. This is achieved through the Behavior class included with the core Proto.Actor library.
 
-<img src="../images/Behaviors-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
+![actor behavior](images/Behaviors-blue.png)
 
 We're going to use the example of modelling a light bulb to demonstrate this:
 

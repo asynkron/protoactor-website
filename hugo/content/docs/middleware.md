@@ -14,6 +14,7 @@ Receive middleware intercepts incoming messages. It is injected using the `Props
 A receive middleware consists of a method/delegate which takes a `Receive` argument, which is the next middleware to invoke and returns a `Receive` method. Together, the middlewares and the actor's `Receive` method form a chain, where each middleware should call the next and return its result. The signature of a receive middleware is `Func<Receive, Receive>`.
 
 ### Example
+
 ```csharp
 var props = Actor.FromFunc(c => {
         Console.WriteLine("actor");
@@ -44,6 +45,7 @@ Sender middleware intercepts outgoing messages sent via the `Context`. It is set
 A difference for sender middleware is that the message is wrapped in a `MessageEnvelope` containing the message, the sender and a message header. The main purpose of this is to enable adding contextual metadata to the headers, that can then be propagated to remote actors.
 
 ### Example
+
 ```csharp
 var props = Actor.FromFunc(c => {
         Console.WriteLine("actor");
