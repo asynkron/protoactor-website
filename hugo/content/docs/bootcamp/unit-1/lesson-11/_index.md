@@ -4,6 +4,8 @@ To install Proto.Actor, we will use NuGet. NuGet contains all the necessary pack
 
 NuGet also contains several additional packages that we can install to access other features.
 
+[Proto.Actor NuGets](https://www.nuget.org/profiles/ProtoActor)
+
 #### Proto.Schedulers.SimpleScheduler
 
 The first one is the message scheduler package. Using this package, you can schedule a message to sent to the specified recipient with the specified delay and frequency.
