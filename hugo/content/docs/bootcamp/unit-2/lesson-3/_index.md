@@ -34,7 +34,7 @@ When creating messages, we should try to adhere to certain best practices that e
 
 The main rule is that we should not pass a variable state between actors. One of the main advantages of using the actor model is that it dramatically simplifies parallel programming. If we start passing variable states between actors, we will return to the old problems related to blocking shared resources. 
 
-Therefore, we must create immutable messages. In other words, our messages must be thread-safe. It will allow us to transmit them anywhere in the system without having to worry about ssharing the variable states between actors. 
+Therefore, we must create immutable messages. In other words, our messages must be thread-safe. It will allow us to transmit them anywhere in the system without having to worry about sharing the variable states between actors. 
 
 ## How to create a message using gRPC and Protobuf.
 
