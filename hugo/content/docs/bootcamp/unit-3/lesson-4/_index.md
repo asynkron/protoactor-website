@@ -1,12 +1,15 @@
 # Lesson 4: What is the Poison Pill message and how to work with it.
 
-In this lesson, we will consider the `PoisonPill()` message and how it differs from the `Stop()` message.
+In this lesson, we will consider the `PoisonPill` message and how it differs from the `Stop` message.
 
-`Stop()` and `PoisonPill()` messages used to terminate the actor and stop the message queue. Both of these messages force the actor to stop processing incoming messages, and send a stop message to all of its child actors, and wait until they are finished. Then, send our code a message `Stopped()` that signals the actor's complete shutdown. Keep in mind that all future messages sent to our actor's address will be forwarded to dead letters mailbox.
+`Stop` and `PoisonPill` messages used to terminate the actor and stop the message queue. Both of these messages force the actor to stop processing incoming messages, and send a stop message to all of its child actors, and wait until they are finished. Then, send our code a message `Stopped` that signals the actor's complete shutdown. Keep in mind that all future messages sent to our actor's address will be forwarded to dead letters mailbox.
 
-Let's see how we can send a message `PoisonPill()` to our actor `PlaybackActor()`.
+`Stop` will stop the actor immediately, ignoring if there are other user messages present in the mailbox.
+`PoisonPill` is a **user-level message** that is placed on the mailbox queue. and processed in order just like any other user message. So you can use that to gracefully stop an actor after all existing messages have been processed.
 
-Let's open our project and add the sending of the message `PoisonPill()` to the class `Program()`. You can do it with the help of 
+Let's see how we can send a message `PoisonPill` to our actor `PlaybackActor`.
+
+Let's open our project and add the sending of the message `PoisonPill` to the class `Program`. You can do it with the help of `Poison()` method
 
 ```csharp
 system.Root.Poison(pid);
@@ -34,7 +37,7 @@ class Program
 }
 ```
 
-Now we need to edit the `PlaybackActor() 'so that it can handle the `Stopped ()' message.
+Now we need to edit the `PlaybackActor` so that it can handle the `Stopped` message.
 
 ```csharp
 public class PlaybackActor : IActor
@@ -61,6 +64,14 @@ public class PlaybackActor : IActor
 Let's launch our app and see what happened.
 
 ![](../../images/3_4_1.png)
+
+Let's replace `Poison()` call with `Stop()` and lunch our app to see what happened.
+```csharp
+- system.Root.Poison(pid);
++ system.Root.Stop(pid);
+```
+
+![](../../images/3_4_2.png)
 
 As you can see, the actor succesfully completed job. 
 
