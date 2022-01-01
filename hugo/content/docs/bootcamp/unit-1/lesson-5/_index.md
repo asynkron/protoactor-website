@@ -24,7 +24,7 @@ Proto.Actor also provides a simple remote spawn model to spawn actors on remote 
 
 Proto.Actor has high performance; although the performance will depend a lot on the machine on which we run it, you can expect to handle about 50 million messages per second per machine,. In terms of overheads on actor management. We can expect to be able to create about 2.5 million instances of actors per gigabyte of memory.
 
-In addition, Photo.Actor has additional features, such as load balancing and routing messages to multiple child instances of the actor.
+In addition, Proto.Actor has additional features, such as load balancing and routing messages to multiple child instances of the actor.
 
 ### Fault Tolerance.
 
