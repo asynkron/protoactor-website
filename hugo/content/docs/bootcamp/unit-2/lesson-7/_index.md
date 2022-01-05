@@ -1,6 +1,6 @@
 # Lesson 7: Sending a Custom Message.
 
-From this lesson, you will learn how to create a custom message and send it to our author. You will also learn how to modify our actor so that it can work with custom messages.
+From this lesson, you will learn how to create a custom message and send it to our actor. You will also learn how to modify our actor so that it can work with custom messages.
 
 For more comfortable work, let's modify our project a bit, for this purpose, let's go to our IDE and create two folders. The first folder will be called Actors, and we will store all our actors in it. The second folder will be called Messages, and it will contain all our custom messages.
 
