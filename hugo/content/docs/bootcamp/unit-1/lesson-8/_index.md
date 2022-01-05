@@ -13,13 +13,13 @@ This is what the reactive programming manifesto says about messages. A message i
 Let's look at an example of what might look like a message class written in C#.
 
 ```csharp
-private class ExampleMessage
+public sealed class ExampleMessage
 {
-    public int CustomerID { get; }
+    public int CustomerId { get; }
 
-    public Hello(int customerId)
+    public ExampleMessage(int customerId)
     {
-        CustomerID = customerId;
+        CustomerId = customerId;
     }
 }
 ```
@@ -28,6 +28,6 @@ private class ExampleMessage
 
 We see that we have a simple class. We do not need to inherit from the base class or implement any special interfaces. 
 
-Note that the ExampleMessage class has a constructor that takes the value customerId. When we create an instance of the ExampleMessage class, the constructor stores the passed value in the CustomerID property. But since the CustomerID property is read-only, no one else can modify it, and we don't have to worry that someone will destroy our business logic by changing its value.
+Note that the `ExampleMessage` class has a constructor that takes the value `customerId`. When we create an instance of the `ExampleMessage` class, the constructor stores the passed value in the `CustomerId` property. But since the `CustomerId` property is read-only, no one else can modify it, and we don't have to worry that someone will destroy our business logic by changing its value.
 
 [Go ahead!](../lesson-9)
