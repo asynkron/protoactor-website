@@ -6,7 +6,7 @@ The first way is to use the `Send` method. This method is used when one actor wa
 
 As opposed to the `Send` method, Proto.Actor provides the `RequestAsync` method. This method, after sending a message, suspends the execution of the current actor until a response is received.
 
-And finally, the third method is the Forward method. This method is used when it is necessary to forward a received message to another actor. This method is usually used when you want to send root messages in the system.
+And finally, the third method is the `Forward` method. This method is used when it is necessary to forward a received message to another actor. This method is usually used when you want to send root messages in the system.
 
 So, let's see what the main differences are between the Send and `RequestAsync` methods.
 
