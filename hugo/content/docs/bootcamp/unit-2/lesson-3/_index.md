@@ -34,7 +34,7 @@ When creating messages, we should try to adhere to certain best practices that e
 
 The main rule is that we should not pass a variable state between actors. One of the main advantages of using the actor model is that it dramatically simplifies parallel programming. If we start passing variable states between actors, we will return to the old problems related to blocking shared resources. 
 
-Therefore, we must create immutable messages. In other words, our messages must be thread-safe. It will allow us to transmit them anywhere in the system without having to worry about ssharing the variable states between actors. 
+Therefore, we must create immutable messages. In other words, our messages must be thread-safe. It will allow us to transmit them anywhere in the system without having to worry about sharing the variable states between actors. 
 
 ## How to create a message using gRPC and Protobuf.
 
@@ -108,7 +108,7 @@ message HelloReply {
 
 The message is an entity that contains the data to be sent. The message defines a set of fields for which the type is defined. Each field represents some piece of information submitted in the message. So, in both messages, two fields of the string type are defined: each message will send a certain string.
 
-Proto3 supports the use of many standard primitive types that are used in some of the most popular programming languages, such as `bool, int32, float, double' and `string'. Thus, it is possible to send data that are different in nature. You may also use earlier defined types of messages as the types of message fields.
+Proto3 supports the use of many standard primitive types that are used in some of the most popular programming languages, such as `bool, int32, float, double, and string`. Thus, it is possible to send data that are different in nature. You may also use earlier defined types of messages as the types of message fields.
 
 Each field in the message is assigned a unique number. In the example above, the fields in both messages are assigned 1 (in `string name = 1 'or in' string message = 1'). These values allow you to identify values of fields in binary format when encoding and receiving messages. When using numbers from 1 to 15 as a value in the binary representation, an additional byte is added to the message. Values from 16 to 2047 add two additional bytes. Therefore, for the most frequently used data in the message, it is better to specify values from 1 to 15. Acceptable values: from 1 to 536870911 (with the exception of the number range from 19000 to 19999).
 
