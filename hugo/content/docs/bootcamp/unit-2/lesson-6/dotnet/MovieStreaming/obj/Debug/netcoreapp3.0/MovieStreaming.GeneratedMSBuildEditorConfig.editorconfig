@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = MovieStreaming
+build_property.ProjectDir = /Users/rogerjohansson/git/asynkron/protoactor-website/hugo/content/docs/bootcamp/unit-2/lesson-6/dotnet/MovieStreaming/
