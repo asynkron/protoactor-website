@@ -16,7 +16,7 @@ The image shows how a particular processing stream is selected based on the mess
 
 This approach involves changing the routing order when the router status changes. The simplest examples are switching the router between two states: **on** and **off**. When the router is in the **on** state, it sends messages as usual, and in state  **off**  the actor delete all messages. You can't use the Proto.Actor router to implement this example, because we need the router to have a state, and the state of Proto.Actor routers is not thread-safe by default. So we use a normal actor. The state can be implemented as a class attribute. Still, since it is possible to change an actor's behavior during its life cycle using the become/unbecome methods, we use them as a state representation mechanism.
 
-In our example, there are two States, * * on** and **off**. When the actor is in the **on** state, messages should be routed as usual, and in the **off** state, messages should simply be destroyed. To do this, we will create two methods for processing messages. When you need to switch the state, we simply replace the receive function with become. This example uses two messages to change the state:` RouteStateOn ()`and `Routestateoff ()`.
+In our example, there are two States, **on** and **off**. When the actor is in the **on** state, messages should be routed as usual, and in the **off** state, messages should simply be destroyed. To do this, we will create two methods for processing messages. When you need to switch the state, we simply replace the receive function with become. This example uses two messages to change the state:` RouteStateOn ()`and `Routestateoff ()`.
 
 ```csharp
 public class SwitchRouter : IActor
