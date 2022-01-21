@@ -58,9 +58,14 @@ tags: [protoactor, docs]
   - [Message Serialization](serialization.md)
   - [Remote Spawning](remote-spawn.md) - How do I spawn actors on other nodes?
   - [gRPC Compression](grpc-compression.md) - How do I use gRPC compression for remote communication?
-- [Cluster](cluster.md) - How do I build clusters of actor nodes?
-  - [Kubernetes Provider](kubernetes-provider.md) - How do I deploy a cluster to Kubernetes?
-  - [Gossip](gossip.md) - How can I share state across cluster members?
+- [Cluster](cluster.md) - How do I build clusters of actor nodes?  
+  - [Virtual Actors (.NET)](cluster/virtual-actors-net.md) - How do I create virtual actors and spawn them in the cluster?
+  - [Cluster providers (.NET)](cluster/cluster-providers-net.md) - What different clustering options do I have?
+  - [Identity lookup (.NET)](cluster/identity-lookup-net.md) - How does Proto.Actor know the location of a virtual actor?
+  - [Kubernetes Deployment (.NET)](cluster/kubernetes-deployment-net.md) - How do I deploy a cluster to Kubernetes?
+  - [Gossip (.NET)](cluster/gossip.md) - How can I share state across cluster members?
+  - [Architecture overview (.NET)](cluster/architecture-overview-net.md) - How does it all work?
+  - [Virtual Actors (Go)](cluster/virtual-actors-go.md) - How do I create virtual actors and spawn them in the cluster?
 - [SimpleScheduler](scheduling.md) - How do I send messages on a timer?
 
 ### Utility features
