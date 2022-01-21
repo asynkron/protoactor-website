@@ -9,19 +9,18 @@ title: Virtual Actors (.NET)
 This page will show you how to create a simple one-node cluster with a single virtual actor.
 
 
-todo: dependency injection
-
-
 ## Requirements
 
-You'll need the following NuGet packages:
+Create a .NET ASP.NET Core Web Application named `ProtoClusterTutorial`. For simplicity, this tutorial will use a Minimal API, however porting it to a classical ASP.NET Core Web App should be straightforward.
 
+You'll need the following NuGet packages:
 * `Proto.Actor`
 * `Proto.Remote`
 * `Proto.Remote.GrpcCore`
 * `Proto.Cluster`
-* `Proto.Cluster.CodeGen` - this is a recommended way of creating Virtual Actors; more on that below.
+* `Proto.Cluster.CodeGen`
 * `Proto.Cluster.TestProvider`
+* `Grpc.Tools` - for compiling Protobuf messages
 
 
 ## Creating a virtual actor
@@ -140,3 +139,6 @@ services.AddHostedService<ActorSystemHostedService>();
 
 To consider:
 * Maybe we should do it in a console app so it's easier? And then have a separate page for "running in a web app"?
+
+
+todo: dependency injection
