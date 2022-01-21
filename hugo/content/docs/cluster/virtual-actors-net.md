@@ -3,34 +3,37 @@ layout: docs.hbs
 title: Virtual Actors (.NET)
 ---
 
-# Virtual Actors (.NET)
-
-What are virtual actors?
-
-“we recommend using codegen package, but you can code them on your own”
-
-## Generatinc virtual actors code
+# Getting started with Proto.Cluster (.NET)
 
 
-As of Release 0.17.0 of Proto.Cluster for .NET, you can reference the Nuget package `ProtoGrainGenerator`, and this will automatically generate the code for you.
-The code is generated under the `/obj` folder and hidden from the user, but included for compilation upon build.
-
-install nuget package (already in the cluster setup? or should we de the setup here?)
+This page will show you how to create a simple one-node cluster with a single virtual actor.
 
 
-```
-dotnet add package Proto.Cluster
-dotnet add package Proto.Cluster.CodeGen
-```
+todo: dependency injection
 
-Add proto file `MyVirtualActors.proto`:
+
+## Requirements
+
+You'll need the following NuGet packages:
+
+* `Proto.Actor`
+* `Proto.Remote`
+* `Proto.Remote.GrpcCore`
+* `Proto.Cluster`
+* `Proto.Cluster.CodeGen` - this is a recommended way of creating Virtual Actors; more on that below.
+* `Proto.Cluster.TestProvider`
+
+
+## Creating a virtual actor
+
+The recommended way of creating a virtual actor is by using a `Proto.Cluster.CodeGen` package.
+
+Add proto file `VehicleActor.proto`:
 
 ```proto
 syntax = "proto3";
 package shared;
 option csharp_namespace = "MyPoject";
-
-// todo: add messages or sth
 
 service VehicleActor {
   rpc OnPosition (Position) returns (google.protobuf.Empty);
@@ -38,16 +41,21 @@ service VehicleActor {
 }
 ```
 
-Consigure it in project file, e.g. `MyPoject.csproj`:
+todo: add messages
 
+In order for our actor to be compiled, we need to consigure it in a project file, e.g. `MyPoject.csproj`:
 
 ```xml
 <ItemGroup>
-    <ProtoGrain Include="MyVirtualActors.proto" AdditionalImportDirs="." />
+    <ProtoGrain Include="VehicleActor.proto" AdditionalImportDirs="." />
 </ItemGroup>
 ```
 
-`ProtoGrain` is a special MS Build task that...
+todo: do we need additional import dirs?
+
+`ProtoGrain` is a special MS Build task that will compile your `.proto` into a base class for your virtual actor (in this case `VehicleActorBase`). You can find generated code in the `\obj` directory of your project.
+
+Now we can implement an actor by implementing a generated base class:
 
 ```csharp
 public class VehicleActor : VehicleActorBase
@@ -74,7 +82,12 @@ public class VehicleActor : VehicleActorBase
 }
 ```
 
-## Running a cluster
+todo: add a page for codegen? we could describe things like lifecycle (startup), child actors, msbuild task parameters etc.
+You can read more about CodeGen [here](todo).
+
+## Configuring a cluster
+
+
 
 Setup cluster in `Startup`:
 
