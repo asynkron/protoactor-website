@@ -5,24 +5,21 @@ title: Cluster providers (.NET)
 
 # Cluster Providers (.NET)
 
-what is a cluster provider and why proto.actor uses it
+Cluster provider is an abstraction that provides an information about currently available members (nodes) in a cluster. Together with [gossip protocol strategy](gossip.md), it allows to resign from any leader-follower concepts in the clustering code.
 
-proto.actor philosophy - why reinvent the wheel? use something tested and proven in battle
+Interface `IClusterProvider` have 2 main functions:
 
+* Start (join) member to a cluster
+* Shutdown 
 
-todo: split into sections, rather than a list?
-todo: code
+Proto.actor continues philosophy of not reinventing the wheel again, so it is possible to choose between one of already battle tested compontents that could save and share information about membership in a cluster.
 
-- ##### Test Provider  - use this for local development.
-- ##### Kubernetes Provider - a go-to solution if you're hosting your cluster in Kubernetes; read more about [deploying to Kubernetes](kubernetes-deployment-net.md).
-- ##### Consul Provider - a great choice if you're not hosting your cluster on Kubernets (but e.g. on VMs); also works great if you want to setup a local, development cluster for testing.
-- ##### AWS ECS Provider
-- ##### Etcd Provider
-- ##### Zookeeper Provider
-- ##### Self Managed Provider
+Available providers:
 
-...
-
-### `IClusterProvider` - extension point
-
-This allows the membership logic to be replaced.
+* [Kubernetes Provider](kubernetes-provider-net.md)
+* [Consul Provider](consul-net.md)
+* [Amazon ECS Provider](aws-provider-net.md)
+* [Test Provider](test-provider-net.md)
+* ETCD Provier TODO
+* Zookeeper Provider TODO
+* Self Managed Provider - your own implementaion of `IClusterProvider` interface

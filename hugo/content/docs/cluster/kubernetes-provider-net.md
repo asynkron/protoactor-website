@@ -2,9 +2,9 @@
 title: Kubernetes Deployment (.NET)
 ---
 
-TODO: add code
-
 # Kubernetes Deployment (.NET)
+
+If proto.actor application is planned to be deployed inside Kubernetes cluster, then this cluster membership provider is the best choice.
 
 ## Advertised Host
 
@@ -24,7 +24,7 @@ env:
     valueFrom:
       fieldRef:
         fieldPath: status.podIP
-```                 
+```
 
 ## Role Definition
 
@@ -49,7 +49,7 @@ rules:
       - list
       - watch
       - patch
-```      
+```
 
 ## Role Binding
 
@@ -65,4 +65,4 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: SomeServiceAccount #this is the service account that should have this role applied
-```    
+```
