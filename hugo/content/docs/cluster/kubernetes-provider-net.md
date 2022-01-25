@@ -98,4 +98,4 @@ subjects:
 
 ## How it works?
 
-Kubernetes provider registers a new member in the cluster by doing modification of labels connected with running pod. It adds information about claster name, pod port, member id and all actor kinds supported by the node. Additionaly it spawns actor responsible for cluster monitoring. Monitor uses kubernetes api to receive updates about any pod that runs in a namespace. Each such change is propagated by using [gossip](gossip.md) to all members.
+Kubernetes provider registers a new member in the cluster by doing modification of labels connected with running pod. It adds information about cluster name, pod port, member id and all actor kinds supported by the node. Additionaly it spawns actor responsible for cluster monitoring. Monitor uses kubernetes api to receive updates about any pod change that runs in a namespace. Each such change is propagated by using gossip to all members.
