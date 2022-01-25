@@ -1,10 +1,38 @@
 ---
-title: Kubernetes Deployment (.NET)
+title: Kubernetes Provider (.NET)
 ---
 
-# Kubernetes Deployment (.NET)
+# Kubernetes Provider (.NET)
 
-If proto.actor application is planned to be deployed inside Kubernetes cluster, then this cluster membership provider is the best choice.
+If Proto.Actor application is planned to be deployed inside Kubernetes cluster, then this cluster membership provider is the best choice.
+
+Below is the example how to configure it. The full working code might be found in [Realtime map example](https://github.com/asynkron/realtimemap-dotnet/blob/main/Backend/ProtoActorExtensions.cs#L17).
+
+```csharp
+(GrpcCoreRemoteConfig, IClusterProvider) ConfigureForKubernetes(IConfiguration config)
+    {
+        var kubernetes = new Kubernetes(KubernetesClientConfiguration.InClusterConfig());
+        var clusterProvider = new KubernetesProvider(kubernetes);
+
+        var host = config["ProtoActor:Host"] ?? "127.0.0.1";
+        var port = TryParseInt(config["ProtoActor:Port"]) ?? 0;
+        var advertisedHostname = config["ProtoActor:AdvertisedHost"];
+        var advertisedPort = TryParseInt(config["ProtoActor:AdvertisedPort"]);
+
+        var remoteConfig = GrpcCoreRemoteConfig
+            .BindTo(host, port)
+            .WithAdvertisedHost(advertisedHostname)
+            .WithAdvertisedPort(advertisedPort);
+
+        return (remoteConfig, clusterProvider);
+
+        int? TryParseInt(string? intAsString) =>
+            string.IsNullOrEmpty(intAsString)
+                ? null
+                : int.Parse(intAsString);
+    }
+
+```
 
 ## Advertised Host
 
@@ -21,6 +49,7 @@ env:
   - name: PROTO_HOST
     value: "0.0.0.0"               #this is the Host we bind to, inside the container
   - name: "PROTO_ADVERTISED_HOST"  #this is the Host we expose outwards, to the cluster
+  - name: "PROTO_ADVERTISED_PORT"  #this is the Port exposed outwards, to the cluster
     valueFrom:
       fieldRef:
         fieldPath: status.podIP
@@ -66,3 +95,7 @@ subjects:
   - kind: ServiceAccount
     name: SomeServiceAccount #this is the service account that should have this role applied
 ```
+
+## How it works?
+
+Kubernetes provider registers a new member in the cluster by doing modification of labels connected with running pod. It adds information about claster name, pod port, member id and all actor kinds supported by the node. Additionaly it spawns actor responsible for cluster monitoring. Monitor uses kubernetes api to receive updates about any pod that runs in a namespace. Each such change is propagated by using [gossip](gossip.md) to all members.
