@@ -22,7 +22,8 @@ Below is the example how to configure it. The full working code might be found i
         var remoteConfig = GrpcCoreRemoteConfig
             .BindTo(host, port)
             .WithAdvertisedHost(advertisedHostname)
-            .WithAdvertisedPort(advertisedPort);
+            .WithAdvertisedPort(advertisedPort)
+            .WithProtoMessages(YourProtoGrainReflecion.Descriptor);
 
         return (remoteConfig, clusterProvider);
 

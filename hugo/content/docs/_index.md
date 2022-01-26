@@ -63,6 +63,9 @@ tags: [protoactor, docs]
   - [Tutorial: creating a local cluster (.NET)](cluster/virtual-actors-net.md) - ... Consul etc.
   - [Tutorial: Kubernetes deployment (.NET)](cluster/kubernetes-provider-net.md) - How do I deploy a cluster to Kubernetes?
   - [Cluster providers (.NET)](cluster/cluster-providers-net.md) - What different clustering options do I have?
+    - [Kubernetes Provider](cluster/kubernetes-provider-net.md)  
+    - [Consul Provider](cluster/consul-net.md)  
+    - [AWS ECS Provider](cluster/aws-provider-net.md)  
   - [Identity lookup (.NET)](cluster/identity-lookup-net.md) - How does Proto.Actor know the location of a virtual actor?
   - [Gossip (.NET)](cluster/gossip.md) - How can I share state across cluster members?
   - [Architecture overview (.NET)](cluster/architecture-overview-net.md) - How does it all work?
