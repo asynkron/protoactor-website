@@ -59,9 +59,9 @@ tags: [protoactor, docs]
   - [Remote Spawning](remote-spawn.md) - How do I spawn actors on other nodes?
   - [gRPC Compression](grpc-compression.md) - How do I use gRPC compression for remote communication?
 - [Cluster](cluster.md) - How do I build clusters of actor nodes?  
-  - [Tutorial: getting started with Proto.Cluster (.NET)](cluster/virtual-actors-net.md) - How do I create virtual actors and spawn them in the cluster?
+  <!-- - [Tutorial: getting started with Proto.Cluster (.NET)](cluster/virtual-actors-net.md) - How do I create virtual actors and spawn them in the cluster?
   - [Tutorial: creating a local cluster (.NET)](cluster/virtual-actors-net.md) - ... Consul etc.
-  - [Tutorial: Kubernetes deployment (.NET)](cluster/kubernetes-provider-net.md) - How do I deploy a cluster to Kubernetes?
+  - [Tutorial: Kubernetes deployment (.NET)](cluster/kubernetes-provider-net.md) - How do I deploy a cluster to Kubernetes? -->
   - [Cluster providers (.NET)](cluster/cluster-providers-net.md) - What different clustering options do I have?
     - [Kubernetes Provider](cluster/kubernetes-provider-net.md)  
     - [Consul Provider](cluster/consul-net.md)  
