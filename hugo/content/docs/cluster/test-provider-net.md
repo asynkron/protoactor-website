@@ -13,6 +13,9 @@ Provider is available in `Proto.Cluster.TestProvider` nuget package.
 ```csharp
 
 static (GrpcCoreRemoteConfig, IClusterProvider) ConfigureForLocalhost() 
-        => (GrpcCoreRemoteConfig.BindToLocalhost(),  new TestProvider(new TestProviderOptions(), new InMemAgent()));
+        => (
+            GrpcCoreRemoteConfig.BindToLocalhost(),  
+            new TestProvider(new TestProviderOptions(), new InMemAgent())
+        );
 
 ```
