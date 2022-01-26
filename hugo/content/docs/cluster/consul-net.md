@@ -8,6 +8,8 @@ If Proto.Actor application is not planned to be hosted in a container but e.g. o
 
 Below sample consul provider configuration might be found. More details might be found [here](https://github.com/asynkron/protoactor-dotnet/tree/dev/examples/ClusterGrainHelloWorld).
 
+Provider is available in `Proto.Cluster.Consul` nuget package.
+
 ```csharp
 (GrpcCoreRemoteConfig, IClusterProvider) ConfigureForKubernetes(IConfiguration config)
     {

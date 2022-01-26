@@ -8,6 +8,8 @@ If Proto.Actor application is planned to be deployed inside Kubernetes cluster, 
 
 Below is the example how to configure it. The full working code might be found in [Realtime map example](https://github.com/asynkron/realtimemap-dotnet/blob/main/Backend/ProtoActorExtensions.cs#L17).
 
+Provider is available in `Proto.Cluster.Kubernetes` nuget package.
+
 ```csharp
 (GrpcCoreRemoteConfig, IClusterProvider) ConfigureForKubernetes(IConfiguration config)
     {
@@ -99,4 +101,4 @@ subjects:
 
 ## How it works?
 
-Kubernetes provider registers a new member in the cluster by doing modification of labels connected with running pod. It adds information about cluster name, pod port, member id and all actor kinds supported by the node. Additionaly it spawns actor responsible for cluster monitoring. Monitor uses kubernetes api to receive updates about any pod change that runs in a namespace. Each such change is propagated by using gossip to all members.
+Kubernetes provider registers a new member in a cluster by doing modification of labels connected with running pod. It adds information about cluster name, pod port, member id and all actor kinds supported by the node. Additionaly it spawns actor responsible for cluster monitoring. Monitor uses kubernetes api to receive updates about any pod change that runs in a namespace. Each such change is propagated by using gossip to all members.
