@@ -9,7 +9,7 @@ title: Virtual Actors (.NET)
 In this tutorial we will:
 
 1. Create a simple, one-node Proto.Actor cluster.
-1. Implement two kinds of granis.
+1. Implement two kinds of grains.
 1. Send messages to and between these grains.
 1. Host everything in a simple ASP.NET Core app.
 
@@ -18,7 +18,7 @@ In this tutorial we will:
 
 ### Required packages
 
-Create a ASP.NET Core Web Application named `ProtoClusterTutorial`. For simplicity, this tutorial will use a Minimal API.
+Create an ASP.NET Core Web Application named `ProtoClusterTutorial`. For simplicity, this tutorial will use a Minimal API.
 
 We'll need the following NuGet packages:
 * `Proto.Actor`
@@ -36,7 +36,7 @@ This tutorial was prepared using:
 
 ### Base web app
 
-Let's establish how our base web app code should look like:
+Let's establish what our base web app code should look like:
 
 `Program.cs`:
 
@@ -55,9 +55,9 @@ Try running your app to see if everything works so far.
 
 ### Basic Proto.Cluster infrastructure and configuration
 
-First, we'll get the basic infrstructure of the cluster going.
+First, we'll get the basic infrastructure of the cluster going.
 
-We need to create, configure and register an `ActorSystem` instance. To keep it clean, we will create a `IServiceCollection` extension in another file to do that:
+We need to create, configure and register an `ActorSystem` instance. To keep it clean, we will create an `IServiceCollection` extension in another file to do that:
 
 `ActorSystemConfiguration.cs`:
 
@@ -120,18 +120,18 @@ Let's go through each configuration section one by one:
 
 **Actor System configuration**
 
-This is a standard Proto.Actor configuration. It's out of the scope for this tutorial; if you want to learn more, you should check out [Actors](../actors.md) section of Proto.Actor's documentation.
+This is a standard Proto.Actor configuration. It's out of the scope for this tutorial; if you want to learn more, you should check out the [Actors](../actors.md) section of Proto.Actor's documentation.
 
 **Remote configuration**
 
-Proto.Cluster uses Proto.Remote for transport, usually GRPC (Proto.Remote.GrpcCore). Again, its configuration is out of scope for this tutorial; if you want to learn more, you should check out [Remote](../remote.md) section of Proto.Actor's documentation.
+Proto.Cluster uses Proto.Remote for transport, usually GRPC (Proto.Remote.GrpcCore). Again, its configuration is out of scope for this tutorial; if you want to learn more, you should check out the [Remote](../remote.md) section of Proto.Actor's documentation.
 
 **Cluster configuration**
 
-This is were we configure Proto.Cluster. Let's explain its parameters:
+This is where we configure Proto.Cluster. Let's explain its parameters:
 1. `clusterName` - any name will do.
-1. `clusterProvider` - a Cluster Provider is an abstraction that provides an information about currently available members (nodes) in a cluster. Since right now our cluster only has one member, it's ok to use `TestProvider`. In the future we will switch to other implementations, like [Consul Provider](consul-net.md) or [Kubernetes Provider](kubernetes-provider-net.md). You can read more about Cluster Providers [here](cluster-providers-net.md).
-1. `identityLookup` - an Identity Lookup is an abstration that allows a cluster to locate grains. `PartitionIdentityLookup` is generally a good choice for most cases. You can read more about Identity Lookup [here](identity-lookup-net.md).
+1. `clusterProvider` - a Cluster Provider is an abstraction that provides information about currently available members (nodes) in a cluster. Since right now our cluster only has one member, it's ok to use `TestProvider`. In the future, we will switch to other implementations, like [Consul Provider](consul-net.md) or [Kubernetes Provider](kubernetes-provider-net.md). You can read more about Cluster Providers [here](cluster-providers-net.md).
+1. `identityLookup` - an Identity Lookup is an abstraction that allows a cluster to locate grains. `PartitionIdentityLookup` is generally a good choice for most cases. You can read more about Identity Lookup [here](identity-lookup-net.md).
 
 
 ### Cluster object
@@ -210,21 +210,21 @@ Register the hosted service in our web app:
 builder.Services.AddHostedService<ActorSystemClusterHostedService>();
 ```
 
-At this point our cluster is not doing mutch, but it won't hurt to run it and check if nothing breaks. You should see a `Starting a cluster member` line in you app's console.
+At this point, our cluster is not doing much, but it won't hurt to run it and check if nothing breaks. You should see a `Starting a cluster member` line in your app's console.
 
 
 ## Creating a grain
 
-### Modelling a light bulb
+### Modeling a light bulb
 
-Now that we're done with the basic configuration, it's time to impelement some features.
+Now that we're done with the basic configuration, it's time to implement some features.
 
 In this tutorial, we'll use grains to model smart light bulbs. Their functionality will be as follows:
 
-1. Smart bulb has a state, which is either: "unknown", "on" or "off".
+1. A smart bulb has a state, which is either: "unknown", "on" or "off".
 1. Initially, smart bulb's state is "unknown".
-1. We can turn smart bulb on or off, which will write a message to a console.
-1. Turning smart bulb on when it's already on or turning it off when it's already off will not do anything.
+1. We can turn a smart bulb on or off, which will write a message to a console.
+1. Turning a smart bulb on when it's already on or turning it off when it's already off will not do anything.
 
 
 ### Virtual Actors / Grains
@@ -232,12 +232,12 @@ In this tutorial, we'll use grains to model smart light bulbs. Their functionali
 To avoid confusion, in this tutorial we'll refer to virtual actors as grains.
 
 To recap:
-1. Grains are essentially actors, meaning they will process messages one at the time.
-1. Grains are not explicitly crated (activated). Instead, they are created when they receive a first message.
+1. Grains are essentially actors, meaning they will process messages one at a time.
+1. Grains are not explicitly crated (activated). Instead, they are created when they receive the first message.
 1. Each grain lives in _one_ of the cluster members.
-1. Grain's location is transparent, meaning we don't need to know in which cluster member grain lives in order to call it.
+1. Grain's location is transparent, meaning we don't need to know in which cluster member grain lives to call it.
 1. Communication with grains should almost always be a request/response. <!-- todo: explain why? -->
-1. Grains are identified by a _kind_ and _identity_, e.g. `airport`/`AMS` or `user`/`53`. It's important to distinguish kind/identity pair with an actor's ID, which in case of grains might change between activations.
+1. Grains are identified by a _kind_ and _identity_, e.g. `airport`/`AMS` or `user`/`53`. It's important to distinguish kind/identity pair with an actor's ID, which in the case of grains might change between activations.
 
 
 ### Generating a grain
@@ -280,7 +280,7 @@ In order for code generation to work (for both grains and messages), we need to 
 </ItemGroup>
 ```
 
-`ProtoGrain` is a MSBuild task provided by `Proto.Cluster.CodeGen`.
+`ProtoGrain` is an MSBuild task provided by `Proto.Cluster.CodeGen`.
 
 This is a good moment to build a project and see if code generation doesn't produce any errors.
 
@@ -337,7 +337,7 @@ public class SmartBulbGrain : SmartBulbGrainBase
 
 ### Registering a grain
 
-Remember, that grains are not explicitly activated, but only when they receive a first message. In other words, Proto.Cluster needs to know how to create new instances of your grains. More specifically, they need to registered when configuring Cluster with a `WithClusterKind` method. 
+Remember, that grains are not explicitly activated, but only when they receive the first message. In other words, Proto.Cluster needs to know how to create new instances of your grains. More specifically, they need  be registered when configuring Cluster with a `WithClusterKind` method. 
 
 `ActorSystemConfiguration.cs`:
 
@@ -358,14 +358,14 @@ var clusterConfig = ClusterConfig
     );
 ```
 
-Similarly to actors, we need  to provide a `Props` describing how our grain is created.
+As with actors, we need to provide a `Props` describing how our grain is created.
 
-`SmartBulbGrainActor` is another class generated by `Proto.Cluster.Codegen`, which is actually a wrapper for our grain code.
+`SmartBulbGrainActor` is another class generated by `Proto.Cluster.Codegen`, which is a wrapper for our grain code.
 
 <!-- todo: more explanation? -->
 
 
-## Comunicating with grains
+## Communicating with grains
 
 
 ### Grain client
@@ -388,12 +388,12 @@ public async Task TurnTheLightOnInTheKitchen(CancellationToken ct)
 
 Both `GetSmartBulbGrain` extention method and `SmartBulbGrainClient` class were generated by `Proto.Cluster.Codegen`.
 
-Mind, that `smartBulbGrainClient` is a client for a _specific_ grain, in this case a smart bulb that's located in the kitchen.
+Mind, that `smartBulbGrainClient` is a client for a _specific_ grain, in this case, a smart bulb that's located in the kitchen.
 
 
 ### Smart bulb simulator
 
-In order to see how grains behave in our system, we'll create a simulator that will send random messages to random smart bulbs.
+To see how grains behave in our system, we'll create a simulator that will send random messages to random smart bulbs.
 
 We'll do that by creating another hosted service:
 
@@ -470,11 +470,11 @@ As you can see in the first few lines, a `living_room_1` grain is created only a
 
 ## Using custom messages
 
-Right now communication with our grain is quite simple: both `TurnOn` and `TurnOff` metods accept and return a predefined `google.protobuf.Empty` message. In this section we will try to receive a custom message from a grain.
+Right now communication with our grain is quite simple: both `TurnOn` and `TurnOff` methods accept and return a predefined `google.protobuf.Empty` message. In this section, we will try to receive a custom message from a grain.
 
 ### Creating a custom message
 
-Let's say we want to get a smar bulb's state. For simplicity, let's create a `GetSmartBulbStateResponse` which only contains smart bulb's state:
+Let's say we want to get a smart bulb's state. For simplicity, let's create a `GetSmartBulbStateResponse` that only contains a smart bulb's state:
 
 `Messages.proto`:
 
@@ -605,7 +605,7 @@ Let's use this moment to emphasise how grains work. Try navigating to: `/smart-b
 {"state":"Unknown"}
 ```
 
-Proto.Custer will activate any grain you send a message to, event the ones you haven't anticipated. Sometimes this might require some additional handling, e.g. checking if a given identity is valid, is present in some sort of a database, etc. It's important to have this in the back of your head when designing a system using grains.
+Proto.Custer will activate any grain you send a message to, even the ones you haven't anticipated. Sometimes this might require some additional handling, e.g. checking if a given identity is valid, is present in some sort of a database, etc. It's important to have this in the back of your head when designing a system using grains.
 
 
 ## Communicating between grains
@@ -693,9 +693,9 @@ Register this grain in the cluster by calling another `WithClusterKind` on `Clus
 ```
 
 
-### Sending messaged between grains
+### Sending messages between grains
 
-Again, to call a grain, we need to use a `Cluster` object. In a grain, we can get it from a `IContext` instance. In garins generated with `Proto.Cluster.CodeGen`, it's available as a `Context` property.
+Again, to call a grain, we need to use a `Cluster` object. In a grain, we can get it from an `IContext` instance. In grains generated with `Proto.Cluster.CodeGen`, it's available as a `Context` property.
 
 Modify the smart bulb grain accordingly:
 
