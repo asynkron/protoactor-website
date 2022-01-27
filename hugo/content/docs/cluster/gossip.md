@@ -6,7 +6,7 @@ title: Cluster Gossip
 
 A **gossip protocol** is a procedure or process of computer peer-to-peer communication that is based on the way epidemics spread.Some distributed systems use peer-to-peer gossip to ensure that data is disseminated to all members of a group. Some ad-hoc networks have no central registry and the only way to spread common data is to rely on each member to pass it along to their neighbours. The term **epidemic protocol** is sometimes used as a synonym for a **gossip protocol**, as gossip spreads information in a manner similar to the spread of a virus in a biological community.
 
-<img src="../images/Gossip-all-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
+<img src="../../images/Gossip-all-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
 
 ## Gossip in Proto.Actor
 
