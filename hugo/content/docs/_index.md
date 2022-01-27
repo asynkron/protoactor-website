@@ -11,6 +11,8 @@ tags: [protoactor, docs]
 
 - [Hello World](hello-world)
 - [Getting Started](getting-started)
+- [Getting Started With Grains / Virtual Actors (.NET)](cluster/getting-started-net.md)
+
 
 ## Articles
 
@@ -58,10 +60,7 @@ tags: [protoactor, docs]
   - [Message Serialization](serialization.md)
   - [Remote Spawning](remote-spawn.md) - How do I spawn actors on other nodes?
   - [gRPC Compression](grpc-compression.md) - How do I use gRPC compression for remote communication?
-- [Cluster](cluster.md) - How do I build clusters of actor nodes?  
-  - [Tutorial: getting started with Proto.Cluster (.NET)](cluster/getting-started-net.md) - How do I create grains and spawn them in the cluster?
-  <!-- - [Tutorial: creating a local cluster (.NET)](cluster/local-cluster-net.md) - a 2/3-node cluster for local dev, Consult etc. -->
-  <!-- - [Tutorial: Kubernetes deployment (.NET)](cluster/kubernetes-provider-net.md) - How do I deploy a cluster to Kubernetes? -->
+- [Cluster of virtual actors / grains](cluster.md) - How do I build clusters of grains / virtual actors?
   - [Cluster providers (.NET)](cluster/cluster-providers-net.md) - What different clustering options do I have?
     - [Kubernetes Provider](cluster/kubernetes-provider-net.md)  
     - [Consul Provider](cluster/consul-net.md)  

@@ -1,9 +1,9 @@
 ---
 layout: docs.hbs
-title: Virtual Actors (.NET)
+title: Getting Started With Grains / Virtual Actors (.NET)
 ---
 
-# Getting started with Proto.Cluster (.NET)
+# Getting Started With Grains / Virtual Actors (.NET)
 
 
 In this tutorial we will:
@@ -13,6 +13,7 @@ In this tutorial we will:
 1. Send messages to and between these grains.
 1. Host everything in a simple ASP.NET Core app.
 
+The code from this tutorial is avaliable [on GitHub](https://github.com/asynkron/protoactor-grains-tutorial).
 
 ## Setting up the project
 

@@ -36,6 +36,12 @@ This means that you as a developer, don't have to care or know if the actor alre
 You address it using its identity and kind and the cluster does the rest for you.
 
 
+## Getting started
+
+If you're new to the concept of virtual actors / grains, it's highly recommended that you take a look at a tutorial:
+
+[Getting Started With Grains / Virtual Actors (.NET)](cluster/getting-started-net.md)
+
 
 ## Communicate with Virtual Actors
 
