@@ -1,0 +1,11 @@
+@startuml Rebalance - push handovers
+
+participant ClusterProvider as clusterProvider
+actor PartitionPlacementActor as placementActor1
+actor PatitionIdentityActor as identityActor1
+
+clusterProvider -> placementActor1 : Topology change
+placementActor1 -> identityActor1 : IdentityHandover
+
+
+@enduml

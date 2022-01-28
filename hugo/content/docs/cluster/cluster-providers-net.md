@@ -9,6 +9,8 @@ Cluster provider is an abstraction that provides an information about currently 
 
 Main responsibilities of cluster provider is to add new member into a cluster, monitor and notify about any member changes. These functionalities are provided in a different way depending which cluster provider is selected.
 
+![Gossip](images/cluser-provider.jpg)
+
 Proto.actor continues philosophy of not reinventing the wheel again, so it is possible to choose between one of already battle tested compontents that provide these functionalities.
 
 Available providers:

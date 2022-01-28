@@ -11,7 +11,7 @@ Below sample consul provider configuration might be found. More details might be
 Provider is available in `Proto.Cluster.Consul` nuget package.
 
 ```csharp
-(GrpcCoreRemoteConfig, IClusterProvider) ConfigureForKubernetes(IConfiguration config)
+(GrpcCoreRemoteConfig, IClusterProvider) ConfigureForConsul(IConfiguration config)
     {
         var consulAddress = config["ProtoActor:Consul"];
 
