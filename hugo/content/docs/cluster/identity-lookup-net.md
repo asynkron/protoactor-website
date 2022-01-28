@@ -5,22 +5,35 @@ title: Identity Lookup (.NET)
 
 # Identity Lookup (.NET)
 
-this is how actors are located
+Identity lookup allows the Proto.Cluster to use different strategies to locate virtual actors. Depending on the use case, different strategy will be suitable.
 
-### `IIdentityLookup` - Interface
+## Partition Identity Lookup
 
-This allows the identity lookup strategy to be replaced.
-The built-in, default is the PartitionIdentityLookup.
+The main feature of this strategy is to split responisibility of owning actor's identity from responsibility of placing it in some member. So in general, one cluster member is responsible to keep actor's identity and another to spawn in the cluster.
 
-- ##### `PartitionIdentityLookup` - Implementation
+![Parition Identity Lookup](images/partition-identity-lookup.jpg)
 
-  For more information about the details of cluster mechanics.
-  See [Cluster Partitions](cluster-partitions.md)
+Partition Identity Lookup can work in 4 modes:
 
-  - `PartitionIdentitySelector` - The hashing algorithm that decides the relation between Identity and Member
+* Pull, Send: Full - identity owner pulls the full topology structure from placement actor
+* Pull, Send: Delta (Experimental) - identity owner pulls only information about actors that were affected by topology change from placement actor
+* Push, Send: Full (Experimental) - placement actor pushes full topology structure to identity owners
+* Push, Send: Delta (Experimental) - placement actor pushes only information about actors that were affected by topology change to identity owners
 
-  - `PartitionPlacementActor` - This actor manages the actual actor instances. it also knows which member owns the identity and can transfer actor identity ownership when topology changes
+### Mode Pull, Send Full rebalance
 
-  - `PartitionIdentityActor` - Manages the owned identities for a member.
+![Pull-full rebalance](images/rebalance-pull-handovers.png)
 
-...
+
+
+
+* PatitionActivatorLookup
+
+
+
+* DBIdentityLookup
+  
+  * Redis implementaion
+
+  * Mongo implementation
+
