@@ -23,4 +23,7 @@ The built-in, default is the PartitionIdentityLookup.
 
   - `PartitionIdentityActor` - Manages the owned identities for a member.
 
+- ##### `PartitionActivatorLookup` - Implementation, Experimental
+
+  The PartitionActivatorLookup is similar but simpler than PartitionIdentityLookup, this lookup uses a strategy where identity and placement owner is the same.
 ...
