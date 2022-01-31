@@ -65,6 +65,8 @@ tags: [protoactor, docs]
     - [Kubernetes Provider](cluster/kubernetes-provider-net.md)  
     - [Consul Provider](cluster/consul-net.md)  
     - [AWS ECS Provider](cluster/aws-provider-net.md)  
+    - [Seed Provider - Experimental](cluster/seed-provider-net.md)
+
   - [Identity lookup (.NET)](cluster/identity-lookup-net.md) - How does Proto.Actor know the location of a virtual actor?
   - [Gossip (.NET)](cluster/gossip.md) - How can I share state across cluster members?
   - [Architecture overview (.NET)](cluster/architecture-overview-net.md) - How does it all work?
