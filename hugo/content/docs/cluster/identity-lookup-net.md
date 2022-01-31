@@ -11,7 +11,7 @@ Possible implementations:
 
 * [Partition Identity Lookup](partition-idenity-lookup.md)
 
-* [Parition Activator Lookup](partition-activator-lookup.md)
+* [Partition Activator Lookup](partition-activator-lookup.md)
 
 * [DB Identity Lookup](db-identity-lookup.md)
 
@@ -50,8 +50,12 @@ var clusterKind = new ClusterKind("someKind", someKindProps)
 
 ```
 
-In the cluster, members might go down and up so it is needed also to relocate actors between members to keep local affinity. It is possible to control relocation process. Relocating too many actors in the same time might case that the whole cluster is unstable.
+When rebalancing partitions on members leaving or being added, existing identity activations may end up on another member than the partition containing its messages. In order to keep local affinity, these activations needs to be moved.
 
-* `LocalAffinityOptions.TriggersLocalAffinity` - delegate that checks if relocation process check should be fired for a given message, e.g. to not relocate when message is comming from non-partitioned source (outside kafka)
+To support this, we have configurable middleware which can control which messages trigger relocation, and the max throughput of these relocations. This limits potential issues caused by too many actors spawning simultaneously, overloading the backing database.
 
-* `LocalAffinityOptions.RelocationThroughput` - controls a throughput of relocation to not relocate too many actors in the same time
+When relocating, the current messages are always processed first, then the actors are stopped on the "wrong" member before being respawned on the member of the message sender.
+
+* `LocalAffinityOptions.TriggersLocalAffinity` - delegate that checks if relocation process check should be fired for a given message, e.g. to not relocate when message is coming from non-partitioned source (outside kafka)
+
+* `LocalAffinityOptions.RelocationThroughput` - controls the throughput of actor relocations, to limit spawning actors from overloading external state stores.
