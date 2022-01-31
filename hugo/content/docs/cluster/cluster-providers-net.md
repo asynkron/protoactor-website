@@ -16,7 +16,6 @@ Proto.actor continues philosophy of not reinventing the wheel again, so it is po
 Available providers:
 
 * [Kubernetes Provider](kubernetes-provider-net.md)
-* [Seed Node Provider](seed-node-provider-net.md)
 * [Consul Provider](consul-net.md)
 * [Amazon ECS Provider](aws-provider-net.md)
 * [Test Provider](test-provider-net.md)
