@@ -7,16 +7,18 @@ participant ClusterProvider as clusterProvider
 box "Member A"
 actor PatitionIdentityActor as identityActor1
 actor PartitionIdentityRebalaceActor as rebalanceActor1
-actor PartitionWorker as partitionWorker1
+actor PartitionWorkerMemberA as partitionWorker1
 actor PartitionPlacementActor as placementActor1
+actor PartitionWorkerMemberB as partitionWorker2
+
 end box
 
 box "Member B"
-actor PartitionWorker as partitionWorker2
 actor PartitionPlacementActor as placementActor2
 end box
 
 clusterProvider -> identityActor1 : Topology change
+identityActor1 -> identityActor1 : Waiting for gossip consensus
 identityActor1 -> rebalanceActor1 : IdentityHandoverRequest
 activate rebalanceActor1
 rebalanceActor1 -> partitionWorker1 : IdentityHandoverRequest
