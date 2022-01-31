@@ -9,13 +9,14 @@ Cluster provider is an abstraction that provides an information about currently 
 
 Main responsibilities of cluster provider is to add new member into a cluster, monitor and notify about any member changes. These functionalities are provided in a different way depending which cluster provider is selected.
 
-![Gossip](images/cluser-provider.jpg)
+![Cluster provider](images/cluster-provider.jpg)
 
 Proto.actor continues philosophy of not reinventing the wheel again, so it is possible to choose between one of already battle tested compontents that provide these functionalities.
 
 Available providers:
 
 * [Kubernetes Provider](kubernetes-provider-net.md)
+* [Seed Node Provider](seed-node-provider-net.md)
 * [Consul Provider](consul-net.md)
 * [Amazon ECS Provider](aws-provider-net.md)
 * [Test Provider](test-provider-net.md)
