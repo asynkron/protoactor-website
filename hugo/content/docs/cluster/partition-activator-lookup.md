@@ -3,7 +3,7 @@ layout: docs.hbs
 title: Partition Activator Lookup (.NET)
 ---
 
-# Patition Activator Lookup (Experimental)
+# Partition Activator Lookup (Experimental)
 
 This strategy is a simplification of ParitionIdentityLookup strategy. The same member is responsible for owning identity and placing actor.
 

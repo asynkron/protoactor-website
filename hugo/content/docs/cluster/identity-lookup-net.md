@@ -58,4 +58,4 @@ When relocating, the current messages are always processed first, then the actor
 
 * `LocalAffinityOptions.TriggersLocalAffinity` - delegate that checks if relocation process check should be fired for a given message, e.g. to not relocate when message is coming from non-partitioned source (outside kafka)
 
-* `LocalAffinityOptions.RelocationThroughput` - controls the throughput of actor relocations, to limit spawning actors from overloading external state stores.
+* `LocalAffinityOptions.RelocationThroughput` - controls the throughput of actor relocations, to prevent spawning actors from overloading external state stores.

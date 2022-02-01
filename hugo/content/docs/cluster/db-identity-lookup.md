@@ -11,7 +11,7 @@ This strategy uses external database to keep information about spawned actors in
 
 ## Async Semaphore
 
-To avoid too many parallel calls to the databse, that might potentially kill database or resulted in client's timeouts, it was needed to introduce mechanism that limits concurrency. Proto.Actor has own implementation of [AsyncSemaphore](https://github.com/asynkron/protoactor-dotnet/blob/dev/src/Proto.Actor/Utils/AsyncSemaphore.cs#L12) that protects before that. DB storage implementations have a parameter that controls concurrency level.
+To avoid too many parallel calls to the database, that might potentially kill it or cause client timeouts, it can be needed to introduce a mechanism that limits concurrency. Proto.Actor has own implementation of [AsyncSemaphore](https://github.com/asynkron/protoactor-dotnet/blob/dev/src/Proto.Actor/Utils/AsyncSemaphore.cs#L12) that protects against that. DB storage implementations have a parameter that controls concurrency level.
 
 ## Redis implementaion
 

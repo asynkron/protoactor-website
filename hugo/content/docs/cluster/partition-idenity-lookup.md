@@ -5,7 +5,7 @@ title: Partition Identity Lookup (.NET)
 
 # Partition Identity Lookup
 
-The main feature of this strategy is to split responisibility of owning actor's identity from responsibility of placing it in some member. So in general, one cluster member is responsible to keep actor's identity and another to spawn in the cluster.
+The main feature of this strategy is to split responsibility of owning actor's identity from responsibility of placing it in some member. So in general, one cluster member is responsible to keep actor's identity and another to spawn in the cluster.
 
 ![Parition Identity Lookup](images/partition-identity-lookup.jpg)
 
