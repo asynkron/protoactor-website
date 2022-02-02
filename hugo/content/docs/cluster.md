@@ -59,4 +59,4 @@ Proto.Cluster consists of a few main components that come together and provide v
 
 Components join together to provide more advanced functionalities that are essential for the cluster to work correctly.
 
-![proto.cluster overview v1](cluster/images/proto-cluster-overview.jpg)
+![proto.cluster overview](cluster/images/proto-cluster-overview.jpg)
