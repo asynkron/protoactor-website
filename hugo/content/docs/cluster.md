@@ -35,18 +35,28 @@ They are spawned _somewhere_ in your cluster, and their lifecycle is managed by 
 This means that you as a developer, don't have to care or know if the actor already exists or where it exists.
 You address it using its identity and kind and the cluster does the rest for you.
 
-
 ## Getting started
 
 If you're new to the concept of virtual actors / grains, it's highly recommended that you take a look at a tutorial:
 
 [Getting Started With Grains / Virtual Actors (.NET)](cluster/getting-started-net.md)
 
+## Proto.Cluster components
 
-## Communicate with Virtual Actors
+Proto.Cluster consists of a few main components that come together and provide virtual actor cluster functionality.
 
-Virtual actors require request-response based messaging, this is to ensure that the message was delivered and/or that the actor was properly activated.
+* Cluster Kind - wrapper over [Props](props.md) that instructs the cluster how to create actors
 
-You do this using `cluster.RequestAsync("MyActor123", "SomeKind", someMessage, cancellationToken)` in .NET, and `cluster.call("MyActor123", "SomeKind", someMessage)` using Go.
+* Remote Configuration - describes how to reach member in the cluster network and how to serialize messages, more details might be found [here](remote.md)
 
-This allows Proto.Actor to re-try getting the PID by calling the actor until it succeeds.
+* Cluster provider - abstraction that provides with information about available members in the cluster, more details might be found [here](cluster/cluster-providers-net.md)
+
+* Gossip - the way how members shares information about each member's state, more details might be found [here](cluster/gossip.md)
+
+* Actor Cache - set of recently used actor references cached in member's memory to speed up access to it
+
+* Identity Lookup - component that is responsible for placing actor on specified member, more details might be found [here](cluster/identity-lookup-net.md)
+
+Components join together to provide more advanced functionalities that are essential for the cluster to work correctly.
+
+![proto.cluster overview](cluster/images/proto-cluster-overview.jpg)
