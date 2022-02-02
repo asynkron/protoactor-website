@@ -1,0 +1,50 @@
+@startuml rebalance-pull-handovers
+
+title "Rebalance pull handovers"
+
+participant ClusterProvider as clusterProvider
+
+box "Member A"
+actor PatitionIdentityActor as identityActor1
+actor PartitionIdentityRebalaceActor as rebalanceActor1
+actor PartitionWorkerMemberA as partitionWorker1
+actor PartitionPlacementActor as placementActor1
+actor PartitionWorkerMemberB as partitionWorker2
+
+end box
+
+box "Member B"
+actor PartitionPlacementActor as placementActor2
+end box
+
+clusterProvider -> identityActor1 : Topology change
+identityActor1 -> identityActor1 : Waiting for gossip consensus
+identityActor1 -> rebalanceActor1 : IdentityHandoverRequest
+activate rebalanceActor1
+rebalanceActor1 -> partitionWorker1 : IdentityHandoverRequest
+activate partitionWorker1
+rebalanceActor1 -> partitionWorker2 : IdentityHandoverRequest
+activate partitionWorker2
+partitionWorker1 -> placementActor1 : IdentityHandoverRequest
+activate placementActor1
+partitionWorker2 -> placementActor2 : IdentityHandoverRequest
+activate placementActor2
+placementActor1 -> partitionWorker1 : IdentityHandover actor 1
+placementActor1 -> partitionWorker1 : IdentityHandover actor 2
+deactivate placementActor1
+partitionWorker1 -> rebalanceActor1 : Partition 1 Completed
+deactivate partitionWorker1
+rebalanceActor1 -> identityActor1 : Partition 1 Completed
+identityActor1 -> identityActor1 : Update internal\n partition lookup 
+placementActor2 -> partitionWorker2 : IdentityHandover actor 3
+placementActor2 -> partitionWorker2 : IdentityHandover actor 4
+deactivate placementActor2
+partitionWorker2 -> rebalanceActor1 : Partition 2 Completed
+deactivate partitionWorker2
+rebalanceActor1 -> identityActor1 : Partition 2 Completed
+deactivate rebalanceActor1
+identityActor1 -> identityActor1 : Update internal\n partition lookup 
+deactivate partitionWorker2
+
+
+@enduml

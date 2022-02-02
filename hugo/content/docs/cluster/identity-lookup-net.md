@@ -5,25 +5,57 @@ title: Identity Lookup (.NET)
 
 # Identity Lookup (.NET)
 
-this is how actors are located
+Identity lookup allows the Proto.Cluster to use different strategies to locate virtual actors. Depending on the use case, different strategy will be suitable.
 
-### `IIdentityLookup` - Interface
+Possible implementations:
 
-This allows the identity lookup strategy to be replaced.
-The built-in, default is the PartitionIdentityLookup.
+* [Partition Identity Lookup](partition-idenity-lookup.md)
 
-- ##### `PartitionIdentityLookup` - Implementation
+* [Partition Activator Lookup](partition-activator-lookup.md)
 
-  For more information about the details of cluster mechanics.
-  See [Cluster Partitions](cluster-partitions.md)
+* [DB Identity Lookup](db-identity-lookup.md)
 
-  - `PartitionIdentitySelector` - The hashing algorithm that decides the relation between Identity and Member
+## Actor placement strategies
 
-  - `PartitionPlacementActor` - This actor manages the actual actor instances. it also knows which member owns the identity and can transfer actor identity ownership when topology changes
+It is possible to choose between two actor placement strategies. Strategy might be selected for each cluster kind.
 
-  - `PartitionIdentityActor` - Manages the owned identities for a member.
+``` csharp
 
-- ##### `PartitionActivatorLookup` - Implementation, Experimental
+var clusterKind = new ClusterKind("someKind", someKindProps)
+                    .WithMemberStrategy(cluster => new SomeCustomStrategy(cluster));
 
-  The PartitionActivatorLookup is similar but simpler than PartitionIdentityLookup, this lookup uses a strategy where identity and placement owner is the same.
-...
+```
+
+### SimpleMemberStrategy (default)
+
+This strategy is the default strategy. It uses round-robin algorithm to select the member to spawn an actor.
+
+### LocalAffinityStrategy
+
+It tries to spawn an actor on the same member as sender. If it fails then it tries to select a member using round-robin algorithm.
+
+This strategy might be very useful in event stream processing cases, e.g. when member reads from kafka partition and partition key is also actor's identity. It results in reducing needed grpc calls between members.
+
+```csharp
+
+var clusterKind = new ClusterKind("someKind", someKindProps)
+                    .WithLocalAffinityRelocationStrategy(new LocalAffinityOptions
+                    {
+                        TriggersLocalAffinity = envelope => 
+                            envelope.Message is GrainRequestMessage { RequestMessage: MessageTypeThatShouldTriggerRelocation },
+                        RelocationThroughput = new ThrottleOptions(
+                            MaxEventsInPeriod: ParseInt(config["LocalAffinityMaxEventsInPeriod"]),
+                            Period: ParseTimeSpan(config["LocalAffinityPeriodSeconds"]))
+                    });
+
+```
+
+When rebalancing partitions on members leaving or being added, existing identity activations may end up on another member than the partition containing its messages. In order to keep local affinity, these activations needs to be moved.
+
+To support this, we have configurable middleware which can control which messages trigger relocation, and the max throughput of these relocations. This limits potential issues caused by too many actors spawning simultaneously, overloading the backing database.
+
+When relocating, the current messages are always processed first, then the actors are stopped on the "wrong" member before being respawned on the member of the message sender.
+
+* `LocalAffinityOptions.TriggersLocalAffinity` - delegate that checks if relocation process check should be fired for a given message, e.g. to not relocate when message is coming from non-partitioned source (outside kafka)
+
+* `LocalAffinityOptions.RelocationThroughput` - controls the throughput of actor relocations, to prevent spawning actors from overloading external state stores.
