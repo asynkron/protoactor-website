@@ -57,10 +57,6 @@ Proto.Cluster consists of a few main components that come together and provide v
 
 * Identity Lookup - component that is responsible for placing actor on specified member, more details might be found [here](cluster/identity-lookup-net.md)
 
-![proto.cluster overview v1](cluster/images/proto-cluster-overview-v1.jpg)
+Components join together to provide more advanced functionalities that are essential for the cluster to work correctly.
 
-Some of these components join together to provide more advanced functionalities that are essential for the cluster to work correctly.
-
-![proto.cluster overview v1](cluster/images/proto-cluster-overview-v2.jpg)
-
-![proto.cluster overview v2](cluster/images/proto-cluster-overview-v3.jpg)
+![proto.cluster overview v1](cluster/images/proto-cluster-overview.jpg)
