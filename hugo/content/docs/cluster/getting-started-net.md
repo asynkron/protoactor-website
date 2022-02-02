@@ -32,7 +32,7 @@ We'll need the following NuGet packages:
 
 This tutorial was prepared using:
 * .NET 6
-* Proto.Actor 0.26.0 (all `Proto.*` packages share the same version number)
+* Proto.Actor 0.27.0 (all `Proto.*` packages share the same version number)
 * `Grpc.Tools` 2.43.0
 
 ### Base web app
@@ -766,3 +766,162 @@ smart bulb simulator: turning on smart bulb 'living_room_2'
 living_room_2: turning smart bulb on
 my-house: 2 smart bulbs are on
 ```
+
+
+## Running a cluster with multiple nodes
+
+To showcase how grains work in a distributed context, we're going to run two nodes of our example app.
+
+To do that, we'll need a proper Cluster Provider. To recap, a Cluster Provider is an abstraction that provides information about currently available members (nodes) in a cluster. In other words, it tells a cluster member what are the other members, thus allowing them to communicate with one another. You can read more about Cluster Providers [here](cluster-providers-net.md).
+
+Until now, we've been using a [Test Provider](test-provider-net.md), which is only suited for running a single-node cluster. To run a cluster with multiple nodes, we'll use a [Consul Provider](consul-net.md), which, like the name suggests, utilizes [HashiCorp Consul](https://www.consul.io/).
+
+Let's also recap, how grains work. Each grain (i.e smart bulbs and a smart house) will live in one of the cluster nodes:
+
+![Grain Locations](images/tutorial-grain-locations.png)
+
+
+### Consul provider
+
+First, we'll need to run Consul:
+
+1. [Download Consul binaries here](https://www.consul.io/downloads).
+1. Open a terminal and run the downloaded Consul binary in the development mode: `./consul agent -dev`
+
+Let's now configure the [Consul Provider](consul-net.md) in our example.
+
+Add `Proto.Cluster.Consul` NuGet package to the project.
+
+Change cluster member provider:
+
+`ActorSystemConfiguration.cs`
+
+```cs
+var clusterConfig = ClusterConfig
+    .Setup(
+        clusterName: "ProtoClusterTutorial",
+        clusterProvider: new ConsulProvider(new ConsulProviderConfig()),
+        identityLookup: new PartitionIdentityLookup()
+    )
+    // ...
+```
+
+This will connect to Consul using a default port.
+
+For more information on how to configure Consul Provider, read [the Consul provider documentation page](consul-net.md).
+
+Run the app to check if everything works so far. The app should work as usual. Also, you should see some output from Consul.
+
+
+### Configuring the nodes
+
+Since we'll be running multiple nodes, we'll probably need them to be configured differently:
+
+1. We'll want to host them on different ports. Mind, that the API port (HTTP, hosted by ASP.NET Core) is different than the port used for communicating between cluster nodes (GRPC, hosted by Proto.Remote).
+2. We'll only want one of them to run the simulation (i.e. produce smart bulb events).
+
+Add the following lines to `appsettings.json`:
+
+```json
+"ProtoRemotePort": 5000,
+"RunSimulation": true,
+```
+
+Now let's configure the advertised host in Proto.Remote so other cluster members can reach one another.
+
+`ActorSystemConfiguration.cs`:
+
+```cs
+var remoteConfig = GrpcCoreRemoteConfig
+    .BindToLocalhost(provider
+        .GetRequiredService<IConfiguration>()
+        .GetValue<int>("ProtoRemotePort")
+    )
+    // ...
+```
+
+Starting the simulator should be conditional:
+
+`Program.cs`:
+
+```cs
+if (builder.Configuration.GetValue<bool>("RunSimulation"))
+{
+    builder.Services.AddHostedService<SmartBulbSimulator>();
+}
+```
+
+Run the app again (a single node) to check if everything works so far. The app should work as usual.
+
+
+### Running multiple nodes
+
+Now we're ready to run multiple nodes. Start a terminal and navigate to the project directory.
+
+First, make sure your app is up to date:
+
+```sh
+dotnet build
+```
+
+Start the first node:
+
+```sh
+dotnet run --no-build --urls "http://localhost:5161" ProtoRemotePort=5000 RunSimulation=false
+```
+
+At this point, the app shouldn't do much now, as the simulator is turned off.
+
+Open a second terminal, start the second node (with the simulation on and with different ports):
+
+```sh
+dotnet run --no-build --urls "http://localhost:5162" ProtoRemotePort=5001 RunSimulation=true
+```
+
+When you look at the console output, grains should be distributed between two nodes.
+
+Sample output from the first terminal:
+
+```txt
+living_room_2: created
+living_room_2: turning smart bulb off
+bedroom: created
+bedroom: turning smart bulb off
+living_room_2: turning smart bulb on
+living_room_2: turning smart bulb off
+bedroom: turning smart bulb on
+bedroom: turning smart bulb off
+living_room_2: turning smart bulb on
+bedroom: turning smart bulb on
+...
+```
+
+Sample output from the second terminal:
+
+```txt
+living_room_1: created
+living_room_1: turning smart bulb off
+my-house: created
+my-house: 0 smart bulbs are on
+smart bulb simulator: turning off smart bulb 'living_room_1'
+smart bulb simulator: turning off smart bulb 'living_room_2'
+my-house: 0 smart bulbs are on
+smart bulb simulator: turning off smart bulb 'kitchen'
+kitchen: created
+kitchen: turning smart bulb off
+my-house: 0 smart bulbs are on
+smart bulb simulator: turning off smart bulb 'living_room_1'
+smart bulb simulator: turning on smart bulb 'kitchen'
+kitchen: turning smart bulb on
+my-house: 1 smart bulbs are on
+smart bulb simulator: turning off smart bulb 'bedroom'
+my-house: 1 smart bulbs are on
+smart bulb simulator: turning on smart bulb 'living_room_2'
+my-house: 2 smart bulbs are on
+smart bulb simulator: turning on smart bulb 'living_room_1'
+living_room_1: turning smart bulb on
+my-house: 3 smart bulbs are on
+...
+```
+
+This is a good opportunity to perform an experiment: turn off the first node. You should see, that all the grains from the first node should be recreated on the second node.
