@@ -26,25 +26,24 @@ To get started with Proto.Remote, we need to configure the host address, registe
 
 ### Network
 
-First, we need to install several packages. If we are using the .NET Framework, then we should install *Proto.Remote* and *Proto.Remote.Grpcnet* packages. If we are using the .NET Core, we need to install the *Proto.Remote* and *Proto.Remote.Grpccore* packages. To do this in Visual Studio open the Package Manager Console and type first 
+First, we need to install two NuGet packages: `Proto.Remote` and `Proto.Remote.GrpcNet`.
 
-`Install-Package Proto.Remote`
+To do this in Visual Studio open the Package Manager Console and type:
 
-then type
+```ps
+Install-Package Proto.Remote
+Install-Package Proto.Remote.GrpcNet
+```
 
-`Install-Package Proto.Remote.Grpcnet` 
+**Warning!** From time to time you may see `Proto.Remote.GrpcCore` package used instead of `Proto.Remote.GrpcNet`. `Proto.Remote.GrpcCore` uses `Grpc.Core` package, and thus is considered deprecated. Read more about it [here](https://grpc.io/blog/grpc-csharp-future/).
 
-or
-
-`Install-Package Proto.Remote.Grpccore`
-
-depending on the platform we are using.
-
-To create Proto.Remote configuration that binds to a specified host address on a specified port we need to use method `BindTo(host, port)` from static class `GrpcCoreRemoteConfig` or `GrpcNetRemoteConfig`. We can also create a configuration that binds to the localhost address by calling the method `BindToLocalHost(port)`. In both methods, the parameter `port` is optional. By default, it is 0, which means that any free port will be used.
-
+To create Proto.Remote configuration that binds to a specified host address on a specified port we need to use method `BindTo(host, port)` from static class `GrpcNetRemoteConfig`. We can also create a configuration that binds to the localhost address by calling the method `BindToLocalHost(port)`. In both methods, the parameter `port` is optional. By default, it is 0, which means that any free port will be used.
 
 ```csharp
-var config = GrpcCoreRemoteConfig
+using Proto.Remote;
+using Proto.Remote.GrpcNet;
+
+var config = GrpcNetRemoteConfig
     .BindTo(advertisedHost, 12000)
     //or
     //.BindTo(advertisedHost)
@@ -79,7 +78,7 @@ For more information on Protobuf read [Protocol Buffers](https://developers.goog
 In order to tell the configuration factory where to find the message from our Protobuf definition, we need to call the static method `WithProtoMessages` from class `RemoteConfigExtensions` and pass to it a descriptor with the namespace.
 
 ```csharp
-var config = GrpcCoreRemoteConfig
+var config = GrpcNetRemoteConfig
     .BindTo(advertisedHost, 12000)
     //like this
     .WithProtoMessages(MyMessagesReflection.Descriptor);
@@ -94,7 +93,7 @@ Proto.Remote allows us to spawn Proto actors that are located on different machi
 To register what kind of actor can be called, we need to use the static method `WithRemoteKids` from class `RemoteConfigExtensions` and pass to it the name of the "kind" and a `Props`. This method creates a dictionary that maps the kind of an actor to `Props` and tells the Remote module how to set up and spawn an actor of that kind.
 
 ```csharp
-var config = GrpcCoreRemoteConfig
+var config = GrpcNetRemoteConfig
     .BindTo(advertisedHost, 12000)
     .WithProtoMessages(MyMessagesReflection.Descriptor)
     //like this
