@@ -24,7 +24,7 @@ Create an ASP.NET Core Web Application named `ProtoClusterTutorial`. For simplic
 We'll need the following NuGet packages:
 * `Proto.Actor`
 * `Proto.Remote`
-* `Proto.Remote.GrpcCore`
+* `Proto.Remote.GrpcNet`
 * `Proto.Cluster`
 * `Proto.Cluster.CodeGen`
 * `Proto.Cluster.TestProvider`
@@ -69,7 +69,7 @@ using Proto.Cluster.Partition;
 using Proto.Cluster.Testing;
 using Proto.DependencyInjection;
 using Proto.Remote;
-using Proto.Remote.GrpcCore;
+using Proto.Remote.GrpcNet;
 
 namespace ProtoClusterTutorial;
 
@@ -86,7 +86,7 @@ public static class ActorSystemConfiguration
             
             // remote configuration
             
-            var remoteConfig = GrpcCoreRemoteConfig
+            var remoteConfig = GrpcNetRemoteConfig
                 .BindToLocalhost();
             
             // cluster configuration
@@ -125,7 +125,7 @@ This is a standard Proto.Actor configuration. It's out of the scope for this tut
 
 **Remote configuration**
 
-Proto.Cluster uses Proto.Remote for transport, usually GRPC (Proto.Remote.GrpcCore). Again, its configuration is out of scope for this tutorial; if you want to learn more, you should check out the [Remote](../remote.md) section of Proto.Actor's documentation.
+Proto.Cluster uses Proto.Remote for transport, usually GRPC (Proto.Remote.GrpcNet). Again, its configuration is out of scope for this tutorial; if you want to learn more, you should check out the [Remote](../remote.md) section of Proto.Actor's documentation.
 
 **Cluster configuration**
 
@@ -537,7 +537,7 @@ using Proto.Remote;
 
 // remote configuration
 
-var remoteConfig = GrpcCoreRemoteConfig
+var remoteConfig = GrpcNetRemoteConfig
     .BindToLocalhost()
     .WithProtoMessages(MessagesReflection.Descriptor);
 ```
@@ -832,7 +832,7 @@ Now let's configure the advertised host in Proto.Remote so other cluster members
 `ActorSystemConfiguration.cs`:
 
 ```cs
-var remoteConfig = GrpcCoreRemoteConfig
+var remoteConfig = GrpcNetRemoteConfig
     .BindToLocalhost(provider
         .GetRequiredService<IConfiguration>()
         .GetValue<int>("ProtoRemotePort")
