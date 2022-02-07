@@ -5,17 +5,19 @@ title: Getting Started With Grains / Virtual Actors (.NET)
 
 # Getting Started With Grains / Virtual Actors (.NET)
 
-
 In this tutorial we will:
 
-1. Create a simple, one-node Proto.Actor cluster.
-1. Implement two kinds of grains.
+1. Model smart bulbs and a smart house using virtual actors/grains.
+1. Run these grains in a cluster of nodes.
 1. Send messages to and between these grains.
 1. Host everything in a simple ASP.NET Core app.
 
 The code from this tutorial is avaliable [on GitHub](https://github.com/asynkron/protoactor-grains-tutorial).
 
+
 ## Setting up the project
+
+First things first, let's get the project setup and basic configuration out of the way, so we can later focus on grains and clustering.
 
 ### Required packages
 
@@ -131,7 +133,7 @@ Proto.Cluster uses Proto.Remote for transport, usually GRPC (Proto.Remote.GrpcNe
 
 This is where we configure Proto.Cluster. Let's explain its parameters:
 1. `clusterName` - any name will do.
-1. `clusterProvider` - a Cluster Provider is an abstraction that provides information about currently available members (nodes) in a cluster. Since right now our cluster only has one member, it's ok to use `TestProvider`. In the future, we will switch to other implementations, like [Consul Provider](consul-net.md) or [Kubernetes Provider](kubernetes-provider-net.md). You can read more about Cluster Providers [here](cluster-providers-net.md).
+1. `clusterProvider` - a Cluster Provider is an abstraction that provides information about currently available members (nodes) in a cluster. Since right now our cluster only has one member, it's ok to use a [Test Provider](test-provider-net.md). In the future, we will switch to other implementations, like [Consul Provider](consul-net.md) or [Kubernetes Provider](kubernetes-provider-net.md). You can read more about Cluster Providers [here](cluster-providers-net.md).
 1. `identityLookup` - an Identity Lookup is an abstraction that allows a cluster to locate grains. `PartitionIdentityLookup` is generally a good choice for most cases. You can read more about Identity Lookup [here](identity-lookup-net.md).
 
 
@@ -214,13 +216,11 @@ builder.Services.AddHostedService<ActorSystemClusterHostedService>();
 At this point, our cluster is not doing much, but it won't hurt to run it and check if nothing breaks. You should see a `Starting a cluster member` line in your app's console.
 
 
-## Creating a grain
-
-### Modeling a light bulb
+## Creating a smart bulb grain
 
 Now that we're done with the basic configuration, it's time to implement some features.
 
-In this tutorial, we'll use grains to model smart light bulbs. Their functionality will be as follows:
+In this tutorial, we'll use grains to model smart bulbs. Their functionality will be as follows:
 
 1. A smart bulb has a state, which is either: "unknown", "on" or "off".
 1. Initially, smart bulb's state is "unknown".
@@ -235,7 +235,7 @@ To avoid confusion, in this tutorial we'll refer to virtual actors as grains.
 To recap:
 1. Grains are essentially actors, meaning they will process messages one at a time.
 1. Grains are not explicitly crated (activated). Instead, they are created when they receive the first message.
-1. Each grain lives in _one_ of the cluster members.
+1. Each grain lives in _one_ of the cluster nodes.
 1. Grain's location is transparent, meaning we don't need to know in which cluster member grain lives to call it.
 1. Communication with grains should almost always be a request/response. <!-- todo: explain why? -->
 1. Grains are identified by a _kind_ and _identity_, e.g. `airport`/`AMS` or `user`/`53`. It's important to distinguish kind/identity pair with an actor's ID, which in the case of grains might change between activations.
@@ -925,3 +925,10 @@ my-house: 3 smart bulbs are on
 ```
 
 This is a good opportunity to perform an experiment: turn off the first node. You should see, that all the grains from the first node should be recreated on the second node.
+
+
+## Conclusion
+
+Hopefully, at this point, you know how to build a cluster of grains using Proto.Actor. If you want to learn more, it's highly recommended, that you take a look at [the documentation](../_index.md), especially [the Cluster section](../cluster.md).
+
+Thanks for your interest and good luck!
