@@ -6,34 +6,25 @@ title: Kubernetes Provider (.NET)
 
 If Proto.Actor application is planned to be deployed inside Kubernetes cluster, then this cluster membership provider is the best choice.
 
-Below is the example how to configure it. The full working code might be found in [Realtime map example](https://github.com/asynkron/realtimemap-dotnet/blob/main/Backend/ProtoActorExtensions.cs#L17).
+Below is the example how to configure it. The full working code might be found in [Realtime map example](https://github.com/asynkron/realtimemap-dotnet/blob/main/Backend/ProtoActorExtensions.cs#L17). The sample also contains a [Helm chart](https://github.com/asynkron/realtimemap-dotnet/tree/main/chart).
 
-Provider is available in `Proto.Cluster.Kubernetes` nuget package.
+Provider is available in `Proto.Cluster.Kubernetes` NuGet package.
 
 ```csharp
 (GrpcCoreRemoteConfig, IClusterProvider) ConfigureForKubernetes(IConfiguration config)
-    {
-        var kubernetes = new Kubernetes(KubernetesClientConfiguration.InClusterConfig());
-        var clusterProvider = new KubernetesProvider(kubernetes);
+{
+    var kubernetes = new Kubernetes(KubernetesClientConfiguration.InClusterConfig());
+    var clusterProvider = new KubernetesProvider(kubernetes);
 
-        var host = config["ProtoActor:Host"] ?? "127.0.0.1";
-        var port = TryParseInt(config["ProtoActor:Port"]) ?? 0;
-        var advertisedHostname = config["ProtoActor:AdvertisedHost"];
-        var advertisedPort = TryParseInt(config["ProtoActor:AdvertisedPort"]);
+    var remoteConfig = GrpcNetRemoteConfig
+        .BindToAllInterfaces(advertisedHost: config["ProtoActor:AdvertisedHost"])
+        .WithProtoMessages(EmptyReflection.Descriptor)
+        .WithProtoMessages(MessagesReflection.Descriptor)
+        .WithLogLevelForDeserializationErrors(LogLevel.Critical)
+        .WithRemoteDiagnostics(true);
 
-        var remoteConfig = GrpcCoreRemoteConfig
-            .BindTo(host, port)
-            .WithAdvertisedHost(advertisedHostname)
-            .WithAdvertisedPort(advertisedPort)
-            .WithProtoMessages(YourProtoGrainReflecion.Descriptor);
-
-        return (remoteConfig, clusterProvider);
-
-        int? TryParseInt(string? intAsString) =>
-            string.IsNullOrEmpty(intAsString)
-                ? null
-                : int.Parse(intAsString);
-    }
+    return (remoteConfig, clusterProvider);
+}
 
 ```
 
@@ -45,25 +36,31 @@ Your service will also have to expose an "Advertised Host", this is the address 
 
 This can be retrieved the following way in your service definition:
 
-```yml
-env:
-  - name: PROTO_PORT
-    value: "8080"                  #this is the port we bind to
-  - name: PROTO_HOST
-    value: "0.0.0.0"               #this is the Host we bind to, inside the container
-  - name: "PROTO_ADVERTISED_HOST"  #this is the Host we expose outwards, to the cluster
-  - name: "PROTO_ADVERTISED_PORT"  #this is the Port exposed outwards, to the cluster
-    valueFrom:
-      fieldRef:
-        fieldPath: status.podIP
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+# ...
+spec:
+  # ...
+  template:
+    # ...
+    spec:
+      # ...
+      containers:
+        # ...
+        - env:
+          - name: "ProtoActor__AdvertisedHost"  # this is the host we expose to other cluster members
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
 ```
 
-## Role Definition
+## Permissions
 
-The service will also need some extra permissions inside Kubernetes in order to read and write metadata to its own Pods.
+The application will also need some extra permissions inside Kubernetes in order to read and write metadata to its own Pods.
 The role will need the following permissions:
 
-```yml
+```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -72,10 +69,7 @@ rules:
   - apiGroups:
       - ""
     resources:
-      - endpoints
       - pods
-      - services
-      - services/status
     verbs:
       - get
       - list
@@ -83,9 +77,10 @@ rules:
       - patch
 ```
 
-## Role Binding
+To bind the role to the deployment:
 
-```yml
+
+```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
@@ -96,9 +91,22 @@ roleRef:
   name: proto-cluster
 subjects:
   - kind: ServiceAccount
-    name: SomeServiceAccount #this is the service account that should have this role applied
+    name: SomeServiceAccount # this is the service account that should have the role applied
+```
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+# ...
+spec:
+  # ...
+  template:
+    # ...
+    spec:
+      # ...
+      serviceAccountName: SomeServiceAccount
 ```
 
 ## How it works?
 
-Kubernetes provider registers a new member in a cluster by doing modification of labels connected with running pod. It adds information about cluster name, pod port, member id and all actor kinds supported by the node. Additionaly it spawns actor responsible for cluster monitoring. Monitor uses kubernetes api to receive updates about any pod change that runs in a namespace. Each such change is propagated by using gossip to all members.
+Kubernetes provider registers a new member in a cluster by modifying labels on it's own pod. It adds information about cluster name, pod port, member id and all actor kinds supported by the node. Additionally it spawns the actor responsible for cluster monitoring. Monitor uses Kubernetes API to receive updates about any pod change that runs in a namespace. Each such change is propagated by using gossip to all members.
