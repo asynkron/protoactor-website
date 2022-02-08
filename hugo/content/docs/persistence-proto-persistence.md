@@ -3,7 +3,7 @@ layout: docs.hbs
 title: Persistence using Proto.Persistence module
 ---
 
-# `Proto.Persistence` module
+# Proto.Persistence module
 
 You can choose to have actors persist their state by using the `Proto.Persistence` module.
 This allows an actor to recover its state when it is started and supports three modes of operation:
