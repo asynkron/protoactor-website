@@ -251,9 +251,9 @@ You can create it manually without that package, but:
 1. It requires much more boilerplate code.
 1. It's easy to make a mistake, e.g. respond to a message with a wrong type of message or not respond at all.
 
-Let's create two `.proto` files: one for grains, and the other for messages used by these grains:
+Read more about generating grains [here](codegen-net.md).
 
-<!-- todo: more info on grain generation? -->
+Let's create two `.proto` files: one for grains, and the other for messages used by these grains:
 
 `Grains.proto`:
 

@@ -64,9 +64,7 @@ var clusterConfig = ClusterConfig
 
 1. `prop` - define how an actor and its context is created. You can read more about Props [here](../props.md).
 
-You can create any kind of actor using Props. However, implementing grains by hand comes with a lot of gotchas, e.g. you have to make sure that grain _always_ responds to certain kinds of messages (also, with the correct response message type). For this reason, the recommended way of creating grains is by using the `Proto.Cluster.CodeGen` package, which solves most of these problems.
-
-<!-- TODO: You can read more about that approach in the [Codegen](todo) section. -->
+You can create any kind of actor using Props. However, implementing grains by hand comes with a lot of gotchas, e.g. you have to make sure that grain _always_ responds to certain kinds of messages (also, with the correct response message type). For this reason, the recommended way of creating grains is by using the `Proto.Cluster.CodeGen` package, which solves most of these problems. Read more about it [here](codegen-net.md).
 
 
 ## Getting a Cluster object
@@ -152,7 +150,7 @@ BlockUserResponse response = await cluster
     .BlockUser(ct: cancellationToken);
 ```
 
-<!-- TODO: You can read more about that approach in the [Codegen](todo) section. -->
+Read more about generating grains [here](codegen-net.md).
 
 
 ### Handling timeouts

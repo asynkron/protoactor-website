@@ -62,12 +62,12 @@ tags: [protoactor, docs]
   - [gRPC Compression](grpc-compression.md) - How do I use gRPC compression for remote communication?
 - [Cluster of virtual actors / grains](cluster.md) - How do I build clusters of grains / virtual actors?
   - [Working with a cluster (.NET)](cluster/using-cluster-net.md)
+  - [Generating grains (.NET)](cluster/codegen-net.md)
   - [Cluster providers (.NET)](cluster/cluster-providers-net.md) - What different clustering options do I have?
     - [Kubernetes Provider](cluster/kubernetes-provider-net.md)  
     - [Consul Provider](cluster/consul-net.md)  
     - [AWS ECS Provider](cluster/aws-provider-net.md)  
     - [Seed Provider - Experimental](cluster/seed-provider-net.md)
-
   - [Identity lookup (.NET)](cluster/identity-lookup-net.md) - How does Proto.Actor know the location of a virtual actor?
   - [Gossip (.NET)](cluster/gossip.md) - How can I share state across cluster members?
   - [Virtual Actors (Go)](cluster/virtual-actors-go.md) - How do I create virtual actors and spawn them in the cluster?
