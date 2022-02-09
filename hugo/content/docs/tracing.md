@@ -37,7 +37,7 @@ We have covered the benefits of using an OpenTelemetry and its basic concept and
 
 ## Getting started with Proto.OpenTelemetry
 
-[Realtime map is using Proto.OpenTelemetry](https://github.com/asynkron/realtimemap-dotnet/blob/main/Backend/Program.cs#L19) and might be used as a working example.
+[Realtime map is using Proto.OpenTelemetry](https://github.com/asynkron/realtimemap-dotnet/blob/ccaa9099f5a6cae615feabd38c3cfcc08e791a6f/Backend/Program.cs#L19) and might be used as a working example.
 
 First thing that needs to be done is registration of [TracerProvider](https://opentelemetry.io/docs/reference/specification/trace/api/#tracerprovider). We can use extension placed in the package `OpenTelemetry.Extensions.Hosting`.
 This helps us to register `TracerProvider` with configured instance of `TracerProviderBuilder`. In this place we can put some common instrumentation that is applied to all Spans.
@@ -111,6 +111,7 @@ Example of distributed tracing root context setup might be found in [the realtim
 OpenTelemetry in itself does not provide a way to view the tracing logs. But it is compatible with many distributed tracing systems. They offer a user-friendly UI for viewing tracing logs.
 
 Let's take a look at how to view the tracing logs generated using OpenTelemetry in Jaeger.
+Jaeger image `jaegertracing/opentelemetry-all-in-one` has [built-in OpenTelemetry collector](https://www.jaegertracing.io/docs/1.18/opentelemetry/) so there is no need to setup OLTP exporter separately.
 
 ```yml
 version: '3.7'

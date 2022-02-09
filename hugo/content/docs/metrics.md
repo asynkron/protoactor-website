@@ -19,6 +19,8 @@ These systems allow us to create dashboards and display specific metrics over a 
 Proto.Actor is using metrics provided by [OpenTelemetry](https://opentelemetry.io/docs/reference/specification/metrics/). With simple Proto.Actor instrumentation from `Proto.OpenTelemetry`, it is possible to get insights how actor system is performing.
 Below it is possible to find more details regarding built in metrics.
 
+Small remark, when using Prometheus exporter directly in the application then the metric names get postfixed with unit name, e.g. histogram `protoactor_threadpool_latency_duration` is renamed to `protoactor_threadpool_latency_duration_seconds`.
+
 ### Proto.Actor Metrics
 
 | Name                                             | Type      | Labels                              |
@@ -58,7 +60,7 @@ Below it is possible to find more details regarding built in metrics.
 
 ## Getting started
 
-[Realtime map is using Proto.OpenTelemetry](https://github.com/asynkron/realtimemap-dotnet/blob/main/Backend/Program.cs#L20) and might be used as a working example.
+[Realtime map is using Proto.OpenTelemetry](https://github.com/asynkron/realtimemap-dotnet/blob/ccaa9099f5a6cae615feabd38c3cfcc08e791a6f/Backend/Program.cs#L20) and might be used as a working example.
 
 First what needs to be done is to register `MeterProvider` instance. It might be achieved with ready to use extension from `OpenTelemetry.Extensions.Hosting` nuget package.
 This extension is using builder pattern to properly configure `MeterProvider` with labels common for all metrics.
