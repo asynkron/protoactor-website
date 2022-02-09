@@ -60,12 +60,17 @@ Small remark, when using Prometheus exporter directly in the application then th
 
 ## Getting started
 
+### OpenTelemetry Exporter example
+
 [Realtime map is using Proto.OpenTelemetry](https://github.com/asynkron/realtimemap-dotnet/blob/ccaa9099f5a6cae615feabd38c3cfcc08e791a6f/Backend/Program.cs#L20) and might be used as a working example.
+It uses OpenTelemetry exporter and also shows [how to set it up locally](https://github.com/asynkron/realtimemap-dotnet/blob/ccaa9099f5a6cae615feabd38c3cfcc08e791a6f/devenv/docker-compose.yml#L36).
+
+### Prometheus Exporter example
 
 First what needs to be done is to register `MeterProvider` instance. It might be achieved with ready to use extension from `OpenTelemetry.Extensions.Hosting` nuget package.
 This extension is using builder pattern to properly configure `MeterProvider` with labels common for all metrics.
-It is also possible to setup OpenTelemetry Protocol exporter depending which backend is used. In order to reuse below example, `OpenTelemetry.Exporter.OpenTelemetryProtocol` nuget package is needed.
-It is suggested also to configure  `PeriodicExportingMetricReaderOptions` if it is needed to control how fast metrics are exported (default value is 60 seconds).
+Prometheus exporter built-in in the application is the easiest to setup and it will be shown as an example. It is needed to reference `OpenTelemetry.Exporter.Prometheus` nuget package and call `AddPrometheusExporter()` extension method.
+It adds `/metrics` endpoint from where Prometheus is able to scrape metrics. To make it work properly it is needed to call also `app.UseOpenTelemetryPrometheusScrapingEndpoint()` after building an application.
 
 `OpenTelemetry` metrics in C# implementation use [System.Diagnositcs.Metrics](https://docs.microsoft.com/en-us/dotnet/core/diagnostics/metrics-instrumentation).
 `AddProtoActorInstrumentation()` extension shown in the example is adding Proto.Actor meter name.
@@ -84,12 +89,7 @@ void ConfigureMetrics(WebApplicationBuilder builder) =>
                 .AddService(builder.Configuration["Service:Name"])
             )
             .AddProtoActorInstrumentation()
-            .AddOtlpExporter(opt =>
-            {
-                opt.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"]);
-                opt.PeriodicExportingMetricReaderOptions.ExportIntervalMilliseconds =
-                    builder.Configuration.GetValue<int>("Otlp:MetricsIntervalMilliseconds");
-            })
+            .AddPrometheusExporter()
     );
 
 ```
@@ -97,9 +97,8 @@ void ConfigureMetrics(WebApplicationBuilder builder) =>
 ## Using Prometheus and Grafana to store and visualize metrics
 
 Another example of Prometheus metrics setup might be found in [ActorMetrics example](https://github.com/asynkron/protoactor-dotnet/tree/dev/examples/ActorMetrics).
-This one doesn't use OpenTelemetry Exporter and the application has own [endpoint for Prometheus metrics](https://github.com/asynkron/protoactor-dotnet/blob/dev/examples/ActorMetrics/Startup.cs#L29).
 
-In this section, it will be presented how to run Prometheus and Grafana locally using Docker. In the setup showned above, it is also required to run [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) to be able to save metrics in Prometheus.
+In this section, it will be presented how to run Prometheus and Grafana locally using Docker.
 
 ```yml
 version: '3.7'
@@ -116,65 +115,28 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - 9090:9090
-      
-      
-  otel-collector:
-    image: otel/opentelemetry-collector
-    volumes:
-      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
-    command: ["--config=/etc/otel-collector-config.yaml"]
-    ports:
-      - 8889:8889
-      - 4317:4317
 ```
 
 prometheus.yml
 
 ```yml
 scrape_configs:
-- job_name: 'otel-collector'
+- job_name: 'your-application'
   scrape_interval: 10s
   static_configs:
-  - targets: ['otel-collector:8889']
-
-```
-
-otel-collector-config.yaml
-
-```yml
-receivers:
-  otlp:
-    protocols:
-      grpc:
-
-exporters:
-  prometheus:
-    endpoint: "0.0.0.0:8889"
-
-processors:
-  batch:
-
-service:
-  pipelines:
-    metrics:
-      receivers: [otlp]
-      processors: [batch]
-      exporters: [prometheus]
+  - targets: ['host.docker.internal:5000']
 
 ```
 
 A few words of exmplanation regarding docker-compose setup:
 
 * Grafana setup is bare minimum to run it, UI is available under `3000` port
-* Prometheus requires `prometheus.yml` config file to properly configure targets from where metrics are scraped.
-In this setup, file points only to OpenTelemetry Collector's prometheus endpoint. Prometheus is available under `9090` port.
-
-* OpenTelemetry Collector exposes two ports. Port `4317` is for grpc OTLP receiver. Applications that export metrics should use this port. Port `8889` is scrape endpoint for Prometheus. Prometheus is configured to use this port to get metrics.
-More information about OpenTelemetry Collector configuration might be found [here](https://opentelemetry.io/docs/collector/configuration/)
+* Prometheus is available under `9090` port. Prometheus requires `prometheus.yml` config file to properly configure targets from where metrics are scraped.
+In this setup, file points only to application's prometheus endpoint.
 
 After running this docker-compose and some application that exposes metrics, it is possible to create some dashboard in Grafana do visualize it.
 
 [ActorMetrics example](https://github.com/asynkron/protoactor-dotnet/tree/dev/examples/ActorMetrics) contains a
-[sample dashboard](https://github.com/asynkron/protoactor-dotnet/blob/dev/examples/ActorMetrics/grafana/dashboards/proto-actor-sample-dashboard.json) that shows how to create a visualisation of metrics.
+[sample dashboard](https://github.com/asynkron/protoactor-dotnet/blob/8edb25caf8213e1fe790402b0af1a3215ea04c0f/examples/ActorMetrics/grafana/dashboards/proto-actor-sample-dashboard.json#L1) that shows how to create a visualisation of metrics.
 
 ![sample dashboard](images/dashboard-overview.png)
