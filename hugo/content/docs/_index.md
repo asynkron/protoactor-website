@@ -83,7 +83,6 @@ tags: [protoactor, docs]
 
 - [Tracing](tracing.md)
 - [Metrics](metrics.md)
-  - [Using custom metrics](custom-metrics.md)
 - [Logging](logging.md)
 
 ## Extension models

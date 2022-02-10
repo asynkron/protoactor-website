@@ -1,5 +1,4 @@
 ---
-layout: docs.hbs
 title: Persistence of actor's state
 ---
 
@@ -102,4 +101,6 @@ After applying any change on actor's state, the second delegate is used and the 
 
 ## Persistence using events and snapshots
 
-If actor is using eventsourcing to maintain its state then it is possible to [Proto.Persistence module](persistence-proto-persistence.md) to make it easier.
+If actor is using eventsourcing to maintain its state then it is possible to use [Proto.Persistence module](persistence-proto-persistence.md) to make it easier.
+
+[Go to Proto.Persistence](persistence-proto-persistence.md)
