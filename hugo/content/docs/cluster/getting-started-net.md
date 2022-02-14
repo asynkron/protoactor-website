@@ -119,17 +119,31 @@ Now we can register it in our web app:
 builder.Services.AddActorSystem();
 ```
 
+It is also suggested to turn on Proto.Actor logging. It will help with resolving all the issues. To do that it is needed to resolve `ILoggerFactory` dependency in `Program.cs` and use it for Proto.Actor logging config.
+
+```csharp
+...
+
+var app = builder.Build();
+
+var loggerFactory = app.Services.GetRequiredService<ILoggerFactory>();
+Proto.Log.SetLoggerFactory(loggerFactory);
+
+...
+
+```
+
 Let's go through each configuration section one by one:
 
-**Actor System configuration**
+#### Actor System configuration
 
 This is a standard Proto.Actor configuration. It's out of the scope for this tutorial; if you want to learn more, you should check out the [Actors](../actors.md) section of Proto.Actor's documentation.
 
-**Remote configuration**
+#### Remote configuration
 
 Proto.Cluster uses Proto.Remote for transport, usually GRPC (Proto.Remote.GrpcNet). Again, its configuration is out of scope for this tutorial; if you want to learn more, you should check out the [Remote](../remote.md) section of Proto.Actor's documentation.
 
-**Cluster configuration**
+#### Cluster configuration
 
 This is where we configure Proto.Cluster. Let's explain its parameters:
 
@@ -675,6 +689,7 @@ Register this grain in the cluster by calling another `WithClusterKind` on `Clus
 `ActorSystemConfiguration.cs`:
 
 ```csharp
+...
 .WithClusterKind(
     kind: SmartHouseGrainActor.Kind,
     prop: Props.FromProducer(() =>
@@ -760,7 +775,7 @@ my-house: 2 smart bulbs are on
 
 ## Running a cluster with multiple members (nodes)
 
-To showcase how grains work in a distributed context, we're going to run two members of our example app.
+To showcase how grains work in a distributed context, we're going to run two members of our example app. Additionally, `SmartBulbSimulator` will be running as a separate application.
 
 To do that, we'll need a proper Cluster Provider. To recap, a Cluster Provider is an abstraction that provides information about currently available members in a cluster.
 In other words, it tells a cluster member what are the other members, thus allowing them to communicate with one another. You can read more about Cluster Providers [here](cluster-providers-net.md).
@@ -772,7 +787,98 @@ Let's also recap, how grains work. Each grain (i.e smart bulbs and a smart house
 
 ![Grain Locations](images/tutorial-grain-locations.png)
 
+### Smart Bulb Simulator as separate application
+
+To not complicate configuration of the cluster member application we will move `SmartBulbSimulator` into separate application. To to this let's create new console application project. We can call it `SmartBulbSimulatorApp`.
+After this we need to reference `ProtoClusterTutorial` project to be able to reuse `ActorSystem` setup. Of course, we will use also `SmartBulbSimulator` hosted service.
+The next step is to replace content of `Program.cs` with a given code:
+
+```csharp
+
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using ProtoClusterTutorial;
+
+using var host = Host.CreateDefaultBuilder(args)
+    .ConfigureServices((hostContext, services) =>
+    {
+        services.AddActorSystem();
+        services.AddHostedService<SmartBulbSimulator>();
+    })
+    .Build();
+
+var loggerFactory = host.Services.GetRequiredService<ILoggerFactory>();
+Proto.Log.SetLoggerFactory(loggerFactory);
+
+await host.RunAsync();
+
+```
+
+In this code we are doing `ActorSystem` registration and we are adding `SmartBulbSimulator` hosted service. The last thing that needs to be done is to start cluster client, similar as it is done for cluster member in the `ProtoClusterTutoral` app.
+Let's create a new class with name `ActorSystemClusterHostedService` and use the code from below:
+
+```csharp
+
+using Microsoft.Extensions.Hosting;
+using Proto;
+using Proto.Cluster;
+
+namespace SmartBulbSimulatorApp;
+
+public class ClusterClientHostedService : IHostedService
+{
+    private readonly ActorSystem _actorSystem;
+
+    public ClusterClientHostedService(ActorSystem actorSystem)
+    {
+        _actorSystem = actorSystem;
+    }
+
+    public async Task StartAsync(CancellationToken cancellationToken)
+    {
+        Console.WriteLine("Starting a cluster client");
+
+        await _actorSystem
+            .Cluster()
+            .StartClientAsync();
+    }
+
+    public async Task StopAsync(CancellationToken cancellationToken)
+    {
+        Console.WriteLine("Shutting down a cluster client");
+
+        await _actorSystem
+            .Cluster()
+            .ShutdownAsync();
+    }
+}
+
+```
+
+As you can see, the only difference between `ClusterClientHostedService` and `ActorSystemClusterHostedService` is the metod used on startup. The client uses `.StartClientAsync()` and member uses `.StartMemberAsync()`.
+
+Then we need to register this hosted service in `Program.cs`.
+
+```csharp
+...
+.ConfigureServices((hostContext, services) =>
+    {
+        services.AddActorSystem();
+        services.AddHostedService<ClusterClientHostedService>();
+        services.AddHostedService<SmartBulbSimulator>();
+    })
+...
+
+```
+
+`ClusterClientHostedService` needs to be added before `SmartBulbSimulator` because it requires to have cluster client already running.
+
+We need also to remove `SmartBulbSimulator` hosted service registration from the `ProtoClusterTutorial` `Program.cs` file since simulator is now independant application.
+
 ### Consul provider
+
+Now we can replace `TestProvider` with Consul provider.
 
 First, we'll need to run Consul:
 
@@ -781,7 +887,7 @@ First, we'll need to run Consul:
 
 Let's now configure the [Consul Provider](consul-net.md) in our example.
 
-Add `Proto.Cluster.Consul` NuGet package to the project.
+Add `Proto.Cluster.Consul` NuGet package to the `ProtoClusterTutorial` project.
 
 Change cluster member provider:
 
@@ -801,51 +907,11 @@ This will connect to Consul using a default port.
 
 For more information on how to configure Consul Provider, read [the Consul provider documentation page](consul-net.md).
 
-Run the app to check if everything works so far. The app should work as usual. Also, you should see some output from Consul.
-
-### Configuring the members
-
-Since we'll be running multiple members, we'll probably need them to be configured differently:
-
-1. We'll want to host them on different ports. Mind, that the API port (HTTP, hosted by ASP.NET Core) is different than the port used for communicating between cluster members (GRPC, hosted by Proto.Remote).
-2. We'll only want one of them to run the simulation (i.e. produce smart bulb events).
-
-Add the following lines to `appsettings.json`:
-
-```json
-"ProtoRemotePort": 5000,
-"RunSimulation": true,
-```
-
-Now let's configure the advertised host in Proto.Remote so other cluster members can reach one another.
-
-`ActorSystemConfiguration.cs`:
-
-```cs
-var remoteConfig = GrpcNetRemoteConfig
-    .BindToLocalhost(provider
-        .GetRequiredService<IConfiguration>()
-        .GetValue<int>("ProtoRemotePort")
-    )
-    // ...
-```
-
-Starting the simulator should be conditional:
-
-`Program.cs`:
-
-```cs
-if (builder.Configuration.GetValue<bool>("RunSimulation"))
-{
-    builder.Services.AddHostedService<SmartBulbSimulator>();
-}
-```
-
-Run the app again (a single member) to check if everything works so far. The app should work as usual.
+Run the `ProtoClusterTutorial` app to check if everything works so far. The app should not process any data since simulator is turned off.
 
 ### Running multiple members
 
-Now we're ready to run multiple members. Start a terminal and navigate to the project directory.
+Now we're ready to run multiple members. Start a terminal and navigate to the `ProtoClusterTutoral` project directory.
 
 First, make sure your app is up to date:
 
@@ -853,23 +919,37 @@ First, make sure your app is up to date:
 dotnet build
 ```
 
-Start the first member:
+Then we do the same for `SmartBulbSimulatorApp` project in the new terminal window:
 
 ```sh
-dotnet run --no-build --urls "http://localhost:5161" ProtoRemotePort=5000 RunSimulation=false
+dotnet build
+```
+
+Start the first member (in the first terminal):
+
+```sh
+dotnet run --no-build --urls "http://localhost:5161" 
 ```
 
 At this point, the app shouldn't do much now, as the simulator is turned off.
 
-Open a second terminal, start the second member (with the simulation on and with different ports):
+Open a third terminal with `ProtoClusterTutoral` project directory, start the second member.
 
 ```sh
-dotnet run --no-build --urls "http://localhost:5162" ProtoRemotePort=5001 RunSimulation=true
+dotnet run --no-build --urls "http://localhost:5162"
+```
+
+After this we could observe in logs that cluster topology has changed but still the application is not doing much since simulator is off.
+
+Back to the second terminal and run `SmartBulbSimulatorApp` app.
+
+```sh
+dotnet run --no-build
 ```
 
 When you look at the console output, grains should be distributed between two members.
 
-Sample output from the first terminal:
+Sample output from the first member terminal:
 
 ```txt
 living_room_2: created
@@ -885,7 +965,7 @@ bedroom: turning smart bulb on
 ...
 ```
 
-Sample output from the second terminal:
+Sample output from the second member terminal:
 
 ```txt
 living_room_1: created
@@ -914,6 +994,99 @@ my-house: 3 smart bulbs are on
 ```
 
 This is a good opportunity to perform an experiment: turn off the first member. You should see, that all the grains from the first member should be recreated on the second member.
+
+## Running application in Kubernetes
+
+For now, tutorial showed how to run multiple members locally using Consul.
+The same setup might be also suitable for some deployment cases, but since modern applications are more often deployed in Kubernetes it is better to select dedicated provider for it.
+
+[Kubernetes provider](cluster/kubernetes-provider-net.md) is another implementation of `IClusterProvider` interface, the same as [Consul provider](cluster/consul-net.md). For more information you can check [Cluster providers section](cluster/cluster-providers-net.md).
+
+### Changes in the application
+
+First thing that needs to be done is to reference `Proto.Cluster.Kubernetes` package where this implementation is provided.
+The next step is to replace Consul provider with Kubernetes provider in `ActorSystemConfiguration.cs`. To still have possibility to easily run the app locally, it is suggested to choose between Kubernetes and Test provider. It might be done based on configuration.
+
+```csharp
+
+...
+
+var clusterConfig = ClusterConfig
+    .Setup(
+        clusterName: "ProtoClusterTutorial",
+        clusterProvider: GetClusterProvider(configuration),
+        identityLookup: new PartitionIdentityLookup()
+    )
+...
+
+static IClusterProvider GetClusterProvider(IConfiguration config)
+{
+    return config["ProtoActor:ClusterProvider"] == "Kubernetes"
+                ? ConfigureForKubernetes(config)
+                : ConfigureForLocalhost();
+
+    IClusterProvider ConfigureForKubernetes(IConfiguration config) 
+        => new KubernetesProvider(new Kubernetes(KubernetesClientConfiguration.InClusterConfig()));
+
+    IClusterProvider ConfigureForLocalhost()
+        => new TestProvider(new TestProviderOptions(), new InMemAgent());
+    }
+
+```
+
+It is also needed to change how remote configuration is prepared. Depending if the application runs in Kubernetes or locally we use localhost address or we bind to all interfaces and use `ProtoActor:AdvertisedHost` host address passed in the configuration.
+
+``` csharp
+
+var remoteConfig = GetRemoteConfig(configuration)
+    .WithProtoMessages(EmptyReflection.Descriptor)
+    .WithProtoMessages(MessagesReflection.Descriptor);
+        
+...
+
+static GrpcNetRemoteConfig GetRemoteConfig(IConfiguration config)
+{
+    return config["ProtoActor:ClusterProvider"] == "Kubernetes"
+        ? ConfigureForKubernetes(config)
+        : ConfigureForLocalhost();
+
+    GrpcNetRemoteConfig ConfigureForKubernetes(IConfiguration config) 
+        => GrpcNetRemoteConfig.BindToAllInterfaces(advertisedHost: config["ProtoActor:AdvertisedHost"]);
+
+    GrpcNetRemoteConfig ConfigureForLocalhost()
+        => GrpcNetRemoteConfig.BindToLocalhost();
+}
+
+```
+
+To have `configuration` variable in `AddActorSystem` extension it is needed to change its signature.
+
+```csharp
+public static void AddActorSystem(this IServiceCollection serviceCollection, IConfiguration configuration)
+{
+    ...
+}
+```
+
+And usage in `Program.cs`.
+
+```csharp
+builder.Services.AddActorSystem(builder.Configuration);
+```
+
+It is also needed add new configuration values in `appsettings.json`.
+
+```json
+"ProtoActor": {
+    "ClusterProvider": "TestProvider",
+    "AdvertisedHost": ""
+  }
+
+```
+
+After these changes it should be still possible to run the application locally as single member with simulator.
+
+Simulator hosted service is the easiest 
 
 ## Conclusion
 
