@@ -856,7 +856,7 @@ public class ClusterClientHostedService : IHostedService
 
 ```
 
-As you can see, the only difference between `ClusterClientHostedService` and `ActorSystemClusterHostedService` is the metod used on startup. The client uses `.StartClientAsync()` and member uses `.StartMemberAsync()`.
+As you can see, the only difference between `ClusterClientHostedService` and `ActorSystemClusterHostedService` is the method used on startup. The client uses `.StartClientAsync()` and member uses `.StartMemberAsync()`.
 
 Then we need to register this hosted service in `Program.cs`.
 
@@ -1005,7 +1005,7 @@ The same setup might be also suitable for some deployment cases, but since moder
 ### Changes in the application
 
 First thing that needs to be done is to reference `Proto.Cluster.Kubernetes` package where this implementation is provided.
-The next step is to replace Consul provider with Kubernetes provider in `ActorSystemConfiguration.cs`. To still have possibility to easily run the app locally, it is suggested to choose between Kubernetes and Test provider. It might be done based on configuration.
+The next step is to replace Consul provider with Kubernetes provider in `ActorSystemConfiguration.cs`.
 
 ```csharp
 
@@ -1014,49 +1014,20 @@ The next step is to replace Consul provider with Kubernetes provider in `ActorSy
 var clusterConfig = ClusterConfig
     .Setup(
         clusterName: "ProtoClusterTutorial",
-        clusterProvider: GetClusterProvider(configuration),
+        clusterProvider: new KubernetesProvider(new Kubernetes(KubernetesClientConfiguration.InClusterConfig())),
         identityLookup: new PartitionIdentityLookup()
     )
-...
-
-static IClusterProvider GetClusterProvider(IConfiguration config)
-{
-    return config["ProtoActor:ClusterProvider"] == "Kubernetes"
-                ? ConfigureForKubernetes(config)
-                : ConfigureForLocalhost();
-
-    IClusterProvider ConfigureForKubernetes(IConfiguration config) 
-        => new KubernetesProvider(new Kubernetes(KubernetesClientConfiguration.InClusterConfig()));
-
-    IClusterProvider ConfigureForLocalhost()
-        => new TestProvider(new TestProviderOptions(), new InMemAgent());
-    }
 
 ```
 
-It is also needed to change how remote configuration is prepared. Depending if the application runs in Kubernetes or locally we use localhost address or we bind to all interfaces and use `ProtoActor:AdvertisedHost` host address passed in the configuration.
+It is also needed to change how remote configuration is prepared. We bind to all interfaces and use `ProtoActor:AdvertisedHost` host address passed in the configuration.
 
 ``` csharp
 
-var remoteConfig = GetRemoteConfig(configuration)
-    .WithProtoMessages(EmptyReflection.Descriptor)
-    .WithProtoMessages(MessagesReflection.Descriptor);
+var remoteConfig = GrpcNetRemoteConfig
+                    .BindToAllInterfaces(advertisedHost: configuration["ProtoActor:AdvertisedHost"])
+                    .WithProtoMessages(MessagesReflection.Descriptor);
         
-...
-
-static GrpcNetRemoteConfig GetRemoteConfig(IConfiguration config)
-{
-    return config["ProtoActor:ClusterProvider"] == "Kubernetes"
-        ? ConfigureForKubernetes(config)
-        : ConfigureForLocalhost();
-
-    GrpcNetRemoteConfig ConfigureForKubernetes(IConfiguration config) 
-        => GrpcNetRemoteConfig.BindToAllInterfaces(advertisedHost: config["ProtoActor:AdvertisedHost"]);
-
-    GrpcNetRemoteConfig ConfigureForLocalhost()
-        => GrpcNetRemoteConfig.BindToLocalhost();
-}
-
 ```
 
 To have `configuration` variable in `AddActorSystem` extension it is needed to change its signature.
@@ -1068,25 +1039,137 @@ public static void AddActorSystem(this IServiceCollection serviceCollection, ICo
 }
 ```
 
-And usage in `Program.cs`.
+And usage in `ProtoClusterTutorial` `Program.cs`.
 
 ```csharp
 builder.Services.AddActorSystem(builder.Configuration);
 ```
 
-It is also needed add new configuration values in `appsettings.json`.
+The same in the `SmartBulbSimulatorApp`
 
-```json
-"ProtoActor": {
-    "ClusterProvider": "TestProvider",
-    "AdvertisedHost": ""
-  }
+```csharp
+services.AddActorSystem(hostContext.Configuration);
+```
+
+At this step both applications should be ready to run in Kubernetes, but first we need to create conainter images.
+
+### Create docker images
+
+Add Dockerfile into `ProtoClusterTutorial` directory:
+
+```Dockerfile
+
+# Stage 1 - Build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS builder
+
+WORKDIR /app/src
+
+# Restore
+COPY *.csproj .
+
+RUN dotnet restore -r linux-x64
+
+# Build
+COPY . .
+
+RUN dotnet publish -c Release -o /app/publish -r linux-x64 --no-self-contained --no-restore
+
+# Stage 2 - Publish
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
+WORKDIR /app
+
+RUN addgroup --system --gid 101 app \
+    && adduser --system --ingroup app --uid 101 app
+
+
+COPY --from=builder --chown=app:app /app/publish .
+
+USER app
+    
+ENTRYPOINT ["./ProtoClusterTutorial"]
 
 ```
 
-After these changes it should be still possible to run the application locally as single member with simulator.
+After this you should be able to build docker image for the `ProtoClusterTutorial` app with tag:
 
-Simulator hosted service is the easiest 
+```sh
+
+docker build . -t proto-cluster-tutorial:1.0.0
+
+```
+
+You need to add Dockerfile in the `SmartBulbSimulatorApp` directory too:
+
+```Dockerfile
+
+# Stage 1 - Build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS builder
+
+WORKDIR /app/src
+
+# Restore
+COPY /ProtoClusterTutorial/*.csproj ./ProtoClusterTutorial/
+COPY /SmartBulbSimulatorApp/*.csproj ./SmartBulbSimulatorApp/
+
+
+RUN dotnet restore ./SmartBulbSimulatorApp/SmartBulbSimulatorApp.csproj -r linux-x64
+
+# Build
+COPY . .
+
+RUN dotnet publish ./SmartBulbSimulatorApp/SmartBulbSimulatorApp.csproj -c Release -o /app/publish -r linux-x64 --no-self-contained --no-restore
+
+# Stage 2 - Publish
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
+WORKDIR /app
+
+RUN addgroup --system --gid 101 app \
+    && adduser --system --ingroup app --uid 101 app
+
+
+COPY --from=builder --chown=app:app /app/publish .
+
+USER app
+ 
+ENTRYPOINT ["./SmartBulbSimulatorApp"]
+
+```
+
+`SmartBulbSimulatorApp` relies on `ProtoClusterTutorial` sources so you need to run it from the main directory and pass Dockerfile as argument.
+
+```sh
+
+ docker build -f SmartBulbSimulatorApp/Dockerfile . -t smart-bulb-simulator:1.0.0
+
+```
+
+So now we created images for both applications and they should be visible on the images list:
+
+```sh
+docker images
+```
+
+To continue next steps it is needed to have container registry where the images will be pushed. In our tutorial we will use Azure Container Registry. You can find instructions how to create it [here](https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-prepare-acr?tabs=azure-cli).
+
+Both images should be pushed to our container registry:
+
+```sh
+
+docker push proto-cluster-tutorial:1.0.0
+
+...
+
+docker push smart-bulb-simulator:1.0.0
+
+```
+
+Now both images are stored in the container registry and we can start application deployment.
+
+### Setting up Kubernetes cluster
+
+To continue next steps it is needed to have Kubernetes cluster running. In our tutorial we will use Azure Kubernetes Service. You can find instructions how to create it [here](https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-deploy-cluster?tabs=azure-cli).
+
+
 
 ## Conclusion
 
