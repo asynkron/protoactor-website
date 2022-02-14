@@ -24,19 +24,19 @@ Create an ASP.NET Core Web Application named `ProtoClusterTutorial`. For simplic
 
 We'll need the following NuGet packages:
 
-* `Proto.Actor`
-* `Proto.Remote`
-* `Proto.Remote.GrpcNet`
-* `Proto.Cluster`
-* `Proto.Cluster.CodeGen`
-* `Proto.Cluster.TestProvider`
-* `Grpc.Tools` - for compiling Protobuf messages
+- `Proto.Actor`
+- `Proto.Remote`
+- `Proto.Remote.GrpcNet`
+- `Proto.Cluster`
+- `Proto.Cluster.CodeGen`
+- `Proto.Cluster.TestProvider`
+- `Grpc.Tools` - for compiling Protobuf messages
 
 This tutorial was prepared using:
 
-* .NET 6
-* Proto.Actor 0.27.0 (all `Proto.*` packages share the same version number)
-* `Grpc.Tools` 2.43.0
+- .NET 6
+- Proto.Actor 0.27.0 (all `Proto.*` packages share the same version number)
+- `Grpc.Tools` 2.43.0
 
 ### Base web app
 
@@ -85,12 +85,12 @@ public static class ActorSystemConfiguration
 
             var actorSystemConfig = ActorSystemConfig
                 .Setup();
-            
+
             // remote configuration
-            
+
             var remoteConfig = GrpcNetRemoteConfig
                 .BindToLocalhost();
-            
+
             // cluster configuration
 
             var clusterConfig = ClusterConfig
@@ -99,7 +99,7 @@ public static class ActorSystemConfiguration
                     clusterProvider: new TestProvider(new TestProviderOptions(), new InMemAgent()),
                     identityLookup: new PartitionIdentityLookup()
                 );
-            
+
             // create the actor system
 
             return new ActorSystem(actorSystemConfig)
@@ -135,7 +135,7 @@ This is where we configure Proto.Cluster. Let's explain its parameters:
 
 1. `clusterName` - any name will do.
 1. `clusterProvider` - a Cluster Provider is an abstraction that provides information about currently available members (nodes) in a cluster. Since right now our cluster only has one member, it's ok to use a [Test Provider](test-provider-net.md).
-In the future, we will switch to other implementations, like [Consul Provider](consul-net.md) or [Kubernetes Provider](kubernetes-provider-net.md). You can read more about Cluster Providers [here](cluster-providers-net.md).
+   In the future, we will switch to other implementations, like [Consul Provider](consul-net.md) or [Kubernetes Provider](kubernetes-provider-net.md). You can read more about Cluster Providers [here](cluster-providers-net.md).
 1. `identityLookup` - an Identity Lookup is an abstraction that allows a cluster to locate grains. `PartitionIdentityLookup` is generally a good choice for most cases. You can read more about Identity Lookup [here](identity-lookup-net.md).
 
 ### Cluster object
@@ -189,7 +189,7 @@ public class ActorSystemClusterHostedService : IHostedService
     public async Task StartAsync(CancellationToken cancellationToken)
     {
         Console.WriteLine("Starting a cluster member");
-        
+
         await _actorSystem
             .Cluster()
             .StartMemberAsync();
@@ -198,7 +198,7 @@ public class ActorSystemClusterHostedService : IHostedService
     public async Task StopAsync(CancellationToken cancellationToken)
     {
         Console.WriteLine("Shutting down a cluster member");
-        
+
         await _actorSystem
             .Cluster()
             .ShutdownAsync();
@@ -257,7 +257,7 @@ Let's create two `.proto` files: one for grains, and the other for messages used
 
 `Grains.proto`:
 
-```proto
+```protobuf
 syntax = "proto3";
 
 option csharp_namespace = "ProtoClusterTutorial";
@@ -299,10 +299,10 @@ namespace ProtoClusterTutorial;
 public class SmartBulbGrain : SmartBulbGrainBase
 {
     private readonly ClusterIdentity _clusterIdentity;
-    
+
     private enum SmartBulbState { Unknown, On, Off }
     private SmartBulbState _state = SmartBulbState.Unknown;
-    
+
     public SmartBulbGrain(IContext context, ClusterIdentity clusterIdentity) : base(context)
     {
         _clusterIdentity = clusterIdentity;
@@ -315,7 +315,7 @@ public class SmartBulbGrain : SmartBulbGrainBase
         if (_state != SmartBulbState.On)
         {
             Console.WriteLine($"{_clusterIdentity.Identity}: turning smart bulb on");
-            
+
             _state = SmartBulbState.On;
         }
     }
@@ -325,7 +325,7 @@ public class SmartBulbGrain : SmartBulbGrainBase
         if (_state != SmartBulbState.Off)
         {
             Console.WriteLine($"{_clusterIdentity.Identity}: turning smart bulb off");
-            
+
             _state = SmartBulbState.Off;
         }
     }
@@ -337,7 +337,7 @@ public class SmartBulbGrain : SmartBulbGrainBase
 ### Registering a grain
 
 Remember, that grains are not explicitly activated, but only when they receive the first message. In other words, Proto.Cluster needs to know how to create new instances of your grains.
-More specifically, they need  be registered when configuring Cluster with a `WithClusterKind` method.
+More specifically, they need be registered when configuring Cluster with a `WithClusterKind` method.
 
 `ActorSystemConfiguration.cs`:
 
@@ -473,7 +473,7 @@ Let's say we want to get a smart bulb's state. For simplicity, let's create a `G
 
 `Messages.proto`:
 
-```proto
+```protobuf
 syntax = "proto3";
 
 option csharp_namespace = "ProtoClusterTutorial";
@@ -515,7 +515,7 @@ ad 1) We need to configure the `ProtoGrain` MSBuild task by adding `AdditionalIm
 
 ad 2) We need to add the following line to `Grains.proto`:
 
-```proto
+```protobuf
 import "Messages.proto";
 ```
 
@@ -541,7 +541,7 @@ Let's add a new method to our grain. It should look like this:
 
 `Grains.proto`:
 
-```proto
+```protobuf
 syntax = "proto3";
 
 option csharp_namespace = "ProtoClusterTutorial";
@@ -587,7 +587,7 @@ app.MapGet("/smart-bulbs/{identity}", async (ActorSystem actorSystem, string ide
 Run the app and try navigating to `/smart-bulbs/bedroom` in your browser. You should get results similar to the following:
 
 ```json
-{"state":"On"}
+{ "state": "On" }
 ```
 
 ### Side note: grain activation
@@ -595,7 +595,7 @@ Run the app and try navigating to `/smart-bulbs/bedroom` in your browser. You sh
 Let's use this moment to emphasise how grains work. Try navigating to: `/smart-bulbs/made-up-identity` or `/smart-bulbs/xyz123`. In both cases you should get:
 
 ```json
-{"state":"Unknown"}
+{ "state": "Unknown" }
 ```
 
 Proto.Custer will activate any grain you send a message to, even the ones you haven't anticipated. Sometimes this might require some additional handling, e.g. checking if a given identity is valid, is present in some sort of a database, etc.
@@ -612,7 +612,7 @@ Create a definition for a new grain:
 
 `Grains.proto`:
 
-```proto
+```protobuf
 service SmartHouseGrain {
   rpc SmartBulbStateChanged (SmartBulbStateChangedRequest) returns (google.protobuf.Empty);
 }
@@ -622,7 +622,7 @@ Define the `SmartBulbStateChangedRequest` message:
 
 `Messages.proto`:
 
-```proto
+```protobuf
 message SmartBulbStateChangedRequest {
   string smart_bulb_identity = 1;
   bool is_on = 2;
@@ -648,7 +648,7 @@ public class SmartHouseGrain : SmartHouseGrainBase
     public SmartHouseGrain(IContext context, ClusterIdentity clusterIdentity) : base(context)
     {
         _clusterIdentity = clusterIdentity;
-        
+
         Console.WriteLine($"{_clusterIdentity.Identity}: created");
     }
 
@@ -699,9 +699,9 @@ public override async Task TurnOn()
     if (_state != SmartBulbState.On)
     {
         Console.WriteLine($"{_clusterIdentity.Identity}: turning smart bulb on");
-        
+
         _state = SmartBulbState.On;
-        
+
         await NotifyHouse();
     }
 }
@@ -711,9 +711,9 @@ public override async Task TurnOff()
     if (_state != SmartBulbState.Off)
     {
         Console.WriteLine($"{_clusterIdentity.Identity}: turning smart bulb off");
-        
+
         _state = SmartBulbState.Off;
-        
+
         await NotifyHouse();
     }
 }
