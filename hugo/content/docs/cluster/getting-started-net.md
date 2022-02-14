@@ -79,7 +79,7 @@ public static class ActorSystemConfiguration
 {
     public static void AddActorSystem(this IServiceCollection serviceCollection)
     {
-        builder.Services.AddSingleton(provider =>
+        serviceCollection.AddSingleton(provider =>
         {
             // actor system configuration
 
