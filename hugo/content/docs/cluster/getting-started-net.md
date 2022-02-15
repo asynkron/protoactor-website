@@ -1173,11 +1173,11 @@ To continue next steps it is needed to have Kubernetes cluster running. In our t
 
 To simplify the deployment to Kubernetes we will use [Helm](https://helm.sh/). Ensure that you have installed it locally and `helm` command is available. You can check how to do it [here](https://helm.sh/docs/intro/quickstart/)
 
-Now we are going to prepare Helm chart that will help us with deployment. To not create everything by hand you can download `chart` [folder](TODO_ADD_LINK_TO_FOLDER) from tutorial's repository on Github.
+Now we are going to prepare Helm chart that will help us with deployment. To not create everything by hand you can download `chart-tutorial` [folder](TODO_ADD_LINK_TO_FOLDER) from tutorial's repository on Github.
 
 This chart contains definitions of given resources:
 
-* deployment - the most important part is setting `ProtoActor__AdvertisedHost` variable based on pod's IP
+- deployment - the most important part is setting `ProtoActor__AdvertisedHost` variable based on pod's IP
 
 ``` yml
 env:
@@ -1188,13 +1188,13 @@ env:
 
 ```
 
-* service - to make each member reachable by another members
+- service - to make each member reachable by another members
 
-* role - permissions needed for [Kubernetes cluster provider](kubernetes-provider-net.md)
+- role - permissions needed for [Kubernetes cluster provider](kubernetes-provider-net.md)
 
-* service account - [identity in Kubernetes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/) that will be used by pod (Kubernetes provider)
+- service account - [identity in Kubernetes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/) that will be used by pod (Kubernetes provider)
 
-* role binding - connection between role and service account
+- role binding - connection between role and service account
 
 To continue with deployment you should open `values.yaml` and replace `member.image.repository` with your image. The same with `member.image.tag`. Key `member.replicaCount` determines the number of running replicas. By default it it 2.
 
@@ -1231,9 +1231,29 @@ At this point these pods do nothing. Now it is needed to deploy simumaltor. We c
 To do this we will call helm install as before but we will override values saved in `values.yaml` file. So first let's copy `values.yaml` file and rename it to `simulator-values.yaml`.
 
 In the file we will change repository and tag to align with simulator image pushed to container registry. We also change `replicaCount` to 1 because we would like to have only single replica of the simulator.
+Then we open again terminal in chart's parent directory and deploy simulator. We are adding `--values` parameter override `values.yaml` stored in chart's folder.
 
+```sh
+PS C:\repo\proto\protoactor-grains-tutorial> helm install simulator chart-tutorial --values .\simulator-values.yaml
+NAME: simulator
+LAST DEPLOYED: Tue Feb 15 13:24:48 2022
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+```
 
+We can also see that the pod has been deployed and we can see one more pod:
 
+```sh
+PS C:\repo\proto\protoactor-grains-tutorial> kubectl get pods
+NAME                                     READY   STATUS    RESTARTS   AGE
+proto-cluster-tutorial-886c9b657-5hgxh   1/1     Running   0          98m
+proto-cluster-tutorial-886c9b657-vj8nj   1/1     Running   0          97m
+simulator-68d4c5c4df-zgxv2               1/1     Running   0          6m22s
+```
+
+We can look into pods logs to see that both pods started processing data. We can do the same experiment as we did for Consul provider and scale down number of replicas to 1 to see that actors are recreated on the node that is still alive.
 
 ## Conclusion
 
