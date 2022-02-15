@@ -785,7 +785,7 @@ To run a cluster with multiple members, we'll use a [Consul Provider](consul-net
 
 Let's also recap, how grains work. Each grain (i.e smart bulbs and a smart house) will live in one of the cluster members:
 
-![Grain Locations](images/tutorial-grain-locations.png)
+![Grain Locations](images/tutorial-grain-locations.jpg)
 
 ### Smart Bulb Simulator as separate application
 
@@ -1226,6 +1226,10 @@ NAME                                     READY   STATUS    RESTARTS   AGE
 proto-cluster-tutorial-886c9b657-5hgxh   1/1     Running   0          63m
 proto-cluster-tutorial-886c9b657-vj8nj   1/1     Running   0          63m
 ```
+
+If we will look closer to the created pods, we can see labels that were added by Kubernetes provider [here](https://github.com/asynkron/protoactor-dotnet/blob/dev/src/Proto.Cluster.Kubernetes/KubernetesProvider.cs#L114).
+
+![pod-labels](images/pod-labels.png)
 
 At this point these pods do nothing. Now it is needed to deploy simumaltor. We can reuse the same chart because simulator uses cluster client to send data to proto.actor cluster and requires similar permissions.
 To do this we will call helm install as before but we will override values saved in `values.yaml` file. So first let's copy `values.yaml` file and rename it to `simulator-values.yaml`.
