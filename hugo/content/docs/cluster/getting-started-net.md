@@ -1173,7 +1173,8 @@ To continue next steps it is needed to have Kubernetes cluster running. In our t
 
 To simplify the deployment to Kubernetes we will use [Helm](https://helm.sh/). Ensure that you have installed it locally and `helm` command is available. You can check how to do it [here](https://helm.sh/docs/intro/quickstart/)
 
-Now we are going to prepare Helm chart that will help us with deployment. To not create everything by hand you can download `chart-tutorial` [folder](TODO_ADD_LINK_TO_FOLDER) from tutorial's repository on Github.
+Now we are going to prepare Helm chart that will help us with deployment.
+To not create everything by hand you can download `chart-tutorial` [folder](https://github.com/asynkron/protoactor-grains-tutorial/tree/5351544702d4905948b45db97202dfb8290a2d25/chart-tutorial) from tutorial's repository on Github.
 
 This chart contains definitions of given resources:
 
