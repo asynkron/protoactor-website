@@ -85,3 +85,100 @@
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<style>
+  .mermaid {
+    background-color: #323f49;
+    border-radius: 4px;
+    padding: 10px;
+  }
+
+  div .mermaid .actor {
+    stroke: none !important;
+    fill: #007cb4 !important;
+  }
+  div .mermaid text.actor {
+    fill: #ffffff !important;
+    stroke: none !important;
+    font-family: Helvetica !important;
+    font-weight: bold !important;
+  }
+
+  div .mermaid text.actor > tspan {
+    fill: #ffffff !important;
+  }
+
+  div .mermaid line {
+    stroke-width: 3px !important;
+    stroke: #00ff00 !important;
+  }
+
+  div .mermaid .messageText {
+    fill: #ffffff !important;
+    stroke: none !important;
+  }
+
+  .actor-line {
+    stroke: grey;
+  }
+
+  div .mermaid .messageLine0 {
+    stroke-width: 1.5;
+    stroke-dasharray: "2 2" !important;
+    marker-end: "url(#arrowhead)";
+    stroke: #00ff00 !important;
+  }
+
+  .messageLine1 {
+    stroke-width: 1.5;
+    stroke-dasharray: "2 2";
+    stroke: #ffffff !important;
+  }
+
+  #arrowhead {
+    fill: black;
+  }
+
+  .messageText {
+    fill: black;
+    stroke: none;
+    font-family: "trebuchet ms", verdana, arial;
+    font-size: 14px;
+  }
+
+  div .mermaid .labelBox {
+    stroke: none !important;
+    fill: #00ff00 !important;
+  }
+
+  div .mermaid .labelText {
+    fill: black !important;
+    stroke: none !important;
+    font-family: "trebuchet ms", verdana, arial !important;
+  }
+
+  div .mermaid .loopText > tspan {
+    fill: #ffffff !important;
+    stroke: none !important;
+    font-family: "trebuchet ms", verdana, arial !important;
+  }
+
+  .loopLine {
+    stroke-width: 2;
+    stroke-dasharray: "2 2";
+    marker-end: "url(#arrowhead)";
+    stroke: #ccccff;
+  }
+
+  .note {
+    stroke: #decc93;
+    fill: #fff5ad;
+  }
+
+  .noteText {
+    fill: black;
+    stroke: none;
+    font-family: "trebuchet ms", verdana, arial;
+    font-size: 14px;
+  }
+</style>

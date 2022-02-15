@@ -1,14 +1,17 @@
 # Mermaid diagram tests
 
 <div class="mermaid">
-  graph TD;
-      DB[(Database)]
-      BlockchainActor-->BlockchainState
-      BlockchainActor-->BlockActor
-      BlockActor-->BlockState
-      BlockActor-->BlockVersionActor
-      BlockVersionActor-->BlockVersionState
-      BlockchainState-->DB
-      BlockState-->DB
-      BlockVersionState-->DB
+sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice->>John: Hello John, how are you?
+    loop Healthcheck
+        John->>John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts<br/>prevail...
+    John-->>Alice: Great!
+    John->>Bob: How about you?
+    Bob-->>John: Jolly good!
 </div>
+
+## test test
