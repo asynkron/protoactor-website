@@ -1055,6 +1055,8 @@ At this step both applications should be ready to run in Kubernetes, but first w
 
 ### Create docker images
 
+To continue next steps it is needed to have container registry where the images will be pushed. In our tutorial we will use Azure Container Registry. You can find instructions how to create it [here](https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-prepare-acr?tabs=azure-cli).
+
 Add Dockerfile into `ProtoClusterTutorial` directory:
 
 ```Dockerfile
@@ -1094,7 +1096,7 @@ After this you should be able to build docker image for the `ProtoClusterTutoria
 
 ```sh
 
-docker build . -t proto-cluster-tutorial:1.0.0
+docker build . -t YOUR_ACR_ADDRESS/proto-cluster-tutorial:1.0.0
 
 ```
 
@@ -1139,7 +1141,7 @@ ENTRYPOINT ["./SmartBulbSimulatorApp"]
 
 ```sh
 
- docker build -f SmartBulbSimulatorApp/Dockerfile . -t smart-bulb-simulator:1.0.0
+ docker build -f SmartBulbSimulatorApp/Dockerfile . -t YOUR_ACR_ADDRESS/smart-bulb-simulator:1.0.0
 
 ```
 
@@ -1149,25 +1151,87 @@ So now we created images for both applications and they should be visible on the
 docker images
 ```
 
-To continue next steps it is needed to have container registry where the images will be pushed. In our tutorial we will use Azure Container Registry. You can find instructions how to create it [here](https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-prepare-acr?tabs=azure-cli).
+Tip: If you encounter strange errors during building images then remove `obj` and `bin` directories. You can also consider adding `.dockerignore` file to skip them.
 
 Both images should be pushed to our container registry:
 
 ```sh
 
-docker push proto-cluster-tutorial:1.0.0
+docker push YOUR_ACR_ADDRESS/proto-cluster-tutorial:1.0.0
 
 ...
 
-docker push smart-bulb-simulator:1.0.0
+docker push YOUR_ACR_ADDRESS/smart-bulb-simulator:1.0.0
 
 ```
 
 Now both images are stored in the container registry and we can start application deployment.
 
-### Setting up Kubernetes cluster
+### Deployment to Kubernetes cluster
 
 To continue next steps it is needed to have Kubernetes cluster running. In our tutorial we will use Azure Kubernetes Service. You can find instructions how to create it [here](https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-deploy-cluster?tabs=azure-cli).
+
+To simplify the deployment to Kubernetes we will use [Helm](https://helm.sh/). Ensure that you have installed it locally and `helm` command is available. You can check how to do it [here](https://helm.sh/docs/intro/quickstart/)
+
+Now we are going to prepare Helm chart that will help us with deployment. To not create everything by hand you can download `chart` [folder](TODO_ADD_LINK_TO_FOLDER) from tutorial's repository on Github.
+
+This chart contains definitions of given resources:
+
+* deployment - the most important part is setting `ProtoActor__AdvertisedHost` variable based on pod's IP
+
+``` yml
+env:
+    - name: ProtoActor__AdvertisedHost
+    valueFrom:
+      fieldRef:
+        fieldPath: status.podIP
+
+```
+
+* service - to make each member reachable by another members
+
+* role - permissions needed for [Kubernetes cluster provider](kubernetes-provider-net.md)
+
+* service account - [identity in Kubernetes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/) that will be used by pod (Kubernetes provider)
+
+* role binding - connection between role and service account
+
+To continue with deployment you should open `values.yaml` and replace `member.image.repository` with your image. The same with `member.image.tag`. Key `member.replicaCount` determines the number of running replicas. By default it it 2.
+
+After this, you need to open terminal in a chart's folder parent directory. Then you need to run `helm install` to deploy your image.
+
+```sh
+helm install proto-cluster-tutorial chart-tutorial
+```
+
+Where `proto-cluster-tutorial` is the name of the release and `chart-tutorial` is the name of a folder where the chart is located.
+
+After this you should be able to see in the command line information that deployment is succeeded.
+
+```sh
+PS C:\repo\proto\protoTest> helm install proto-cluster-tutorial chart
+NAME: proto-cluster-tutorial
+LAST DEPLOYED: Tue Feb 15 11:29:48 2022
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+```
+
+You can also check that there are two running pods:
+
+```sh
+PS C:\repo\proto\protoTest> kubectl get pods
+NAME                                     READY   STATUS    RESTARTS   AGE
+proto-cluster-tutorial-886c9b657-5hgxh   1/1     Running   0          63m
+proto-cluster-tutorial-886c9b657-vj8nj   1/1     Running   0          63m
+```
+
+At this point these pods do nothing. Now it is needed to deploy simumaltor. We can reuse the same chart because simulator uses cluster client to send data to proto.actor cluster and requires similar permissions.
+To do this we will call helm install as before but we will override values saved in `values.yaml` file. So first let's copy `values.yaml` file and rename it to `simulator-values.yaml`.
+
+In the file we will change repository and tag to align with simulator image pushed to container registry. We also change `replicaCount` to 1 because we would like to have only single replica of the simulator.
+
 
 
 
