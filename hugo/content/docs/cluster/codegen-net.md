@@ -12,7 +12,6 @@ This approach:
 
 1. Reduces boilerplate code and lets you focus on functionality.
 
-
 ## Prerequisites
 
 To generate grains, you'll need the `Proto.Cluster.CodeGen` NuGet package:
@@ -20,7 +19,6 @@ To generate grains, you'll need the `Proto.Cluster.CodeGen` NuGet package:
 ```sh
 dotnet add package Proto.Cluster.CodeGen
 ```
-
 
 ## Generating a grain
 
@@ -30,7 +28,7 @@ Grains are defined and generated from `.proto` files, similarly to gRPC services
 
 `CounterGrain.proto`:
 
-```proto
+```protobuf
 syntax = "proto3";
 
 option csharp_namespace = "MyProject";
@@ -55,7 +53,6 @@ Code generation is performed by the `ProtoGrain` MSBuild task. It needs to be de
     <ProtoGrain Include="CounterGrain.proto" />
 </ItemGroup>
 ```
-
 
 ## Importing messages
 
@@ -83,7 +80,7 @@ Assuming there's a `CounterGrainMessages.proto` definition with a `CounterValue`
 
 `CounterGrain.proto`:
 
-```proto
+```protobuf
 syntax = "proto3";
 
 option csharp_namespace = "MyProject";
@@ -96,7 +93,6 @@ service CounterGrain {
   rpc GetCurrentValue (google.protobuf.Empty) returns (CounterValue);
 }
 ```
-
 
 ## Generated code
 
@@ -126,7 +122,6 @@ The generated `.cs` file includes:
 
 It would also generate `GetSmartBulbGrain` extension methods for `Cluster` and `IContext`.
 
-
 ## Implementing a grain
 
 To implement the actual grain logic, we need to implement generated `<grain>Base` abstract class.
@@ -144,7 +139,7 @@ namespace MyProject;
 public class CounterGrain : CounterGrainBase
 {
     private int _value = 0;
-    
+
     public CounterGrain(IContext context) : base(context)
     {
     }
@@ -166,7 +161,6 @@ public class CounterGrain : CounterGrainBase
 ```
 
 Mind, that `<grain>Base` abstract class looks like an actor, but it doesn't implement `IActor` interface. To use it, it must be wrapped in `<grain>Actor` class.
-
 
 ## Registering a grain
 
@@ -193,7 +187,6 @@ var clusterConfig = ClusterConfig
 {{< warning >}}
 It's highly recommended to use `<grain>Actor.Kind` constant instead of inline strings, as invalid grain kinds lead to difficult to find errors.
 {{</ warning >}}
-
 
 ## Sending messages to grains
 
@@ -227,7 +220,6 @@ The result will be `null` if a request timeouts, so this should always be checke
 
 Timeouts should be handled using cancellation tokens. It's recommended to use Proto.Actor's `CancellationTokens` utility for this purpose.
 
-
 ### Exception handling
 
 If a grain implementation throws an exception when handling a request:
@@ -235,7 +227,6 @@ If a grain implementation throws an exception when handling a request:
 1. A `GrainErrorResponse` will be sent as a response.
 
 1. `<grain>Client` will receive a `GrainErrorResponse` and throw an `Exception`.
-
 
 ## Context
 
@@ -247,11 +238,10 @@ In contrast to classical actors, context is not passed as a parameter, but avail
 public override Task Increment()
 {
     IContext context = Context;
-    
+
     // ...
 }
 ```
-
 
 ## Cluster identity
 
@@ -303,7 +293,7 @@ Grain implementation:
 public class CounterGrain : CounterGrainBase
 {
     private readonly ClusterIdentity _clusterIdentity;
-    
+
     public CounterGrain(IContext context, ClusterIdentity clusterIdentity) : base(context)
     {
         _clusterIdentity = clusterIdentity;
@@ -314,7 +304,6 @@ public class CounterGrain : CounterGrainBase
 {{< warning >}}
 Cluster identity should not be confused with actor's PID (`Context.Self`) or ID (`Context.Self.Id`).
 {{</ warning >}}
-
 
 ## Lifecycle hooks
 
@@ -348,7 +337,6 @@ public override Task OnStopped()
 
 You can read more about the actor lifecycle [here](../life-cycle.md).
 
-
 ## Receiving messages outside of grain's contract
 
 Sometimes there is a need to handle messages that are outside of grain's contract, i.e. are not defined in grain service in `.proto` file. This can be done via overriding `Task OnReceive()` method:
@@ -370,7 +358,6 @@ The use cases of such approach include, but are not limited to:
 1. Subscribing to the event stream, e.g. `Context.System.EventStream.Subscribe<SomeMessage>(Context.System.Root, Context.Self);`.
 
 1. Detecting inactive grains, see [receive timeout](../receive-timeout.md).
-
 
 ## Dependency injection
 
@@ -407,7 +394,7 @@ Grain implementation:
 public class CounterGrain : CounterGrainBase
 {
     private readonly INotificationSender _notificationSender;
-    
+
     public CounterGrain(IContext context, INotificationSender notificationSender) : base(context)
     {
         _notificationSender = notificationSender;
