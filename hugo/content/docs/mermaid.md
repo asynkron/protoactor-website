@@ -1,6 +1,6 @@
 # Mermaid diagram tests
 
-```mermaid
+<div class="mermaid">
   graph TD;
       DB[(Database)]
       BlockchainActor-->BlockchainState
@@ -11,4 +11,4 @@
       BlockchainState-->DB
       BlockState-->DB
       BlockVersionState-->DB
-```
+</div>
