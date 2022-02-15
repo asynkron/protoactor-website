@@ -109,7 +109,7 @@
   }
 
   div .mermaid line {
-    stroke-width: 3px !important;
+    stroke-width: 4px !important;
     stroke: #00ff00 !important;
   }
 
@@ -122,11 +122,24 @@
     stroke: grey;
   }
 
+  div .mermaid #arrowhead path {
+    stroke: #00ff00 !important;
+    fill: #00ff00 !important;
+  }
+
   div .mermaid .messageLine0 {
-    stroke-width: 1.5;
     stroke-dasharray: "2 2" !important;
     marker-end: "url(#arrowhead)";
+    stroke-width: 4px !important;
     stroke: #00ff00 !important;
+  }
+
+  div .mermaid .note {
+    fill: #ffbb00 !important;
+    stroke: none !important;
+  }
+  div .mermaid .noteText > tspan {
+    fill: #373635 !important;
   }
 
   .messageLine1 {
