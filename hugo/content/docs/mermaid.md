@@ -4,14 +4,30 @@
 sequenceDiagram
     participant Alice
     participant Bob
-    Alice->>John: Hello John, how are you?
+    Alice->>Jonathan: Hello Jonathan, how are you?
     loop Healthcheck
-        John->>John: Fight against hypochondria
+        Jonathan->>Jonathan: Fight against hypochondria
     end
-    Note right of John: Rational thoughts<br/>prevail...
-    John-->>Alice: Great!
-    John->>Bob: How about you?
-    Bob-->>John: Jolly good!
+    Note right of Jonathan: Rational thoughts<br/>prevail...
+    Jonathan-->>Alice: Great!
+    Jonathan->>Bob: How about you?
+    Bob-->>Jonathan: splendid!
 </div>
 
 ## test test
+
+<div class="mermaid">
+  graph TD;
+      DB[(Database)]
+      BlockchainActor((Blockchain Actor))
+      BlockActor((Block Actor))
+      BlockVersionActor((Block Version Actor))
+      BlockchainActor-->BlockchainState
+      BlockchainActor-->BlockActor      
+      BlockActor-->BlockState
+      BlockActor-->BlockVersionActor
+      BlockVersionActor-->BlockVersionState
+      BlockchainState-->DB
+      BlockState-->DB
+      BlockVersionState-->DB
+</div>
