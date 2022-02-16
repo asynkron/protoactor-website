@@ -1,6 +1,6 @@
 # Mermaid diagram tests
 
-<div class="mermaid">
+```mermaid
 sequenceDiagram
     participant Alice
     participant Bob
@@ -12,22 +12,22 @@ sequenceDiagram
     Jonathan-->>Alice: Great!
     Jonathan->>Bob: How about you?
     Bob-->>Jonathan: splendid!
-</div>
+```
 
 ## test test
 
-<div class="mermaid">
+```mermaid
   graph TD;
       DB[(Database)]
       BlockchainActor((Blockchain Actor))
       BlockActor((Block Actor))
       BlockVersionActor((Block Version Actor))
       BlockchainActor-->BlockchainState
-      BlockchainActor-->BlockActor      
+      BlockchainActor-->BlockActor
       BlockActor-->BlockState
       BlockActor-->BlockVersionActor
       BlockVersionActor-->BlockVersionState
       BlockchainState-->DB
       BlockState-->DB
       BlockVersionState-->DB
-</div>
+```

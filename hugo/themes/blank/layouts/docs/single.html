@@ -16,7 +16,8 @@
                                 {{ $content := .Content }}
                                 {{ $content = replace $content "<table" "<table class='table bg-white'" }}
                                 {{ $content = replace $content "<blockquote" "<blockquote class='blockquote my-4 my-md-5'" }}
-								
+								{{ $content = replace $content "language-mermaid" "mermaid" }}
+                                
 								{{ safeHTML $content}}
 								
                             </div>
