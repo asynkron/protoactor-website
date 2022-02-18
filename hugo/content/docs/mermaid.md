@@ -30,6 +30,7 @@ sequenceDiagram
       BlockchainState-->DB
       BlockState-->DB
       BlockVersionState-.->DB
+      BlockVersionState-.->BlockState
 ```
 
 ```mermaid

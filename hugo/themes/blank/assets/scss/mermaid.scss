@@ -1,52 +1,66 @@
+$line-color: #00ff00 !important;
+$actor-color: #007cb4 !important;
+$text-color: #ffffff !important;
+$font-style: "trebuchet ms", verdana, arial !important;
 div {
   .mermaid {
     display: block;
     background-color: #323f49;
     border-radius: 4px;
     padding: 10px;
-    color: #ffffff !important;
+    color: $text-color;
 
     marker {
-      stroke: #00ff00 !important;
-      fill: #00ff00 !important;
+      stroke: $line-color;
+      fill: $line-color;
+    }
+
+    .cluster rect {
+      fill: #00b3f6 !important;
+      stroke: none !important;
     }
 
     .label-container {
       stroke: none !important;
-      fill: #007cb4 !important;
+      fill: $actor-color;
     }
 
     .label {
-      color: #ffffff !important;
+      color: $text-color;
       font-family: Helvetica !important;
     }
 
     .path {
       stroke-width: 4px !important;
-      stroke: #00ff00 !important;
+      stroke: $line-color;
     }
     .actor {
       stroke: none !important;
-      fill: #007cb4 !important;
+      fill: $actor-color;
     }
     text.actor {
-      fill: #ffffff !important;
+      fill: $text-color;
       stroke: none !important;
       font-family: Helvetica !important;
       font-weight: bold !important;
     }
 
     text.actor > tspan {
-      fill: #ffffff !important;
+      fill: $text-color;
     }
 
     line {
       stroke-width: 4px !important;
-      stroke: #00ff00 !important;
+      stroke: $line-color;
+    }
+
+    .arrowheadPath {
+      fill: $line-color;
+      stroke: none !important;
     }
 
     .messageText {
-      fill: #ffffff !important;
+      fill: $text-color;
       stroke: none !important;
     }
 
@@ -55,15 +69,21 @@ div {
     }
 
     #arrowhead path {
-      stroke: #00ff00 !important;
-      fill: #00ff00 !important;
+      stroke: $line-color;
+      fill: $line-color;
     }
 
     .messageLine0 {
       stroke-dasharray: "2 2" !important;
       marker-end: "url(#arrowhead)";
       stroke-width: 4px !important;
-      stroke: #00ff00 !important;
+      stroke: $line-color;
+    }
+
+    .messageLine1 {
+      stroke-width: 1.5;
+      stroke-dasharray: "2 2";
+      stroke: $line-color;
     }
 
     .note {
@@ -74,34 +94,28 @@ div {
       fill: #373635 !important;
     }
 
-    .messageLine1 {
-      stroke-width: 1.5;
-      stroke-dasharray: "2 2";
-      stroke: #ffffff !important;
-    }
-
     .messageText {
       fill: black;
       stroke: none;
-      font-family: "trebuchet ms", verdana, arial;
+      font-family: $font-style;
       font-size: 14px;
     }
 
     .labelBox {
       stroke: none !important;
-      fill: #00ff00 !important;
+      fill: $line-color;
     }
 
     .labelText {
       fill: black !important;
       stroke: none !important;
-      font-family: "trebuchet ms", verdana, arial !important;
+      font-family: $font-style;
     }
 
     .loopText > tspan {
-      fill: #ffffff !important;
+      fill: $text-color;
       stroke: none !important;
-      font-family: "trebuchet ms", verdana, arial !important;
+      font-family: $font-style;
     }
   }
 }
