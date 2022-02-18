@@ -1,0 +1,107 @@
+div {
+  .mermaid {
+    display: block;
+    background-color: #323f49;
+    border-radius: 4px;
+    padding: 10px;
+    color: #ffffff !important;
+
+    marker {
+      stroke: #00ff00 !important;
+      fill: #00ff00 !important;
+    }
+
+    .label-container {
+      stroke: none !important;
+      fill: #007cb4 !important;
+    }
+
+    .label {
+      color: #ffffff !important;
+      font-family: Helvetica !important;
+    }
+
+    .path {
+      stroke-width: 4px !important;
+      stroke: #00ff00 !important;
+    }
+    .actor {
+      stroke: none !important;
+      fill: #007cb4 !important;
+    }
+    text.actor {
+      fill: #ffffff !important;
+      stroke: none !important;
+      font-family: Helvetica !important;
+      font-weight: bold !important;
+    }
+
+    text.actor > tspan {
+      fill: #ffffff !important;
+    }
+
+    line {
+      stroke-width: 4px !important;
+      stroke: #00ff00 !important;
+    }
+
+    .messageText {
+      fill: #ffffff !important;
+      stroke: none !important;
+    }
+
+    .actor-line {
+      stroke: grey;
+    }
+
+    #arrowhead path {
+      stroke: #00ff00 !important;
+      fill: #00ff00 !important;
+    }
+
+    .messageLine0 {
+      stroke-dasharray: "2 2" !important;
+      marker-end: "url(#arrowhead)";
+      stroke-width: 4px !important;
+      stroke: #00ff00 !important;
+    }
+
+    .note {
+      fill: #ffbb00 !important;
+      stroke: none !important;
+    }
+    .noteText > tspan {
+      fill: #373635 !important;
+    }
+
+    .messageLine1 {
+      stroke-width: 1.5;
+      stroke-dasharray: "2 2";
+      stroke: #ffffff !important;
+    }
+
+    .messageText {
+      fill: black;
+      stroke: none;
+      font-family: "trebuchet ms", verdana, arial;
+      font-size: 14px;
+    }
+
+    .labelBox {
+      stroke: none !important;
+      fill: #00ff00 !important;
+    }
+
+    .labelText {
+      fill: black !important;
+      stroke: none !important;
+      font-family: "trebuchet ms", verdana, arial !important;
+    }
+
+    .loopText > tspan {
+      fill: #ffffff !important;
+      stroke: none !important;
+      font-family: "trebuchet ms", verdana, arial !important;
+    }
+  }
+}

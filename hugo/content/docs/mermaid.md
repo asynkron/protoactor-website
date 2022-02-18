@@ -19,9 +19,9 @@ sequenceDiagram
 ```mermaid
   graph TD;
       DB[(Database)]
-      BlockchainActor((Blockchain Actor))
-      BlockActor((Block Actor))
-      BlockVersionActor((Block Version Actor))
+      BlockchainActor((Blockchain<br/>Actor))
+      BlockActor((Block<br/>Actor))
+      BlockVersionActor((Block<br/>Version<br/>Actor))
       BlockchainActor-->BlockchainState
       BlockchainActor-->BlockActor
       BlockActor-->BlockState
@@ -29,5 +29,28 @@ sequenceDiagram
       BlockVersionActor-->BlockVersionState
       BlockchainState-->DB
       BlockState-->DB
-      BlockVersionState-->DB
+      BlockVersionState-.->DB
+```
+
+```mermaid
+graph TB
+    a1((a1))
+    a2((a2))
+    b1((b1))
+    b2((b2))
+    c1((c1))
+    c2((c2))
+
+    subgraph Member 1
+        a1
+        a2
+    end
+    subgraph Member 2
+        b1
+        b2
+    end
+    subgraph Member 3
+        c1
+        c2
+    end
 ```
