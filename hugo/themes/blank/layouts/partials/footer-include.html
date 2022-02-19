@@ -39,6 +39,12 @@
   const fontFamily = "'trebuchet ms', verdana, arial !important";
   const backgroundColor = "#323f49 !important";
 
+  const blueColor = "#007cb4 !important";
+  const greenColor = "#00CC66 !important";
+  const yellowColor = "#FFBF34 !important";
+  const redColor = "#C34423 !important";
+  const lightBluecolor = "#00ADF8 !important";
+
   mermaid.initialize({
     startOnLoad: true,
     theme: "default",
@@ -59,8 +65,40 @@
         display: none;
       }
 
+      [class*='LS-empty']  {
+        display:none;
+      }
+
+      [class*='LE-empty']  {
+        display:none;
+      }
+
       [id^="flowchart-DB"] .label-container {
-        fill: #ffbb00 !important;
+        fill: ${yellowColor}
+        stroke: ${backgroundColor};
+        stroke-width: 2px !important;
+      }
+
+      [id^="flowchart-Pid"] .label-container {
+        fill: ${greenColor};
+        stroke: ${backgroundColor};
+        stroke-width: 2px !important;
+      }
+
+      [id^="flowchart-Grain"] .label-container {
+        fill:  ${blueColor};
+        stroke: ${backgroundColor};
+        stroke-width: 2px !important;
+      }
+
+      [id^="flowchart-ClusterIdentity"] .label-container {
+        fill:  ${greenColor};
+        stroke: ${backgroundColor};
+        stroke-width: 2px !important;
+      }
+
+      [id^="flowchart-Client"] .label-container {
+        fill: ${yellowColor};
         stroke: ${backgroundColor};
         stroke-width: 2px !important;
       }
@@ -166,8 +204,6 @@
       stroke: none !important;
       font-family: ${fontFamily}
     }
-
-
 
      `,
     fontFamily: fontFamily,

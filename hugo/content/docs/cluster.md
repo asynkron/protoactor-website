@@ -11,7 +11,6 @@ tags: [protoactor, docs]
 
 <small>[Homage to Proto.Actors Swedish roots, Swedish midsummer ring dance - Connected Cluster Actors]</small>
 
-
 ## Virtual Actors, aka. Grains
 
 Proto.Cluster leverages the _"Virtual Actor Model"_, which was pioneered by Microsoft Orleans.
@@ -36,19 +35,17 @@ They are spawned _somewhere_ in your cluster, and their lifecycle is managed by 
 This means that you as a developer, don't have to care or know if the actor already exists or where it exists.
 You address it using its kind and identity and the cluster does the rest for you.
 
-
 ## Grains vs actors
 
 Let's break down how grains differ from actors:
 
-* **They are referenced by cluster identities, not PIDs**. A cluster identity uniquely identifies a grain. It consists of a _kind_ and an _identity_. Some examples: `vehicle/JB007`, `vehicle/ECTO1`, `user/1`, `user/2`. Think of it as a _proxy_ to a grain.
+- **They are referenced by cluster identities, not PIDs**. A cluster identity uniquely identifies a grain. It consists of a _kind_ and an _identity_. Some examples: `vehicle/JB007`, `vehicle/ECTO1`, `user/1`, `user/2`. Think of it as a _proxy_ to a grain.
 
-* **They don't need to be manually spawned.** As a client, you never explicitly spawn grains - you kind of assume they're already there. Send a request to a cluster identity and it'll find its way to a grain. If a grain doesn't exist yet, it'll be spawned on the go. During the lifetime of your application, a single grain can be started and stopped multiple times. Most of the time, you don't need to care about that - you just use a cluster identity and everything else is taken care of by the cluster.
+- **They don't need to be manually spawned.** As a client, you never explicitly spawn grains - you kind of assume they're already there. Send a request to a cluster identity and it'll find its way to a grain. If a grain doesn't exist yet, it'll be spawned on the go. During the lifetime of your application, a single grain can be started and stopped multiple times. Most of the time, you don't need to care about that - you just use a cluster identity and everything else is taken care of by the cluster.
 
-* **Their location is transparent**. As a client, you never explicitly declare on which cluster member a grain should be spawned. Also, at different points in time, the same grain might be hosted on different cluster members. Again - you just use a cluster identity and a request finds its way to a grain.
+- **Their location is transparent**. As a client, you never explicitly declare on which cluster member a grain should be spawned. Also, at different points in time, the same grain might be hosted on different cluster members. Again - you just use a cluster identity and a request finds its way to a grain.
 
-* **Communication with grains should always be request/response**. For grains to work properly, they must almost always respond to the messages they receive.
-
+- **Communication with grains should always be request/response**. For grains to work properly, they must almost always respond to the messages they receive.
 
 ## Grain lifecycle
 
@@ -60,7 +57,27 @@ Let's consider the following example:
 
 When a cluster starts, the grain `user/123` is not spawned anywhere. Nothing is stopping us from sending requests to it, though:
 
-![no actor yet](cluster/images/grains-introduction-no-actor.png)
+```mermaid
+graph BT;
+    ClusterIdentity(ClusterIdentity <br/> user/123)
+    subgraph "Member 1 your-app.com:5001"
+        empty1
+    end
+    subgraph "Member 2 your-app.com:5002"
+        empty2
+    end
+    subgraph "Member 3 your-app.com:5003"
+        empty3
+    end
+
+
+Client --> ClusterIdentity
+ClusterIdentity --> empty4
+empty4 --> empty1
+empty4 --> empty2
+empty4 --> empty3
+
+```
 
 Since we've just sent the first request to it, the cluster spawns a grain on one of the cluster members, in this case, `Member 2`, which is hosted on `your-app.com:5002`.
 
@@ -72,18 +89,42 @@ From now on, when you send a request to this grain, its cluster identity (`user/
 
 ![actor spawned](cluster/images/grains-introduction-actor-is-created.png)
 
+```mermaid
+graph BT;
+    ClusterIdentity(ClusterIdentity <br/> user/123)
+    Pid(Pid <br/> your-app.com:5002/partition-activator/123$5463)
+    Grain{{Some Grain}}
+
+    subgraph "Member 1 your-app.com:5001"
+        empty1
+    end
+    subgraph "Member 2 your-app.com:5002"
+        Grain
+    end
+    subgraph "Member 3 your-app.com:5003"
+        empty3
+    end
+
+
+Client --> ClusterIdentity
+ClusterIdentity --> Pid
+Pid --> Grain
+Pid --> empty1
+Pid --> empty3
+
+```
+
 The topology of the cluster may change over time. Let's say `Member 2` goes down. In this case, sooner or later (depending on the cluster's configuration) that grain will be respawned on a different node as a different actor (with a new PID, e.g. `your-app.com:5001/partition-activator/123$4235`). Again, this is transparent to the client.
 
 ![actor spawned](cluster/images/grains-introduction-member-down.png)
 
 To recap:
 
-* At first, the grain wasn't spawned anywhere.
-* Then it was spawned as an actor on Member 2.
-* When Member 2 went down, it was spawned on Member 1 as a different actor.
+- At first, the grain wasn't spawned anywhere.
+- Then it was spawned as an actor on Member 2.
+- When Member 2 went down, it was spawned on Member 1 as a different actor.
 
 In none of the above situations, we had to care about its state, location, or even existence. Under the hood, Proto.Cluster took care of that details. This is the reason, why grains are sometimes called _virtual_ actors.
-
 
 ## Cluster Identity
 
@@ -100,8 +141,7 @@ Here are some examples of cluster identities:
 1. `vehicle/JB007`, `vehicle/ECTO1`
 1. `airport/ATL`, `airport/AMS`
 1. `user/1`, `user/2`
-2. `temperatureSensor/ff7e1600-ecdd-4150-80d3-17dd1074bcc0`
-
+1. `temperatureSensor/ff7e1600-ecdd-4150-80d3-17dd1074bcc0`
 
 ## Getting started
 
@@ -109,22 +149,21 @@ If you're new to the concept of virtual actors / grains, it's highly recommended
 
 [Getting Started With Grains / Virtual Actors (.NET)](cluster/getting-started-net.md)
 
-
 ## Proto.Cluster components
 
 Proto.Cluster consists of a few main components that come together and provide virtual actor cluster functionality.
 
-* Cluster Kind - wrapper over [Props](props.md) that instructs the cluster how to create actors
+- Cluster Kind - wrapper over [Props](props.md) that instructs the cluster how to create actors
 
-* Remote Configuration - describes how to reach member in the cluster network and how to serialize messages, more details might be found [here](remote.md)
+- Remote Configuration - describes how to reach member in the cluster network and how to serialize messages, more details might be found [here](remote.md)
 
-* Cluster provider - abstraction that provides with information about available members in the cluster, more details might be found [here](cluster/cluster-providers-net.md)
+- Cluster provider - abstraction that provides with information about available members in the cluster, more details might be found [here](cluster/cluster-providers-net.md)
 
-* Gossip - the way how members shares information about each member's state, more details might be found [here](cluster/gossip.md)
+- Gossip - the way how members shares information about each member's state, more details might be found [here](cluster/gossip.md)
 
-* Actor Cache - set of recently used actor references cached in member's memory to speed up access to it
+- Actor Cache - set of recently used actor references cached in member's memory to speed up access to it
 
-* Identity Lookup - component that is responsible for placing actor on specified member, more details might be found [here](cluster/identity-lookup-net.md)
+- Identity Lookup - component that is responsible for placing actor on specified member, more details might be found [here](cluster/identity-lookup-net.md)
 
 Components join together to provide more advanced functionalities that are essential for the cluster to work correctly.
 
