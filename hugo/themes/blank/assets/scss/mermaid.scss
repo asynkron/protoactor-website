@@ -20,18 +20,18 @@ div {
     .label-container {
       stroke: none !important;
       fill: $actor-color;
-      stroke: $background-color;
-      stroke-width: 2px !important;
     }
 
-    g[id^="DB"] .label-container {
-      fill: #ffbb00 !important;
-      stroke: $background-color;
-      stroke-width: 2px !important;
+    [id^="flowchart-DB"] {
+      .label-container {
+        fill: #ffbb00 !important;
+        stroke: $background-color;
+        stroke-width: 2px !important;
+      }
     }
 
     .cluster rect {
-      fill: #00b3f6a0 !important;
+      fill: #00b3f6 !important;
       stroke: none !important;
     }
 
