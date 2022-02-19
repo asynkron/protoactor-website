@@ -38,6 +38,12 @@ graph TB
         d1
         d2
     end
+
+    a1-->a2
+    b1-->b2
+    c1-->c2
+    d1-->d2
+    linkStyle default display:none;
 ```
 
 **Use-case:** e.g. Players, monsters, user accounts .
