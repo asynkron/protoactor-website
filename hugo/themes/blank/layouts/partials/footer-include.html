@@ -43,23 +43,37 @@
   const yellowColor = "#FFBF34";
   const redColor = "#C34423";
   const lightBluecolor = "#00ADF8";
-  const lineWidth = "2px";
+  const lineWidth = "3px";
   var css = `
 
-  $prefix .red {
-    fill: ${redColor}
+  $prefix .red .label-container{
+    fill: ${redColor};
+    stroke: ${backgroundColor};
+    stroke-width: ${lineWidth};
   }
 
-  $prefix .green {
-    fill: ${greenColor}
+  $prefix .yellow .label-container{
+    fill: ${yellowColor};
+    stroke: ${backgroundColor};
+    stroke-width: ${lineWidth};
   }
 
-  $prefix .blue {
-    fill: ${blueColor}
+  $prefix .green .label-container{
+    fill: ${greenColor};
+    stroke: ${backgroundColor};
+    stroke-width: ${lineWidth};
   }
 
-  $prefix .light-blue {
-    fill: ${lightBluecolor}
+  $prefix .blue .label-container{
+    fill: ${blueColor};
+    stroke: ${backgroundColor};
+    stroke-width: ${lineWidth};
+  }
+
+  $prefix .light-blue .label-container {
+    fill: ${lightBluecolor};
+    stroke: ${backgroundColor};
+    stroke-width: ${lineWidth};
   }
 
   $prefix .edgePath marker {
@@ -82,37 +96,6 @@
 
   $prefix [class*='LE-empty']  {
     display:none;
-  }
-
-  
-  $prefix [id^="flowchart-DB"] .label-container {
-    fill: ${yellowColor}
-    stroke: ${backgroundColor};
-    stroke-width: ${lineWidth};
-  }
-
-  $prefix [id^="flowchart-Pid"] .label-container {
-    fill: ${greenColor};
-    stroke: ${backgroundColor};
-    stroke-width: ${lineWidth};
-  }
-
-  $prefix [id^="flowchart-Grain"] .label-container {
-    fill:  ${blueColor};
-    stroke: ${backgroundColor};
-    stroke-width: ${lineWidth};
-  }
-
-  $prefix [id^="flowchart-ClusterIdentity"] .label-container {
-    fill:  ${greenColor};
-    stroke: ${backgroundColor};
-    stroke-width: ${lineWidth};
-  }
-
-  $prefix [id^="flowchart-Client"] .label-container {
-    fill: ${yellowColor};
-    stroke: ${backgroundColor};
-    stroke-width: ${lineWidth};
   }
 
   $prefix .cluster rect {

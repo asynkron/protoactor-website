@@ -62,8 +62,13 @@ graph BT;
     empty1(XXXXXXXXXXXXXXXXXXX)
     empty2(XXXXXXXXXXXXXXXXXXX)
     empty3(XXXXXXXXXXXXXXXXXXX)
-
     ClusterIdentity(ClusterIdentity <br/> user/123)
+    Client[Client]
+    class Pid green
+    class ClusterIdentity green
+    class Client yellow
+    class Grain blue
+
     subgraph Member1[Member1 - your-app.com:5001]
         empty1
     end
@@ -96,10 +101,14 @@ graph BT;
     empty1(XXXXXXXXXXXXXXXXXXX)
     empty2(XXXXXXXXXXXXXXXXXXX)
     empty3(XXXXXXXXXXXXXXXXXXX)
-
     ClusterIdentity(ClusterIdentity <br/> user/123)
     Pid(Pid <br/> your-app.com:5002/partition-activator/123$31183)
     Grain{{Some Grain}}
+    Client[Client]
+    class Pid green
+    class ClusterIdentity green
+    class Client yellow
+    class Grain blue
 
     subgraph Member1[Member1 - your-app.com:5001]
         empty1
@@ -127,19 +136,20 @@ graph BT;
     empty1(XXXXXXXXXXXXXXXXXXX)
     empty2(XXXXXXXXXXXXXXXXXXX)
     empty3(XXXXXXXXXXXXXXXXXXX)
-
-
     ClusterIdentity(ClusterIdentity <br/> user/123)
     Pid(Pid <br/> your-app.com:5001/partition-activator/123$4235)
     Grain{{Some Grain}}
+    Client[Client]
+    class Pid green
+    class ClusterIdentity green
+    class Client yellow
+    class Grain blue
 
     subgraph Member1[Member1 - your-app.com:5001]
         Grain
     end
     subgraph Member2[Member2 - your-app.com:5002]
-        style Member2 fill:#f9f,stroke:#333,stroke-width:4px
-        classDef red fill:#FF0000;
-        class Member2 red
+        style Member2 fill:#ff3040
         empty2
     end
     subgraph Member3[Member3 - your-app.com:5003]

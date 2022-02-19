@@ -19,6 +19,7 @@ sequenceDiagram
 ```mermaid
   graph TD;
       DB[(Database)]
+      class DB yellow
       BlockchainActor((Blockchain<br/>Actor))
       BlockActor((Block<br/>Actor))
       BlockVersionActor((Block<br/>Version<br/>Actor))
