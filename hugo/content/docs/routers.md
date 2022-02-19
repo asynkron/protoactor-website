@@ -223,7 +223,45 @@ var props = system.Root.NewRandomGroup(
 
 The `ConsistentHashingPool` and `ConsistentHashingGroup` are routers that use a [consistent hashing algorithm](http://en.wikipedia.org/wiki/Consistent_hashing) to select a routee to forward the message. The idea is that messages with the same key are forwarded to the same routee. Any .NET object can be used as a key, although it's usually a number, string or Guid.
 
-![ConsistentHash Router](images/consistent-hash-router.png)
+```mermaid
+graph LR
+
+l1(M)
+class l1 message
+l2(Y)
+class l2 message
+l3(A)
+class l3 message
+l4(X)
+class l4 message
+
+r1(M)
+class r1 message
+r2(A)
+class r2 message
+r3(X)
+class r3 message
+r4(Y)
+class r4 message
+
+Router(Router)
+class Router light-blue
+Routee1(Routee1)
+class Routee1 light-blue
+Routee2(Routee2)
+class Routee2 light-blue
+Routee3(Routee3)
+class Routee3 light-blue
+
+
+l4---l3---l2---l1-->Router
+
+Router---r4---r1-->Routee1
+Router----r2-->Routee2
+Router----r3-->Routee3
+
+
+```
 
 `ConsistentHash` can be very useful when dealing with **Commands** in the sense of [**CQRS**](http://en.wikipedia.org/wiki/Command%E2%80%93query_separation#Command_Query_Responsibility_Segregation) or [**Domain Driven Design**].
 
