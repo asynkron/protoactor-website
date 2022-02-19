@@ -36,10 +36,9 @@
   const lineColor = "#00ff00 !important";
   const actorColor = "#007cb4 !important";
   const textColor = "#ffffff !important";
-  const fontStyle = "'trebuchet ms', verdana, arial !important";
+  const fontFamily = "'trebuchet ms', verdana, arial !important";
   const backgroundColor = "#323f49 !important";
 
-  console.log("hej");
   mermaid.initialize({
     startOnLoad: true,
     theme: "default",
@@ -59,13 +58,13 @@
       [id^="flowchart-empty"] {
         display: none;
       }
+
       [id^="flowchart-DB"] .label-container {
         fill: #ffbb00 !important;
         stroke: ${backgroundColor};
         stroke-width: 2px !important;
       }
       
-
       .cluster rect {
         fill: #00b3f6 !important;
         stroke: none !important;
@@ -147,7 +146,7 @@
     .messageText {
       fill: black;
       stroke: none;
-      font-family: ${fontStyle}
+      font-family: ${fontFamily}
       font-size: 14px;
     }
 
@@ -159,19 +158,19 @@
     .labelText {
       fill: black !important;
       stroke: none !important;
-      font-family: ${fontStyle}
+      font-family: ${fontFamily}
     }
 
     .loopText > tspan {
       fill: ${textColor};
       stroke: none !important;
-      font-family: ${fontStyle}
+      font-family: ${fontFamily}
     }
 
 
 
      `,
-    fontFamily: "Fira Code",
+    fontFamily: fontFamily,
   });
 </script>
 <script
