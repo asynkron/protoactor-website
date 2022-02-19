@@ -795,12 +795,10 @@ subgraph Member1
     a3
 end
 
-a1-->a2
+a2-->a1
 a2-->a3
-a3-->a1
 
 a4-->a5
-a5-->a4
 
 linkStyle default display:none;
 ```
