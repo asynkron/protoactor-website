@@ -2,10 +2,12 @@ $line-color: #00ff00 !important;
 $actor-color: #007cb4 !important;
 $text-color: #ffffff !important;
 $font-style: "trebuchet ms", verdana, arial !important;
+$background-color: #323f49 !important;
+
 div {
   .mermaid {
     display: block;
-    background-color: #323f49;
+    background-color: $background-color;
     border-radius: 4px;
     padding: 10px;
     color: $text-color;
@@ -15,19 +17,29 @@ div {
       fill: $line-color;
     }
 
-    .cluster rect {
-      fill: #00b3f6 !important;
-      stroke: none !important;
-    }
-
     .label-container {
       stroke: none !important;
       fill: $actor-color;
+      stroke: $background-color;
+      stroke-width: 2px !important;
+    }
+
+    g[id^="DB"] .label-container {
+      fill: #ffbb00 !important;
+      stroke: $background-color;
+      stroke-width: 2px !important;
+    }
+
+    .cluster rect {
+      fill: #00b3f6a0 !important;
+      stroke: none !important;
     }
 
     .label {
       color: $text-color;
       font-family: Helvetica !important;
+      font-weight: bold !important;
+      font-size: small !important;
     }
 
     .path {

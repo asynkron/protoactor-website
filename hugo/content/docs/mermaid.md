@@ -34,24 +34,32 @@ sequenceDiagram
 ```
 
 ```mermaid
-graph TB
-    a1((a1))
-    a2((a2))
-    b1((b1))
-    b2((b2))
-    c1((c1))
-    c2((c2))
+graph TD
+    a1((Player1))
+    a2((Player5))
+    b1((Player7))
+    b2((Player9))
+    c1((Player3))
+    c2((Player6))
+    d1((Player2))
+    d2((Player4))
 
-    subgraph Member 1
-        a1
-        a2
-    end
-    subgraph Member 2
-        b1
-        b2
-    end
-    subgraph Member 3
-        c1
-        c2
+    subgraph Cluster
+        subgraph Member 1
+            a1
+            a2
+        end
+        subgraph Member 2
+            b1
+            b2
+        end
+        subgraph Member 3
+            c1
+            c2
+        end
+        subgraph Member 4
+            d1
+            d2
+        end
     end
 ```
