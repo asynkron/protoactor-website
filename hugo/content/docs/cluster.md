@@ -59,6 +59,10 @@ When a cluster starts, the grain `user/123` is not spawned anywhere. Nothing is 
 
 ```mermaid
 graph BT;
+    empty1(XXXXXXXXXXXXXXXXXXX)
+    empty2(XXXXXXXXXXXXXXXXXXX)
+    empty3(XXXXXXXXXXXXXXXXXXX)
+
     ClusterIdentity(ClusterIdentity <br/> user/123)
     subgraph "Member 1 your-app.com:5001"
         empty1
@@ -87,12 +91,14 @@ Also, a request we've sent is delivered to the newly created grain.
 
 From now on, when you send a request to this grain, its cluster identity (`user/123`) will be translated into a PID pointing to that specific host and actor (e.g. `your-app.com:5002/partition-activator/123$31183`). This is all transparent from the client's perspective.
 
-![actor spawned](cluster/images/grains-introduction-actor-is-created.png)
-
 ```mermaid
 graph BT;
+    empty1(XXXXXXXXXXXXXXXXXXX)
+    empty2(XXXXXXXXXXXXXXXXXXX)
+    empty3(XXXXXXXXXXXXXXXXXXX)
+
     ClusterIdentity(ClusterIdentity <br/> user/123)
-    Pid(Pid <br/> your-app.com:5002/partition-activator/123$5463)
+    Pid(Pid <br/> your-app.com:5002/partition-activator/123$31183)
     Grain{{Some Grain}}
 
     subgraph "Member 1 your-app.com:5001"
@@ -116,7 +122,34 @@ Pid --> empty3
 
 The topology of the cluster may change over time. Let's say `Member 2` goes down. In this case, sooner or later (depending on the cluster's configuration) that grain will be respawned on a different node as a different actor (with a new PID, e.g. `your-app.com:5001/partition-activator/123$4235`). Again, this is transparent to the client.
 
-![actor spawned](cluster/images/grains-introduction-member-down.png)
+```mermaid
+graph BT;
+    empty1(XXXXXXXXXXXXXXXXXXX)
+    empty2(XXXXXXXXXXXXXXXXXXX)
+    empty3(XXXXXXXXXXXXXXXXXXX)
+
+    ClusterIdentity(ClusterIdentity <br/> user/123)
+    Pid(Pid <br/> your-app.com:5002/partition-activator/123$4235)
+    Grain{{Some Grain}}
+
+    subgraph "Member 1 your-app.com:5001"
+        Grain
+    end
+    subgraph "Member 2 your-app.com:5002"
+        empty2
+    end
+    subgraph "Member 3 your-app.com:5003"
+        empty3
+    end
+
+
+Client --> ClusterIdentity
+ClusterIdentity --> Pid
+Pid --> Grain
+Pid --> empty2
+Pid --> empty3
+
+```
 
 To recap:
 
