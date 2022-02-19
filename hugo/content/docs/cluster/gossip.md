@@ -68,6 +68,7 @@ graph LR
     Member1 --> empty --> Member3
     Member1 --- Gossip4 --> Member4
     Member1 --- Gossip5 --> Member5
+    Member1 --> empty2 --> Member6
 
 
 
