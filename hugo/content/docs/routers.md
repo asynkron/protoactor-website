@@ -63,7 +63,45 @@ These are the routing strategies provided by Proto.Actor out of the box.
 
 `RoundRobinPool` and `RoundRobinGroup` are routers that sends messages to routees in [round-robin](http://en.wikipedia.org/wiki/Round-robin) order. It's the simplest way to distribute messages to multiple worker actors, on a best-effort basis.
 
-![Round Robin Router](images/round-robin-router.png)
+```mermaid
+graph LR
+
+l1(1)
+class l1 message
+l2(2)
+class l2 message
+l3(3)
+class l3 message
+l4(4)
+class l4 message
+
+r1(1)
+class r1 message
+r2(2)
+class r2 message
+r3(3)
+class r3 message
+r4(4)
+class r4 message
+
+Router(Router)
+class Router light-blue
+Routee1(Routee1)
+class Routee1 light-blue
+Routee2(Routee2)
+class Routee2 light-blue
+Routee3(Routee3)
+class Routee3 light-blue
+
+
+l4---l3---l2---l1-->Router
+
+Router---r4---r1-->Routee1
+Router----r2-->Routee2
+Router----r3-->Routee3
+
+
+```
 
 #### Usage:
 
@@ -92,7 +130,46 @@ var pid = system.Root.Spawn(props);
 
 The `BroadcastPool` and `BroadcastGroup` routers will, as the name implies, broadcast any message to all of its routees.
 
-![Broadcast Router](images/broadcast-router.png)
+```mermaid
+graph LR
+
+l1(1)
+class l1 message
+l2(2)
+class l2 message
+
+
+r1(1)
+class r1 message
+r2(2)
+class r2 message
+r3(1)
+class r3 message
+r4(2)
+class r4 message
+r5(1)
+class r5 message
+r6(2)
+class r6 message
+
+
+Router(Router)
+class Router light-blue
+Routee1(Routee1)
+class Routee1 light-blue
+Routee2(Routee2)
+class Routee2 light-blue
+Routee3(Routee3)
+class Routee3 light-blue
+
+
+l2---l1-->Router
+
+Router---r2---r1-->Routee1
+Router---r4---r3-->Routee2
+Router---r6---r5-->Routee3
+
+```
 
 #### Usage:
 

@@ -43,8 +43,25 @@
   const yellowColor = "#FFBF34";
   const redColor = "#C34423";
   const lightBluecolor = "#00ADF8";
-  const lineWidth = "3px";
+  const lineWidth = "4px";
+  const strokeWidth = "3px";
+  const strokeColor = backgroundColor;
+  const commentColor = "#FFF2CC";
+  const commentBorderColor = "#D6B656";
   var css = `
+
+  $prefix .comment .label-container{
+    fill: ${commentColor};
+    stroke: ${commentBorderColor};
+    stroke-width: ${lineWidth};
+  }
+
+  $prefix .comment .label{
+    color: #404040;
+    font-family: ${fontFamily};
+    font-size: 15px;
+    font-weight: bold;
+  }
 
   $prefix .message .label-container{
     fill: #ffffff;
@@ -58,32 +75,32 @@
 
   $prefix .red .label-container{
     fill: ${redColor};
-    stroke: ${backgroundColor};
-    stroke-width: ${lineWidth};
+    stroke: ${strokeColor};
+    stroke-width: ${strokeWidth};
   }
 
   $prefix .yellow .label-container{
     fill: ${yellowColor};
-    stroke: ${backgroundColor};
-    stroke-width: ${lineWidth};
+    stroke: ${strokeColor};
+    stroke-width: ${strokeWidth};
   }
 
   $prefix .green .label-container{
     fill: ${greenColor};
-    stroke: ${backgroundColor};
-    stroke-width: ${lineWidth};
+    stroke: ${strokeColor};
+    stroke-width: ${strokeWidth};
   }
 
   $prefix .blue .label-container{
     fill: ${blueColor};
-    stroke: ${backgroundColor};
-    stroke-width: ${lineWidth};
+    stroke: ${strokeColor};
+    stroke-width: ${strokeWidth};
   }
 
   $prefix .light-blue .label-container {
     fill: ${lightBluecolor};
-    stroke: ${backgroundColor};
-    stroke-width: ${lineWidth};
+    stroke: ${strokeColor};
+    stroke-width: ${strokeWidth};
   }
 
   $prefix .edgePath marker {
@@ -119,7 +136,7 @@
 
   $prefix .label {
     color: ${textColor};
-    font-family: Helvetica;
+    font-family: ${fontFamily};
     font-weight: bold;
     font-size: small;
   }
@@ -277,6 +294,9 @@
   mermaid.initialize({
     startOnLoad: true,
     theme: "default",
+    flowchart: {
+      curve: "basis",
+    },
     securityLevel: "loose",
     themeCSS: css,
     fontFamily: fontFamily,

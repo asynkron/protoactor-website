@@ -107,3 +107,39 @@ graph TB
         d1
     end
 ```
+
+```mermaid
+graph LR
+
+l1(1)
+class l1 message
+l2(2)
+class l2 message
+l3(3)
+class l3 message
+l4(4)
+class l4 message
+
+r1(1)
+class r1 message
+r2(2)
+class r2 message
+r3(3)
+class r3 message
+r4(4)
+class r4 message
+
+Router(Router)
+Routee1(Routee1)
+Routee2(Routee2)
+Routee3(Routee3)
+
+
+l4---l3---l2---l1-->Router
+
+Router---r4---r1-->Routee1
+Router----r2-->Routee2
+Router----r3-->Routee3
+
+
+```
