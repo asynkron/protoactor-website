@@ -129,13 +129,13 @@ graph BT;
     empty3(XXXXXXXXXXXXXXXXXXX)
 
     ClusterIdentity(ClusterIdentity <br/> user/123)
-    Pid(Pid <br/> your-app.com:5002/partition-activator/123$4235)
+    Pid(Pid <br/> your-app.com:5001/partition-activator/123$4235)
     Grain{{Some Grain}}
 
     subgraph "Member 1 your-app.com:5001"
         Grain
     end
-    subgraph "Member 2 your-app.com:5002"
+    subgraph "Member 2 DOWN!"
         empty2
     end
     subgraph "Member 3 your-app.com:5003"
