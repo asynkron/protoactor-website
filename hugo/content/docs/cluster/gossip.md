@@ -53,6 +53,9 @@ graph LR
     Topology(Topology)
     class Topology message
 
+    ClusterProvider
+    class ClusterProvider red
+
     Gossip2(Gossip)
     class Gossip2 message
 
