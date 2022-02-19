@@ -770,7 +770,40 @@ To run a cluster with multiple members, we'll use a [Consul Provider](consul-net
 
 Let's also recap, how grains work. Each grain (i.e smart bulbs and a smart house) will live in one of the cluster members:
 
-![Grain Locations](images/tutorial-grain-locations.png)
+```mermaid
+graph TB
+a1{{SmartBulbGrain<br/>living_room_1}}
+class a1 blue
+a2{{SmartBulbGrain<br/>living_room_2}}
+class a2 blue
+a3{{SmartBulbGrain<br/>kitchen}}
+class a3 blue
+
+a4{{SmartBulbGrain<br/>bedroom}}
+class a4 blue
+a5{{SmartHouseGrain<br/>my-house}}
+class a5 red
+
+subgraph Member 2
+    a4
+    a5
+end
+
+subgraph Member1
+    a1
+    a2
+    a3
+end
+
+a1-->a2
+a2-->a3
+a3-->a1
+
+a4-->a5
+a5-->a4
+
+linkStyle default display:none;
+```
 
 ### Consul provider
 
