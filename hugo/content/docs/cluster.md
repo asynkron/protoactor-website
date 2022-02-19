@@ -64,13 +64,13 @@ graph BT;
     empty3(XXXXXXXXXXXXXXXXXXX)
 
     ClusterIdentity(ClusterIdentity <br/> user/123)
-    subgraph "Member 1 your-app.com:5001"
+    subgraph Member1[Member1 - your-app.com:5001]
         empty1
     end
-    subgraph "Member 2 your-app.com:5002"
+    subgraph Member2[Member2 - your-app.com:5002]
         empty2
     end
-    subgraph "Member 3 your-app.com:5003"
+    subgraph Member3[Member3 - your-app.com:5003]
         empty3
     end
 
@@ -101,13 +101,13 @@ graph BT;
     Pid(Pid <br/> your-app.com:5002/partition-activator/123$31183)
     Grain{{Some Grain}}
 
-    subgraph "Member 1 your-app.com:5001"
+    subgraph Member1[Member1 - your-app.com:5001]
         empty1
     end
-    subgraph "Member 2 your-app.com:5002"
+    subgraph Member2[Member2 - your-app.com:5002]
         Grain
     end
-    subgraph "Member 3 your-app.com:5003"
+    subgraph Member3[Member3 - your-app.com:5003]
         empty3
     end
 
@@ -128,20 +128,23 @@ graph BT;
     empty2(XXXXXXXXXXXXXXXXXXX)
     empty3(XXXXXXXXXXXXXXXXXXX)
 
+
     ClusterIdentity(ClusterIdentity <br/> user/123)
     Pid(Pid <br/> your-app.com:5001/partition-activator/123$4235)
     Grain{{Some Grain}}
 
-    subgraph "Member 1 your-app.com:5001"
+    subgraph Member1[Member1 - your-app.com:5001]
         Grain
     end
-    subgraph "Member 2 DOWN!"
+    subgraph Member2[Member2 - your-app.com:5002]
+        style Member2 fill:#f9f,stroke:#333,stroke-width:4px
+        classDef red fill:#FF0000;
+        class Member2 red
         empty2
     end
-    subgraph "Member 3 your-app.com:5003"
+    subgraph Member3[Member3 - your-app.com:5003]
         empty3
     end
-
 
 Client --> ClusterIdentity
 ClusterIdentity --> Pid

@@ -33,179 +33,204 @@
 <!-- jQuery Countdown (displays countdown text to a specified date) -->
 <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 <script type="text/javascript">
-  const lineColor = "#00ff00 !important";
-  const actorColor = "#007cb4 !important";
-  const textColor = "#ffffff !important";
+  const lineColor = "#00ff00";
+  const actorColor = "#007cb4";
+  const textColor = "#ffffff";
   const fontFamily = "'trebuchet ms', verdana, arial !important";
-  const backgroundColor = "#323f49 !important";
+  const backgroundColor = "#323f49";
+  const blueColor = "#007cb4";
+  const greenColor = "#00CC66";
+  const yellowColor = "#FFBF34";
+  const redColor = "#C34423";
+  const lightBluecolor = "#00ADF8";
+  const lineWidth = "2px";
+  var css = `
 
-  const blueColor = "#007cb4 !important";
-  const greenColor = "#00CC66 !important";
-  const yellowColor = "#FFBF34 !important";
-  const redColor = "#C34423 !important";
-  const lightBluecolor = "#00ADF8 !important";
+  $prefix .red {
+    fill: ${redColor}
+  }
+
+  $prefix .green {
+    fill: ${greenColor}
+  }
+
+  $prefix .blue {
+    fill: ${blueColor}
+  }
+
+  $prefix .light-blue {
+    fill: ${lightBluecolor}
+  }
+
+  $prefix .edgePath marker {
+    stroke: ${lineColor};
+    fill:${lineColor};
+  }
+
+  $prefix .label-container {
+    stroke: none;
+    fill: ${actorColor};
+  }
+
+  $prefix [id^="flowchart-empty"] {
+    display: none;
+  }
+
+  $prefix [class*='LS-empty']  {
+    display:none;
+  }
+
+  $prefix [class*='LE-empty']  {
+    display:none;
+  }
+
+  
+  $prefix [id^="flowchart-DB"] .label-container {
+    fill: ${yellowColor}
+    stroke: ${backgroundColor};
+    stroke-width: ${lineWidth};
+  }
+
+  $prefix [id^="flowchart-Pid"] .label-container {
+    fill: ${greenColor};
+    stroke: ${backgroundColor};
+    stroke-width: ${lineWidth};
+  }
+
+  $prefix [id^="flowchart-Grain"] .label-container {
+    fill:  ${blueColor};
+    stroke: ${backgroundColor};
+    stroke-width: ${lineWidth};
+  }
+
+  $prefix [id^="flowchart-ClusterIdentity"] .label-container {
+    fill:  ${greenColor};
+    stroke: ${backgroundColor};
+    stroke-width: ${lineWidth};
+  }
+
+  $prefix [id^="flowchart-Client"] .label-container {
+    fill: ${yellowColor};
+    stroke: ${backgroundColor};
+    stroke-width: ${lineWidth};
+  }
+
+  $prefix .cluster rect {
+    fill: #00b3f6;
+    stroke: none;
+  }
+
+  $prefix .label {
+    color: ${textColor};
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: small;
+  }
+
+  $prefix .edgePath .path {
+    stroke-width: ${lineWidth};
+    stroke: ${lineColor};
+  }
+
+  $prefix .actor {
+    stroke: none;
+    fill: ${actorColor}};
+  }
+
+  $prefix text.actor {
+    fill: ${textColor};
+    stroke: none;
+    font-family: ${fontFamily};
+    font-weight: bold;
+  }
+
+  $prefix text.actor > tspan {
+    fill: ${textColor};
+  }
+
+  $prefix line {
+    stroke-width: ${lineWidth};
+    stroke: ${lineColor};
+  }
+
+  $prefix [id^="arrowhead"] path {
+    fill:  ${lineColor} !important;    
+  }
+
+  $prefix .arrowheadPath {
+    fill: ${lineColor};
+    stroke: none;
+  }
+
+    $prefix .messageText {
+    fill: ${textColor};
+    stroke: none;
+  }
+
+  $prefix .actor-line {
+    stroke: grey;
+  }
+
+  $prefix #arrowhead path {
+    stroke: ${lineColor};
+    fill: ${lineColor};
+  }
+
+  $prefix line .messageLine0 {
+    stroke-dasharray: "2 2" !important;
+    marker-end: "url(#arrowhead)";
+    stroke-width: ${lineWidth};
+    stroke: ${lineColor};
+  }
+
+  $prefix line .messageLine1 {
+    stroke-width: 1.5;
+    stroke-dasharray: "2 2";
+    stroke:${lineColor};
+  }
+
+  $prefix .note {
+    fill: #ffbb00;
+    stroke: none;
+  }
+
+  $prefix .note  > tspan {
+    fill: #373635;
+  }
+
+  $prefix .messageText {
+    fill: black;
+    stroke: none;
+    font-family: ${fontFamily}
+    font-size: 14px;
+  }
+
+  $prefix .labelBox {
+    stroke: none;
+    fill: ${lineColor};
+  }
+
+  $prefix .labelText {
+    fill: black;
+    stroke: none;
+    font-family: ${fontFamily}
+  }
+
+  $prefix .loopText > tspan {
+    fill: ${textColor};
+    stroke: none;
+    font-family: ${fontFamily}
+  }
+
+  `;
+
+  css = css.replaceAll("$prefix", "g ");
 
   mermaid.initialize({
     startOnLoad: true,
     theme: "default",
     securityLevel: "loose",
-    themeCSS: `
-
-      marker {
-        stroke: ${lineColor};
-        fill:${lineColor};
-      }
-
-      .label-container {
-        stroke: none !important;
-        fill: ${actorColor};
-      }
-
-      [id^="flowchart-empty"] {
-        display: none;
-      }
-
-      [class*='LS-empty']  {
-        display:none;
-      }
-
-      [class*='LE-empty']  {
-        display:none;
-      }
-
-      [id^="flowchart-DB"] .label-container {
-        fill: ${yellowColor}
-        stroke: ${backgroundColor};
-        stroke-width: 2px !important;
-      }
-
-      [id^="flowchart-Pid"] .label-container {
-        fill: ${greenColor};
-        stroke: ${backgroundColor};
-        stroke-width: 2px !important;
-      }
-
-      [id^="flowchart-Grain"] .label-container {
-        fill:  ${blueColor};
-        stroke: ${backgroundColor};
-        stroke-width: 2px !important;
-      }
-
-      [id^="flowchart-ClusterIdentity"] .label-container {
-        fill:  ${greenColor};
-        stroke: ${backgroundColor};
-        stroke-width: 2px !important;
-      }
-
-      [id^="flowchart-Client"] .label-container {
-        fill: ${yellowColor};
-        stroke: ${backgroundColor};
-        stroke-width: 2px !important;
-      }
-      
-      .cluster rect {
-        fill: #00b3f6 !important;
-        stroke: none !important;
-      }
-
-      .label {
-        color: ${textColor};
-        font-family: Helvetica !important;
-        font-weight: bold !important;
-        font-size: small !important;
-      }
-
-      .path {
-        stroke-width: 4px !important;
-        stroke: ${lineColor};
-      }
-
-      .actor {
-        stroke: none !important;
-        fill: ${actorColor}};
-      }
-
-      text.actor {
-        fill: ${textColor};
-        stroke: none !important;
-        font-family: Helvetica !important;
-        font-weight: bold !important;
-      }
-
-      text.actor > tspan {
-        fill: ${textColor};
-      }
-
-      line {
-        stroke-width: 4px !important;
-        stroke: ${lineColor};
-      }
-
-    .arrowheadPath {
-      fill: ${lineColor};
-      stroke: none !important;
-    }
-
-    .messageText {
-      fill: ${textColor};
-      stroke: none !important;
-    }
-
-    .actor-line {
-      stroke: grey;
-    }
-
-    #arrowhead path {
-      stroke: ${lineColor};
-      fill: ${lineColor};
-    }
-
-    .messageLine0 {
-      stroke-dasharray: "2 2" !important;
-      marker-end: "url(#arrowhead)";
-      stroke-width: 4px !important;
-      stroke: ${lineColor};
-    }
-
-    .messageLine1 {
-      stroke-width: 1.5;
-      stroke-dasharray: "2 2";
-      stroke:${lineColor};
-    }
-
-    .note {
-      fill: #ffbb00 !important;
-      stroke: none !important;
-      > tspan {
-        fill: #373635 !important;
-      }
-    }
-
-    .messageText {
-      fill: black;
-      stroke: none;
-      font-family: ${fontFamily}
-      font-size: 14px;
-    }
-
-    .labelBox {
-      stroke: none !important;
-      fill: ${lineColor};
-    }
-
-    .labelText {
-      fill: black !important;
-      stroke: none !important;
-      font-family: ${fontFamily}
-    }
-
-    .loopText > tspan {
-      fill: ${textColor};
-      stroke: none !important;
-      font-family: ${fontFamily}
-    }
-
-     `,
+    themeCSS: css,
     fontFamily: fontFamily,
   });
 </script>
