@@ -48,7 +48,30 @@ The sender member can _know_ that some state has been transmitted to the target,
 
 Gossip between member nodes occur at intervals and target members are picked at random with a selection of `ClusterConfig.GossipFanout` number of members.
 
-![Gossip Fan-out](images/gossipfanout.png)
+```mermaid
+graph LR
+    Topology(Topology)
+    class Topology message
+
+    Gossip2(Gossip)
+    class Gossip2 message
+
+    Gossip4(Gossip)
+    class Gossip4 message
+
+    Gossip5(Gossip)
+    class Gossip5 message
+
+    ClusterProvider --- Topology
+    Topology --> Member1
+    Member1 --- Gossip2 --> Member2
+    Member1 --> empty --> Member3
+    Member1 --- Gossip4 --> Member4
+    Member1 --- Gossip5 --> Member5
+
+
+
+```
 
 ### Sending user state
 
