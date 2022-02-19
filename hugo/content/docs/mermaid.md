@@ -34,7 +34,7 @@ sequenceDiagram
 ```
 
 ```mermaid
-graph TD
+graph TB
 
     a1((Player1))
     a2((Player5))
@@ -62,5 +62,52 @@ graph TD
         d1
         d2
     end
+```
 
+```mermaid
+graph TB
+
+    a1((Worker1))
+
+    b1((Worker2))
+
+    c1((Worker3))
+
+    d1((Worker4))
+
+    subgraph Member 1
+        a1
+    end
+    subgraph Member 2
+        b1
+    end
+    subgraph Member 3
+        c1
+    end
+    subgraph Member 4
+        d1
+    end
+```
+
+```mermaid
+graph TD
+
+    s((Singleton))
+    e1[ ]
+    e2[ ]
+    e3[ ]
+
+
+    subgraph Member 1
+        e1
+    end
+    subgraph Member 2
+        e2
+    end
+    subgraph Member 3
+        s
+    end
+    subgraph Member 4
+        e3
+    end
 ```
