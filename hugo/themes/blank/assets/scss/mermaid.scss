@@ -13,15 +13,15 @@ div {
     color: $text-color;
     text-align: center;
 
-    marker {
-      stroke: $line-color;
-      fill: $line-color;
-    }
+    // marker {
+    //   stroke: $line-color;
+    //   fill: $line-color;
+    // }
 
-    .label-container {
-      stroke: none !important;
-      fill: $actor-color;
-    }
+    // .label-container {
+    //   stroke: none !important;
+    //   fill: $actor-color;
+    // }
 
     [id^="flowchart-empty"] {
       display: none;
@@ -34,104 +34,104 @@ div {
       }
     }
 
-    .cluster rect {
-      fill: #00b3f6 !important;
-      stroke: none !important;
-    }
+    // .cluster rect {
+    //   fill: #00b3f6 !important;
+    //   stroke: none !important;
+    // }
 
-    .label {
-      color: $text-color;
-      font-family: Helvetica !important;
-      font-weight: bold !important;
-      font-size: small !important;
-    }
+    // .label {
+    //   color: $text-color;
+    //   font-family: Helvetica !important;
+    //   font-weight: bold !important;
+    //   font-size: small !important;
+    // }
 
-    .path {
-      stroke-width: 4px !important;
-      stroke: $line-color;
-    }
-    .actor {
-      stroke: none !important;
-      fill: $actor-color;
-    }
-    text.actor {
-      fill: $text-color;
-      stroke: none !important;
-      font-family: Helvetica !important;
-      font-weight: bold !important;
-    }
+    // .path {
+    //   stroke-width: 4px !important;
+    //   stroke: $line-color;
+    // }
+    // .actor {
+    //   stroke: none !important;
+    //   fill: $actor-color;
+    // }
+    // text.actor {
+    //   fill: $text-color;
+    //   stroke: none !important;
+    //   font-family: Helvetica !important;
+    //   font-weight: bold !important;
 
-    text.actor > tspan {
-      fill: $text-color;
-    }
+    //   > tspan {
+    //     fill: $text-color;
+    //   }
+    // }
 
-    line {
-      stroke-width: 4px !important;
-      stroke: $line-color;
-    }
+    // line {
+    //   stroke-width: 4px !important;
+    //   stroke: $line-color;
+    // }
 
-    .arrowheadPath {
-      fill: $line-color;
-      stroke: none !important;
-    }
+    // .arrowheadPath {
+    //   fill: $line-color;
+    //   stroke: none !important;
+    // }
 
-    .messageText {
-      fill: $text-color;
-      stroke: none !important;
-    }
+    // .messageText {
+    //   fill: $text-color;
+    //   stroke: none !important;
+    // }
 
-    .actor-line {
-      stroke: grey;
-    }
+    // .actor-line {
+    //   stroke: grey;
+    // }
 
-    #arrowhead path {
-      stroke: $line-color;
-      fill: $line-color;
-    }
+    // #arrowhead path {
+    //   stroke: $line-color;
+    //   fill: $line-color;
+    // }
 
-    .messageLine0 {
-      stroke-dasharray: "2 2" !important;
-      marker-end: "url(#arrowhead)";
-      stroke-width: 4px !important;
-      stroke: $line-color;
-    }
+    // .messageLine0 {
+    //   stroke-dasharray: "2 2" !important;
+    //   marker-end: "url(#arrowhead)";
+    //   stroke-width: 4px !important;
+    //   stroke: $line-color;
+    // }
 
-    .messageLine1 {
-      stroke-width: 1.5;
-      stroke-dasharray: "2 2";
-      stroke: $line-color;
-    }
+    // .messageLine1 {
+    //   stroke-width: 1.5;
+    //   stroke-dasharray: "2 2";
+    //   stroke: $line-color;
+    // }
 
-    .note {
-      fill: #ffbb00 !important;
-      stroke: none !important;
-    }
-    .noteText > tspan {
-      fill: #373635 !important;
-    }
+    // .note {
+    //   fill: #ffbb00 !important;
+    //   stroke: none !important;
+    //   > tspan {
+    //     fill: #373635 !important;
+    //   }
+    // }
 
-    .messageText {
-      fill: black;
-      stroke: none;
-      font-family: $font-style;
-      font-size: 14px;
-    }
+    // .messageText {
+    //   fill: black;
+    //   stroke: none;
+    //   font-family: $font-style;
+    //   font-size: 14px;
+    // }
 
-    .labelBox {
-      stroke: none !important;
-      fill: $line-color;
-    }
+    // .labelBox {
+    //   stroke: none !important;
+    //   fill: $line-color;
+    // }
 
-    .labelText {
-      fill: black !important;
-      stroke: none !important;
-      font-family: $font-style;
-    }
+    // .labelText {
+    //   fill: black !important;
+    //   stroke: none !important;
+    //   font-family: $font-style;
+    // }
 
-    .loopText > tspan {
-      fill: $text-color;
-      stroke: none !important;
-      font-family: $font-style;
-    }
+    // .loopText > tspan {
+    //   fill: $text-color;
+    //   stroke: none !important;
+    //   font-family: $font-style;
+    // }
   }
 }
