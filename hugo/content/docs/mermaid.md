@@ -45,8 +45,7 @@ graph TB
     d1((Player2))
     d2((Player4))
 
-
-    subgraph Member 1
+    subgraph Member1
         a1
         a2
     end
@@ -61,6 +60,25 @@ graph TB
     subgraph Member 4
         d1
         d2
+    end
+```
+
+```mermaid
+graph TD
+
+    s((Singleton))
+
+    subgraph Member 1
+        empty1
+    end
+    subgraph Member 2
+        empty2
+    end
+    subgraph Member 3
+        s
+    end
+    subgraph Member 4
+        empty3
     end
 ```
 
@@ -86,28 +104,5 @@ graph TB
     end
     subgraph Member 4
         d1
-    end
-```
-
-```mermaid
-graph TD
-
-    s((Singleton))
-    e1[ ]
-    e2[ ]
-    e3[ ]
-
-
-    subgraph Member 1
-        e1
-    end
-    subgraph Member 2
-        e2
-    end
-    subgraph Member 3
-        s
-    end
-    subgraph Member 4
-        e3
     end
 ```

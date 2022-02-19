@@ -23,6 +23,9 @@ div {
       fill: $actor-color;
     }
 
+    [id^="flowchart-empty"] {
+      display: none;
+    }
     [id^="flowchart-DB"] {
       .label-container {
         fill: #ffbb00 !important;
