@@ -103,6 +103,10 @@
     stroke: none;
   }
 
+  $prefix .cluster span {
+    color: ${textColor};
+  }
+
   $prefix .label {
     color: ${textColor};
     font-family: Helvetica;
@@ -120,6 +124,7 @@
     fill: ${actorColor}};
   }
 
+
   $prefix text.actor {
     fill: ${textColor};
     stroke: none;
@@ -129,6 +134,56 @@
 
   $prefix text.actor > tspan {
     fill: ${textColor};
+  }
+
+  g .marker {
+    stroke-width: ${lineWidth} !important;
+    stroke: ${lineColor} !important;
+    fill: ${lineColor} !important;
+  }
+  .root .nodes .node circle,
+  .root .nodes .node rect {
+    stroke: none ;
+    fill: ${blueColor} ;   
+  }
+
+  g .red {
+    fill: ${redColor};
+    stroke: ${backgroundColor};
+    stroke-width: ${lineWidth};
+  }
+
+  g .yellow {
+    fill: ${yellowColor};
+    stroke: ${backgroundColor};
+    stroke-width: ${lineWidth};
+  }
+
+  g .green {
+    fill: ${greenColor};
+    stroke: ${backgroundColor};
+    stroke-width: ${lineWidth};
+  }
+
+  g .blue {
+    fill: ${blueColor};
+    stroke: ${backgroundColor};
+    stroke-width: ${lineWidth};
+  }
+
+  g .light-blue  {
+    fill: ${lightBluecolor};
+    stroke: ${backgroundColor};
+    stroke-width: ${lineWidth};
+  }
+
+  .root .nodes .node .nodeLabel {
+    color: ${textColor} !important;
+  }
+
+  .root .flowchart-link {
+    stroke-width: ${lineWidth} !important;
+    stroke: ${lineColor} !important;
   }
 
   $prefix line {
