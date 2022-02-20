@@ -77,7 +77,7 @@ This indeed allows to get rid of `WaitCallback` so now the same benchmark alloca
 ![Actor](../images/perf5.png)
 
 {{< note >}}
-This issue have been corrected after the review
+This issue has been corrected after the review
 {{</ note >}}
 
 There is also one funny method `OneForOneStrategy.ShouldStop` producing a little of unwanted garbage:
@@ -136,4 +136,4 @@ await Task.WhenAny(task, _clock.CurrentBucket);
 
 And could be maybe optimized with a new .NET 6 API as described in [Performance Improvements in .NET 6](https://devblogs.microsoft.com/dotnet/performance-improvements-in-net-6/) after a little of `TaskClock` redesign:
 
-> Beyond these new builders, there have been other new APIs introduced in .NET 6 related to tasks. `Task.WaitAsync` was introduced in `dotnet/runtime#48842` and provides an optimized implementation for creating a new `Task` that will complete when either the previous one completes.
+Beyond these new builders, there have been other new APIs introduced in .NET 6 related to tasks. `Task.WaitAsync` was introduced in `dotnet/runtime#48842` and provides an optimized implementation for creating a new `Task` that will complete when either the previous one completes.
