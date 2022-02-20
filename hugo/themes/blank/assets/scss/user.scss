@@ -1,16 +1,16 @@
-// 
-// 
+//
+//
 // user.scss
 //
 // Place your own custom CSS or SCSS rules below this line, these rules will override any Bootstrap and theme variables.
 
 main a {
-    font-weight: normal;
+  font-weight: normal;
 }
 
 // .highlight {
 //     pre {
-//         padding: 16px;    
+//         padding: 16px;
 //         -moz-tab-size: 4;
 //         -o-tab-size: 4;
 //         tab-size: 4;
@@ -27,7 +27,7 @@ main a {
 //             padding: unset;
 //             font-weight: unset;
 //             color: unset;
-            
+
 //             font-weight: normal;
 //             font-family: "Lucida Console", Monaco, monospace !important;
 //             font-size: 14px;
@@ -35,168 +35,157 @@ main a {
 //     }
 // }
 
-
 code {
-    background-color: #f4f3f5;
-    border: 0;
-    border-radius: 4px;
-    padding: 2px 6px 2px 6px;
-    font-weight: 450;
-    color: #835fca;
+  background-color: #f4f3f5;
+  border: 0;
+  border-radius: 4px;
+  padding: 2px 6px 2px 6px;
+  font-weight: 450;
+  color: #835fca;
 }
 
 .blockquote {
-    border-left-width: 10px;
-    border-left: 10px solid $primary;
-    width: 95%;
-    padding-left: 2rem;
-    font-style: italic;
+  border-left-width: 10px;
+  border-left: 10px solid $primary;
+  width: 95%;
+  padding-left: 2rem;
+  font-style: italic;
 }
 
 #TableOfContents {
-    font-size: smaller;
+  font-size: smaller;
 
-    ul {
-        list-style: none;
-        padding: 0;
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  li {
+    display: block;
+    padding-left: 16px;
+
+    a {
+      padding: 8px 0 8px 18px;
+      display: block;
+      color: #666;
+      border-bottom: 1px solid #ededde;
+      line-height: 20px;
+      font-weight: 500;
+
+      &:before {
+        content: "";
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-top: 4px solid transparent;
+        border-bottom: 4px solid transparent;
+        border-left: 4px solid #333;
+        margin: 6px 0 0 -10px;
+        position: absolute;
+      }
     }
-
-    li {
-        display: block;
-        padding-left: 16px;
-
-        a {
-            padding: 8px 0 8px 18px;
-            display: block;
-            color: #666;
-            border-bottom: 1px solid #EDEDDE;
-            line-height: 20px;
-            font-weight: 500;
-
-            &:before {
-                content: "";
-                display: inline-block;
-                width: 0;
-                height: 0;
-                border-top: 4px solid transparent;
-                border-bottom: 4px solid transparent;
-                border-left: 4px solid #333;
-                margin: 6px 0 0 -10px;
-                position: absolute;
-            }
-        }
-    }
+  }
 }
 
-#TableOfContents>ul>li>a {
-    font-weight: 800 !important;
+#TableOfContents > ul > li > a {
+  font-weight: 800 !important;
 }
-
 
 .note {
-    border: 0px solid lighten($color: $primary, $amount: 15);
-    background-color: lighten($color: $primary, $amount: 52);
-    color: darken($color: $primary, $amount: 15);;
-    border-left-width: 10px;
-    border-radius: 0;
+  border: 0px solid lighten($color: $primary, $amount: 15);
+  background-color: lighten($color: $primary, $amount: 52);
+  color: darken($color: $primary, $amount: 15);
+  border-left-width: 10px;
+  border-radius: 0;
 
+  &:before {
+    background-color: lighten($color: $primary, $amount: 15);
+    content: "i";
+    color: white;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    left: -17px;
+    text-align: center;
+    font-family: "courier new";
+    font-weight: bold;
+  }
 
-    &:before {
-        background-color: lighten($color: $primary, $amount: 15);
-        content: "i";
-        color: white;
-        border-radius: 50%;
-        display: block;
-        position: absolute;
-        height: 24px;
-        width: 24px;
-        left: -17px;
-        text-align: center;
-        font-family: "courier new";
-        font-weight: bold;
-    }
+  .text {
+    font-weight: 400;
+  }
 
-    .text {
-        font-weight: 400;
-    }
-    
-    .header {
-        display: block;
-        padding-bottom: 8px;
-    }
+  .header {
+    display: block;
+    padding-bottom: 8px;
+  }
 }
-
 
 .warning {
+  border: 0px solid #f2ca72;
+  border-left-width: 10px;
+  border-radius: 0;
+  background-color: #fff5be;
+  color: #785d24;
 
-    border: 0px solid #f2ca72;
-    border-left-width: 10px;
-    border-radius: 0;
-    background-color: #fff5be;
-    color:#785d24;
+  &:before {
+    background-color: #f2ca72;
+    content: "!";
+    color: white;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    left: -17px;
+    text-align: center;
+    font-family: "courier new";
+    font-weight: bold;
+  }
 
-    &:before {
-        background-color: #f2ca72;;
-        content: "!";
-        color: white;
-        border-radius: 50%;
-        display: block;
-        position: absolute;
-        height: 24px;
-        width: 24px;
-        left: -17px;
-        text-align: center;
-        font-family: "courier new";
-        font-weight: bold;
-    }
+  .text {
+    font-weight: 400;
+  }
 
-    .text {
-        font-weight: 400;
-    }
-    
-    .header {
-        display: block;
-        padding-bottom: 8px;
-    } 
+  .header {
+    display: block;
+    padding-bottom: 8px;
+  }
 }
-
 
 body {
-    font-weight: 400;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+  font-weight: 400;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
 }
 
-h3, .h3 {
-    font-size: 1.5rem;
-    color: #35383f;
+h3,
+.h3 {
+  font-size: 1.5rem;
+  color: #35383f;
 }
 
 .markdown-img {
-    max-width: 100%;
-    //max-height: 600px;
-    margin-bottom: 24px;
+  max-width: 100%;
+  //max-height: 600px;
+  margin-bottom: 24px;
 }
 
 .nav-link {
-    font-weight: bold;
-    padding-left: 10px !important;
-    padding-right: 10px  !important;
-    margin-right: 10px !important;
+  font-weight: bold;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  margin-right: 10px !important;
 }
 
 .nav-link.active {
-    color: $primary;
+  color: $primary;
 }
 
 /* Main dropdown wrapper */
 .algolia-autocomplete .ds-dropdown-menu {
-    width: 100% !important;
-  }
-
-/* target the go ahead button */
-article>div:last-of-type>p:last-of-type>a:last-of-type{
-    @extend .btn,.btn-primary,.float-right;
-    &:after{
-      content: " →";  
-    }
+  width: 100% !important;
 }

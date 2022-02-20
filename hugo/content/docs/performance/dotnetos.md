@@ -1,3 +1,8 @@
+# Performance review by Dotnetos
+
+In february 2022, The Dotnetos teams made a performance review of the Proto.Actor .NET core features.
+This document contains the findings from this review.
+
 Output of [Proto.Actor benchmarks](https://gist.github.com/rogeralsing/12d16983f9d2e27d7c4b39cd25a64b18), with full PGO on and off, to identify any visible quick wins with "measure first approach". It includes both dotMemory and dotTrace profiling. I've also made an initial code "look around".
 
 # Spawn benchmark
@@ -8,7 +13,7 @@ That's a litte suprising consequence of using `ConcurrentQueue` but for 1M it's 
 
 There are little suboptimal allocations like below but I'm not sure if it is worth to remove them (one is from the benchmark itself):
 
-![image](https://user-images.githubusercontent.com/11159779/153033700-3e2b0c35-08cc-456e-906b-0f17b7751688.png)
+![Actor](../images/perf1.png)
 
 # In process benchmark
 
@@ -33,11 +38,11 @@ Because of more complex nature of benchmarking program (preparations and cleanup
 
 Initial rundown shows allocations during the message processing, here's an 16/50 activity marked:
 
-![image](https://user-images.githubusercontent.com/11159779/152973270-6f0a620b-84cb-4671-a381-190341cb2071.png)
+![Actor](../images/perf2.png)
 
 Which is allocating ~68MB where 2/3 is a `WaitCallback` allocated in `DefaultMailbox.Schedule`:
 
-![image](https://user-images.githubusercontent.com/11159779/152973659-2361dcdb-05c7-40c1-b911-443d3772f4a5.png)
+![Actor](../images/perf3.png)
 
 because of:
 
@@ -67,13 +72,13 @@ private static Task RunAsync(DefaultMailbox mailbox)
 
 This indeed allows to get rid of `WaitCallback` so now the same benchmark allocates ~24MB:
 
-![image](https://user-images.githubusercontent.com/11159779/152974746-49c064d4-4773-403e-a350-872527a344bc.png)
+![Actor](../images/perf4.png)
 
-![image](https://user-images.githubusercontent.com/11159779/152974834-480354ce-5ad9-4ae3-aec0-d2b0ac7007d8.png)
+![Actor](../images/perf5.png)
 
 There is also one funny method `OneForOneStrategy.ShouldStop` producing a little of unwanted garbage:
 
-![image](https://user-images.githubusercontent.com/11159779/153044823-05eadb4d-2a46-4d6a-84de-f5c39a477168.png)
+![Actor](../images/perf6.png)
 
 which is one of those examples when plain old loop instead of LINQ pays off:
 
@@ -92,7 +97,7 @@ public int NumberOfFailures(TimeSpan? within)
 
 Additionaly, a few trivial things:
 
-- `NullReferenceException` thrown 150 times from `ActorContext.SendUserMessage`? ![image](https://user-images.githubusercontent.com/11159779/153037869-aedb0057-5a41-4cba-9402-1d87cd7ffbfa.png)
+- `NullReferenceException` thrown 150 times from `ActorContext.SendUserMessage`? ![Actor](../images/perf7.png)
 - I'd consider moving to [Compile-time logging source generation](https://docs.microsoft.com/en-us/dotnet/core/extensions/logger-message-generator) or [string interpolation](https://devblogs.microsoft.com/dotnet/string-interpolation-in-c-10-and-net-6/), for example in `Proto.OneForOneStrategy.HandleFailure.LogInfo`
 
 # Remote benchmark
@@ -101,7 +106,7 @@ First of all, the previous fix allows to avoid hundreds of MBs of `WaitCallback`
 
 Besides that, much more data ia allocated because of materializing `MessageEnvelope`, to the extent when looking at anything else does not make sense:
 
-![image](https://user-images.githubusercontent.com/11159779/152984841-369aafdf-6f6c-46f2-b622-ffc687d85941.png)
+![Actor](../images/perf8.png)
 
 The only thought I have in such scenario is - is it possible to get rid of `object`/`class` in some paths (like sending) and use `ref struct` instead? I've skimmed through code and it obviously require much work. I'm not able to propose anything for now here... But well, I have a feeling it won't be ever possible because of Protobuf ane the whole architecture.
 
@@ -109,7 +114,7 @@ The only thought I have in such scenario is - is it possible to get rid of `obje
 
 It would be nice to get rid of those state machine allocations here:
 
-![image](https://user-images.githubusercontent.com/11159779/152988814-4b3b45ba-33cb-46c8-8179-5c236d6cf137.png)
+![Actor](../images/perf9.png)
 
 that come from `ExperimentalClusterContext.RequestAsync`:
 

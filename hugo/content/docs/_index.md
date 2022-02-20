@@ -81,7 +81,7 @@ tags: [protoactor, docs]
 ## Performance
 
 - [Benchmarks](performance/benchmarks.md)
-- [Dotnetos performance review](dotnetos.md)
+- [Dotnetos performance review](performance/dotnetos.md)
 
 ## Observability
 
