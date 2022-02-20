@@ -13,7 +13,6 @@ tags: [protoactor, docs]
 - [Getting Started](getting-started)
 - [Getting Started With Grains / Virtual Actors (.NET)](cluster/getting-started-net.md)
 
-
 ## Articles
 
 {{< article-clean >}}
@@ -64,9 +63,9 @@ tags: [protoactor, docs]
   - [Working with a cluster (.NET)](cluster/using-cluster-net.md)
   - [Generating grains (.NET)](cluster/codegen-net.md)
   - [Cluster providers (.NET)](cluster/cluster-providers-net.md) - What different clustering options do I have?
-    - [Kubernetes Provider](cluster/kubernetes-provider-net.md)  
-    - [Consul Provider](cluster/consul-net.md)  
-    - [AWS ECS Provider](cluster/aws-provider-net.md)  
+    - [Kubernetes Provider](cluster/kubernetes-provider-net.md)
+    - [Consul Provider](cluster/consul-net.md)
+    - [AWS ECS Provider](cluster/aws-provider-net.md)
     - [Seed Provider - Experimental](cluster/seed-provider-net.md)
   - [Identity lookup (.NET)](cluster/identity-lookup-net.md) - How does Proto.Actor know the location of a virtual actor?
   - [Gossip (.NET)](cluster/gossip.md) - How can I share state across cluster members?
@@ -78,6 +77,11 @@ tags: [protoactor, docs]
 - [AsyncSemaphore](asyncsemaphore.md) - How do I limit concurrency to a given resource?
 - [BatchingMailbox](batching-mailbox.md) - How do I collect many events and process as single one unit?
 - [Throttle](throttle.md) - How do I throttle method calls?
+
+## Performance
+
+- [Benchmarks](performance/benchmarks.md)
+- [Dotnetos performance review](dotnetos.md)
 
 ## Observability
 

@@ -1,5 +1,5 @@
 ---
-title: "Performance"
+title: "Benchmarks"
 date: 2020-05-28T16:34:24+02:00
 draft: false
 tags: [protoactor, docs]
@@ -7,13 +7,12 @@ tags: [protoactor, docs]
 
 # Performance and Benchmarks
 
-| Lib                | Remote PingPong    | Inproc PingPong      | SkyNet              |
-| ------------------ | ------------------:| --------------------:| -------------------:|
-| Proto.Actor C#     | ~8 500 000 msg/sec | ~125 000 000 msg/sec | ~0.7 sec            |
-| Proto.Actor Go     | ~2 400 000 msg/sec | ~120 000 000 msg/sec | ~1.5 sec            |
-| Akka               | ?                  | ~38 000 000 msg/sec  | ?                   |
-| Akka.NET           | ~350 000 msg/sec   | ~30 000 000 msg/sec  | ~4.5 sec            |
-| Erlang             | ~200 000 msg/sc    | ~12 000 000 msg/sec  | ~0.75 sec           | 
+| Lib            |    Remote PingPong |      Inproc PingPong |    SkyNet |
+| -------------- | -----------------: | -------------------: | --------: |
+| Proto.Actor C# | ~8 500 000 msg/sec | ~125 000 000 msg/sec |  ~0.7 sec |
+| Proto.Actor Go | ~2 400 000 msg/sec | ~120 000 000 msg/sec |  ~1.5 sec |
+| Akka.NET       |   ~350 000 msg/sec |  ~30 000 000 msg/sec |  ~4.5 sec |
+| Erlang         |    ~200 000 msg/sc |  ~12 000 000 msg/sec | ~0.75 sec |
 
 ## Remote PingPong
 
@@ -25,7 +24,7 @@ your framework supports.
 ## Inproc PingPong
 
 This test is similar to the remote ping-pong, the difference is that there is a single node and
-there may be more than two actors, usually CPU-Count or CPU-Count * 2.
+there may be more than two actors, usually CPU-Count or CPU-Count \* 2.
 Messages may or may not be serialized. Both Proto.Actor and Akka.NET supports passing messages by reference
 to optimize in-process performance.
 
