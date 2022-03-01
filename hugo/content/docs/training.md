@@ -14,7 +14,7 @@ title: Professional Services
 
 ### Proto.Cluster - Distributed systems made easy
 
-Learn how to leverage programming abstractions such as actors, grains, persistence and pubsub to built highly scalable, realtime, systems.
+Learn how to leverage programming abstractions such as actors, grains, persistence and cluster pub-sub ,to built highly scalable, real-time, systems.
 
 **Agenda**
 
@@ -27,16 +27,18 @@ Learn how to leverage programming abstractions such as actors, grains, persisten
     * Metrics
     * Tracing
     * Logging    
-    * DataDog / Grafana integration
+    * DataDog and Grafana integration
+      * Grafana Loki
+      * Grafana Tempo
+      * Proto.Actor Dashboard
 * Stream processing
     * Cluster PubSub
     * Queue and Log integration    
-* Realtime Data Visualizations
+* Real-time Data Visualizations
+   * Real-time Map example
 * Digital Twins
 * Cluster-based microservices
 * Cluster Configuration
-
-
 
 
 ### Deployment - Kubernetes
