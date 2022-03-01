@@ -16,7 +16,7 @@ title: Professional Services
 
 Learn how to leverage programming abstractions such as actors, grains, persistence and cluster pub-sub ,to built highly scalable, real-time, systems.
 
-**Agenda**
+#### Agenda
 
 * Building Blocks; Actors, Virtual Actors, and Grains
 * Design patterns and optimizations
@@ -43,8 +43,15 @@ Learn how to leverage programming abstractions such as actors, grains, persisten
 
 ### Deployment - Kubernetes
 
+* Configure Kubernetes - Security setup
+* Configure Kubernetes Cluster Provider
+* Architecture overview
+
+
 Learn the best ways to deploy, run, monitor, and scale your Proto.Actor systems in a Kubernetes environment.
 
 ## Facilitators
 
-Roger, Magne, Alexey?, Thomas? other? 
+Roger Johansson
+Magne Helleborg
+Thomas Ornell
