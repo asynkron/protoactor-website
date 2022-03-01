@@ -4,6 +4,8 @@ title: Professional Services
 
 # Professional Services
 
+## Support Subscription
+
 ## Sessions
 
 ## Workshops
@@ -39,13 +41,10 @@ Learn how to leverage programming abstractions such as actors, grains, persisten
 * Digital Twins
 * Cluster-based microservices
 * Cluster Configuration
-
-
-### Deployment - Kubernetes
-
-* Configure Kubernetes - Security setup
-* Configure Kubernetes Cluster Provider
-* Architecture overview
+   * Kubernetes
+      * Configure Kubernetes - Security setup
+      * Configure Kubernetes Cluster Provider
+      * Architecture overview
 
 
 Learn the best ways to deploy, run, monitor, and scale your Proto.Actor systems in a Kubernetes environment.
