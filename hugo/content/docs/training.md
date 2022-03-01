@@ -4,57 +4,26 @@ title: Professional Services
 
 # Professional Services
 
-## Support Subscription
-
 ## Presentations
 
-* Introduction to the actor-model and Proto.Actor - 1h Session <a href="mailto:info@asynkron.se?subject=Proto.Actor Presentation">Contact us</a>
+- **Introduction to the actor-model and Proto.Actor** - 1h Session <a href="mailto:info@asynkron.se?subject=Proto.Actor Presentation">Contact us</a>
 
 ## Workshops
 
-* Introduction to the actor-model and Proto.Actor, Q&A, hands on coding - 8h Session <a href="mailto:info@asynkron.se?subject=Proto.Actor Workshop">Contact us</a>
+- **Introduction to the actor-model and Proto.Actor, Q&A, hands on coding** - Full-day <a href="mailto:info@asynkron.se?subject=Proto.Actor Workshop">Contact us</a>
+
+- **Proto.Actor Cluster - Distributed systems made easy** - Full-day,
+  [Agenda](workshop-cluster.md),
+  <a href="mailto:info@asynkron.se?subject=Proto.Cluster Workshop">Contact us</a>
+
+- **Code / Architectural review of actor based systems** - <a href="mailto:info@asynkron.se?subject=Architectural Review">Contact us</a>
 
 ## Dedicated Team Member
 
 Do you need a full-time distributed systems engineer / Proto.Actor expert?
 <a href="mailto:info@asynkron.se?subject=dedicated team member">Contact us</a>
 
-## Training
-
-### Proto.Cluster - Distributed systems made easy
-
-Learn how to leverage programming abstractions such as actors, grains, persistence, and cluster pub-sub to built highly scalable, real-time, systems.
-
-#### Agenda
-
-* Building Blocks; Actors, Virtual Actors, and Grains
-* Design patterns and optimizations
-    * Local affinity
-    * Message deduplication
-    * Persistence patterns
-* Observability
-    * Metrics
-    * Tracing
-    * Logging    
-    * DataDog and Grafana integration
-      * Grafana Loki
-      * Grafana Tempo
-      * Proto.Actor Dashboard
-* Stream processing
-    * Cluster PubSub
-    * Queue and Log integration    
-* Real-time Data Visualizations
-   * Real-time Map example
-* Digital Twins
-* Cluster-based microservices
-* Cluster Configuration
-   * Kubernetes
-      * Configure Kubernetes - Security setup
-      * Configure Kubernetes Cluster Provider
-      * Architecture overview
-
-
-Learn the best ways to deploy, run, monitor, and scale your Proto.Actor systems in a Kubernetes environment.
+## Support Subscription
 
 ## Facilitators
 
