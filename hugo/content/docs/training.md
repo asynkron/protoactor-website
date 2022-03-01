@@ -8,6 +8,8 @@ title: Professional Services
 
 ## Sessions
 
+* Introduction to the actor-model - 1h Session
+
 ## Workshops
 
 ## Dedicated Team Member
