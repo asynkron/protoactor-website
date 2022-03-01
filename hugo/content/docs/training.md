@@ -16,7 +16,7 @@ title: Professional Services
 
 ## Dedicated Team Member
 
-Do you need a full-time distributed systems engineer?
+Do you need a full-time distributed systems engineer / Proto.Actor expert?
 <a href="mailto:info@asynkron.se?subject=dedicated team member">Contact us</a>
 
 ## Training
