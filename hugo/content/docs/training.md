@@ -26,9 +26,3 @@ Do you need a full-time distributed systems engineer / Proto.Actor expert?
 ## Support Subscription
 
 Coming soon
-
-## Facilitators
-
-Roger Johansson
-Magne Helleborg
-Thomas Ornell
