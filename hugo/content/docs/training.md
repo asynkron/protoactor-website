@@ -8,9 +8,7 @@ title: Professional Services
 
 ## Sessions
 
-* Introduction to the actor-model - 1h Session
-
-[Book online](https://calendly.com/asynkron/proto-actor-introduction)
+* Introduction to the actor-model and Proto.Actor - 1h Session [Book online](https://calendly.com/asynkron/proto-actor-introduction)
 
 ## Workshops
 
