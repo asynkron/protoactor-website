@@ -6,11 +6,13 @@ title: Professional Services
 
 ## Support Subscription
 
-## Sessions
+## Presentations
 
 * Introduction to the actor-model and Proto.Actor - 1h Session [Book online](https://calendly.com/asynkron/proto-actor-introduction)
 
 ## Workshops
+
+* Introduction to the actor-model and Proto.Actor, Q&A, hands on coding - 8h Session
 
 ## Dedicated Team Member
 
@@ -18,7 +20,7 @@ title: Professional Services
 
 ### Proto.Cluster - Distributed systems made easy
 
-Learn how to leverage programming abstractions such as actors, grains, persistence and cluster pub-sub ,to built highly scalable, real-time, systems.
+Learn how to leverage programming abstractions such as actors, grains, persistence, and cluster pub-sub to built highly scalable, real-time, systems.
 
 #### Agenda
 
