@@ -10,6 +10,8 @@ title: Professional Services
 
 * Introduction to the actor-model - 1h Session
 
+[Book online](https://calendly.com/asynkron/proto-actor-introduction)
+
 ## Workshops
 
 ## Dedicated Team Member
