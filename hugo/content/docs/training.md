@@ -8,11 +8,11 @@ title: Professional Services
 
 ## Presentations
 
-* Introduction to the actor-model and Proto.Actor - 1h Session [Book online](https://calendly.com/asynkron/proto-actor-introduction)
+* Introduction to the actor-model and Proto.Actor - 1h Session <a href="mailto:info@asynkron.se?subject=Proto.Actor Presentation">Contact us</a>
 
 ## Workshops
 
-* Introduction to the actor-model and Proto.Actor, Q&A, hands on coding - 8h Session
+* Introduction to the actor-model and Proto.Actor, Q&A, hands on coding - 8h Session <a href="mailto:info@asynkron.se?subject=Proto.Actor Workshop">Contact us</a>
 
 ## Dedicated Team Member
 
