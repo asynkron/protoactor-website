@@ -17,7 +17,7 @@ title: Professional Services
 ## Dedicated Team Member
 
 Do you need a full-time distributed systems engineer?
-<a href="mailto://info@asynkron.se?subject=dedicated team member">Contact us</a>
+<a href="mailto:info@asynkron.se?subject=dedicated team member">Contact us</a>
 
 ## Training
 
