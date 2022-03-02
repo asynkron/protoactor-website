@@ -84,7 +84,7 @@ This method takes a key for the state you wish to set, e.g. "MyState" and a valu
 Once set, the cluster will start to sync this information over to other cluster members.
 
 
-### Reading gossip state
+### Query gossip state
 
 ```csharp
 //get the heartbeat entry in the gossip state
@@ -96,4 +96,15 @@ var stats = (from x in memberHeartbeats
     from y in x.Value.ActorStatistics.ActorCount
     select (MemberId: memberId, Kind: y.Key, Count: y.Value))
     .ToList();
+```    
+
+### Subscribing to gossip state
+
+```csharp
+cluster
+    .System
+    .EventStream
+    .Subscribe<GossipUpdate>(
+    x => x.Key == GossipKeys.MemberHeartbeat, 
+    update => {....});
 ```    
