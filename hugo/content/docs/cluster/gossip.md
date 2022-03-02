@@ -88,7 +88,7 @@ Once set, the cluster will start to sync this information over to other cluster 
 
 ```csharp
 //get the heartbeat entry in the gossip state
-var memberHeartbeats = await System.Cluster().Gossip.GetState<MemberHeartbeat>(GossipKeys.Heartbeat);
+var memberHeartbeats = await system.Cluster().Gossip.GetState<MemberHeartbeat>(GossipKeys.Heartbeat);
 
 //create a list with tuple (MemberId, Kind, Count)
 var stats = (from x in memberHeartbeats
@@ -101,8 +101,7 @@ var stats = (from x in memberHeartbeats
 ### Subscribing to gossip state
 
 ```csharp
-cluster
-    .System
+system
     .EventStream
     .Subscribe<GossipUpdate>(
     x => x.Key == GossipKeys.MemberHeartbeat, 
