@@ -12,5 +12,9 @@ div {
     padding: 24px;
     color: $text-color;
     text-align: center;
+
+    svg {
+      height: 100% !important;
+    }
   }
 }

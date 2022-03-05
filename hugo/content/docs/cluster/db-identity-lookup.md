@@ -9,14 +9,18 @@ This strategy uses external database to keep information about spawned actors in
 
 ![DB-Identity-Lookup](images/db-identity-lookup.jpg)
 
+## Sequence diagram
+
 ```mermaid
 sequenceDiagram
 
     actor Consumer
     participant ClusterContext
-    participant PidCache
     participant DBIdentityLookup
+    participant PidCache
     participant DB
+    participant MemberList
+    participant Activator
 
     Consumer->>ClusterContext: RequestAsync<T>
     loop
@@ -26,11 +30,18 @@ sequenceDiagram
             ClusterContext->>DBIdentityLookup: GetPid
             DBIdentityLookup->>DB: Get Placement Info
             DB-->>DBIdentityLookup: Placement Info
-            alt Placement is missing
-                DBIdentityLookup->>MemberList: GetActivator(kind)
-                MemberList-->>DBIdentityLookup: Member info
-                DBIdentityLookup->>Activator: ActivationRequest
-                Activator-->>DBIdentityLookup: ActivationResponse(PID)
+            rect rgba(0, 0, 0, 0.3)
+                alt Placement is missing
+                    DBIdentityLookup->>MemberList: GetActivator(kind)
+                    MemberList-->>DBIdentityLookup: Member info
+                    DBIdentityLookup-->>+Activator: ActivationRequest
+                    note right of Activator: Spawn the virtual actor<br>and return the PID
+                    Activator-->>-DBIdentityLookup: ActivationResponse(PID)
+                    DBIdentityLookup->>DB: Store Placement Info
+                    DB-->>DBIdentityLookup:Stored
+                    DBIdentityLookup->>PidCache: Store PID
+                    PidCache-->>DBIdentityLookup: Stored
+                end
             end
             DBIdentityLookup-->>ClusterContext: PID
         end
