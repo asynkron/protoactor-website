@@ -9,6 +9,28 @@ This strategy uses external database to keep information about spawned actors in
 
 ![DB-Identity-Lookup](images/db-identity-lookup.jpg)
 
+```mermaid
+sequenceDiagram
+
+    participant Consumer
+    participant ClusterContext
+
+    Consumer->>ClusterContext: RequestAsync<T>
+    loop
+        ClusterContext->>PidCache: GetPid
+        PidCache-->>ClusterContext: PID
+        alt PID is null
+            ClusterContext->>IIdentityLookup: GetPid
+            IIdentityLookup->>ClusterContext: PID
+        end
+        ClusterContext->>PID: Request
+        PID-->>ClusterContext: Response
+        alt Response has value
+            ClusterContext-->>Consumer: Response
+        end
+    end
+```
+
 ## Async Semaphore
 
 To avoid too many parallel calls to the database, that might potentially kill it or cause client timeouts, it can be needed to introduce a mechanism that limits concurrency. Proto.Actor has own implementation of [AsyncSemaphore](https://github.com/asynkron/protoactor-dotnet/blob/dev/src/Proto.Actor/Utils/AsyncSemaphore.cs#L12) that protects against that. DB storage implementations have a parameter that controls concurrency level.
@@ -18,12 +40,12 @@ To avoid too many parallel calls to the database, that might potentially kill it
 ```csharp
 
 static IIdentityLookup GetRedisIdentityLookup()
-        {
-            var multiplexer = ConnectionMultiplexer.Connect(config["RedisAddress"]);
-            var redisIdentityStorage = new RedisIdentityStorage("mycluster", multiplexer, maxConcurrency: 50);
+{
+    var multiplexer = ConnectionMultiplexer.Connect(config["RedisAddress"]);
+    var redisIdentityStorage = new RedisIdentityStorage("mycluster", multiplexer, maxConcurrency: 50);
 
-            return new IdentityStorageLookup(redisIdentityStorage);
-        }
+    return new IdentityStorageLookup(redisIdentityStorage);
+}
 
 ```
 
@@ -32,14 +54,14 @@ static IIdentityLookup GetRedisIdentityLookup()
 ```csharp
 
 static IIdentityLookup GetMongoIdentityLookup()
-        {
-            var db = GetMongo();
-            var pidsCollection = db.GetCollection<PidLookupEntity>("pids");
+{
+    var db = GetMongo();
+    var pidsCollection = db.GetCollection<PidLookupEntity>("pids");
 
-            var identity = new IdentityStorageLookup(
-                new MongoIdentityStorage("mycluster", pidsCollection, maxConcurrency: 200)
-            );
-            return identity;
-        }
+    var identity = new IdentityStorageLookup(
+        new MongoIdentityStorage("mycluster", pidsCollection, maxConcurrency: 200)
+    );
+    return identity;
+}
 
 ```
