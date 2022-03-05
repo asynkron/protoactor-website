@@ -27,7 +27,7 @@ sequenceDiagram
         ClusterContext->>PidCache: GetPid
         PidCache-->>ClusterContext: PID
         rect rgba(0, 0, 0, 0.2)
-            alt Get PID from IdentityLookup
+            alt No hit in PidCache
                 ClusterContext->>IdentityLookup: GetPid
                 note right of IdentityLookup: "IdentityLookup implementation"
                 IdentityLookup-->>ClusterContext: PID
