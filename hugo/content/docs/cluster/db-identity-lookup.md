@@ -21,32 +21,36 @@ sequenceDiagram
     participant DB
     participant MemberList
     participant Activator
+    participant VirtualActor
 
     Consumer->>ClusterContext: RequestAsync<T>
     loop
         ClusterContext->>PidCache: GetPid
         PidCache-->>ClusterContext: PID
-        alt PID is missing
-            ClusterContext->>DBIdentityLookup: GetPid
-            DBIdentityLookup->>DB: Get Placement Info
-            DB-->>DBIdentityLookup: Placement Info
-            rect rgba(0, 0, 0, 0.3)
-                alt Placement is missing
-                    DBIdentityLookup->>MemberList: GetActivator(kind)
-                    MemberList-->>DBIdentityLookup: Member info
-                    DBIdentityLookup-->>+Activator: ActivationRequest
-                    note right of Activator: Spawn the virtual actor<br>and return the PID
-                    Activator-->>-DBIdentityLookup: ActivationResponse(PID)
-                    DBIdentityLookup->>DB: Store Placement Info
-                    DB-->>DBIdentityLookup:Stored
-                    DBIdentityLookup->>PidCache: Store PID
-                    PidCache-->>DBIdentityLookup: Stored
-                end
+        rect rgba(0, 0, 0, 0.3)
+            alt PID is missing
+                ClusterContext->>DBIdentityLookup: GetPid
+                DBIdentityLookup->>DB: Get Placement Info
+                DB-->>DBIdentityLookup: Placement Info
+
+                    alt Placement is missing
+                        DBIdentityLookup->>MemberList: GetActivator(kind)
+                        MemberList-->>DBIdentityLookup: Member info
+                        DBIdentityLookup->>Activator: ActivationRequest
+                        note right of Activator: Spawn the virtual actor<br>and return the PID
+                        Activator->>VirtualActor: Spawn
+                        Activator-->>DBIdentityLookup: ActivationResponse(PID)
+                        DBIdentityLookup->>DB: Store Placement Info
+                        DB-->>DBIdentityLookup:Stored
+                        DBIdentityLookup->>PidCache: Store PID
+                        PidCache-->>DBIdentityLookup: Stored
+                    end
+
+                DBIdentityLookup-->>ClusterContext: PID
             end
-            DBIdentityLookup-->>ClusterContext: PID
         end
-        ClusterContext->>PID: Request
-        PID-->>ClusterContext: Response
+        ClusterContext->>VirtualActor: Request
+        VirtualActor-->>ClusterContext: Response
         alt Response has value
             ClusterContext-->>Consumer: Response
         end
