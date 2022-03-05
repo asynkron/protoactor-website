@@ -12,16 +12,23 @@ This strategy uses external database to keep information about spawned actors in
 ```mermaid
 sequenceDiagram
 
-    participant Consumer
+    actor Consumer
     participant ClusterContext
+    participant PidCache
+    participant DBIdentityLookup
+    participant DB
 
     Consumer->>ClusterContext: RequestAsync<T>
     loop
         ClusterContext->>PidCache: GetPid
         PidCache-->>ClusterContext: PID
         alt PID is null
-            ClusterContext->>IIdentityLookup: GetPid
-            IIdentityLookup->>ClusterContext: PID
+            ClusterContext->>DBIdentityLookup: GetPid
+            DBIdentityLookup->>DB: Get Placement Info
+            DB-->>DBIdentityLookup: Placement Info
+            alt Placement exists
+                DBIdentityLookup-->>ClusterContext: PID
+            end
         end
         ClusterContext->>PID: Request
         PID-->>ClusterContext: Response
