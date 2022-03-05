@@ -22,13 +22,17 @@ sequenceDiagram
     loop
         ClusterContext->>PidCache: GetPid
         PidCache-->>ClusterContext: PID
-        alt PID is null
+        alt PID is missing
             ClusterContext->>DBIdentityLookup: GetPid
             DBIdentityLookup->>DB: Get Placement Info
             DB-->>DBIdentityLookup: Placement Info
-            alt Placement exists
-                DBIdentityLookup-->>ClusterContext: PID
+            alt Placement is missing
+                DBIdentityLookup->>MemberList: GetActivator(kind)
+                MemberList-->>DBIdentityLookup: Member info
+                DBIdentityLookup->>Activator: ActivationRequest
+                Activator-->>DBIdentityLookup: ActivationResponse(PID)
             end
+            DBIdentityLookup-->>ClusterContext: PID
         end
         ClusterContext->>PID: Request
         PID-->>ClusterContext: Response
