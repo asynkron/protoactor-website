@@ -55,6 +55,7 @@ tags: [protoactor, docs]
   - [Dispatchers](dispatchers.md) - How do I tweak how and where actors execute?
   - [Dependency Injection (.NET)](di.md) - How do I configure actors using Dependency Injection?
 - [Persistence of actor's state](persistence.md) - How do I persist state for actors?
+  - [Using 3rd party libraries](externalpersistence.md) - How do I persist state using external libraries?
 - [Remote](remote.md) - How do I communicate with actors on other nodes?
   - [Message Serialization](serialization.md)
   - [Remote Spawning](remote-spawn.md) - How do I spawn actors on other nodes?
