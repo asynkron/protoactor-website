@@ -1,12 +1,10 @@
-// 
-// 
+//
+//
 // prism.scss
 //
 //
 
-@import "../../components/plugins/prismdark";
-
-
+@import "../../components/plugins/prism-one-light";
 
 // code {
 
@@ -16,13 +14,13 @@
 //     padding: unset;
 //     font-weight: unset;
 //     color: unset;
-    
+
 //     font-weight: normal;
 //     font-family: "Lucida Console", Monaco, monospace !important;
 //     font-size: 14px;
 // }
 
-code[class*='language-']{
+code[class*="language-"] {
   border: none;
   line-height: 18px;
   padding: 0;
@@ -31,23 +29,23 @@ code[class*='language-']{
 
 article {
   code[class*="language-"],
-    pre[class*="language-"] {    
-    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace !important;
+  pre[class*="language-"] {
+    font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace !important;
   }
 
-  pre[class*='language-']{
+  pre[class*="language-"] {
     border: 1px solid #00000005;
     border-radius: 3px;
-    border-left-width: 10px; 
-   // font-weight: normal !important;
+    border-left-width: 10px;
+    // font-weight: normal !important;
     font-size: 13.6px !important;
-    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace !important;
+    font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace !important;
     padding: 10px;
     margin: 0;
     margin-bottom: 16px;
   }
 }
 
-pre[class*='language-']{
+pre[class*="language-"] {
   padding: $spacer;
 }
