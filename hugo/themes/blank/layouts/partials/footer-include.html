@@ -214,8 +214,8 @@
   }
 
   $prefix line {
-    stroke-width: ${lineWidth};
-    stroke: ${lineColor};
+    stroke-width: 2px !important;
+    stroke: #a0a0a0 !important;
   }
 
   $prefix [id^="arrowhead"] path {
@@ -232,26 +232,26 @@
     stroke: none;
   }
 
-  $prefix .actor-line {
-    stroke: grey;
+   .actor-line {
+    stroke: grey !important;
   }
 
-  $prefix #arrowhead path {
-    stroke: ${lineColor};
-    fill: ${lineColor};
+   #arrowhead path {
+    stroke: ${lineColor} !important;
+    fill: ${lineColor} !important;
   }
 
-  $prefix line .messageLine0 {
+   .messageLine0 {
     stroke-dasharray: "2 2" !important;
-    marker-end: "url(#arrowhead)";
-    stroke-width: ${lineWidth};
-    stroke: ${lineColor};
+    marker-end: "url(#arrowhead)" !important;
+    stroke-width: ${lineWidth} !important;
+    stroke: ${lineColor} !important;
   }
 
-  $prefix line .messageLine1 {
-    stroke-width: 1.5;
-    stroke-dasharray: "2 2";
-    stroke:${lineColor};
+   .messageLine1 {
+    stroke-width: 1.5 !important;
+    stroke-dasharray: "2 2" !important;
+    stroke:${lineColor} !important;
   }
 
   $prefix .note {
@@ -285,6 +285,24 @@
     fill: ${textColor};
     stroke: none;
     font-family: ${fontFamily}
+  }
+
+  $prefix text.actor>tspan {
+    fill: ${textColor} !important;
+  }
+
+  .loopText>tspan {
+    fill: ${textColor} !important;
+    stroke: none !important;
+  }
+   .messageText {
+    fill: ${textColor} !important;
+    stroke: none !important;
+  }
+
+  $prefix line.loopLine {
+    stroke-width: 2px !important;
+    stroke: #ffffff !important;
   }
 
   `;
