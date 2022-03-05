@@ -445,7 +445,7 @@ builder.Services.AddHostedService<SmartBulbSimulator>();
 
 When you ran the app, you should see console output similar to:
 
-```txt
+```log
 Starting a cluster member
 smart bulb simulator: turning on smart bulb 'living_room_1'
 living_room_1: created
@@ -743,7 +743,7 @@ private async Task NotifyHouse()
 
 Try running the app. You should see console output similar to:
 
-```txt
+```log
 smart bulb simulator: turning off smart bulb 'living_room_2'
 living_room_2: created
 living_room_2: turning smart bulb off
@@ -902,7 +902,7 @@ When you look at the console output, grains should be distributed between two me
 
 Sample output from the first terminal:
 
-```txt
+```log
 living_room_2: created
 living_room_2: turning smart bulb off
 bedroom: created
@@ -918,7 +918,7 @@ bedroom: turning smart bulb on
 
 Sample output from the second terminal:
 
-```txt
+```log
 living_room_1: created
 living_room_1: turning smart bulb off
 my-house: created
