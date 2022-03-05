@@ -16,7 +16,7 @@ This approach:
 
 To generate grains, you'll need the `Proto.Cluster.CodeGen` NuGet package:
 
-```sh
+```bash
 dotnet add package Proto.Cluster.CodeGen
 ```
 

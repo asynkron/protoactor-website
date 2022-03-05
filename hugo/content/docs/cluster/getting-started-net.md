@@ -880,13 +880,13 @@ Now we're ready to run multiple members. Start a terminal and navigate to the pr
 
 First, make sure your app is up to date:
 
-```sh
+```bash
 dotnet build
 ```
 
 Start the first member:
 
-```sh
+```bash
 dotnet run --no-build --urls "http://localhost:5161" ProtoRemotePort=5000 RunSimulation=false
 ```
 
@@ -894,7 +894,7 @@ At this point, the app shouldn't do much now, as the simulator is turned off.
 
 Open a second terminal, start the second member (with the simulation on and with different ports):
 
-```sh
+```bash
 dotnet run --no-build --urls "http://localhost:5162" ProtoRemotePort=5001 RunSimulation=true
 ```
 
