@@ -143,3 +143,76 @@ Router----r3-->Routee3
 
 
 ```
+
+```mermaid
+  graph TD;
+  A((A))
+  A---B1((B1))
+  A---B2((B2))
+  A---B3((B3))
+
+  B1---C1((C1))
+  B1---C2((C2))
+  B1---C3((C3))
+
+  B2---C4((C4))
+  B2---C5((C5))
+  B2---C6((C6))
+
+  B3---C7((C7))
+  B3---C8((C8))
+  B3---C9((C9))
+```
+
+```mermaid
+  graph TD;
+  A((A))
+  B1((B1))
+  B2((B2))
+  B3((B3))
+
+  C1((C1))
+  C2((C2))
+  C3((C3))
+
+  C4((C4))
+  C5((C5))
+  C6((C6))
+
+  C7((C7))
+  C8((C8))
+  C9((C9))
+
+
+  class A blue
+  class B1 yellow
+  class B2 light-blue
+  class B3 light-blue
+
+  class C1 explode
+  class C2 light-blue
+  class C3 light-blue
+  class C4 light-blue
+  class C5 light-blue
+  class C6 light-blue
+  class C7 light-blue
+  class C8 light-blue
+  class C9 light-blue
+
+
+  A---B1
+  A---B2
+  A---B3
+
+  B1---C1
+  B1---C2
+  B1---C3
+
+  B2---C4
+  B2---C5
+  B2---C6
+
+  B3---C7
+  B3---C8
+  B3---C9
+```
