@@ -1,4 +1,4 @@
-# OpenTelemetry + .NET
+# OpenTelemetry, Grafana, and .NET
 
 ## Example setup
 
