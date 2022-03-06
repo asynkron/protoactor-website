@@ -10,7 +10,51 @@ e.g. there might be some 3rd party service which cannot handle more than X simul
 
 In those cases, you can use a round-robin router to address this.
 
-![Limit Concurrency](images/limit-concurrency.png)
+```mermaid
+graph LR
+
+l1(1)
+class l1 message
+l2(2)
+class l2 message
+l3(3)
+class l3 message
+l4(4)
+class l4 message
+
+r1(1)
+class r1 message
+r2(2)
+class r2 message
+r3(3)
+class r3 message
+r4(4)
+class r4 message
+
+lr((Limited Resource))
+
+Router(Router)
+class Router light-blue
+Routee1(Worker1)
+class Routee1 light-blue
+Routee2(Worker2)
+class Routee2 light-blue
+Routee3(Worker3)
+class Routee3 light-blue
+
+
+l4---l3---l2---l1-->Router
+
+Router---r4---r1-->Routee1
+Router----r2-->Routee2
+Router----r3-->Routee3
+
+Routee1--->lr
+Routee2--->lr
+Routee3--->lr
+
+
+```
 
 As seen in the image above, we use a round-robin router to forward messages to, in this case, three worker actors.
 These worker actors can then interact with the limited resource.
@@ -28,6 +72,7 @@ That is, we want to ensure that no more than X concurrent workers are working at
 This can be useful when working with some form of expensive or limited resource, or when you want to scale up and maximize CPU core utilization.
 
 First, let's define a struct that will represent some form of work:
+
 ```go
 type workItem struct{ i int }
 ```
@@ -61,6 +106,7 @@ func doWork(ctx actor.Context) {
 ```
 
 ## Creating an actor
+
 Now we need to create an actor and pass some work to this actor:
 
 ```go
@@ -74,7 +120,7 @@ func main() {
 }
 ```
 
-We start by calling `actor.FromFunc` to define *how* the actor should be created, in this case, we simply say that we want to create a stateless actor from a function.
+We start by calling `actor.FromFunc` to define _how_ the actor should be created, in this case, we simply say that we want to create a stateless actor from a function.
 Then we call `actor.Spawn` to creates an instance of the actor, this is similar to the `new` function in Go.
 The `actor.PID` returned by `Spawn` is an identifier for the actor, and can be used to enqueue messages to the actors mailbox,
 We do this by calling `pid.Tell(message)`.
@@ -91,7 +137,7 @@ Proto.Actor has support for "Routers".
 
 ## Working with Routers
 
-What we want in this specific case is a *"Round-robin pool"*, that is, we want a pool of actors, where the workload is sent in a round-robin manner to the workers.
+What we want in this specific case is a _"Round-robin pool"_, that is, we want a pool of actors, where the workload is sent in a round-robin manner to the workers.
 We can do this by altering the above code to this:
 
 ```go
