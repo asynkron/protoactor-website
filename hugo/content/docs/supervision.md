@@ -143,6 +143,14 @@ There are two classes of supervision strategies which come with Proto.Actor: `On
   B1---C2
   B1---C3
 
+  subgraph g1[ ]
+  style g1 fill:#00000030, stroke-dasharray: 5, stroke: #ffffff, stroke-width:2px
+    C1
+  end
+    C2
+    C3
+
+
   B2---C4
   B2---C5
   B2---C6
@@ -168,19 +176,20 @@ The `AllForOneStrategy` is applicable in cases where the ensemble of children ha
 
 
   class A blue
-  class B1 light-blue
-  class B2 yellow
-  class B2 selected
+  class B1 yellow
+  class B1 selected
+  class B2 light-blue
 
-  class C1 light-blue
-  class C2 light-blue
-  class C3 light-blue
-  class C4 red
-  class C4 selected
-  class C5 green
-  class C5 selected
-  class C6 green
-  class C6 selected
+
+  class C1 red
+  class C1 selected
+  class C2 green
+  class C2 selected
+  class C3 green
+  class C3 selected
+  class C4 light-blue
+  class C5 light-blue
+  class C6 light-blue
 
 
   A---B1
@@ -190,7 +199,15 @@ The `AllForOneStrategy` is applicable in cases where the ensemble of children ha
   B1---C2
   B1---C3
 
+  subgraph g1[ ]
+  style g1 fill:#00000030, stroke-dasharray: 5, stroke: #ffffff, stroke-width:2px
+    C1
+    C2
+    C3
+  end
+
   B2---C4
   B2---C5
   B2---C6
+
 ```
