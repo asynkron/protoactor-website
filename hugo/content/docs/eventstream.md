@@ -11,7 +11,7 @@ The EventStream is used internally in Proto.Actor to broadcast framework events.
     graph LR
     sender(Sender)
     class sender blue
-    message(Message)
+    message(Messag)
     class message message
     es(EventStream)
     class es blue
