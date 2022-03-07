@@ -59,7 +59,8 @@ static async Task Main(string[] args)
     var props = Props.FromProducer(() => new Echo());
     var pid = system.Root.Spawn(props);
 
-    system.EventStream.Subscribe<DeadLetterEvent>(msg => Console.WriteLine($"Sender: {msg.Sender}, Pid: {msg.Pid}, Message: {msg.Message}"));
+    system.EventStream.Subscribe<DeadLetterEvent>(msg =>
+        Console.WriteLine($"Sender: {msg.Sender}, Pid: {msg.Pid}, Message: {msg.Message}"));
 
     system.Root.Send(pid, new TestMessage());
     await system.Root.PoisonAsync(pid);
@@ -72,5 +73,6 @@ static async Task Main(string[] args)
 Messages sent to a terminated actor cannot be processed and the PID on that actor must no longer be used. When messages are sent to a terminated actor, they are placed in the DeadLetter queue. This confirms receipt of the message by our handler.
 
 ```csharp
-system.EventStream.Subscribe<DeadLetterEvent>(msg => Console.WriteLine($"Sender: {msg.Sender}, Pid: {msg.Pid}, Message: {msg.Message}"));
+system.EventStream.Subscribe<DeadLetterEvent>(msg =>
+    Console.WriteLine($"Sender: {msg.Sender}, Pid: {msg.Pid}, Message: {msg.Message}"));
 ```
