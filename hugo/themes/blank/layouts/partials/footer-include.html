@@ -31,7 +31,7 @@
   src="/assets/js/jarallax-element.min.js"
 ></script>
 <!-- jQuery Countdown (displays countdown text to a specified date) -->
-<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script src="https://unpkg.com/mermaid@<8.14.0/dist/mermaid.min.js"></script>
 <script type="text/javascript">
   const lineColor = "#00ff00";
   const actorColor = "#007cb4";
@@ -42,7 +42,8 @@
   const greenColor = "#00CC66";
   const yellowColor = "#FFBF34";
   const redColor = "#C34423";
-  const lightBluecolor = "#00ADF8";
+  const grayColor = "#a0a0a0";
+  const lightBlueColor = "#00ADF8";
   const lineWidth = "4px";
   const strokeWidth = "3px";
   const strokeColor = backgroundColor;
@@ -71,6 +72,12 @@
 
   $prefix .message .label{
     color: #404040;
+  }
+
+  $prefix .gray .label-container{
+    fill: ${grayColor};
+    stroke: ${strokeColor};
+    stroke-width: ${strokeWidth};
   }
 
   $prefix .red .label-container{
@@ -103,7 +110,7 @@
   }
 
   $prefix .light-blue .label-container {
-    fill: ${lightBluecolor};
+    fill: ${lightBlueColor};
     stroke: ${strokeColor};
     stroke-width: ${strokeWidth};
   }
@@ -204,7 +211,7 @@
   }
 
   g .light-blue  {
-    fill: ${lightBluecolor};
+    fill: ${lightBlueColor};
     stroke: ${backgroundColor};
     stroke-width: ${lineWidth};
   }
