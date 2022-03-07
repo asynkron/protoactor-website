@@ -42,7 +42,7 @@ DeadLetter is a channel for undelivered messages. It stores all messages that ha
     class es blue
 
 
-    sender---message--->process-.-mailbox-.->actor
+    sender---message--->process-..-mailbox-..->actor
     process--->dl--->es
 
 
