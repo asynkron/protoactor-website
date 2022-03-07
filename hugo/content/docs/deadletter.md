@@ -30,7 +30,7 @@ DeadLetter is a channel for undelivered messages. It stores all messages that ha
     class sender blue
     actor(Actor)
     class actor gray
-    dl(DeadLetter)
+    dl(DeadLetterEvent)
     class dl blue
     message(Message)
     class message message
@@ -38,10 +38,12 @@ DeadLetter is a channel for undelivered messages. It stores all messages that ha
     class mailbox gray
     process(ActorProcess)
     class process light-blue
+    es(EventStream)
+    class es blue
 
 
     sender---message--->process-.-mailbox-.->actor
-    process--->dl
+    process--->dl--->es
 
 
 ```
