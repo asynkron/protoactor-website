@@ -31,7 +31,7 @@ DeadLetter is a channel for undelivered messages. It stores all messages that ha
     actor(Actor)
     class actor gray
     dl(DeadLetterEvent)
-    class dl blue
+    class dl message
     message(Message)
     class message message
     mailbox(Mailbox)
