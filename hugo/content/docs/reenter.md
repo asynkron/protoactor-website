@@ -35,14 +35,17 @@ This would execute as follows:
 
 ```mermaid
     graph TB
+    receive(Receive message)
     start(GetSomeData starts)
-    blocked(Actor is blocked<br>Task is executing)
+    blocked(Task is executing<br>actor is blocked)
     class blocked red
     rest(do something with the result)
     exit((Exit))
     class exit gray
 
-start --> blocked --> rest --> exit
+subgraph Actor Concurrency
+    receive --> start --> blocked ----> rest --> exit
+end
 
 ```
 
@@ -72,14 +75,22 @@ We instead get this execution flow:
     receive(Receive message)
     start(GetSomeData starts)
     await(Reenter into the actor thread)
-    blocked(Actor is not blocked<br>Task is executing)
+    blocked(Task is executing)
     class blocked green
     rest(do something with the result)
     exit((Exit))
     class exit gray
 
-receive --> start --> exit --> empty1 --> empty2
-start -.- blocked -.- await -.-> rest
+
+subgraph Actor Concurrency
+    direction TB
+    receive --> start --> exit
+    rest
+end
+
+blocked -..-> await
+start -.-> blocked
+await -.-> rest
 
 
 ```
