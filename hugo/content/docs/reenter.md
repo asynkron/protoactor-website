@@ -81,18 +81,17 @@ We instead get this execution flow:
     rest(do something with the result)
     exit((Exit))
     class exit gray
+    free1(Other messages can be processed here)
+    class free1 comment
 
 
 subgraph ac [Actor Concurrency]
     style ac fill:#00000030, stroke-dasharray: 5, stroke: #ffffff, stroke-width:2px
     direction TB
-    receive --> start --> exit
-    rest
+    receive --> start --> exit -->free1-->rest
 end
 
-blocked -..-> await
-start -.-> blocked
-await -.-> rest
+start -.-> blocked -.-> await -.-> rest
 
 
 ```
