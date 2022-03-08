@@ -25,6 +25,8 @@ public async Task Receive(IContext context)
         //do something with the result
         //....
     }
+
+    //Exit
 }
 
 ```
@@ -34,11 +36,11 @@ This would execute as follows:
 ```mermaid
     graph TB
     start(GetSomeData starts)
-    blocked(Actor is blocked<br>Waiting for GetSomeData to complete)
+    blocked(Actor is blocked<br>Task is executing)
     class blocked red
     rest(do something with the result)
-    exit(Exit)
-
+    exit((Exit))
+    class exit gray
 
 start --> blocked --> rest --> exit
 
@@ -57,6 +59,8 @@ public async Task Receive(IContext context)
             //....
         });
     }
+
+    //Exit
 }
 
 ```
@@ -68,12 +72,13 @@ We instead get this execution flow:
     receive(Receive message)
     start(GetSomeData starts)
     await(Reenter into the actor thread)
-    blocked(Actor is not locked<br>Waiting for GetSomeData to complete)
-    class blocked gray
+    blocked(Actor is not blocked<br>Task is executing)
+    class blocked green
     rest(do something with the result)
-    exit(Exit)
+    exit((Exit))
+    class exit gray
 
-receive --> start --> exit
+receive --> start --> exit --> empty1 --> empty2
 start -.- blocked -.- await -.-> rest
 
 
