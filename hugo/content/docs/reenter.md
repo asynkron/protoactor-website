@@ -1,4 +1,4 @@
-# Context.ReenterAfter
+# Reentrancy
 
 `Context.ReenterAfter` allows you to combine asynchronous operations with the actor-models single-threaded semantics.
 
