@@ -32,14 +32,15 @@ public async Task Receive(IContext context)
 This would execute as follows:
 
 ```mermaid
-    graph LR
+    graph TB
     start(GetSomeData starts)
     blocked(Actor is blocked<br>Waiting for GetSomeData to complete)
     class blocked red
     rest(do something with the result)
+    exit(Exit)
 
 
-start --> blocked --> rest
+start --> blocked --> rest --> exit
 
 ```
 
@@ -63,15 +64,16 @@ public async Task Receive(IContext context)
 We instead get this execution flow:
 
 ```mermaid
-    graph LR
+    graph TB
+    receive(Receive message)
     start(GetSomeData starts)
     await(Reenter into the actor thread)
     blocked(Actor is not locked<br>Waiting for GetSomeData to complete)
     class blocked gray
     rest(do something with the result)
-    next(Continue to process next message)
+    exit(Exit)
 
-start --> next
+receive --> start --> exit
 start -.- blocked -.- await -.-> rest
 
 
