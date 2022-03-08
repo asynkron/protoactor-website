@@ -43,7 +43,8 @@ This would execute as follows:
     exit((Exit))
     class exit gray
 
-subgraph Actor Concurrency
+subgraph ac [Actor Concurrency]
+    style ac fill:#00000030, stroke-dasharray: 5, stroke: #ffffff, stroke-width:2px
     receive --> start --> blocked ----> rest --> exit
 end
 
@@ -82,7 +83,8 @@ We instead get this execution flow:
     class exit gray
 
 
-subgraph Actor Concurrency
+subgraph ac [Actor Concurrency]
+    style ac fill:#00000030, stroke-dasharray: 5, stroke: #ffffff, stroke-width:2px
     direction TB
     receive --> start --> exit
     rest
