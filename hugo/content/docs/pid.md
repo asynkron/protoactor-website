@@ -28,4 +28,35 @@ There are three built-in Process types in Proto.Actor.
 
 `LocalProcess`, `RemoteProcess` and `FutureProcess`.
 
-![Process types](images/process-types.png)
+```mermaid
+graph LR
+pid(pid)
+
+ActorProcess(ActorProcess)
+FutureProcess(FutureProcess)
+RemoteProcess(RemoteProcess)
+
+Mailbox(Mailbox)
+ActorContext(ActorContext)
+Actor((Actor))
+
+TaskCompletionSource(TaskCompletionSource)
+
+RemoteProcess(RemoteProcess)
+
+EndpointWriter(EndpointWriter)
+EndpointReader(EndpointReader)
+
+network(Network)
+class network message
+
+GrpcServer(GrpcServer)
+class GrpcServer green
+GrpcClient(GrpcClient)
+class GrpcClient green
+
+
+pid --> ActorProcess --> Mailbox --> ActorContext --> Actor
+pid --> FutureProcess --> TaskCompletionSource
+pid --> RemoteProcess --> EndpointWriter --> GrpcClient --> network --> GrpcServer --> EndpointReader
+```
