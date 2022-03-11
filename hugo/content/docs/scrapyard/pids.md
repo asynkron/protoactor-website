@@ -1,6 +1,4 @@
-# Lesson 2: Actor References.
-
-In the actors' system, there would be no sense if it did not consist of several actors that interact with each other. As we know from the first module, actors interact with each other by sending messages. So to be able to send a message, one actor needs some reference to another actor.
+Actors interact with each other by sending messages. So to be able to send a message, one actor needs some form of reference to another actor.
 
 ![](../../images/2_2_1.png)
 
@@ -27,5 +25,3 @@ And the last link that interests us. This is a reference to the parent. That is,
 Now you know that Proto.Actor does not use direct links to other actors instead we have an abstraction over actors called PID.
 
 In Proto.Actor, the primary way to get the PID of an actor, is to create a new actor. That is, after creating a child or root actor, Proto.Actor returns the PID of the newly created actor. You can use this PID to send messages to this actor.
-
-[Go ahead!](../lesson-3)

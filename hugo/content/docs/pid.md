@@ -6,6 +6,30 @@ title: Process ID
 
 When you spawn an actor you don't get a direct reference to it. Instead, you get a `PID` (short for process ID) which is a serializable identifier that is used to send messages to the actor's mailbox. A benefit of this is that the `PID` can easily and cheaply be serialized and sent over the wire, allowing for actors to communicate remotely.
 
+## Overview
+
+Actors interact with each other by sending messages. So to be able to send a message, one actor needs some form of reference to another actor.
+
+```mermaid
+graph LR
+
+  actor1((Actor)) ----> actor2((Actor))
+
+```
+
+Here we see that actor 1 wants to send a message to actor 2, in Proto.Actor we don't work with actors directly. Instead, we work with the PID of the actor. The PID is the Process ID of the process.
+
+Each actor has a unique PID that allows Proto.Actor to distinguish actors. When a new actor is created Photo.Actor assigns it the next free ID(i.e., not associated with any actor). ID's are assigned incrementally, i.e., the new actor's ID is higher than the actor created before it. When an actor completes his work, Proto.Actor frees the identifier occupied by it.
+
+```mermaid
+graph LR
+    pid(PID)
+    class pid light-blue
+
+  actor1((Actor)) --- pid --> actor2((Actor))
+
+```
+
 ## Communicating with PIDs
 
 There are two main methods of communicating with a PID.
@@ -20,17 +44,77 @@ There are two main methods of communicating with a PID.
 
 `RequestAsync<T>` is identical to `Request` but it returns an awaitable `Task` that will complete when the actor has sent a reply of type `T`. It should only be used when you require a synchronous mode of communication.
 
+## Topology
+
+Thus, a PID is a layer of abstraction over an actor. And by having this level of abstraction, we can transfer references to actors throughout the system via messages. In addition to that, each actor has several special references to other actors.
+
+### Self
+
+The first link is a link to yourself. Since a PID is an abstraction above an actor. We can use our PID to send a message to yourself. For example, you may need to do this when you want to send a message to yourself that delayed in time.
+
+```mermaid
+graph LR
+    pid(Self PID)
+    class pid light-blue
+
+  pid --> actor((Actor))
+
+```
+
+### Children
+
+The next special link that our actor has is a link to his child actors. For example, our actor has created two child actors. And you can use those links to interact with those child actors.
+
+```mermaid
+graph LR
+
+
+    parent((Parent<br>Actor))
+    child1((Child<br>Actor))
+    child2((Child<br>Actor))
+    pid1(Child PID)
+    class pid1 light-blue
+    pid2(Child PID)
+    class pid2 light-blue
+
+    parent --- pid1 --> child1
+    parent --- pid2 --> child2
+
+```
+
+### Parent
+
+And the last link that interests us. This is a reference to the parent. That is, child actors can communicate with their parents. For example, the child actor can notify the parent that an error has occurred while processing the message.
+
+```mermaid
+graph LR
+
+
+    parent((Parent<br>Actor))
+    child1((Child<br>Actor))
+    child2((Child<br>Actor))
+    pid1(Parent PID)
+    class pid1 light-blue
+    pid2(Parent PID)
+    class pid2 light-blue
+
+    child1 --- pid1 --> parent
+    child2 --- pid2 --> parent
+
+```
+
 ## Architecture of PIDs
 
 You can think of the PID as the phone number to an actor, and the process as the underlying infrastructure used to reach the target.
 
 There are three built-in Process types in Proto.Actor.
 
-`LocalProcess`, `RemoteProcess` and `FutureProcess`.
+`ActorProcess`, `RemoteProcess` and `FutureProcess`.
 
 ```mermaid
 graph LR
-pid(pid)
+pid(PID)
+class pid light-blue
 
 ActorProcess(ActorProcess)
 FutureProcess(FutureProcess)
