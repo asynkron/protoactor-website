@@ -1,4 +1,4 @@
-# Lesson 4: The Reactive Manifesto.
+# The Reactive Manifesto.
 
 Proto.Actor follows the principles first expressed in the reactive programming manifesto. The Reactive Programming Manifesto is a set of principles for creating flexible, loosely coupled and scalable systems. These systems are easy to develop and can be easily modified. They are lower susceptible to failures and react to them with more elegance.
 
@@ -12,7 +12,7 @@ However, progress does not stand still. The application architecture has evolved
 
 ## Reactive applications
 
-The Merriam Webster dictionary defines reactive as *"ready to respond to external events"* , which means that the components are always active and always ready to receive messages. This definition reveals the essence of reactive applications, focusing on systems that:
+The Merriam Webster dictionary defines reactive as _"ready to respond to external events"_ , which means that the components are always active and always ready to receive messages. This definition reveals the essence of reactive applications, focusing on systems that:
 
 - **react to events:**
   Event orientation means having the following qualities.
@@ -25,7 +25,7 @@ The Merriam Webster dictionary defines reactive as *"ready to respond to externa
 
 Each of these characteristics is essential for reactive applications. They all depend on each other, but not as tiers of standard multi-level architecture. Instead, they describe properties that apply across the all technology stack:
 
-![](../../images/1_4_1.png)
+![](images/1_4_1.png)
 
 Next, we will look at each of these four characteristics in more detail and see how they relate to each other.
 
@@ -33,16 +33,16 @@ Next, we will look at each of these four characteristics in more detail and see 
 
 ### Why is it important
 
-Applications that use an asynchronous model are much better at providing *Loosely coupling* than applications based on pure synchronous calls. Sender and receiver can be implemented without looking at the details of how events distributed in the system, which allows interfaces to focus on the content of the messages. This leads to an implementation that is easier to expand, modify, and maintain, and it gives greater flexibility and reduces support costs.
+Applications that use an asynchronous model are much better at providing _Loosely coupling_ than applications based on pure synchronous calls. Sender and receiver can be implemented without looking at the details of how events distributed in the system, which allows interfaces to focus on the content of the messages. This leads to an implementation that is easier to expand, modify, and maintain, and it gives greater flexibility and reduces support costs.
 
-Since recipients of asynchronous communication do not act until they receive a message, this approach can allow efficient use of resources, making it possible for many recipients to work in the same thread. Thus, a non-blocking application can have *lower latency* and *more bandwidth* than a traditional application based on blocking synchronization and communication primitives. It leads to lower transaction costs, increased utilization of CPU resources, and makes end users happier.
+Since recipients of asynchronous communication do not act until they receive a message, this approach can allow efficient use of resources, making it possible for many recipients to work in the same thread. Thus, a non-blocking application can have _lower latency_ and _more bandwidth_ than a traditional application based on blocking synchronization and communication primitives. It leads to lower transaction costs, increased utilization of CPU resources, and makes end users happier.
 
 ### Key building blocks
 
-In an event-driven application, components interact with each other by sending and receiving *messages* - discrete parts of information describing facts. These messages are sent and received in asynchronous and non-blocking mode. Event-driven systems are more prone to *push* models than *pull* or *poll*. In other words, they push data to their customers when data becomes available instead of wasting resources by constantly requesting or waiting for data.
+In an event-driven application, components interact with each other by sending and receiving _messages_ - discrete parts of information describing facts. These messages are sent and received in asynchronous and non-blocking mode. Event-driven systems are more prone to _push_ models than _pull_ or _poll_. In other words, they push data to their customers when data becomes available instead of wasting resources by constantly requesting or waiting for data.
 
 - Asynchronous messaging means that an application is inherently highly competitive and can operate on a multi-core architecture without changes. Any CPU core can process any message, which gives more parallelization capabilities.
-- Non-blocking means being able to continue to run so that the application is *responsive* all the time, even in the crash or peak load conditions. For this purpose, all resources required for responsiveness, such as CPU, memory, and network, must not be monopolized. It will result in lower latency, higher throughput capacity, and better *scalability*.
+- Non-blocking means being able to continue to run so that the application is _responsive_ all the time, even in the crash or peak load conditions. For this purpose, all resources required for responsiveness, such as CPU, memory, and network, must not be monopolized. It will result in lower latency, higher throughput capacity, and better _scalability_.
 
 Traditional server architectures use shared mutable state and blocking operations on a thread. This makes it difficult to scale the system. The shared mutable state requires synchronization, which adds complexity and nondeterminism, making the code difficult to understand and maintain. Switching a thread to sleep mode requires using limited resources, and waking up operation cost is expensive.
 
@@ -52,27 +52,27 @@ Event-driven systems provide loose coupling between components and subsystems. S
 
 When an application requires high performance and high scalability, it is difficult to foresee where bottlenecks may occur. Therefore it is very important that the entire solution is asynchronous and non-blocking. For a typical application, this means that the architecture must be fully event-driven, starting from user requests through the GUI (browser, REST, etc.) and processing requests in a web layer to services, cache and database. If at least one of these layers does not meet this requirement - will make blocking queries to the database, use the publicly available variable state, call expensive synchronous operations - then the entire stack will stall and users will suffer from increased latency and decreased scalability.
 
-The application must be *reactive from top to bottom*.
+The application must be _reactive from top to bottom_.
 
 The need to eliminate the weakest link in the chain is well illustrated. by [Amdal's Law](http://ru.wikipedia.org/wiki/Закон_Амдала), which according to Wikipedia says:
 
-*Acceleration of a program by paralleling it is limited to a sequential part of the program. For example, if 95% of the computation volume can be paralleled, the theoretical maximum of acceleration cannot exceed 20, regardless of the number of processors used.*
+_Acceleration of a program by paralleling it is limited to a sequential part of the program. For example, if 95% of the computation volume can be paralleled, the theoretical maximum of acceleration cannot exceed 20, regardless of the number of processors used._
 
-![](../../images/1_4_2.png)
+![](images/1_4_2.png)
 
 ## Scalability
 
 ### Why is it important
 
-The word scalable is defined by Merriam Webster dictionary as *"capable of easily expanding or modernizing."* The scalable application can be extended to the required scale. This is achieved by giving the application elasticity, a property that allows the system to stretch or shrink (add or remove nodes) on demand. This architecture makes it possible to expand or shrink (deploy on more or fewer processors) without having to rewrite the application. Elasticity minimizes the cost of operating in the cloud, while we only pay for what we use.
+The word scalable is defined by Merriam Webster dictionary as _"capable of easily expanding or modernizing."_ The scalable application can be extended to the required scale. This is achieved by giving the application elasticity, a property that allows the system to stretch or shrink (add or remove nodes) on demand. This architecture makes it possible to expand or shrink (deploy on more or fewer processors) without having to rewrite the application. Elasticity minimizes the cost of operating in the cloud, while we only pay for what we use.
 
-Scalability also helps manage risk: too little hardware can lead to dissatisfaction and loss of customersand too much will simply be idle (along with staff) and lead to unnecessary expenses. An even more scalable application reduces the risk of a situation where hardware is available, but the application cannot use it: over the next 10 years, we will have processors with hundreds if not thousands of hardware cores and using their potential requires scalability at a microscopic level.
+Scalability also helps manage risk: too little hardware can lead to dissatisfaction and loss of customers and too much will simply be idle (along with staff) and lead to unnecessary expenses. An even more scalable application reduces the risk of a situation where hardware is available, but the application cannot use it: over the next 10 years, we will have processors with hundreds if not thousands of hardware cores and using their potential requires scalability at a microscopic level.
 
 ### Key building blocks
 
 An event-oriented system based on asynchronous message passing is the basis of scalability. Loose coupling and location independence of components and subsystems allow you to deploy the system on multiple nodes while remaining within the same software model with the same semantics. When new nodes added, the throughput of the system increases. In terms of implementation, there should be no difference between deploying a system on more cores or more nodes in a cluster or data center. The application topology becomes a problem of configuration and/or adaptive runtime algorithms that monitor the system load. It is called [location transparency](http://en.wikipedia.org/wiki/Location_transparency).
 
-It is essential to understand that the goal is not to invent transparent distributed computing, distributed objects, or RPC communications — this has been tried before and failed. Instead, we should *cover the network* by presenting it directly in the software model via the asynchronous message mechanism. True scalability naturally relies on distributed computing and its inter-node interaction, which means traversing the network that is inherently [unreliable](http://aphyr.com/posts/288-the-network-is-reliable). Therefore, it is important to explicitly consider the limitations, trade-offs, and exception scenarios in the software model instead of hiding them behind a screen of leaky abstractions that supposedly try to "simplify" things. As a result, it is equally essential to provide yourself with software tools that contain the building blocks for solving typical problems in a distributed environment, such as consensus-building mechanisms or messaging interfaces that have a high level of reliability.
+It is essential to understand that the goal is not to invent transparent distributed computing, distributed objects, or RPC communications — this has been tried before and failed. Instead, we should _cover the network_ by presenting it directly in the software model via the asynchronous message mechanism. True scalability naturally relies on distributed computing and its inter-node interaction, which means traversing the network that is inherently [unreliable](http://aphyr.com/posts/288-the-network-is-reliable). Therefore, it is important to explicitly consider the limitations, trade-offs, and exception scenarios in the software model instead of hiding them behind a screen of leaky abstractions that supposedly try to "simplify" things. As a result, it is equally essential to provide yourself with software tools that contain the building blocks for solving typical problems in a distributed environment, such as consensus-building mechanisms or messaging interfaces that have a high level of reliability.
 
 ## Fault tolerance
 
@@ -86,7 +86,7 @@ In a reactive application, fault tolerance is not left "for later" but is part o
 
 To manage failures, we need a way to isolate them so that they don't spread to other healthy components, and monitor them from a safe location outside of the context in which failures may occur. One method that comes to mind is bulkheads that divide the system into compartments so that if one of the compartments is flooded (fails), it does not affect the other compartments in any way. This prevents the classic cascading failure problem and allows you to solve problems in isolation.
 
-![](../../images/1_4_3.png)
+![](images/1_4_3.png)
 
 The event-driven model, which gives scalability, also provides the necessary primitives to solve the problem of fault tolerance. Low coupling in the event-driven model provides us with fully isolated components where failures are encapsulated in messages along with the necessary details and forwarded to other components, which in turn analyze the errors and decide how to respond to them.
 
@@ -98,21 +98,21 @@ This approach creates a system in which:
 
 It is best if the compartments are organized hierarchically, like a large corporation, where the problems are raised to a level with enough power to take appropriate action.
 
-The power of this model is that it is purely event-driven - it is based on reactive components and asynchronous events, and therefore has *location transparency*. In practice, this means that its semantics does not depend on whether it is running on a local server or in a distributed environment.
+The power of this model is that it is purely event-driven - it is based on reactive components and asynchronous events, and therefore has _location transparency_. In practice, this means that its semantics does not depend on whether it is running on a local server or in a distributed environment.
 
 ## **Responsiveness**
 
 ### Why is it important
 
-Responsiveness is defined by the Merriam-Webster dictionary as *"responding quickly or responding appropriately"*. Note that we will continue to use this word in its General sense and will not confuse it with [responsive web design](http://en.wikipedia.org/wiki/Responsive_Web_Design) with its CSS [media queries](http://en.wikipedia.org/wiki/Media_queries) and [progressive enhancement](http://en.wikipedia.org/wiki/Progressive_enhancement).
+Responsiveness is defined by the Merriam-Webster dictionary as _"responding quickly or responding appropriately"_. Note that we will continue to use this word in its General sense and will not confuse it with [responsive web design](http://en.wikipedia.org/wiki/Responsive_Web_Design) with its CSS [media queries](http://en.wikipedia.org/wiki/Media_queries) and [progressive enhancement](http://en.wikipedia.org/wiki/Progressive_enhancement).
 
 Responsive applications are real-time applications, attractive, rich in functionality and, and provide shared access. Open and continuous dialogue is maintained with clients through responsiveness and interactivity. It does the work of clients more productive, creates a feeling of constancy and readiness at any moment to solve problems and execute problems. One such example is Google Docs, which supports real-time collaborative editing, allowing users to see each other's edits directly.
 
-Applications need to respond to events on time, even in the event of a failure. If an application does not respond within a reasonable time (also known as latency), it is not available and cannot be considered *fault-tolerant*.
+Applications need to respond to events on time, even in the event of a failure. If an application does not respond within a reasonable time (also known as latency), it is not available and cannot be considered _fault-tolerant_.
 
 Failure to remain within a hard real-time framework for some applications, such as those related to weapons or medicine, is equivalent to a complete system failure. Not all applications have such strict requirements. Many applications quickly become useless if they fail to meet the time requirements; for example, an application conducting trade operations may lose the current trade if it does not respond in time.
 
-More common applications, such as online retail shopping stores, lose profits if the response time increases. Users interact more intensively with *responsive* apps, which leads to more purchases.
+More common applications, such as online retail shopping stores, lose profits if the response time increases. Users interact more intensively with _responsive_ apps, which leads to more purchases.
 
 ### Key building blocks
 
@@ -129,14 +129,12 @@ Here are a few strategies that will help to keep the latency is independent of t
 - In the case of explosive traffic, reactive applications must amortize the cost of expensive operations, such as I/O or competitive data exchange, by applying batching with an understanding and consideration of the specifics of the underlying resources.
 - Queues should be limited based on the flow rate, and the length of queues for these response time requirements should be determined according to [little's law](http://en.wikipedia.org/wiki/Little's_law).
 - The systems must be monitored at all times and have an adequate safety margin.
-- In case of failures, [circuit breakers](http://en.wikipedia.org/wiki/Circuit_breaker_design_pattern)  are activated and run alternate processing strategies.
+- In case of failures, [circuit breakers](http://en.wikipedia.org/wiki/Circuit_breaker_design_pattern) are activated and run alternate processing strategies.
 
 As an example, consider a responsive web application with "rich" clients (browser, mobile app) to provide the user with a quality interaction experience. This application performs logic and stores a state on the client-side in which the observed models provide a mechanism for updating the user interface when data changes in real-time. Technologies like WebSockets or Server-Sent Events allow the user interface to connect directly to the event stream, so that the entire system becomes event-driven, from the back-end layer to the client. This allows reactive applications to push events to the browser and mobile apps via asynchronous and non-blocking data transfer while maintaining scalability and fault tolerance.
 
-It now becomes clear how the four reactive whales: *event-driven*, *scalable*, *responsive* and *resilient* are linked to each other and form a single whole:
+It now becomes clear how the four reactive whales: _event-driven_, _scalable_, _responsive_ and _resilient_ are linked to each other and form a single whole:
 
-![](../../images/1_4_4.png)
+![](images/1_4_4.png)
 
-Reactive applications represent a balanced approach to solving modern problems in the development of software systems. They are built on a framework *focused on events* and message passing, and provide tools for *scalability* and *fault tolerance*. On top of this, they support rich and *responsive* user interfaces. We expect the rapidly growing number of systems to be follow this Manifesto in the near future.
-
-[Go ahead!](../lesson-5)
+Reactive applications represent a balanced approach to solving modern problems in the development of software systems. They are built on a framework _focused on events_ and message passing, and provide tools for _scalability_ and _fault tolerance_. On top of this, they support rich and _responsive_ user interfaces. We expect the rapidly growing number of systems to be follow this Manifesto in the near future.

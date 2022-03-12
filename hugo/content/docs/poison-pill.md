@@ -1,6 +1,4 @@
-# Lesson 4: What is the Poison Pill message and how to work with it.
-
-In this lesson, we will consider the `PoisonPill` message and how it differs from the `Stop` message.
+# PoisonPill
 
 `Stop` and `PoisonPill` messages used to terminate the actor and stop the message queue. Both of these messages force the actor to stop processing incoming messages, and send a stop message to all of its child actors, and wait until they are finished. Then, send our code a message `Stopped` that signals the actor's complete shutdown. Keep in mind that all future messages sent to our actor's address will be forwarded to dead letters mailbox.
 
@@ -19,23 +17,17 @@ system.Root.Poison(pid);
 As a result, we should get the following code.
 
 ```csharp
-class Program
-{
-    static void Main(string[] args)
-    {
-        var system = new ActorSystem();
-        Console.WriteLine("Actor system created");
+var system = new ActorSystem();
+Console.WriteLine("Actor system created");
 
-        var props = Props.FromProducer(() => new PlaybackActor());
-        var pid = system.Root.Spawn(props);
+var props = Props.FromFunc(ctx => Task.CompletedTask);
+var pid = system.Root.Spawn(props);
 
-        system.Root.Send(pid, new PlayMovieMessage("The Movie", 44));
+system.Root.Send(pid, "a string message");
 
-        system.Root.Poison(pid);
+system.Root.Poison(pid);
 
-        Console.ReadLine();
-    }
-}
+Console.ReadLine();
 ```
 
 Now we need to edit the `PlaybackActor` so that it can handle the `Stopped` message.
@@ -64,17 +56,18 @@ public class PlaybackActor : IActor
 
 Let's launch our app and see what happened.
 
-![](../../images/3_4_1.png)
+![](images/3_4_1.png)
 
 Let's replace `Poison()` call with `Stop()` and lunch our app to see what happened.
+
 ```diff
 - system.Root.Poison(pid);
 + system.Root.Stop(pid);
 ```
 
-![](../../images/3_4_2.png)
+![](images/3_4_2.png)
 
-As you can see, the actor succesfully completed job. 
+As you can see, the actor succesfully completed job.
 
 {{< listfiles "dotnet" >}}
 
