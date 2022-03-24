@@ -1,5 +1,36 @@
 # Asp.NET Health Checks
 
+
+## ConfigureServices
+
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddHealthChecks().AddCheck<ActorSystemHealthCheck>("actor-system");
+    //...
+```
+
+## Configure
+
+```csharp
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+
+        //....
+
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+
+            endpoints.MapHealthChecks("/health/live", new HealthCheckOptions
+            {
+                Predicate = check => false
+            });
+        });
+```
+
+## Health Check implementation
+
 ```csharp
 public class ActorSystemHealthCheck : IHealthCheck
 {
