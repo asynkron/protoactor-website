@@ -89,6 +89,7 @@ tags: [protoactor, docs]
 - [Tracing](tracing.md)
 - [Metrics](metrics.md)
 - [Logging](logging.md)
+- [Health Checks](health-checks.md)
 
 ## Extension models
 
