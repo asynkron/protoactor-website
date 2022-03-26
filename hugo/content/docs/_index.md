@@ -13,7 +13,6 @@ tags: [protoactor, docs]
 - [Getting Started](getting-started)
 - [Getting Started With Grains / Virtual Actors (.NET)](cluster/getting-started-net.md)
 
-
 ## Articles
 
 {{< article-clean >}}
@@ -56,6 +55,7 @@ tags: [protoactor, docs]
   - [Dispatchers](dispatchers.md) - How do I tweak how and where actors execute?
   - [Dependency Injection (.NET)](di.md) - How do I configure actors using Dependency Injection?
 - [Persistence of actor's state](persistence.md) - How do I persist state for actors?
+  - [Using 3rd party libraries](externalpersistence.md) - How do I persist state using external libraries?
 - [Remote](remote.md) - How do I communicate with actors on other nodes?
   - [Message Serialization](serialization.md)
   - [Remote Spawning](remote-spawn.md) - How do I spawn actors on other nodes?
@@ -64,13 +64,14 @@ tags: [protoactor, docs]
   - [Working with a cluster (.NET)](cluster/using-cluster-net.md)
   - [Generating grains (.NET)](cluster/codegen-net.md)
   - [Cluster providers (.NET)](cluster/cluster-providers-net.md) - What different clustering options do I have?
-    - [Kubernetes Provider](cluster/kubernetes-provider-net.md)  
-    - [Consul Provider](cluster/consul-net.md)  
-    - [AWS ECS Provider](cluster/aws-provider-net.md)  
+    - [Kubernetes Provider](cluster/kubernetes-provider-net.md)
+    - [Consul Provider](cluster/consul-net.md)
+    - [AWS ECS Provider](cluster/aws-provider-net.md)
     - [Seed Provider - Experimental](cluster/seed-provider-net.md)
   - [Identity lookup (.NET)](cluster/identity-lookup-net.md) - How does Proto.Actor know the location of a virtual actor?
   - [Gossip (.NET)](cluster/gossip.md) - How can I share state across cluster members?
   - [Virtual Actors (Go)](cluster/virtual-actors-go.md) - How do I create virtual actors and spawn them in the cluster?
+  - [Integration Testing (.NET)](integration-tests.md) -  How do I integration-test virtual actors?
 - [SimpleScheduler](scheduling.md) - How do I send messages on a timer?
 
 ### Utility features
@@ -79,11 +80,17 @@ tags: [protoactor, docs]
 - [BatchingMailbox](batching-mailbox.md) - How do I collect many events and process as single one unit?
 - [Throttle](throttle.md) - How do I throttle method calls?
 
+## Performance
+
+- [Benchmarks](performance/benchmarks.md)
+- [Dotnetos performance review](performance/dotnetos.md)
+
 ## Observability
 
 - [Tracing](tracing.md)
 - [Metrics](metrics.md)
 - [Logging](logging.md)
+- [Health Checks](health-checks.md)
 
 ## Extension models
 

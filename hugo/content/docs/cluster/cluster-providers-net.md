@@ -11,17 +11,17 @@ Main responsibilities of cluster provider is to add new member into a cluster, m
 
 ![Cluster provider](images/cluster-provider.jpg)
 
-Proto.actor continues philosophy of not reinventing the wheel again, so it is possible to choose between one of already battle tested compontents that provide these functionalities.
+Proto.Actor continues philosophy of not reinventing the wheel again, so it is possible to choose between one of already battle tested compontents that provide these functionalities.
 
 Available providers:
 
-* [Kubernetes Provider](kubernetes-provider-net.md)
-* [Consul Provider](consul-net.md)
-* [Amazon ECS Provider](aws-provider-net.md)
-* [Test Provider](test-provider-net.md)
-* ETCD Provier
-* Zookeeper Provider
-* Self Managed Provider - your own implementaion of [`IClusterProvider`](https://github.com/asynkron/protoactor-dotnet/blob/dev/src/Proto.Cluster/IClusterProvider.cs) interface
+- [Kubernetes Provider](kubernetes-provider-net.md)
+- [Consul Provider](consul-net.md)
+- [Amazon ECS Provider](aws-provider-net.md)
+- [Test Provider](test-provider-net.md)
+- ETCD Provier
+- Zookeeper Provider
+- Self Managed Provider - your own implementaion of [`IClusterProvider`](https://github.com/asynkron/protoactor-dotnet/blob/dev/src/Proto.Cluster/IClusterProvider.cs) interface
 
 ## Cluster Client
 

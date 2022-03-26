@@ -48,10 +48,62 @@ The sender member can _know_ that some state has been transmitted to the target,
 
 Gossip between member nodes occur at intervals and target members are picked at random with a selection of `ClusterConfig.GossipFanout` number of members.
 
-![Gossip Fan-out](images/gossipfanout.png)
+```mermaid
+graph LR
+    Topology(Topology)
+    class Topology message
+
+    ClusterProvider
+    class ClusterProvider red
+
+    Gossip2(Gossip)
+    class Gossip2 message
+
+    Gossip4(Gossip)
+    class Gossip4 message
+
+    Gossip5(Gossip)
+    class Gossip5 message
+
+    ClusterProvider --- Topology
+    Topology --> Member1
+    Member1 --- Gossip2 --> Member2
+    Member1 --> empty --> Member3
+    Member1 --- Gossip4 --> Member4
+    Member1 --- Gossip5 --> Member5
+    Member1 --> empty2 --> Member6
+
+
+
+```
 
 ### Sending user state
 
 To set cluster state, there is a `Cluster.Gossip.SetKey(key, value)` method.
 This method takes a key for the state you wish to set, e.g. "MyState" and a value, in the form of a `Protobuf.Any` message.
 Once set, the cluster will start to sync this information over to other cluster members.
+
+
+### Query gossip state
+
+```csharp
+//get the heartbeat entry in the gossip state
+var memberHeartbeats = await system.Cluster().Gossip.GetState<MemberHeartbeat>(GossipKeys.Heartbeat);
+
+//create a list with tuple (MemberId, Kind, Count)
+var stats = (from x in memberHeartbeats
+    let memberId = x.Key
+    from y in x.Value.ActorStatistics.ActorCount
+    select (MemberId: memberId, Kind: y.Key, Count: y.Value))
+    .ToList();
+```    
+
+### Subscribing to gossip state
+
+```csharp
+system
+    .EventStream
+    .Subscribe<GossipUpdate>(
+    x => x.Key == GossipKeys.MemberHeartbeat, 
+    update => {....});
+```    

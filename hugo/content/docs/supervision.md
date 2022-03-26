@@ -35,7 +35,36 @@ failure notifications. For details and example see the Discussion: Message Order
 
 ## The top-level Supervisors
 
-![Top level supervisors](images/error-kernel.png)
+```mermaid
+    graph TD;
+
+A1((Supervisor1))
+class A1 blue
+A2((Supervisor2))
+class A2 blue
+A3((Supervisor3))
+class A3 blue
+A4((System<br>Supervisor))
+class A4 blue
+
+B1[/<br><br>Actor<br>Hierarchy\]
+class B1 light-blue
+
+B2[/<br><br>Actor<br>Hierarchy\]
+class B2 light-blue
+
+B3[/<br><br>Actor<br>Hierarchy\]
+class B3 light-blue
+
+B4[/<br><br>Actor<br>Hierarchy\]
+class B4 light-blue
+
+A1---B1
+A2---B2
+A3---B3
+A4---B4
+
+```
 
 Supervisors in Proto.Actor are any type that implements the supervisor interface.
 This means that both actors and non actors can be supervisors.
@@ -74,10 +103,127 @@ Another common use case is that an actor needs to fail in the absence of an exte
 
 ### One-For-One strategy vs All-For-One strategy
 
+**One-For-One strategy**
+
 There are two classes of supervision strategies which come with Proto.Actor: `OneForOneStrategy` and `AllForOneStrategy`. Both are configured with a mapping from exception type to supervision directive (see above) and limits on how often a child is allowed to fail before terminating it. The difference between them is that the former applies the obtained directive only to the failed child, whereas the latter applies it to all siblings as well. Normally, you should use the `OneForOneStrategy`, which also is the default if none is specified explicitly.
 
-![One for one](images/oneforone.png)
+```mermaid
+  graph TD;
+  A((Actor A1))
+  B1((Actor B1))
+  B2((Actor B2))
+
+  C1((Actor C1))
+  C2((Actor C2))
+  C3((Actor C3))
+
+  C4((Actor C4))
+  C5((Actor C5))
+  C6((Actor C6))
+
+
+  class A blue
+  class B1 yellow
+  class B1 selected
+  class B2 light-blue
+
+  class C1 red
+  class C1 selected
+  class C2 light-blue
+  class C3 light-blue
+  class C4 light-blue
+  class C5 light-blue
+  class C6 light-blue
+
+
+  A---B1
+  A---B2
+
+  B1---C1
+  B1---C2
+  B1---C3
+
+  subgraph g1[ ]
+  style g1 fill:#00000030, stroke-dasharray: 5, stroke: #ffffff, stroke-width:2px
+    C1
+  end
+    C2
+    C3
+
+
+  B2---C4
+  B2---C5
+  B2---C6
+```
+
+**All-For-One strategy**
 
 The `AllForOneStrategy` is applicable in cases where the ensemble of children has such tight dependencies among them, that a failure of one child affects the function of the others, i.e. they are inextricably linked. Since a restart does not clear out the mailbox, it is often best to terminate the children upon failure and re-create them explicitly from the supervisor (by watching the children's lifecycle); otherwise you have to make sure that it is no problem for any of the actors to receive a message which was queued before the restart but processed afterwards.
 
-![All for one](images/allforone.png)
+```mermaid
+  graph TD;
+  A((Actor A1))
+  B1((Actor B1))
+  B2((Actor B2))
+
+  C1((Actor C1))
+  C2((Actor C2))
+  C3((Actor C3))
+
+  C4((Actor C4))
+  C5((Actor C5))
+  C6((Actor C6))
+
+
+  class A blue
+  class B1 yellow
+  class B1 selected
+  class B2 light-blue
+
+
+  class C1 red
+  class C1 selected
+  class C2 green
+  class C2 selected
+  class C3 green
+  class C3 selected
+  class C4 light-blue
+  class C5 light-blue
+  class C6 light-blue
+
+
+  A---B1
+  A---B2
+
+  B1---C1
+  B1---C2
+  B1---C3
+
+  subgraph g1[ ]
+  style g1 fill:#00000030, stroke-dasharray: 5, stroke: #ffffff, stroke-width:2px
+    C1
+    C2
+    C3
+  end
+
+  B2---C4
+  B2---C5
+  B2---C6
+
+```
+
+The hierarchy of supervisors defines the order in which actors are created by each other: each actor that creates other actors is a supervisor for the child actors that it creates.
+
+The hierarchy stays fixed throughout the life cycle of the child actor. Once created by a parent, the child actor is under constant supervision of the parent until it stops; there is no such thing as adoption in Proto.Actor. The only way for the supervisor to give up parental responsibilities is to stop the child actor. This is why it is so important to choose the correct actor hierarchy in the application from the start, especially if you do not plan to stop parts of the hierarchy to replace them with completely different subtrees of actors.
+
+The actors most at risk (for whom crashes are most likely) should be in a hierarchy as low as possible. Errors that occur deep in the hierarchy can be handled by more supervisors than those that occur closer to the top. When an error occurs at the top level of the actor system, it may cause restart of all the top level actors or even stop the actor system.
+
+![](images/4_1_1.png)
+
+To create root actors, we use the method.
+
+`system.Root.Spawn(props);`
+
+After we have created root actors from the code of root actors, we can create their child actors using the method.
+
+`context.Spawn(props);`

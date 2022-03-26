@@ -31,6 +31,321 @@
   src="/assets/js/jarallax-element.min.js"
 ></script>
 <!-- jQuery Countdown (displays countdown text to a specified date) -->
+<script src="https://unpkg.com/mermaid@<8.14.0/dist/mermaid.min.js"></script>
+<script type="text/javascript">
+  const lineColor = "#00ff00";
+  const actorColor = "#007cb4";
+  const textColor = "#ffffff";
+  const fontFamily = "'trebuchet ms', verdana, arial !important";
+  const backgroundColor = "#323f49";
+  const blueColor = "#007cb4";
+  const greenColor = "#00CC66";
+  const yellowColor = "#FFBF34";
+  const redColor = "#C34423";
+  const grayColor = "#727f99";
+  const lightBlueColor = "#00ADF8";
+  const lineWidth = "4px";
+  const strokeWidth = "3px";
+  const strokeColor = backgroundColor;
+  const commentColor = "#FFF2CC";
+  const commentBorderColor = "#D6B656";
+  var css = `
+
+  $prefix .comment .label-container{
+    fill: ${commentColor};
+    stroke: ${commentBorderColor};
+    stroke-width: ${lineWidth};
+  }
+
+  $prefix .comment .label{
+    color: #404040;
+    font-family: ${fontFamily};
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  $prefix .message .label-container{
+    fill: #ffffff;
+    stroke: #e0e0e0;
+    stroke-width: ${lineWidth};
+  }
+
+  $prefix .message .label{
+    color: #404040;
+  }
+
+  $prefix .gray .label-container{
+    fill: ${grayColor};
+    stroke: ${strokeColor};
+    stroke-width: ${strokeWidth};
+  }
+
+  $prefix .red .label-container{
+    fill: ${redColor};
+    stroke: ${strokeColor};
+    stroke-width: ${strokeWidth};
+  }
+
+  $prefix .selected .label-container{
+    stroke: #ffffff !important;
+    stroke-width:4px !important;
+  }
+
+  $prefix .yellow .label-container{
+    fill: ${yellowColor};
+    stroke: ${strokeColor};
+    stroke-width: ${strokeWidth};
+  }
+
+  $prefix .green .label-container{
+    fill: ${greenColor};
+    stroke: ${strokeColor};
+    stroke-width: ${strokeWidth};
+  }
+
+  $prefix .blue .label-container{
+    fill: ${blueColor};
+    stroke: ${strokeColor};
+    stroke-width: ${strokeWidth};
+  }
+
+  $prefix .light-blue .label-container {
+    fill: ${lightBlueColor};
+    stroke: ${strokeColor};
+    stroke-width: ${strokeWidth};
+  }
+
+  $prefix .edgePath marker {
+    stroke: ${lineColor};
+    fill:${lineColor};
+  }
+
+  $prefix .label-container {
+    stroke: none;
+    fill: ${actorColor};
+  }
+
+  $prefix [id^="flowchart-empty"] {
+    display: none;
+  }
+
+  $prefix [class*='LS-empty']  {
+    display:none;
+  }
+
+  $prefix [class*='LE-empty']  {
+    display:none;
+  }
+
+  $prefix [class*='LS-free']  {
+    display:none;
+  }
+
+  $prefix [class*='LE-free']  {
+    display:none;
+  }
+
+  $prefix .cluster rect {
+    fill: #00b3f6;
+    stroke: none;
+  }
+
+  $prefix .cluster span {
+    color: ${textColor};
+  }
+
+  $prefix .label {
+    color: ${textColor};
+    font-family: ${fontFamily};
+    font-weight: bold;
+    font-size: small;
+  }
+
+  $prefix .edgePath .path {
+    stroke-width: ${lineWidth};
+    stroke: ${lineColor};
+  }
+
+  $prefix .actor {
+    stroke: none;
+    fill: ${actorColor}};
+  }
+
+
+  $prefix text.actor {
+    fill: ${textColor};
+    stroke: none;
+    font-family: ${fontFamily};
+    font-weight: bold;
+  }
+
+  $prefix text.actor > tspan {
+    fill: ${textColor};
+  }
+
+  g .marker {
+    stroke-width: ${lineWidth} !important;
+    stroke: ${lineColor} !important;
+    fill: ${lineColor} !important;
+  }
+  .root .nodes .node circle,
+  .root .nodes .node rect {
+    stroke: none ;
+    fill: ${blueColor} ;   
+  }
+
+  g .red {
+    fill: ${redColor};
+    stroke: ${backgroundColor};
+    stroke-width: ${lineWidth};
+  }
+
+  g .yellow {
+    fill: ${yellowColor};
+    stroke: ${backgroundColor};
+    stroke-width: ${lineWidth};
+  }
+
+  g .green {
+    fill: ${greenColor};
+    stroke: ${backgroundColor};
+    stroke-width: ${lineWidth};
+  }
+
+  g .blue {
+    fill: ${blueColor};
+    stroke: ${backgroundColor};
+    stroke-width: ${lineWidth};
+  }
+
+  g .light-blue  {
+    fill: ${lightBlueColor};
+    stroke: ${backgroundColor};
+    stroke-width: ${lineWidth};
+  }
+
+  .root .nodes .node .nodeLabel {
+    color: ${textColor} !important;
+  }
+
+  .root .flowchart-link {
+    stroke-width: ${lineWidth} !important;
+    stroke: ${lineColor} !important;
+  }
+
+  $prefix line {
+    stroke-width: 2px !important;
+    stroke: #a0a0a0 !important;
+  }
+
+  $prefix [id^="arrowhead"] path {
+    fill:  ${lineColor} !important;    
+  }
+
+  $prefix .arrowheadPath {
+    fill: ${lineColor};
+    stroke: none;
+  }
+
+    $prefix .messageText {
+    fill: ${textColor};
+    stroke: none;
+  }
+
+   .actor-line {
+    stroke: grey !important;
+  }
+
+   #arrowhead path {
+    stroke: ${lineColor} !important;
+    fill: ${lineColor} !important;
+  }
+
+   .messageLine0 {
+    stroke-dasharray: "2 2" !important;
+    marker-end: "url(#arrowhead)" !important;
+    stroke-width: ${lineWidth} !important;
+    stroke: ${lineColor} !important;
+  }
+
+   .messageLine1 {
+    stroke-width: 1.5 !important;
+    stroke-dasharray: "2 2" !important;
+    stroke:${lineColor} !important;
+  }
+
+  $prefix .note {
+    fill: #ffbb00;
+    stroke: none;
+  }
+
+  $prefix .note  > tspan {
+    fill: #373635;
+  }
+
+  $prefix .messageText {
+    fill: black;
+    stroke: none;
+    font-family: ${fontFamily}
+    font-size: 14px;
+  }
+
+  $prefix .labelBox {
+    stroke: none;
+    fill: ${lineColor};
+  }
+
+  $prefix .labelText {
+    fill: black;
+    stroke: none;
+    font-family: ${fontFamily}
+  }
+
+  $prefix .loopText > tspan {
+    fill: ${textColor};
+    stroke: none;
+    font-family: ${fontFamily}
+  }
+
+  $prefix text.actor>tspan {
+    fill: ${textColor} !important;
+    font-weight: bolder !important;
+  }
+
+  .loopText>tspan {
+    fill: ${textColor} !important;
+    stroke: none !important;
+  }
+   .messageText {
+    fill: ${textColor} !important;    
+    stroke: none !important;
+  }
+
+  $prefix line.loopLine {
+    stroke-width: 2px !important;
+    stroke: #a0a0a0 !important;
+  }
+
+  .activation0 {
+    fill: #ffc107 !important;
+    stroke: #000 !important;
+  }
+
+  `;
+
+  css = css.replaceAll("$prefix", "g ");
+
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: "default",
+    flowchart: {
+      curve: "basis",
+    },
+    securityLevel: "loose",
+    themeCSS: css,
+    fontFamily: fontFamily,
+  });
+</script>
 <script
   type="text/javascript"
   src="/assets/js/jquery.countdown.min.js"

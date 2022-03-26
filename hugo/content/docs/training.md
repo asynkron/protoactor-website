@@ -4,45 +4,25 @@ title: Professional Services
 
 # Professional Services
 
-## Sessions
+## Presentations
+
+- **Introduction to the actor-model and Proto.Actor** - 1h Session <a href="mailto:info@asynkron.se?subject=Proto.Actor Presentation">Contact us</a>
 
 ## Workshops
 
+- **Introduction to the actor-model and Proto.Actor, Q&A, hands on coding** - Full-day <a href="mailto:info@asynkron.se?subject=Proto.Actor Workshop">Contact us</a>
+
+- **Proto.Actor Cluster - Distributed systems made easy** - Full-day,
+  [Agenda](workshop-cluster.md),
+  <a href="mailto:info@asynkron.se?subject=Proto.Cluster Workshop">Contact us</a>
+
+- **Code and Architectural review of actor based systems** - <a href="mailto:info@asynkron.se?subject=Architectural Review">Contact us</a>
+
 ## Dedicated Team Member
 
-## Training
+Do you need a full-time distributed systems engineer / Proto.Actor expert?
+<a href="mailto:info@asynkron.se?subject=dedicated team member">Contact us</a>
 
-### Proto.Cluster - Distributed systems made easy
+## Support Subscription
 
-Learn how to leverage programming abstractions such as actors, grains, persistence and pubsub to built highly scalable, realtime, systems.
-
-**Agenda**
-
-* Building Blocks; Actors, Virtual Actors, and Grains
-* Design patterns and optimizations
-    * Local affinity
-    * Message deduplication
-    * Persistence patterns
-* Observability
-    * Metrics
-    * Tracing
-    * Logging    
-    * DataDog / Grafana integration
-* Stream processing
-    * Cluster PubSub
-    * Queue and Log integration    
-* Realtime Data Visualizations
-* Digital Twins
-* Cluster-based microservices
-* Cluster Configuration
-
-
-
-
-### Deployment - Kubernetes
-
-Learn the best ways to deploy, run, monitor, and scale your Proto.Actor systems in a Kubernetes environment.
-
-## Facilitators
-
-Roger, Magne, Alexey?, Thomas? other? 
+Coming soon

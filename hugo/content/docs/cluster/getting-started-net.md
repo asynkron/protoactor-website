@@ -459,7 +459,7 @@ builder.Services.AddHostedService<SmartBulbSimulator>();
 
 When you ran the app, you should see console output similar to:
 
-```txt
+```log
 Starting a cluster member
 smart bulb simulator: turning on smart bulb 'living_room_1'
 living_room_1: created
@@ -758,7 +758,7 @@ private async Task NotifyHouse()
 
 Try running the app. You should see console output similar to:
 
-```txt
+```log
 smart bulb simulator: turning off smart bulb 'living_room_2'
 living_room_2: created
 living_room_2: turning smart bulb off
@@ -785,96 +785,40 @@ To run a cluster with multiple members, we'll use a [Consul Provider](consul-net
 
 Let's also recap, how grains work. Each grain (i.e smart bulbs and a smart house) will live in one of the cluster members:
 
-![Grain Locations](images/tutorial-grain-locations.jpg)
 
-### Smart Bulb Simulator as separate application
+```mermaid
+graph TB
+a1{{SmartBulbGrain<br/>living_room_1}}
+class a1 blue
+a2{{SmartBulbGrain<br/>living_room_2}}
+class a2 blue
+a3{{SmartBulbGrain<br/>kitchen}}
+class a3 blue
 
-To not complicate configuration of the cluster member application we will move `SmartBulbSimulator` into separate application. To to this let's create new console application project. We can call it `SmartBulbSimulatorApp`.
-After this we need to reference `ProtoClusterTutorial` project to be able to reuse `ActorSystem` setup. Of course, we will use also `SmartBulbSimulator` hosted service.
-The next step is to replace content of `Program.cs` with a given code:
+a4{{SmartBulbGrain<br/>bedroom}}
+class a4 blue
+a5{{SmartHouseGrain<br/>my-house}}
+class a5 red
 
-```csharp
+subgraph Member 2
+    a4
+    a5
+end
 
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using ProtoClusterTutorial;
+subgraph Member1
+    a1
+    a2
+    a3
+end
 
-using var host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices((hostContext, services) =>
-    {
-        services.AddActorSystem();
-        services.AddHostedService<SmartBulbSimulator>();
-    })
-    .Build();
+a2-->a1
+a2-->a3
 
-var loggerFactory = host.Services.GetRequiredService<ILoggerFactory>();
-Proto.Log.SetLoggerFactory(loggerFactory);
+a4-->a5
 
-await host.RunAsync();
-
+linkStyle default display:none;
 ```
 
-In this code we are doing `ActorSystem` registration and we are adding `SmartBulbSimulator` hosted service. The last thing that needs to be done is to start cluster client, similar as it is done for cluster member in the `ProtoClusterTutoral` app.
-Let's create a new class with name `ActorSystemClusterHostedService` and use the code from below:
-
-```csharp
-
-using Microsoft.Extensions.Hosting;
-using Proto;
-using Proto.Cluster;
-
-namespace SmartBulbSimulatorApp;
-
-public class ClusterClientHostedService : IHostedService
-{
-    private readonly ActorSystem _actorSystem;
-
-    public ClusterClientHostedService(ActorSystem actorSystem)
-    {
-        _actorSystem = actorSystem;
-    }
-
-    public async Task StartAsync(CancellationToken cancellationToken)
-    {
-        Console.WriteLine("Starting a cluster client");
-
-        await _actorSystem
-            .Cluster()
-            .StartClientAsync();
-    }
-
-    public async Task StopAsync(CancellationToken cancellationToken)
-    {
-        Console.WriteLine("Shutting down a cluster client");
-
-        await _actorSystem
-            .Cluster()
-            .ShutdownAsync();
-    }
-}
-
-```
-
-As you can see, the only difference between `ClusterClientHostedService` and `ActorSystemClusterHostedService` is the method used on startup. The client uses `.StartClientAsync()` and member uses `.StartMemberAsync()`.
-
-Then we need to register this hosted service in `Program.cs`.
-
-```csharp
-...
-.ConfigureServices((hostContext, services) =>
-    {
-        services.AddActorSystem();
-        services.AddHostedService<ClusterClientHostedService>();
-        services.AddHostedService<SmartBulbSimulator>();
-    })
-...
-
-```
-
-`ClusterClientHostedService` needs to be added before `SmartBulbSimulator` because it requires to have cluster client already running.
-
-We need also to remove `SmartBulbSimulator` hosted service registration from the `ProtoClusterTutorial` `Program.cs` file since simulator is now independant application.
 
 ### Consul provider
 
@@ -935,23 +879,25 @@ At this point, the app shouldn't do much now, as the simulator is turned off.
 
 Open a third terminal with `ProtoClusterTutoral` project directory, start the second member.
 
-```sh
+
+```bash
 dotnet run --no-build --urls "http://localhost:5162"
+dotnet run --no-build --urls "http://localhost:5161" ProtoRemotePort=5000 RunSimulation=false
 ```
 
 After this we could observe in logs that cluster topology has changed but still the application is not doing much since simulator is off.
 
 Back to the second terminal and run `SmartBulbSimulatorApp` app.
 
-```sh
-dotnet run --no-build
+```bash
+dotnet run --no-build --urls "http://localhost:5162" ProtoRemotePort=5001 RunSimulation=true
 ```
 
 When you look at the console output, grains should be distributed between two members.
 
 Sample output from the first member terminal:
 
-```txt
+```log
 living_room_2: created
 living_room_2: turning smart bulb off
 bedroom: created
@@ -967,7 +913,7 @@ bedroom: turning smart bulb on
 
 Sample output from the second member terminal:
 
-```txt
+```log
 living_room_1: created
 living_room_1: turning smart bulb off
 my-house: created
