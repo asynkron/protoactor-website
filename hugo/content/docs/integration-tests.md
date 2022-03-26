@@ -39,14 +39,12 @@ public class SomeTest : IClassFixture<MysystemClassFixture<Startup>>
 {
     private readonly ITestOutputHelper _output;
     private readonly Cluster _cluster;
-    private readonly MockSender _sender;
     private readonly MockStore _store;
 
     public SomeTest(MysystemClassFixture<Startup> factory, ITestOutputHelper output)
     {
-        _output = output;
         var services = factory.Server.Services;
-        _sender = (MockSender)services.GetRequiredService<IChargePointMessageSender>();
+        _output = output;
         _cluster = services.GetRequiredService<Cluster>();
         _store = (MockStore)services.GetRequiredService<IKeyValueStore<LoadbalancerSite>>();
 
