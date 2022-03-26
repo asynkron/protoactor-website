@@ -71,7 +71,7 @@ tags: [protoactor, docs]
   - [Identity lookup (.NET)](cluster/identity-lookup-net.md) - How does Proto.Actor know the location of a virtual actor?
   - [Gossip (.NET)](cluster/gossip.md) - How can I share state across cluster members?
   - [Virtual Actors (Go)](cluster/virtual-actors-go.md) - How do I create virtual actors and spawn them in the cluster?
-  - [Integration Testing (.NET)(integration-tests.md) -  How do I integration-test virtual actors?
+  - [Integration Testing (.NET)](integration-tests.md) -  How do I integration-test virtual actors?
 - [SimpleScheduler](scheduling.md) - How do I send messages on a timer?
 
 ### Utility features
