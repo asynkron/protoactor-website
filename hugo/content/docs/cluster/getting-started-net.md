@@ -79,7 +79,7 @@ public static class ActorSystemConfiguration
 {
     public static void AddActorSystem(this IServiceCollection serviceCollection)
     {
-        builder.Services.AddSingleton(provider =>
+        serviceCollection.AddSingleton(provider =>
         {
             // actor system configuration
 
@@ -119,17 +119,31 @@ Now we can register it in our web app:
 builder.Services.AddActorSystem();
 ```
 
+It is also suggested to turn on Proto.Actor logging. It will help with resolving all the issues. To do that it is needed to resolve `ILoggerFactory` dependency in `Program.cs` and use it for Proto.Actor logging config.
+
+```csharp
+...
+
+var app = builder.Build();
+
+var loggerFactory = app.Services.GetRequiredService<ILoggerFactory>();
+Proto.Log.SetLoggerFactory(loggerFactory);
+
+...
+
+```
+
 Let's go through each configuration section one by one:
 
-**Actor System configuration**
+#### Actor System configuration
 
 This is a standard Proto.Actor configuration. It's out of the scope for this tutorial; if you want to learn more, you should check out the [Actors](../actors.md) section of Proto.Actor's documentation.
 
-**Remote configuration**
+#### Remote configuration
 
 Proto.Cluster uses Proto.Remote for transport, usually GRPC (Proto.Remote.GrpcNet). Again, its configuration is out of scope for this tutorial; if you want to learn more, you should check out the [Remote](../remote.md) section of Proto.Actor's documentation.
 
-**Cluster configuration**
+#### Cluster configuration
 
 This is where we configure Proto.Cluster. Let's explain its parameters:
 
@@ -675,6 +689,7 @@ Register this grain in the cluster by calling another `WithClusterKind` on `Clus
 `ActorSystemConfiguration.cs`:
 
 ```csharp
+...
 .WithClusterKind(
     kind: SmartHouseGrainActor.Kind,
     prop: Props.FromProducer(() =>
@@ -760,7 +775,7 @@ my-house: 2 smart bulbs are on
 
 ## Running a cluster with multiple members (nodes)
 
-To showcase how grains work in a distributed context, we're going to run two members of our example app.
+To showcase how grains work in a distributed context, we're going to run two members of our example app. Additionally, `SmartBulbSimulator` will be running as a separate application.
 
 To do that, we'll need a proper Cluster Provider. To recap, a Cluster Provider is an abstraction that provides information about currently available members in a cluster.
 In other words, it tells a cluster member what are the other members, thus allowing them to communicate with one another. You can read more about Cluster Providers [here](cluster-providers-net.md).
@@ -769,6 +784,7 @@ Until now, we've been using a [Test Provider](test-provider-net.md), which is on
 To run a cluster with multiple members, we'll use a [Consul Provider](consul-net.md), which, like the name suggests, utilizes [HashiCorp Consul](https://www.consul.io/).
 
 Let's also recap, how grains work. Each grain (i.e smart bulbs and a smart house) will live in one of the cluster members:
+
 
 ```mermaid
 graph TB
@@ -803,7 +819,10 @@ a4-->a5
 linkStyle default display:none;
 ```
 
+
 ### Consul provider
+
+Now we can replace `TestProvider` with Consul provider.
 
 First, we'll need to run Consul:
 
@@ -812,7 +831,7 @@ First, we'll need to run Consul:
 
 Let's now configure the [Consul Provider](consul-net.md) in our example.
 
-Add `Proto.Cluster.Consul` NuGet package to the project.
+Add `Proto.Cluster.Consul` NuGet package to the `ProtoClusterTutorial` project.
 
 Change cluster member provider:
 
@@ -832,67 +851,43 @@ This will connect to Consul using a default port.
 
 For more information on how to configure Consul Provider, read [the Consul provider documentation page](consul-net.md).
 
-Run the app to check if everything works so far. The app should work as usual. Also, you should see some output from Consul.
-
-### Configuring the members
-
-Since we'll be running multiple members, we'll probably need them to be configured differently:
-
-1. We'll want to host them on different ports. Mind, that the API port (HTTP, hosted by ASP.NET Core) is different than the port used for communicating between cluster members (GRPC, hosted by Proto.Remote).
-2. We'll only want one of them to run the simulation (i.e. produce smart bulb events).
-
-Add the following lines to `appsettings.json`:
-
-```json
-"ProtoRemotePort": 5000,
-"RunSimulation": true,
-```
-
-Now let's configure the advertised host in Proto.Remote so other cluster members can reach one another.
-
-`ActorSystemConfiguration.cs`:
-
-```cs
-var remoteConfig = GrpcNetRemoteConfig
-    .BindToLocalhost(provider
-        .GetRequiredService<IConfiguration>()
-        .GetValue<int>("ProtoRemotePort")
-    )
-    // ...
-```
-
-Starting the simulator should be conditional:
-
-`Program.cs`:
-
-```cs
-if (builder.Configuration.GetValue<bool>("RunSimulation"))
-{
-    builder.Services.AddHostedService<SmartBulbSimulator>();
-}
-```
-
-Run the app again (a single member) to check if everything works so far. The app should work as usual.
+Run the `ProtoClusterTutorial` app to check if everything works so far. The app should not process any data since simulator is turned off.
 
 ### Running multiple members
 
-Now we're ready to run multiple members. Start a terminal and navigate to the project directory.
+Now we're ready to run multiple members. Start a terminal and navigate to the `ProtoClusterTutoral` project directory.
 
 First, make sure your app is up to date:
 
-```bash
+```sh
 dotnet build
 ```
 
-Start the first member:
+Then we do the same for `SmartBulbSimulatorApp` project in the new terminal window:
 
-```bash
-dotnet run --no-build --urls "http://localhost:5161" ProtoRemotePort=5000 RunSimulation=false
+```sh
+dotnet build
+```
+
+Start the first member (in the first terminal):
+
+```sh
+dotnet run --no-build --urls "http://localhost:5161" 
 ```
 
 At this point, the app shouldn't do much now, as the simulator is turned off.
 
-Open a second terminal, start the second member (with the simulation on and with different ports):
+Open a third terminal with `ProtoClusterTutoral` project directory, start the second member.
+
+
+```bash
+dotnet run --no-build --urls "http://localhost:5162"
+dotnet run --no-build --urls "http://localhost:5161" ProtoRemotePort=5000 RunSimulation=false
+```
+
+After this we could observe in logs that cluster topology has changed but still the application is not doing much since simulator is off.
+
+Back to the second terminal and run `SmartBulbSimulatorApp` app.
 
 ```bash
 dotnet run --no-build --urls "http://localhost:5162" ProtoRemotePort=5001 RunSimulation=true
@@ -900,7 +895,7 @@ dotnet run --no-build --urls "http://localhost:5162" ProtoRemotePort=5001 RunSim
 
 When you look at the console output, grains should be distributed between two members.
 
-Sample output from the first terminal:
+Sample output from the first member terminal:
 
 ```log
 living_room_2: created
@@ -916,7 +911,7 @@ bedroom: turning smart bulb on
 ...
 ```
 
-Sample output from the second terminal:
+Sample output from the second member terminal:
 
 ```log
 living_room_1: created
@@ -945,6 +940,271 @@ my-house: 3 smart bulbs are on
 ```
 
 This is a good opportunity to perform an experiment: turn off the first member. You should see, that all the grains from the first member should be recreated on the second member.
+
+## Running application in Kubernetes
+
+For now, tutorial showed how to run multiple members locally using Consul.
+The same setup might be also suitable for some deployment cases, but since modern applications are more often deployed in Kubernetes it is better to select dedicated provider for it.
+
+[Kubernetes provider](cluster/kubernetes-provider-net.md) is another implementation of `IClusterProvider` interface, the same as [Consul provider](cluster/consul-net.md). For more information you can check [Cluster providers section](cluster/cluster-providers-net.md).
+
+### Changes in the application
+
+First thing that needs to be done is to reference `Proto.Cluster.Kubernetes` package where this implementation is provided.
+The next step is to replace Consul provider with Kubernetes provider in `ActorSystemConfiguration.cs`.
+
+```csharp
+
+...
+
+var clusterConfig = ClusterConfig
+    .Setup(
+        clusterName: "ProtoClusterTutorial",
+        clusterProvider: new KubernetesProvider(new Kubernetes(KubernetesClientConfiguration.InClusterConfig())),
+        identityLookup: new PartitionIdentityLookup()
+    )
+
+```
+
+It is also needed to change how remote configuration is prepared. We bind to all interfaces and use `ProtoActor:AdvertisedHost` host address passed in the configuration.
+
+``` csharp
+
+var remoteConfig = GrpcNetRemoteConfig
+                    .BindToAllInterfaces(advertisedHost: configuration["ProtoActor:AdvertisedHost"])
+                    .WithProtoMessages(MessagesReflection.Descriptor);
+        
+```
+
+To have `configuration` variable in `AddActorSystem` extension it is needed to change its signature.
+
+```csharp
+public static void AddActorSystem(this IServiceCollection serviceCollection, IConfiguration configuration)
+{
+    ...
+}
+```
+
+And usage in `ProtoClusterTutorial` `Program.cs`.
+
+```csharp
+builder.Services.AddActorSystem(builder.Configuration);
+```
+
+The same in the `SmartBulbSimulatorApp`
+
+```csharp
+services.AddActorSystem(hostContext.Configuration);
+```
+
+At this step both applications should be ready to run in Kubernetes, but first we need to create conainter images.
+
+### Create docker images
+
+To continue next steps it is needed to have container registry where the images will be pushed. In our tutorial we will use Azure Container Registry. You can find instructions how to create it [here](https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-prepare-acr?tabs=azure-cli).
+
+Add Dockerfile into `ProtoClusterTutorial` directory:
+
+```Dockerfile
+
+# Stage 1 - Build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS builder
+
+WORKDIR /app/src
+
+# Restore
+COPY *.csproj .
+
+RUN dotnet restore -r linux-x64
+
+# Build
+COPY . .
+
+RUN dotnet publish -c Release -o /app/publish -r linux-x64 --no-self-contained --no-restore
+
+# Stage 2 - Publish
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
+WORKDIR /app
+
+RUN addgroup --system --gid 101 app \
+    && adduser --system --ingroup app --uid 101 app
+
+
+COPY --from=builder --chown=app:app /app/publish .
+
+USER app
+    
+ENTRYPOINT ["./ProtoClusterTutorial"]
+
+```
+
+After this you should be able to build docker image for the `ProtoClusterTutorial` app with tag:
+
+```sh
+
+docker build . -t YOUR_ACR_ADDRESS/proto-cluster-tutorial:1.0.0
+
+```
+
+You need to add Dockerfile in the `SmartBulbSimulatorApp` directory too:
+
+```Dockerfile
+
+# Stage 1 - Build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS builder
+
+WORKDIR /app/src
+
+# Restore
+COPY /ProtoClusterTutorial/*.csproj ./ProtoClusterTutorial/
+COPY /SmartBulbSimulatorApp/*.csproj ./SmartBulbSimulatorApp/
+
+
+RUN dotnet restore ./SmartBulbSimulatorApp/SmartBulbSimulatorApp.csproj -r linux-x64
+
+# Build
+COPY . .
+
+RUN dotnet publish ./SmartBulbSimulatorApp/SmartBulbSimulatorApp.csproj -c Release -o /app/publish -r linux-x64 --no-self-contained --no-restore
+
+# Stage 2 - Publish
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
+WORKDIR /app
+
+RUN addgroup --system --gid 101 app \
+    && adduser --system --ingroup app --uid 101 app
+
+
+COPY --from=builder --chown=app:app /app/publish .
+
+USER app
+ 
+ENTRYPOINT ["./SmartBulbSimulatorApp"]
+
+```
+
+`SmartBulbSimulatorApp` relies on `ProtoClusterTutorial` sources so you need to run it from the main directory and pass Dockerfile as argument.
+
+```sh
+
+ docker build -f SmartBulbSimulatorApp/Dockerfile . -t YOUR_ACR_ADDRESS/smart-bulb-simulator:1.0.0
+
+```
+
+So now we created images for both applications and they should be visible on the images list:
+
+```sh
+docker images
+```
+
+Tip: If you encounter strange errors during building images then remove `obj` and `bin` directories. You can also consider adding `.dockerignore` file to skip them.
+
+Both images should be pushed to our container registry:
+
+```sh
+
+docker push YOUR_ACR_ADDRESS/proto-cluster-tutorial:1.0.0
+
+...
+
+docker push YOUR_ACR_ADDRESS/smart-bulb-simulator:1.0.0
+
+```
+
+Now both images are stored in the container registry and we can start application deployment.
+
+### Deployment to Kubernetes cluster
+
+To continue next steps it is needed to have Kubernetes cluster running. In our tutorial we will use Azure Kubernetes Service. You can find instructions how to create it [here](https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-deploy-cluster?tabs=azure-cli).
+
+To simplify the deployment to Kubernetes we will use [Helm](https://helm.sh/). Ensure that you have installed it locally and `helm` command is available. You can check how to do it [here](https://helm.sh/docs/intro/quickstart/)
+
+Now we are going to prepare Helm chart that will help us with deployment.
+To not create everything by hand you can download `chart-tutorial` [folder](https://github.com/asynkron/protoactor-grains-tutorial/tree/5351544702d4905948b45db97202dfb8290a2d25/chart-tutorial) from tutorial's repository on Github.
+
+This chart contains definitions of given resources:
+
+- deployment - the most important part is setting `ProtoActor__AdvertisedHost` variable based on pod's IP
+
+``` yml
+env:
+    - name: ProtoActor__AdvertisedHost
+    valueFrom:
+      fieldRef:
+        fieldPath: status.podIP
+
+```
+
+- service - to make each member reachable by another members
+
+- role - permissions needed for [Kubernetes cluster provider](kubernetes-provider-net.md)
+
+- service account - [identity in Kubernetes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/) that will be used by pod (Kubernetes provider)
+
+- role binding - connection between role and service account
+
+To continue with deployment you should open `values.yaml` and replace `member.image.repository` with your image. The same with `member.image.tag`. Key `member.replicaCount` determines the number of running replicas. By default it it 2.
+
+After this, you need to open terminal in a chart's folder parent directory. Then you need to run `helm install` to deploy your image.
+
+```sh
+helm install proto-cluster-tutorial chart-tutorial
+```
+
+Where `proto-cluster-tutorial` is the name of the release and `chart-tutorial` is the name of a folder where the chart is located.
+
+After this you should be able to see in the command line information that deployment is succeeded.
+
+```sh
+PS C:\repo\proto\protoTest> helm install proto-cluster-tutorial chart
+NAME: proto-cluster-tutorial
+LAST DEPLOYED: Tue Feb 15 11:29:48 2022
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+```
+
+You can also check that there are two running pods:
+
+```sh
+PS C:\repo\proto\protoTest> kubectl get pods
+NAME                                     READY   STATUS    RESTARTS   AGE
+proto-cluster-tutorial-886c9b657-5hgxh   1/1     Running   0          63m
+proto-cluster-tutorial-886c9b657-vj8nj   1/1     Running   0          63m
+```
+
+If we will look closer to the created pods, we can see labels that were added by Kubernetes provider [here](https://github.com/asynkron/protoactor-dotnet/blob/dev/src/Proto.Cluster.Kubernetes/KubernetesProvider.cs#L114).
+
+![pod-labels](images/pod-labels.png)
+
+At this point these pods do nothing. Now it is needed to deploy simumaltor. We can reuse the same chart because simulator uses cluster client to send data to proto.actor cluster and requires similar permissions.
+To do this we will call helm install as before but we will override values saved in `values.yaml` file. So first let's copy `values.yaml` file and rename it to `simulator-values.yaml`.
+
+In the file we will change repository and tag to align with simulator image pushed to container registry. We also change `replicaCount` to 1 because we would like to have only single replica of the simulator.
+Then we open again terminal in chart's parent directory and deploy simulator. We are adding `--values` parameter override `values.yaml` stored in chart's folder.
+
+```sh
+PS C:\repo\proto\protoactor-grains-tutorial> helm install simulator chart-tutorial --values .\simulator-values.yaml
+NAME: simulator
+LAST DEPLOYED: Tue Feb 15 13:24:48 2022
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+```
+
+We can also see that the pod has been deployed and we can see one more pod:
+
+```sh
+PS C:\repo\proto\protoactor-grains-tutorial> kubectl get pods
+NAME                                     READY   STATUS    RESTARTS   AGE
+proto-cluster-tutorial-886c9b657-5hgxh   1/1     Running   0          98m
+proto-cluster-tutorial-886c9b657-vj8nj   1/1     Running   0          97m
+simulator-68d4c5c4df-zgxv2               1/1     Running   0          6m22s
+```
+
+We can look into pods logs to see that both pods started processing data. We can do the same experiment as we did for Consul provider and scale down number of replicas to 1 to see that actors are recreated on the node that is still alive.
 
 ## Conclusion
 
