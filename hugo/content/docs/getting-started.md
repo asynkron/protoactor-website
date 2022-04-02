@@ -106,7 +106,7 @@ namespace ConsoleApplication11
             {
                 // Tell the actor to respond
                 // to the Greet message
-                Console.WriteLine("Hello {0}", greet.Who)); 
+                Console.WriteLine($"Hello {greet.Who}"); 
             }
             return Task.CompletedTask;
         }
@@ -152,7 +152,7 @@ namespace ConsoleApplication11
             {
                 // Tell the actor to respond
                 // to the Greet message
-                Console.WriteLine("Hello {0}", greet.Who)); 
+                Console.WriteLine($"Hello {greet.Who}"); 
             }
             return Task.CompletedTask;
         }
