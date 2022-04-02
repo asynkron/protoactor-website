@@ -11,7 +11,7 @@ tags: [protoactor, docs]
 | -------------- | -----------------: | -------------------: | --------: |
 | Proto.Actor C# | ~8 500 000 msg/sec | ~125 000 000 msg/sec |  ~0.7 sec |
 | Proto.Actor Go | ~5 400 000 msg/sec |  ~70 000 000 msg/sec |  ~1.2 sec |
-| Akka.NET       |   ~350 000 msg/sec |  ~30 000 000 msg/sec |  ~4.5 sec |
+| Akka.NET       |   ~350 000 msg/sec |  ~46 000 000 msg/sec |  ~4.5 sec |
 | Erlang         |    ~200 000 msg/sc |  ~12 000 000 msg/sec | ~0.75 sec |
 
 ## Remote PingPong
