@@ -26,7 +26,6 @@ We'll need the following NuGet packages:
 
 - `Proto.Actor`
 - `Proto.Remote`
-- `Proto.Remote.GrpcNet`
 - `Proto.Cluster`
 - `Proto.Cluster.CodeGen`
 - `Proto.Cluster.TestProvider`
