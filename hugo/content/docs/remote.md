@@ -90,7 +90,7 @@ Read more about [Protobuf](https://proto.actor/docs/serialization/).
 
 Proto.Remote allows us to spawn Proto actors that are located on different machines in a distributed system. In order to do this, we need to register the kinds of actors that can be spawned remotely.
 
-To register what kind of actor can be called, we need to use the static method `WithRemoteKids` from class `RemoteConfigExtensions` and pass to it the name of the "kind" and a `Props`. This method creates a dictionary that maps the kind of an actor to `Props` and tells the Remote module how to set up and spawn an actor of that kind.
+To register what kind of actor can be called, we need to use the static method `WithRemoteKind` from class `RemoteConfigExtensions` and pass to it the name of the "kind" and a `Props`. This method creates a dictionary that maps the kind of an actor to `Props` and tells the Remote module how to set up and spawn an actor of that kind.
 
 ```csharp
 var config = GrpcNetRemoteConfig
