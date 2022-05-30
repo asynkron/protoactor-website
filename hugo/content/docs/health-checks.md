@@ -22,10 +22,7 @@ public void ConfigureServices(IServiceCollection services)
         {
             endpoints.MapControllers();
 
-            endpoints.MapHealthChecks("/health/live", new HealthCheckOptions
-            {
-                Predicate = check => false
-            });
+            endpoints.MapHealthChecks("/health/live");
         });
 ```
 
