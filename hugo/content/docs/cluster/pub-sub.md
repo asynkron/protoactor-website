@@ -215,8 +215,8 @@ flowchart LR
 
         class TopicActor green
 
-    end
 
+    end
 
     subgraph SubscriberMember1[Member with subscriber 1]
         direction TB
@@ -236,15 +236,20 @@ flowchart LR
         PubSubDeliveryActor2 --deliver--> Subscriber2
     end
 
-    
-    Publisher --publish--> TopicActor
-    
+    subgraph PublisherMember[Member with publisher]
 
+        Publisher(Topic Publisher) --publish---> TopicActor
+        
+    end
 
+    
+    
+    
 
     TopicActor --deliver--> PubSubDeliveryActor1
     TopicActor --deliver--> PubSubDeliveryActor2
 
-    TopicActor -.subscribe.- Subscriber1
-    TopicActor -.subscribe.- Subscriber2
+
+    Subscriber1 -.subscribe.-> TopicActor
+    Subscriber2 -.subscribe.-> TopicActor
 ```
