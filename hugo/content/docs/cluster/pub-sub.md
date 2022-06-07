@@ -200,40 +200,51 @@ The pub sub functionality is implemented using two actors: the TopicActor and th
 ```mermaid
 flowchart LR
     Publisher
+    TopicActor
     Subscriber1
     Subscriber2
-    TopicActor
+
 
     class Publisher yellow
     class Subscriber1 blue
     class Subscriber2 blue
 
     subgraph TopicActorMember[Member with topic actor]
-        direction LR
+        direction TB
         TopicActor(TopicActor <br /> contains subscriber list)
 
         class TopicActor green
+
     end
 
 
     subgraph SubscriberMember1[Member with subscriber 1]
-        direction LR
+        direction TB
         PubSubDeliveryActor1(PubSubDeliveryActor)
 
         class PubSubDeliveryActor1 green
+
+        PubSubDeliveryActor1 --deliver--> Subscriber1
     end
 
     subgraph SubscriberMember2[Member with subscriber 2]
-        direction LR
+        direction TB
         PubSubDeliveryActor2(PubSubDeliveryActor)
 
         class PubSubDeliveryActor2 green
+
+        PubSubDeliveryActor2 --deliver--> Subscriber2
     end
 
+    
     Publisher --publish--> TopicActor
-    TopicActor --deliver--> PubSubDeliveryActor1 & PubSubDeliveryActor2
-    PubSubDeliveryActor1 --deliver--> Subscriber1
-    PubSubDeliveryActor2 --deliver--> Subscriber2
-    Subscriber1 --subscribe--> TopicActor
-    Subscriber2 --subscribe--> TopicActor
+    
+
+
+
+    TopicActor --deliver--> PubSubDeliveryActor1
+    TopicActor --deliver--> PubSubDeliveryActor2
+
+    TopicActor -.subscribe.- Subscriber1
+    TopicActor -.subscribe.- Subscriber2
 ```
