@@ -55,7 +55,7 @@ The task returned by `Publish` will complete when the message is delivered and p
 There are different options on how to subscribe to a topic, depending on whether you are doing this from an actor or from outside code. The simplest subscription could look like this:
 
 ```csharp
-await cluster.Subscribe("my-topic", context => {
+var pid = await cluster.Subscribe("my-topic", context => {
         if (context.Message is ChatMessage)
         {
             // process
@@ -100,6 +100,25 @@ public class User : UserActorBase
 }
 ```
 
+## Unsubscribing from a topic
+
+Use a proper `Unsubscribe` overload to cancel topic subscription.
+
+```csharp
+// with regular actor
+cluster.Unsubscribe("my-topic", actorPID);
+
+// with virtual ator
+cluster.Unsubscribe("my-topic", ClusterIdentity.Create("my-id", "my-kind"));
+
+```
+
+### What if I forget to unsubscribe?
+
+If you stop the subscriber without first unsubscribing from the topic, two different situations may occur depending on whether virtual or regular actors are used:
+* When using virtal actors, they are assumed to always exist. If there is no activation available currently, the framework will spawn one when a message arrives to this actor. So a message published to the topic will activate the virtual actor again.
+* Regular actors have an explicit lifecycle. If you stop such actor, all messages directed to it will end up in the deadletter process. When this situation is detected, the subscriber will get automatically unsubscribed. It is still recommended to unsubscribe explicitly.
+
 ## Persistent subscriptions
 
 Subscriptions are collected in the `TopicActor`. By default they are not persisted. If this actor needs to restart, the subscriptions are lost.
@@ -108,8 +127,14 @@ You can provide an implementation of `IKeyValueStore<Subscribers>` to persist th
 
 ```csharp
 var clusterConfig = ClusterConfig
-    .Setup("MyCluster", new TestProvider(new TestProviderOptions(), new InMemAgent()), new PartitionIdentityLookup())
-    .WithClusterKind(TopicActor.Kind, Props.FromProducer(() => new TopicActor(new MyRedisKVStore())));
+    .Setup("MyCluster", 
+        new TestProvider(
+            new TestProviderOptions(), 
+            new InMemAgent()), 
+            new PartitionIdentityLookup())
+    .WithClusterKind(
+        TopicActor.Kind, 
+        Props.FromProducer(() => new TopicActor(new MyRedisKVStore())));
 ```
 
 This topic kind registration overrides the default one in the cluster.
@@ -181,7 +206,11 @@ cts.Cancel();
 By default, the `BatchingProducer` will fail and stop on publishing error. You can override this behavior by providing implementation of the `PublishingErrorHandler` in the producer config.
 
 ```csharp
-public delegate Task<PublishingErrorDecision> PublishingErrorHandler(int retries, Exception e, PublisherBatchMessage batch);
+public delegate Task<PublishingErrorDecision> PublishingErrorHandler(
+    int retries, 
+    Exception e, 
+    PubSubBatch batch
+);
 ```
 
 You can return following decisions from the handler:
@@ -195,7 +224,7 @@ If the decision is to retry, the message batch will be sent to all the subscribe
 
 ## Under the hood
 
-The pub sub functionality is implemented using two actors: the TopicActor and the PubSubMemberDeliveryActor. The TopicActor knows about all the subscribers. It is a virtual actor, so there is no need to explicitly instantiate a  The delivery of messages is optimized by TopicActor, which sends only single over-the-network message to each of the members, that contain subscribers. Then PubSubMemberDeliveryActor distributes the message locally within the member, to each of the subscribers.
+The pub sub functionality is implemented using two actors: the TopicActor and the PubSubMemberDeliveryActor. The TopicActor knows about all the subscribers. It is a virtual actor, so there is no need to explicitly instantiate it. The delivery of messages is optimized by TopicActor, which sends only single over-the-network message to each of the members, that contain subscribers. Then PubSubMemberDeliveryActor (running on each member) distributes the messages locally within the member, to each of the subscribers.
 
 ```mermaid
 flowchart LR
@@ -238,13 +267,9 @@ flowchart LR
 
     subgraph PublisherMember[Member with publisher]
 
-        Publisher(Topic Publisher) --publish---> TopicActor
+        Publisher(Topic Publisher) --publish--> TopicActor
         
     end
-
-    
-    
-    
 
     TopicActor --deliver--> PubSubDeliveryActor1
     TopicActor --deliver--> PubSubDeliveryActor2
