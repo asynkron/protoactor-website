@@ -32,7 +32,7 @@ After we have implemented the basis of our future actor, we will need to create 
 var system = new ActorSystem();
 ```
 
-Note that you should create a single instance of the `Actor System () ' class for the entire application in most cases.
+Note that you should create a single instance of the `ActorSystem` class for the entire application in most cases.
 
 Next, we need to create a Props class to set the parameters for creating an instance of our actor.
 
