@@ -114,4 +114,5 @@ tags: [protoactor, docs]
 
 ## Additional Information
 
+- [Core vs contrib Proto.Actor components](core-contrib-components.md)
 - [Books](books.md)
