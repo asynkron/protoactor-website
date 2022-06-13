@@ -35,7 +35,7 @@ Another option is to monitor the state of the actor system directly.
 actorSystem.Shutdown.Register(() =>
 {
     // wait for shutdown to complete
-    a.Cluster().ShutdownAsync().Wait();
+    actorSystem.Cluster().ShutdownAsync().Wait();
     
     Environment.Exit(1); 
     // or alternatively, recreate and restart the cluster member
