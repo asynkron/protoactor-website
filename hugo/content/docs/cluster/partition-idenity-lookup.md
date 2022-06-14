@@ -7,17 +7,53 @@ title: Partition Identity Lookup (.NET)
 
 The main feature of this strategy is to split responsibility of owning actor's identity from responsibility of placing it in some member. So in general, one cluster member is responsible to keep actor's identity and another to spawn in the cluster.
 
+The identity owner member is assigned with a consistent hashing algorithm, while placement is determined with a [member strategy](member-strategies.md).
+
 ![Parition Identity Lookup](images/partition-identity-lookup.jpg)
 
-Partition Identity Lookup can work in 4 modes. They control how the cluster is behaving during rebalance (when members are going up and down). Rebalance is needed not not leave any actor orphaned (running actor that can't receive any message). It also prevents before having two instances of the same actor in the cluster.
+When cluster topology changes (members are leaving or joining the cluster), the partitioned identities need to be rebalanced, because identity ownership changes (according to the consistent).
 
-Rebalance is triggered by cluster topology change but it doesn't start until all members in a cluster will reach topology consensus. After reaching topology consensus the rebalance is starting.
+## Usage
 
-* Pull, Send: Full - identity owner pulls the full topology structure from placement actor
-* Pull, Send: Delta (Experimental) - identity owner pulls only information about actors that were affected by topology change from placement actor
+```csharp
+actorSystem.WithCluster(
+    ClusterConfig
+        .Setup(clusterName, clusterProvider, new PartitionIdentityLookup())
+);
+```
+
+## Characteristics
+
+* It limits the number of actors that need to move to a new node on topology change. Only actors hosted on the leaving member need to move.
+* It scales with the cluster size.
+* If the actor location is not cached in the PID cache, it may take 2 network hops to locate the actor. Also activating an actor may take 2 network hops.
+* No dependency on external components.
+* In rare cases it might result in multiple activations of an actor. Specifically during topology changes, and/or networking split brain scenarios.
+
+## Rebalancing
+
+ Rebalance is triggered by cluster topology change and it starts after all members in the cluster reach topology consensus.
+
+The rebalancing can be executed in 4 modes:
+
+* Pull, Send: Full - the identity owner pulls the full information from the placement actor
+* Pull, Send: Delta (Experimental) - the identity owner pulls only information about actors that were affected by topology change
 * Push, Send: Full (Experimental) - placement actor pushes full topology structure to identity owners
-* Push, Send: Delta (Experimental) - placement actor pushes only information about actors that were affected by topology change to identity owners
+* Push, Send: Delta (Experimental) - placement actor pushes only information about actors that were affected by topology change
 
-## Mode Pull, Send Full rebalance
+```csharp
+actorSystem.WithCluster(
+    ClusterConfig
+        .Setup(clusterName, clusterProvider,
+            new PartitionIdentityLookup(new PartitionConfig
+                {
+                    Mode = PartitionIdentityLookup.Mode.Pull, 
+                    Send = PartitionIdentityLookup.Send.Delta,
+                    HandoverChunkSize = 1000
+                }))
+);
+```
+
+### Mode Pull, Send Full rebalance
 
 ![Pull-full rebalance](images/rebalance-pull-handovers.png)
