@@ -68,7 +68,8 @@ tags: [protoactor, docs]
     - [Consul Provider](cluster/consul-net.md)
     - [AWS ECS Provider](cluster/aws-provider-net.md)
     - [Seed Provider - Experimental](cluster/seed-provider-net.md)
-  - [Identity lookup (.NET)](cluster/identity-lookup-net.md) - How does Proto.Actor know the location of a virtual actor?
+  - [Identity lookup (.NET)](cluster/identity-lookup-net.md) - How to locate a virtual actor?
+  - [Member strategies (.NET)](cluster/member-strategies.md) - Which member will host the virtual actor?
   - [Gossip (.NET)](cluster/gossip.md) - How can I share state across cluster members?
   - [Blocklist (.NET)](cluster/blocklist.md) - How do I handle blocked status of a member?
   - [Cluster Pub-Sub (.NET)](cluster/pub-sub.md) - How to broadcast messages in the cluster?
