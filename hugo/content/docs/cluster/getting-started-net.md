@@ -12,7 +12,7 @@ In this tutorial we will:
 1. Send messages to and between these grains.
 1. Host everything in a simple ASP.NET Core app.
 
-The code from this tutorial is avaliable [on GitHub](https://github.com/asynkron/protoactor-grains-tutorial).
+The code from this tutorial is available [on GitHub](https://github.com/asynkron/protoactor-grains-tutorial).
 
 ## Setting up the project
 
@@ -34,8 +34,8 @@ We'll need the following NuGet packages:
 This tutorial was prepared using:
 
 - .NET 6
-- Proto.Actor 0.27.0 (all `Proto.*` packages share the same version number)
-- `Grpc.Tools` 2.43.0
+- Proto.Actor 1.0.0-rc1 (all `Proto.*` packages share the same version number)
+- `Grpc.Tools` 2.46.1
 
 ### Base web app
 
@@ -118,7 +118,7 @@ Now we can register it in our web app:
 builder.Services.AddActorSystem();
 ```
 
-It is also suggested to turn on Proto.Actor logging. It will help with resolving all the issues. To do that it is needed to resolve `ILoggerFactory` dependency in `Program.cs` and use it for Proto.Actor logging config.
+It is also suggested to turn on Proto.Actor logging. It will help with resolving any issue we encounter. To do that, resolve `ILoggerFactory` dependency in `Program.cs` and use it for Proto.Actor logging config.
 
 ```csharp
 ...
@@ -140,7 +140,7 @@ This is a standard Proto.Actor configuration. It's out of the scope for this tut
 
 #### Remote configuration
 
-Proto.Cluster uses Proto.Remote for transport, usually GRPC (Proto.Remote.GrpcNet). Again, its configuration is out of scope for this tutorial; if you want to learn more, you should check out the [Remote](../remote.md) section of Proto.Actor's documentation.
+Proto.Cluster uses Proto.Remote for transport. Again, its configuration is out of scope for this tutorial; if you want to learn more, you should check out the [Remote](../remote.md) section of Proto.Actor's documentation.
 
 #### Cluster configuration
 
@@ -148,7 +148,7 @@ This is where we configure Proto.Cluster. Let's explain its parameters:
 
 1. `clusterName` - any name will do.
 1. `clusterProvider` - a Cluster Provider is an abstraction that provides information about currently available members (nodes) in a cluster. Since right now our cluster only has one member, it's ok to use a [Test Provider](test-provider-net.md).
-   In the future, we will switch to other implementations, like [Consul Provider](consul-net.md) or [Kubernetes Provider](kubernetes-provider-net.md). You can read more about Cluster Providers [here](cluster-providers-net.md).
+   Later we will switch to other implementations, like [Consul Provider](consul-net.md) or [Kubernetes Provider](kubernetes-provider-net.md). You can read more about Cluster Providers [here](cluster-providers-net.md).
 1. `identityLookup` - an Identity Lookup is an abstraction that allows a cluster to locate grains. `PartitionIdentityLookup` is generally a good choice for most cases. You can read more about Identity Lookup [here](identity-lookup-net.md).
 
 ### Cluster object
@@ -250,23 +250,22 @@ To recap:
 1. Grains are not explicitly crated (activated). Instead, they are created when they receive the first message.
 1. Each grain lives in _one_ of the cluster members.
 1. Grain's location is transparent, meaning we don't need to know in which cluster member grain lives to call it.
-1. Communication with grains should almost always be a request/response. <!-- todo: explain why? -->
+1. Communication with grains should almost always be a request/response.
 1. Grains are identified by a _kind_ and _identity_, e.g. `airport`/`AMS` or `user`/`53`. It's important to distinguish kind/identity pair with an actor's ID, which in the case of grains might change between activations.
+
+*Note: The request / response pattern is required for grain communication, because internally Proto.Actor relies on the responses to determine if the PID (actor id) it has for the grain is still valid. If it's not, the request will be retried after refreshing the PID.*
 
 ### Generating a grain
 
 <!-- todo: link grains documentation page when it's created -->
 
-The recommended way of creating a grain is by using a `Proto.Cluster.CodeGen` package, which generates most of the grain's code for use from a `.proto` file.
+The recommended way of creating a grain is by using a `Proto.Cluster.CodeGen` package, which generates most of the grain's boilerplate code from a `.proto` file.
 
-You can create it manually without that package, but:
+You can create it manually without that package, but it's easy to make a mistake, e.g. respond to a message with a wrong type of message or not respond at all.
 
-1. It requires much more boilerplate code.
-1. It's easy to make a mistake, e.g. respond to a message with a wrong type of message or not respond at all.
+Read more about generating grains [here](codegen-net.md) and more about protobuf syntax [here](https://developers.google.com/protocol-buffers/docs/proto3).
 
-Read more about generating grains [here](codegen-net.md).
-
-Let's create two `.proto` files: one for grains, and the other for messages used by these grains:
+Add following file to the project:
 
 `Grains.proto`:
 
@@ -295,7 +294,7 @@ In order for code generation to work (for both grains and messages), we need to 
 
 `ProtoGrain` is an MSBuild task provided by `Proto.Cluster.CodeGen`.
 
-This is a good moment to build a project and see if code generation doesn't produce any errors.
+This is a good moment to build a project and see if code generation completes successfully.
 
 ### Implementing a grain
 
@@ -349,8 +348,7 @@ public class SmartBulbGrain : SmartBulbGrainBase
 
 ### Registering a grain
 
-Remember, that grains are not explicitly activated, but only when they receive the first message. In other words, Proto.Cluster needs to know how to create new instances of your grains.
-More specifically, they need be registered when configuring Cluster with a `WithClusterKind` method.
+Remember, that grains are not activated explicitly, but rather when they receive the first message. In other words, Proto.Cluster needs to know how to create new instances of your grains. More specifically, they need be registered when configuring Cluster with a `WithClusterKind` method.
 
 `ActorSystemConfiguration.cs`:
 
@@ -375,13 +373,24 @@ As with actors, we need to provide a `Props` describing how our grain is created
 
 `SmartBulbGrainActor` is another class generated by `Proto.Cluster.Codegen`, which is a wrapper for our grain code.
 
-<!-- todo: more explanation? -->
+#### Side note: dependency injection
+
+Suppose our grain depends on some services registered in the ASP.NET dependency injection container. At the same time the `IContext` parameter needs to be passed to grain's constructor. You could inject the services and additionally pass `context` with following code:
+
+```csharp
+// "provider" is the IServiceProvider from the serviceCollection.AddSingleton scope
+Props.FromProducer(() => 
+    new SmartBulbGrainActor(
+        (context, clusterIdentity) => 
+            ActivatorUtilities.CreateInstance<SmartBulbGrainActor>(provider, context)));
+
+```
 
 ## Communicating with grains
 
 ### Grain client
 
-We can communicate with grains using a `Cluster` object:
+We can communicate with grains using the `Cluster` object:
 
 ```csharp
 private readonly ActorSystem _actorSystem;
@@ -396,9 +405,9 @@ public async Task TurnTheLightOnInTheKitchen(CancellationToken ct)
 }
 ```
 
-Both `GetSmartBulbGrain` extention method and `SmartBulbGrainClient` class were generated by `Proto.Cluster.Codegen`.
+Both `GetSmartBulbGrain` extension method and `SmartBulbGrainClient` class were generated by `Proto.Cluster.Codegen`.
 
-Mind, that `smartBulbGrainClient` is a client for a _specific_ grain, in this case, a smart bulb that's located in the kitchen.
+Mind that `smartBulbGrainClient` is a client for a _specific_ grain, in this case, a smart bulb that's located in the kitchen.
 
 ### Smart bulb simulator
 
@@ -526,7 +535,7 @@ ad 1) We need to configure the `ProtoGrain` MSBuild task by adding `AdditionalIm
 </ItemGroup>
 ```
 
-ad 2) We need to add the following line to `Grains.proto`:
+ad 2) We need to add the following line to the beginning `Grains.proto`:
 
 ```protobuf
 import "Messages.proto";
@@ -605,18 +614,19 @@ Run the app and try navigating to `/smart-bulbs/bedroom` in your browser. You sh
 
 ### Side note: grain activation
 
-Let's use this moment to emphasise how grains work. Try navigating to: `/smart-bulbs/made-up-identity` or `/smart-bulbs/xyz123`. In both cases you should get:
+Let's use this moment to emphasize how grains work. Try navigating to: `/smart-bulbs/made-up-identity` or `/smart-bulbs/xyz123`. In both cases you should get:
 
 ```json
 { "state": "Unknown" }
 ```
 
-Proto.Custer will activate any grain you send a message to, even the ones you haven't anticipated. Sometimes this might require some additional handling, e.g. checking if a given identity is valid, is present in some sort of a database, etc.
+Proto.Custer will activate any grain you send a message to, even the ones you haven't anticipated. Sometimes this might require some additional handling, e.g. checking if a given identity is valid, is present in some sort of a database, etc. Proto.Actor has a built in mechanism for handling this scenario, see [ClusterKind.WithSpawnPredicate](https://github.com/asynkron/protoactor-dotnet/blob/dev/src/Proto.Cluster/ClusterKind.cs).
+
 It's important to have this in the back of your head when designing a system using grains.
 
 ## Communicating between grains
 
-To present how grains can communicate with each other, we'll create a new grain that will represent a smart house. It will be responsible for counting how many smart bulbs are on.
+To show how grains can communicate with each other, we'll create a new grain that will represent a smart house. It will be responsible for counting how many smart bulbs are on.
 For simplicity, we'll assume there's only one smart house with identity `my-house`. Each bulb will report its status to this smart house when it changes.
 
 ### Creating a new grain
@@ -701,7 +711,7 @@ Register this grain in the cluster by calling another `WithClusterKind` on `Clus
 
 ### Sending messages between grains
 
-Again, to call a grain, we need to use a `Cluster` object. In a grain, we can get it from an `IContext` instance. In grains generated with `Proto.Cluster.CodeGen`, it's available as a `Context` property.
+Again, to call a grain, we need to use a `Cluster` object. In a grain, we can get it from an `IContext` instance. In the grains generated with `Proto.Cluster.CodeGen`, it's available as a `Context` property.
 
 Modify the smart bulb grain accordingly:
 
@@ -774,7 +784,7 @@ my-house: 2 smart bulbs are on
 
 ## Running a cluster with multiple members (nodes)
 
-To showcase how grains work in a distributed context, we're going to run two members of our example app. Additionally, `SmartBulbSimulator` will be running as a separate application.
+To showcase how grains work in a distributed system, we're going to run two members of our example app. Additionally, `SmartBulbSimulator` will be running as a separate application.
 
 To do that, we'll need a proper Cluster Provider. To recap, a Cluster Provider is an abstraction that provides information about currently available members in a cluster.
 In other words, it tells a cluster member what are the other members, thus allowing them to communicate with one another. You can read more about Cluster Providers [here](cluster-providers-net.md).
@@ -818,7 +828,6 @@ a4-->a5
 linkStyle default display:none;
 ```
 
-
 ### Consul provider
 
 Now we can replace `TestProvider` with Consul provider.
@@ -846,7 +855,7 @@ var clusterConfig = ClusterConfig
     // ...
 ```
 
-This will connect to Consul using a default port.
+This will connect to Consul using the default port.
 
 For more information on how to configure Consul Provider, read [the Consul provider documentation page](consul-net.md).
 
@@ -940,270 +949,9 @@ my-house: 3 smart bulbs are on
 
 This is a good opportunity to perform an experiment: turn off the first member. You should see, that all the grains from the first member should be recreated on the second member.
 
-## Running application in Kubernetes
+## Kubernetes
 
-For now, tutorial showed how to run multiple members locally using Consul.
-The same setup might be also suitable for some deployment cases, but since modern applications are more often deployed in Kubernetes it is better to select dedicated provider for it.
-
-[Kubernetes provider](cluster/kubernetes-provider-net.md) is another implementation of `IClusterProvider` interface, the same as [Consul provider](cluster/consul-net.md). For more information you can check [Cluster providers section](cluster/cluster-providers-net.md).
-
-### Changes in the application
-
-First thing that needs to be done is to reference `Proto.Cluster.Kubernetes` package where this implementation is provided.
-The next step is to replace Consul provider with Kubernetes provider in `ActorSystemConfiguration.cs`.
-
-```csharp
-
-...
-
-var clusterConfig = ClusterConfig
-    .Setup(
-        clusterName: "ProtoClusterTutorial",
-        clusterProvider: new KubernetesProvider(new Kubernetes(KubernetesClientConfiguration.InClusterConfig())),
-        identityLookup: new PartitionIdentityLookup()
-    )
-
-```
-
-It is also needed to change how remote configuration is prepared. We bind to all interfaces and use `ProtoActor:AdvertisedHost` host address passed in the configuration.
-
-``` csharp
-
-var remoteConfig = GrpcNetRemoteConfig
-                    .BindToAllInterfaces(advertisedHost: configuration["ProtoActor:AdvertisedHost"])
-                    .WithProtoMessages(MessagesReflection.Descriptor);
-        
-```
-
-To have `configuration` variable in `AddActorSystem` extension it is needed to change its signature.
-
-```csharp
-public static void AddActorSystem(this IServiceCollection serviceCollection, IConfiguration configuration)
-{
-    ...
-}
-```
-
-And usage in `ProtoClusterTutorial` `Program.cs`.
-
-```csharp
-builder.Services.AddActorSystem(builder.Configuration);
-```
-
-The same in the `SmartBulbSimulatorApp`
-
-```csharp
-services.AddActorSystem(hostContext.Configuration);
-```
-
-At this step both applications should be ready to run in Kubernetes, but first we need to create conainter images.
-
-### Create docker images
-
-To continue next steps it is needed to have container registry where the images will be pushed. In our tutorial we will use Azure Container Registry. You can find instructions how to create it [here](https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-prepare-acr?tabs=azure-cli).
-
-Add Dockerfile into `ProtoClusterTutorial` directory:
-
-```Dockerfile
-
-# Stage 1 - Build
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS builder
-
-WORKDIR /app/src
-
-# Restore
-COPY *.csproj .
-
-RUN dotnet restore -r linux-x64
-
-# Build
-COPY . .
-
-RUN dotnet publish -c Release -o /app/publish -r linux-x64 --no-self-contained --no-restore
-
-# Stage 2 - Publish
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
-WORKDIR /app
-
-RUN addgroup --system --gid 101 app \
-    && adduser --system --ingroup app --uid 101 app
-
-
-COPY --from=builder --chown=app:app /app/publish .
-
-USER app
-    
-ENTRYPOINT ["./ProtoClusterTutorial"]
-
-```
-
-After this you should be able to build docker image for the `ProtoClusterTutorial` app with tag:
-
-```sh
-
-docker build . -t YOUR_ACR_ADDRESS/proto-cluster-tutorial:1.0.0
-
-```
-
-You need to add Dockerfile in the `SmartBulbSimulatorApp` directory too:
-
-```Dockerfile
-
-# Stage 1 - Build
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS builder
-
-WORKDIR /app/src
-
-# Restore
-COPY /ProtoClusterTutorial/*.csproj ./ProtoClusterTutorial/
-COPY /SmartBulbSimulatorApp/*.csproj ./SmartBulbSimulatorApp/
-
-
-RUN dotnet restore ./SmartBulbSimulatorApp/SmartBulbSimulatorApp.csproj -r linux-x64
-
-# Build
-COPY . .
-
-RUN dotnet publish ./SmartBulbSimulatorApp/SmartBulbSimulatorApp.csproj -c Release -o /app/publish -r linux-x64 --no-self-contained --no-restore
-
-# Stage 2 - Publish
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
-WORKDIR /app
-
-RUN addgroup --system --gid 101 app \
-    && adduser --system --ingroup app --uid 101 app
-
-
-COPY --from=builder --chown=app:app /app/publish .
-
-USER app
- 
-ENTRYPOINT ["./SmartBulbSimulatorApp"]
-
-```
-
-`SmartBulbSimulatorApp` relies on `ProtoClusterTutorial` sources so you need to run it from the main directory and pass Dockerfile as argument.
-
-```sh
-
- docker build -f SmartBulbSimulatorApp/Dockerfile . -t YOUR_ACR_ADDRESS/smart-bulb-simulator:1.0.0
-
-```
-
-So now we created images for both applications and they should be visible on the images list:
-
-```sh
-docker images
-```
-
-Tip: If you encounter strange errors during building images then remove `obj` and `bin` directories. You can also consider adding `.dockerignore` file to skip them.
-
-Both images should be pushed to our container registry:
-
-```sh
-
-docker push YOUR_ACR_ADDRESS/proto-cluster-tutorial:1.0.0
-
-...
-
-docker push YOUR_ACR_ADDRESS/smart-bulb-simulator:1.0.0
-
-```
-
-Now both images are stored in the container registry and we can start application deployment.
-
-### Deployment to Kubernetes cluster
-
-To continue next steps it is needed to have Kubernetes cluster running. In our tutorial we will use Azure Kubernetes Service. You can find instructions how to create it [here](https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-deploy-cluster?tabs=azure-cli).
-
-To simplify the deployment to Kubernetes we will use [Helm](https://helm.sh/). Ensure that you have installed it locally and `helm` command is available. You can check how to do it [here](https://helm.sh/docs/intro/quickstart/)
-
-Now we are going to prepare Helm chart that will help us with deployment.
-To not create everything by hand you can download `chart-tutorial` [folder](https://github.com/asynkron/protoactor-grains-tutorial/tree/5351544702d4905948b45db97202dfb8290a2d25/chart-tutorial) from tutorial's repository on Github.
-
-This chart contains definitions of given resources:
-
-- deployment - the most important part is setting `ProtoActor__AdvertisedHost` variable based on pod's IP
-
-``` yml
-env:
-    - name: ProtoActor__AdvertisedHost
-    valueFrom:
-      fieldRef:
-        fieldPath: status.podIP
-
-```
-
-- service - to make each member reachable by another members
-
-- role - permissions needed for [Kubernetes cluster provider](kubernetes-provider-net.md)
-
-- service account - [identity in Kubernetes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/) that will be used by pod (Kubernetes provider)
-
-- role binding - connection between role and service account
-
-To continue with deployment you should open `values.yaml` and replace `member.image.repository` with your image. The same with `member.image.tag`. Key `member.replicaCount` determines the number of running replicas. By default it it 2.
-
-After this, you need to open terminal in a chart's folder parent directory. Then you need to run `helm install` to deploy your image.
-
-```sh
-helm install proto-cluster-tutorial chart-tutorial
-```
-
-Where `proto-cluster-tutorial` is the name of the release and `chart-tutorial` is the name of a folder where the chart is located.
-
-After this you should be able to see in the command line information that deployment is succeeded.
-
-```sh
-PS C:\repo\proto\protoTest> helm install proto-cluster-tutorial chart
-NAME: proto-cluster-tutorial
-LAST DEPLOYED: Tue Feb 15 11:29:48 2022
-NAMESPACE: default
-STATUS: deployed
-REVISION: 1
-TEST SUITE: None
-```
-
-You can also check that there are two running pods:
-
-```sh
-PS C:\repo\proto\protoTest> kubectl get pods
-NAME                                     READY   STATUS    RESTARTS   AGE
-proto-cluster-tutorial-886c9b657-5hgxh   1/1     Running   0          63m
-proto-cluster-tutorial-886c9b657-vj8nj   1/1     Running   0          63m
-```
-
-If we will look closer to the created pods, we can see labels that were added by Kubernetes provider [here](https://github.com/asynkron/protoactor-dotnet/blob/dev/src/Proto.Cluster.Kubernetes/KubernetesProvider.cs#L114).
-
-![pod-labels](images/pod-labels.png)
-
-At this point these pods do nothing. Now it is needed to deploy simumaltor. We can reuse the same chart because simulator uses cluster client to send data to proto.actor cluster and requires similar permissions.
-To do this we will call helm install as before but we will override values saved in `values.yaml` file. So first let's copy `values.yaml` file and rename it to `simulator-values.yaml`.
-
-In the file we will change repository and tag to align with simulator image pushed to container registry. We also change `replicaCount` to 1 because we would like to have only single replica of the simulator.
-Then we open again terminal in chart's parent directory and deploy simulator. We are adding `--values` parameter override `values.yaml` stored in chart's folder.
-
-```sh
-PS C:\repo\proto\protoactor-grains-tutorial> helm install simulator chart-tutorial --values .\simulator-values.yaml
-NAME: simulator
-LAST DEPLOYED: Tue Feb 15 13:24:48 2022
-NAMESPACE: default
-STATUS: deployed
-REVISION: 1
-TEST SUITE: None
-```
-
-We can also see that the pod has been deployed and we can see one more pod:
-
-```sh
-PS C:\repo\proto\protoactor-grains-tutorial> kubectl get pods
-NAME                                     READY   STATUS    RESTARTS   AGE
-proto-cluster-tutorial-886c9b657-5hgxh   1/1     Running   0          98m
-proto-cluster-tutorial-886c9b657-vj8nj   1/1     Running   0          97m
-simulator-68d4c5c4df-zgxv2               1/1     Running   0          6m22s
-```
-
-We can look into pods logs to see that both pods started processing data. We can do the same experiment as we did for Consul provider and scale down number of replicas to 1 to see that actors are recreated on the node that is still alive.
+To see how to run the application we've been building in Kubernetes, see the [continuation of the tutorial](getting-started-kubernetes.md).
 
 ## Conclusion
 

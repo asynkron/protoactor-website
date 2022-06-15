@@ -12,6 +12,7 @@ tags: [protoactor, docs]
 - [Hello World](hello-world)
 - [Getting Started](getting-started)
 - [Getting Started With Grains / Virtual Actors (.NET)](cluster/getting-started-net.md)
+- [Deploy to Kubernetes](cluster/getting-started-kubernetes.md)
 
 ## Articles
 
