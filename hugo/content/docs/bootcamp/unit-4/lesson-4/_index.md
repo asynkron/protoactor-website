@@ -23,12 +23,13 @@ Now let's add UserId to the `UserActor()` class.
 ```csharp
  public class UserActor : IActor
  {
-        private int _id;
-   
-				public UserActor(int id)
-        {
-            _id = id;
-        }
+    private int _id;
+
+    public UserActor(int id)
+    {
+        _id = id;
+    }
+}
 ```
 
 Next, we need to add a couple of messages to the Messages folder. The first message will be called `RequestActorPid()`. And it will will be used to request the Pid of the desired actor.
