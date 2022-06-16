@@ -4,7 +4,7 @@ So, let's begin creating the final architecture for our application. In this les
 
 ![](../../images/4_3_1.png)
 
-First of all, we will need to do a little preparatory work. First, we need to add the UserId to the `StopMovieMessage () ' message.
+First of all, we will need to do a little preparatory work. First, we need to add the UserId to the `StopMovieMessage()` message.
 
 ```csharp
 public class StopMovieMessage
