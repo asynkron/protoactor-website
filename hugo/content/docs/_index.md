@@ -77,6 +77,8 @@ tags: [protoactor, docs]
   - [Virtual Actors (Go)](cluster/virtual-actors-go.md) - How do I create virtual actors and spawn them in the cluster?
   - [Integration Testing (.NET)](integration-tests.md) -  How do I integration-test virtual actors?
 - [SimpleScheduler](scheduling.md) - How do I send messages on a timer?
+- [Built in messages](messages)
+
 
 ### Utility features
 
