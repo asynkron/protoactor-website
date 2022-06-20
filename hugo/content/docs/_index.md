@@ -13,10 +13,6 @@ tags: [protoactor, docs]
 - [Getting Started](getting-started)
 - [Getting Started With Grains / Virtual Actors (.NET)](cluster/getting-started-net.md)
 
-## Articles
-
-{{< article-clean >}}
-
 ## Introduction
 
 - [What is Proto.Actor?](what-is-protoactor)
@@ -99,6 +95,10 @@ tags: [protoactor, docs]
 - [ActorSystem Extensions](actorsystem-extensions.md)
 - [Actor Extensions](actor-extensions.md)
 - [Context Decorator](context-decorator.md)
+
+## Articles
+
+{{< article-clean >}}
 
 ## Useful Patterns
 
