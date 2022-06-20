@@ -4,7 +4,7 @@ So, let's begin creating the final architecture for our application. In this les
 
 ![](../../images/4_3_1.png)
 
-First of all, we will need to do a little preparatory work. First, we need to add the UserId to the `StopMovieMessage () ' message.
+First of all, we will need to do a little preparatory work. First, we need to add the UserId to the `StopMovieMessage()` message.
 
 ```csharp
 public class StopMovieMessage
@@ -23,12 +23,13 @@ Now let's add UserId to the `UserActor()` class.
 ```csharp
  public class UserActor : IActor
  {
-        private int _id;
-   
-				public UserActor(int id)
-        {
-            _id = id;
-        }
+    private int _id;
+
+    public UserActor(int id)
+    {
+        _id = id;
+    }
+}
 ```
 
 Next, we need to add a couple of messages to the Messages folder. The first message will be called `RequestActorPid()`. And it will will be used to request the Pid of the desired actor.
