@@ -67,12 +67,13 @@ layout: empty
         <h3 class="display-4">Get in touch</h3>
 
         <div class="lead">
-<!-- Calendly link widget begin -->
-<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-<a href="" class="btn btn-primary" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/asynkron?hide_landing_page_details=0&hide_gdpr_banner=1'});return false;">
-  Schedule time with us on a video call</a><br><br>
-<!-- Calendly link widget end -->
+          <!-- Calendly link widget begin -->
+          <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+          <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+          <a href="" class="btn btn-primary"
+            onclick="Calendly.initPopupWidget({url: 'https://calendly.com/asynkron?hide_landing_page_details=0&hide_gdpr_banner=1'});return false;">
+            Schedule time with us on a video call</a><br><br>
+          <!-- Calendly link widget end -->
         </div>
 
         <div class="lead">Or, get in touch with our Customer Service.</div>
@@ -148,6 +149,138 @@ layout: empty
             </div>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+</section>
+<!--
+<section class="bg-light o-hidden pt-5 pb-5">
+  <div class="container py-4">
+    <div class="row align-items-center justify-content-around">
+      <div class="text-center ">
+
+        <p class="lead">
+          Sponsors and Partners
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="container py-4">
+    <div class="row align-items-center justify-content-around">
+      <div class="col-md-9 col-lg-6 ">
+        <div class="text-center text-lg-left">
+          aaaa
+        </div>
+      </div>
+      <div class="col-md-9 col-lg-6 ">
+        <div class="text-center text-lg-left">
+          bbb
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+-->
+<section class="p-4 bg-dark text-white">
+  <div class="container py-4">
+    <div class="row align-items-center justify-content-around">
+      <div class="text-center ">
+        <img src="/assets/img/asynkron/protoactor-logo.png" height="120">
+        <p class="lead">Cross-platform actors for .NET and Go<br>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="container py-4">
+    <div class="row align-items-center justify-content-around">
+      <div class="col-md-9 col-lg-6 ">
+        <div class="text-center text-lg-left">
+          <h2 class="h1">Actor Model</h2>
+          <p class="lead">The Actor Model provides a higher level of abstraction for writing concurrent and distributed
+            systems. It alleviates the developer from having to deal with explicit locking and thread management, making
+            it easier to write correct concurrent and parallel systems.</p>
+          <a href="/docs/actors"> Read More <img class="icon icon-sm bg-primary"
+              src="/assets/img/icons/theme/code/right-circle.svg" alt="Icon" data-inject-svg /></a></small>
+        </div>
+      </div>
+      <div class="col-md-9 col-lg-6 aos-init aos-animate" data-aos="fade-in">
+        <img src="/docs/images/actor-illustration.png" alt="Actor model" class="img-fluid">
+      </div>
+    </div>
+  </div>
+  <div class="container py-4">
+    <div class="row align-items-center justify-content-around">
+      <div class="col-md-9 col-lg-6 aos-init aos-animate" data-aos="fade-in">
+        <img src="/docs/images/grains-illustration.png" alt="Virtual actors in different servers" class="img-fluid">
+      </div>
+      <div class="col-md-9 col-lg-6 ">
+        <div class="text-center text-lg-left">
+          <h2 class="h1">Grains / Virtual Actors</h2>
+          <p class="lead">Grain abstraction, which provides a <b>straightforward approach to building
+              distributed interactive applications</b>, without the need to learn complex programming patterns for
+            handling concurrency,
+            fault tolerance, and resource management.</p>
+          <a href="/docs/cluster"> Read More <img class="icon icon-sm bg-primary"
+              src="/assets/img/icons/theme/code/right-circle.svg" alt="Icon" data-inject-svg /></a></small>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="container py-4">
+    <div class="row align-items-center justify-content-around">
+      <div class="col-md-9 col-lg-6 ">
+        <div class="text-center text-lg-left">
+          <h2 class="h1">Stream Processing</h2>
+          <p class="lead">Proto.Actor is designed to <b>optimize for locality</b>, grains can <b>gradually migrate</b>
+            to cluster members from where it receives the most interactions.
+            This allows Proto.Actor to leverage in-process performance for realtime stream processing.
+          </p>
+          <a href="/docs/local-affinity"> Read More <img class="icon icon-sm bg-primary"
+              src="/assets/img/icons/theme/code/right-circle.svg" alt="Icon" data-inject-svg /></a></small>
+        </div>
+      </div>
+      <div class="col-md-9 col-lg-6 aos-init aos-animate" data-aos="fade-in">
+        <img src="/docs/images/stream-illustration.png" alt="Actor migrating to where its messages arrive"
+          class="img-fluid">
+      </div>
+    </div>
+  </div>
+  <div class="container py-4">
+    <div class="row align-items-center justify-content-around">
+      <div class="col-md-9 col-lg-6 aos-init aos-animate" data-aos="fade-in">
+        <img src="/docs/images/digitaltwins-illustration.png" alt="Image" class="img-fluid">
+      </div>
+      <div class="col-md-9 col-lg-6 ">
+        <div class="text-center text-lg-left">
+          <h2 class="h1">Digital Twins</h2>
+          <p class="lead">
+            A digital twin is a virtual representation that serves as the real-time digital counterpart of a physical
+            object or process.
+            By leveraging Proto.Actors local affinity strategy, digital twins can react on external events in realtime.
+          </p>
+          <a href="/docs/local-affinity"> Read More <img class="icon icon-sm bg-primary"
+              src="/assets/img/icons/theme/code/right-circle.svg" alt="Icon" data-inject-svg /></a></small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container py-4">
+    <div class="row align-items-center justify-content-around">
+      <div class="col-md-9 col-lg-6 ">
+        <div class="text-center text-lg-left">
+          <h2 class="h1">Metrics and Tracing</h2>
+          <p class="lead">Observability is an essential feature for distributed systems. Every area of
+            Proto.Actor has been instrumented to allow users to extract runtime and
+            performance metrics.<br>
+            Dashboards for DataDog and Grafana are provided out of the box.
+          </p>
+          <a href="/docs/metrics"> Read More <img class="icon icon-sm bg-primary"
+              src="/assets/img/icons/theme/code/right-circle.svg" alt="Icon" data-inject-svg /></a></small>
+        </div>
+      </div>
+      <div class="col-md-9 col-lg-6 aos-init aos-animate" data-aos="fade-in">
+        <img src="/docs/images/metrics-illustration.png" alt="Image" class="img-fluid">
       </div>
     </div>
   </div>
