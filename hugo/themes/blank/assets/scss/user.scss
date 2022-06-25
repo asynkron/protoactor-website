@@ -194,4 +194,8 @@ h3,
   display: inline-block;
   filter: brightness(0.0) saturate(0.0);
   opacity: 0.85;
+
+  img {
+    height: 60px;
+  }
 }
