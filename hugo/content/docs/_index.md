@@ -69,7 +69,7 @@ tags: [protoactor, docs]
   - [Member strategies (.NET)](cluster/member-strategies.md) - Which member will host the virtual actor?
   - [Gossip (.NET)](cluster/gossip.md) - How can I share state across cluster members?
   - [Blocklist (.NET)](cluster/blocklist.md) - How do I handle blocked status of a member?
-  - [Cluster Pub-Sub (.NET)](cluster/pub-sub.md) - How to broadcast messages in the cluster?
+  - [Cluster Pub-Sub (.NET) - Experimental](cluster/pub-sub.md) - How to broadcast messages in the cluster?
   - [Virtual Actors (Go)](cluster/virtual-actors-go.md) - How do I create virtual actors and spawn them in the cluster?
   - [Integration Testing (.NET)](integration-tests.md) -  How do I integration-test virtual actors?
 - [SimpleScheduler](scheduling.md) - How do I send messages on a timer?

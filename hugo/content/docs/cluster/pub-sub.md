@@ -1,9 +1,9 @@
 ---
 layout: docs.hbs
-title: Cluster Pub-Sub
+title: Cluster Pub-Sub (Experimental)
 ---
 
-# Cluster Pub-Sub
+# Cluster Pub-Sub (Experimental)
 
 Proto.Actor has a feature that enables you to broadcast messages from a publisher to a number of subscribers. On the publisher side, the message is published to a "topic", which is identified by its unique name. On the subscriber side, you subscribe to a topic by its name. Proto.Actor routes the published message to all topic subscribers, sending a copy of the message to each one.
 
