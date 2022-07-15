@@ -48,7 +48,7 @@ await publisher.PublishBatch("my-topic", ChatTopic, new ChatMessage[]
     });
 ```
 
-The task returned by `Publish` will complete when the message is delivered and processed by all the topic subscribers. If you are interested in a "fire and forget" scenario, do not await the task, but be aware that this may lead to unbounded queueing in memory.
+The task returned by `Publish` will complete when the message is delivered to the topic and topic was able to send the message to subscribers. The delivery to the subscriber is not guaranteed. The order of the messages is preserved.
 
 ## Subscribing to a topic
 
@@ -185,7 +185,7 @@ var t2 = producer.ProduceAsync(new ChatMessage { Message = "Hi" });
 await Task.WhenAll(t1, t2);
 ```
 
-Notice how the produce tasks are not awaited in a sequence, but rather all at once. This is the pattern you should follow when using the BatchingProducer. The tasks will complete when the message is actually processed by all the subscribers, not when added to the internal producer queue.
+Notice how the produce tasks are not awaited in a sequence, but rather all at once. This is the pattern you should follow when using the BatchingProducer. The tasks will complete when the message is actually delivered to the topic, not when added to the internal producer queue.
 
 *Note: you can also decide to not await the task if you are interested in the "fire and forget" scenario.*
 

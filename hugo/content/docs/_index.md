@@ -51,6 +51,7 @@ tags: [protoactor, docs]
   - [Futures (Go)](futures.md) - How do I react to task completions?
   - [Dispatchers](dispatchers.md) - How do I tweak how and where actors execute?
   - [Dependency Injection (.NET)](di.md) - How do I configure actors using Dependency Injection?
+  - [Dealing with deadlocks](deadlocks.md)
 - [Persistence of actor's state](persistence.md) - How do I persist state for actors?
   - [Using 3rd party libraries](externalpersistence.md) - How do I persist state using external libraries?
 - [Remote](remote.md) - How do I communicate with actors on other nodes?
