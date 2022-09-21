@@ -32,8 +32,7 @@ var props = Actor.FromFunc(c => {
             await next(context); // invokes the actor
         })
     );
-var pid = Actor.Spawn(props);
-pid.Tell("");
+
 ```
 
 The above code will print `middleware 1`, then `middleware 2`, then `actor`. The `next` argument to the first middleware will be the second middleware, and the `next` argument to the second middleware will be the actor's `Receive` method.
@@ -63,8 +62,7 @@ var props = Actor.FromFunc(c => {
             await next(context, target, envelope); // sends the message to the target
         }
     );
-var pid = Actor.Spawn(props);
-pid.Tell("");
+
 ```
 
 The above code will print `actor`, then `middleware 1`, then `middleware 2`. The `next` argument to the first middleware will be the second middleware, and the `next` argument to the second middleware.
