@@ -25,4 +25,4 @@ Do you need a full-time distributed systems engineer / Proto.Actor expert?
 
 ## Support Subscription
 
-Coming soon
+  <a href="mailto:info@asynkron.se?subject=Proto.Cluster Support">Contact us</a>
