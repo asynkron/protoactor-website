@@ -6,7 +6,7 @@ In the actors' system, there would be no sense if it did not consist of several 
 
 Here we see that actor 1 wants to send a message to actor 2, in Proto.Actor we don't work with actors directly. Instead, we work with the PID of the actor. The PID is the Process ID of the process.
 
-Each actor has a unique PID that allows Proto.Actor to distinguish actors. When a new actor is created Photo.Actor assigns it the next free ID(i.e., not associated with any actor). ID's are assigned incrementally, i.e., the new actor's ID is higher than the actor created before it. When an actor completes his work, Proto.Actor frees the identifier occupied by it.
+Each actor has a unique PID that allows Proto.Actor to distinguish actors. When a new actor is created Proto.Actor assigns it the next free ID(i.e., not associated with any actor). ID's are assigned incrementally, i.e., the new actor's ID is higher than the actor created before it. When an actor completes his work, Proto.Actor frees the identifier occupied by it.
 
 ![](../../images/2_2_2.png)
 
