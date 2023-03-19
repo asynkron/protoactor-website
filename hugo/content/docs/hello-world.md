@@ -20,7 +20,7 @@ An Actor System is a container for your actors and a central point for managing 
 
 Let's create an actor system called `MySystem`:
 
-### .NET
+#### .NET
 
 ```csharp
 // Import the Proto namespace
@@ -30,7 +30,7 @@ using Proto;
 var system = new ActorSystem();
 ```
 
-### Go
+#### Go
 
 ```go
 // Import the actor package
@@ -46,14 +46,14 @@ system := actor.NewActorSystem()
 
 Actors communicate by exchanging messages. In this example, we will create a simple `Hello` message with a `Who` property:
 
-### .NET
+#### .NET
 
 ```csharp
 // Define the Hello message with a Who property
 public record Hello(string Who);
 ```
 
-### Go
+#### Go
 
 ```go
 // Define the Hello message with a Who property
@@ -66,7 +66,7 @@ type Hello struct {
 
 Now, let's create a `HelloWorldActor` that will receive and process `Hello` messages. We will define the actor's behavior using a `Receive` method that takes the incoming message and processes it:
 
-### .NET
+#### .NET
 
 ```csharp
 // Import the Proto namespace
@@ -90,7 +90,7 @@ public class HelloWorldActor : IActor
 }
 ```
 
-### Go
+#### Go
 
 ```go
 // Define the HelloWorldActor struct
@@ -110,7 +110,7 @@ func (state *HelloWorldActor) Receive(context actor.Context) {
 
 To start the `HelloWorldActor`, we need to create a `Props` object, which defines the properties of the actor, and then use the actor system to spawn a new instance:
 
-### .NET
+#### .NET
 
 ```csharp
 // Import the Proto namespace
@@ -123,7 +123,7 @@ var props = Props.FromProducer(() => new HelloWorldActor());
 var pid = system.Root.Spawn(props);
 ```
 
-### Go
+#### Go
 
 ```go
 // Create a Props object for the HelloWorldActor
@@ -137,13 +137,13 @@ pid := system.Root.Spawn(props)
 
 Finally, let's send a `Hello` message to our `HelloWorldActor`:
 
-### .NET
+#### .NET
 
 ```csharp
 system.Root.Send(pid, new Hello("World"));
 ```
 
-### Go
+#### Go
 
 ```go
 system.Root.Send(pid, &Hello{Who: "World"})
