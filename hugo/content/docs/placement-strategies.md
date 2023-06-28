@@ -8,7 +8,7 @@ title: Placement Strategies
 
 ### Is unique for a given ID
 
-Use a virtual actor with the ID as part of its name.
+This strategy involves using a virtual actor with a unique identifier (ID) as part of its name. This ensures that each actor is unique and can be individually addressed within the cluster. This strategy is typically used when you need to maintain a unique instance of an actor for each entity in your system.
 
 ```mermaid
 graph TB
