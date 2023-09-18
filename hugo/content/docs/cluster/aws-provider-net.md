@@ -13,14 +13,14 @@ Provider is available in `Proto.Cluster.AmazonECS` nuget package.
 static (GrpcNetRemoteConfig, IClusterProvider) ConfigureForAwsEcs(IConfiguration config)
     {
         var awsClient = new AmazonECSClient();
-        var containerInstanceName = config["ProtoActor:AwsContainerInstance"];
-        var ecsClusterName = config["ProtoActor:AwsEcsClusterName"];
+        var awsMetadataClient = new AwsEcsContainerMetadataHttpClient();
+        var taskMetadata = awsMetadataClient.GetTaskMetadata();
 
         var clusterProvider = new AmazonEcsProvider
             (
                 awsClient, 
-                ecsClusterName, 
-                containerInstanceName, 
+                taskMetadata.Cluster, 
+                taskMetadata.TaskARN, 
                 new AmazonEcsProviderConfig()
             );
 
