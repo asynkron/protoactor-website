@@ -135,10 +135,10 @@ Here are a few strategies that will help you keep the latency independent of the
 
 For example, consider a responsive web application with "rich" clients (browser, mobile app) to provide the user with a quality interaction experience. This application performs logic and stores a state on the client side in which the observed models provide a mechanism for updating the user interface when data changes in real time. Technologies like WebSockets or Server-Sent Events allow the user interface to connect directly to the event stream so that the entire system becomes event-driven, from the back-end layer to the client. These connection types allow reactive applications to push events to the browser and mobile apps via asynchronous and non-blocking data transfer while maintaining scalability and fault tolerance.
 
-It now becomes clear how the four reactive whales: *event-driven*, *scalable*, *responsive* and *resilient* are linked to each other and form a single whole:
+It now becomes clear what the four reactive characteristics are - *event-driven*, *scalable*, *responsive* and *resilient* - and how they are linked to each other:
 
 ![](../../images/1_4_4.png)
 
-Reactive applications represent a balanced approach to solving modern problems in the development of software systems. They are built on a framework *focused on events* and message passing, and provide tools for *scalability* and *fault tolerance*. On top of this, they support rich and *responsive* user interfaces. We expect the rapidly growing number of systems to be follow this Manifesto in the near future.
+Reactive applications represent a balanced approach to solving modern problems in the development of software systems. They are built on a framework *focused on events* and message passing and provide tools for *scalability* and *fault tolerance*. On top of this, they support *responsive* user interfaces. We expect the rapidly growing number of systems to follow this Manifesto.
 
 [Go ahead!](../lesson-5)
