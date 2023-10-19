@@ -66,10 +66,10 @@ The algorithm for placing messages in the mailbox is configurable, and you can q
 An essential feature in which Proto.Actor differs from other actor model implementations is that the actor's current behavior must always process the next message from the queue. However, out of the box, there is no validation of whether the actor with current behavior can process the received message. Failure to process a message is usually considered a failure.
 
 **Child Actors**
-Each actor is potentially a supervisor: if it creates child actors to delegate subtasks, it automatically controls them. An actor can access children in its context, though descendants of the second generation are considered "grandchildren" and are not directly accessible. You can create child actors by calling `context.actorOf (...)` or stop them by calling `context.stop (child)`. Creating and terminating child actors is asynchronous and does not block the supervisor.
+Each actor is potentially a supervisor: if it creates child actors to delegate subtasks, it automatically controls them. An actor can access child actors in its context, though descendants of the second generation are considered "grandchildren" and are not directly accessible. You can create child actors by calling `context.actorOf (...)` or stop them by calling `context.stop (child)`. Creating and terminating child actors is asynchronous and does not block the supervisor.
 
 **Supervisor strategy**
-The last part of the actor is the strategy for handling failures in child actors. The standard children failure strategies are:
+The last part of the actor is the strategy for handling failures in child actors. The standard child actors failure strategies are:
 
 - resume the work of the subordinate actor, keeping its status;
 - resume the work of the subordinate actor, restoring its standard state;
