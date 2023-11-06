@@ -1,8 +1,8 @@
 # Lesson 5: Key features of the Proto.Actor.
 
-So, when we got a basic understanding of the actor model and Proto.Actor. Let's begin to consider the key features of the Proto.Actor platform.
+In previous lessons, we got a basic understanding of the actor model and Proto.Actor. Let's consider the key features of the Proto.Actor platform.
 
-Proto.Actor offers us:
+Proto.Actor offers us the following:
 
 - Simple multithreading and asynchronous (concurrency and asynchronous)
 - Simple distributed processing (distribution)
@@ -12,26 +12,26 @@ Proto.Actor offers us:
 
 ### Concurrency and asynchronous.
 
-Thanks to the fact that we work with high levels of abstraction such as actors, messages, and Finite-state machines. We work with parallelism at high level of abstraction, so we do not need to perform low-level operations such as manual control, threads, and blocking shared resources. Because message passing is an asynchronous operation, we get the ease of interaction between actors running in parallel. This avoids blocking the actor while waiting for a response from another actor.
+We work with high levels of abstraction, such as actors, messages, and Finite-state machines. We also work with parallelism at a high level of abstraction, so we do not need to perform low-level operations such as manual control, threads, and blocking shared resources. Because message passing is an asynchronous operation, we get the ease of interaction between actors running in parallel and avoid blocking the actor while waiting for a response from another actor.
 
 ### Distributed processing.
 
-The concept of location transparency, which we will focus on in more detail, essentially means that it does not matter where the individual actor instances are. They can be on one machine or another computer. 
+The concept of location transparency, which we will focus on in more detail, essentially means that it does not matter where the individual actor instances are. They can be on the same or another machine.
 
 Proto.Actor also provides a simple remote spawn model to spawn actors on remote or cluster members.
 
 ### High performance.
 
-Proto.Actor has high performance; although the performance will depend a lot on the machine on which we run it, you can expect to handle about 50 million messages per second per machine,. In terms of overheads on actor management. We can expect to be able to create about 2.5 million instances of actors per gigabyte of memory.
+Proto.Actor has high performance; you can expect to handle about 50 million messages per second per machine. However, actual performance will depend on the machine we run because of overheads on actor management. We expect to create about 2.5 million instances of actors per gigabyte of memory.
 
-In addition, Proto.Actor has additional features, such as load balancing and routing messages to multiple child instances of the actor.
+Proto.Actor also has features such as load balancing and routing messages to multiple child instances of the actor.
 
 ### Fault Tolerance.
 
-Proto.Actor allows us to create self-repairing systems. This is done using the concept of a supervisor hierarchy. This concept is that if an error occurs in any part of the system, we isolate it from the rest of the system and tell the system  how to make self-recover.
+Proto.Actor allows us to create self-repairing systems using the concept of a supervisor hierarchy. If an error occurs in any part of the system, we isolate it from the rest and tell the system how to self-recover.
 
 ### Ability to use multiple programming languages in a single application.
 
-A key feature of Proto.Actor is the ability to write a single application in multiple programming languages. Thanks to the use of gRPC, actors written in different programming languages can easily exchange messages with each other. For example. You can write app, split this app into client and server parts. Write the client part on ASP.NET Core, and the server part in Python. And communication between the server and client parts will be absolutely transparent for you.
+A key feature of Proto.Actor is the ability to write a single application in multiple programming languages. Thanks to gRPC, actors written in different programming languages can easily exchange messages with each other. For example, write the client part using ASP.NET Core and the server part in Python. Communication between the server and client parts will be transparent for you.
 
 [Go ahead!](../lesson-6)

@@ -2,15 +2,15 @@
 
 So, now we understand a lot more about actors. Let's talk about messages.
 
-The message is a simple class that allows you to describe the subject area. The class of message must not be inherited from any parent class.
+The message is a simple class or record that allows you to describe the subject area and must not inherit from any parent class. It is also called POCO: plain, old CLR object.
 
-An instance of the message class must be unchangeable. When you create an instance of the message class, you must make sure that it won't be modified in the future.
+An instance of the message class must be unchangeable. When you create an instance of the message class, you must make sure that it is not modified in the future. The easiest way to ensure this is to use records.
 
-In most cases, sending messages is an asynchronous operation. This means that the actor sends a message to another actor and, not waiting for the other actor to process its message, continues to do his work.
+In most cases, sending messages is an asynchronous operation, meaning the actor sends a message to another actor and continues to do its work without waiting for the other actor to process the message.
 
-This is what the reactive programming manifesto says about messages. A message is a data element that sent to a specific address. In a message-based system, recipients wait for and react to messages, otherwise, they are in a waiting state. So, here we see another confirmation of how lazy are actors. They will just doze until we send them a message.
+The reactive programming manifesto says this about messages: a message is a data element sent to a specific address. In a message-based system, recipients wait for and react to messages or are waiting for messages. This behavior confirms the actor's laziness.
 
-Let's look at an example of what might look like a message class written in C#.
+Let's look at an example of a message class written in C#.
 
 ```csharp
 public sealed class ExampleMessage
@@ -26,8 +26,8 @@ public sealed class ExampleMessage
 
 
 
-We see that we have a simple class. We do not need to inherit from the base class or implement any special interfaces. 
+We see that we have a simple class. We do not inherit from the base class or implement any interfaces. 
 
-Note that the `ExampleMessage` class has a constructor that takes the value `customerId`. When we create an instance of the `ExampleMessage` class, the constructor stores the passed value in the `CustomerId` property. But since the `CustomerId` property is read-only, no one else can modify it, and we don't have to worry that someone will destroy our business logic by changing its value.
+Note that the `ExampleMessage` class has a constructor that takes the value `customerId`. When we create an instance of the `ExampleMessage` class, the constructor stores the passed value in the `CustomerId` property, but since it is read-only, no one else can modify the value, and we don't have to worry about someone destroying our business logic.
 
 [Go ahead!](../lesson-9)
