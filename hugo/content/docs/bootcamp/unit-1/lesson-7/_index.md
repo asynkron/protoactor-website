@@ -57,7 +57,7 @@ When the actor restarts, its behavior resets to the initial state. However, with
 
 **Mailbox**
 
-The purpose of an actor is to process messages sent from other actors inside the system or messages received from external systems. Acotr's mailbox connects the sender and recipient: each actor has only one mailbox where senders place messages. Sending messages from the same source to a particular actor will put them in the queue in the same order, no matter whether the actors are running on multiple threads simultaneously.
+The purpose of an actor is to process messages sent from other actors inside the system or messages received from external systems. Actor's mailbox connects the sender and recipient: each actor has only one mailbox where senders place messages. Sending messages from the same source to a particular actor will put them in the queue in the same order, no matter whether the actors are running on multiple threads simultaneously.
 
 There are different ways to implement mailboxes. By default, we use FIFO (first-in-first-out): the actor processes messages in the order they were queued. In most cases, FIFO is the best choice, but applications may need to prioritize some messages over others.
 
