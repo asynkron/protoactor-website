@@ -130,6 +130,9 @@ public override async Task DoStuff(DoStuffRequest request, Action<DoStuffRespons
    // Immediate return allows the actor to process other messages.
    return;
 }
+
+// You do need to override the abstract version of the generated DoStuff method to appease the compiler, but it won't be invoked.
+public override async Task<DoStuffResponse> DoStuff(DoStuffRequest request) => Task.FromResult(new DoStuffResponse());
 ```
 
 This modification enables your actor to handle other incoming messages while the asynchronous task is running, enhancing throughput and avoiding potential deadlocks (see [deadlock prevention](./deadlocks)). The `respond` callback is invoked with the task result once it completes, maintaining the ability to return results to the caller.
