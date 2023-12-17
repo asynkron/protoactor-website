@@ -2,114 +2,153 @@
 layout: docs.hbs
 title: The Obligatory Hello World
 ---
-#  The Obligatory Hello World
-This example shows how to define and consume actors.
 
-## Hello World 
+# Hello World
 
-### Define a message
+In this guide, we'll walk you through creating a simple "Hello World" example using Proto.Actor to understand the basics of actor systems, actors, and messages.
 
-The first thing we do, is to define a message.
-A message is an object that represents some form of information the actor can act upon.
-There are two flavors of messages, plain object/struct messages, or Protobuf messages.
-Read more on Protobuf messages here: ...
+## Prerequisites
 
-{{< tabs >}}
-{{< tab "C#" >}}
+Ensure you have the following installed on your system:
+
+- [.NET SDK](https://dotnet.microsoft.com/download)
+- [Go](https://golang.org/dl/)
+
+## Creating an Actor System
+
+An Actor System is a container for your actors and a central point for managing their lifecycle. It is responsible for creating and supervising actors.
+
+Let's create an actor system called `MySystem`:
+
+#### .NET
+
 ```csharp
-// define a POCO message
-record Hello(string Who);
+// Import the Proto namespace
+using Proto;
+
+// Create a new ActorSystem
+var system = new ActorSystem();
 ```
-{{</ tab >}}
-{{< tab "Go" >}}
+
+#### Go
+
 ```go
-// define a struct for our message
-type Hello struct{ Who string }
+// Import the actor package
+import (
+	"github.com/AsynkronIT/protoactor-go/actor"
+)
+
+// Create a new ActorSystem
+system := actor.NewActorSystem()
 ```
-{{</ tab >}}
-{{</ tabs >}}
 
-### Define your actor
+## Defining Messages
 
-Now let's define the actor, from a technical point of view, you can think of an actor as an asynchronous worker.
+Actors communicate by exchanging messages. In this example, we will create a simple `Hello` message with a `Who` property:
 
-The actor is a type, that follows a specific interface, the actor interface.
-This interface receives a `Context`, this context contains information about the actor internals.
-In this case, we are interested in acting upon the message the actor received.
+#### .NET
 
-{{< tabs >}}
-{{< tab "C#" >}}
 ```csharp
-//the actor type, owner of any actor related state
-class HelloActor : IActor
+// Define the Hello message with a Who property
+public record Hello(string Who);
+```
+
+#### Go
+
+```go
+// Define the Hello message with a Who property
+type Hello struct {
+	Who string
+}
+```
+
+## Creating an Actor
+
+Now, let's create a `HelloWorldActor` that will receive and process `Hello` messages. We will define the actor's behavior using a `Receive` method that takes the incoming message and processes it:
+
+#### .NET
+
+```csharp
+// Import the Proto namespace
+using Proto;
+
+// Define the HelloWorldActor class implementing IActor
+public class HelloWorldActor : IActor
 {
-    //the receive function, invoked by the runtime whenever a message
-    //should be processed
+    // Implement the ReceiveAsync method for message processing
     public Task ReceiveAsync(IContext context)
     {
-        //the message we received
-        var msg = context.Message; 
-        //match message based on type
-        if (msg is Hello helloMsg)
+        // Check if the received message is of type Hello
+        if (context.Message is Hello hello)
         {
-            Console.WriteLine($"Hello {helloMsg.Who}");
+            // Print the greeting to the console
+            Console.WriteLine($"Hello {hello.Who}");
         }
+        // Return a completed task
         return Task.CompletedTask;
     }
 }
 ```
-{{</ tab >}}
-{{< tab "Go" >}}
-```go
-//the actor type, owner of any actor related state
-type helloActor struct{}
 
-//the receive function, invoked by the runtime whenever a message
-//should be processed
-func (state *HelloActor) Receive(context actor.Context) {
-    //the message we received
-    switch msg := context.Message().(type) {
-    //match message based on type
-    case Hello:
-        fmt.Printf("Hello %v\n", msg.Who)
-    }
+#### Go
+
+```go
+// Define the HelloWorldActor struct
+type HelloWorldActor struct{}
+
+// Implement the Receive method for message processing
+func (state *HelloWorldActor) Receive(context actor.Context) {
+	switch msg := context.Message().(type) {
+	case Hello:
+		// Print the greeting to the console
+		fmt.Printf("Hello %v\n", msg.Who)
+	}
 }
 ```
-{{</ tab >}}
-{{</ tabs >}}
 
-### Usage
+## Starting the Actor
 
-Once we have both the message and actor, we can now hook everything up and send our first message to an actor.
+To start the `HelloWorldActor`, we need to create a `Props` object, which defines the properties of the actor, and then use the actor system to spawn a new instance:
 
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
+
 ```csharp
-var system = new ActorSystem();
+// Import the Proto namespace
+using Proto;
 
-//the actor configuration
-var props = Props.FromProducer(() => new HelloActor());
+// Create a Props object for the HelloWorldActor
+var props = Props.FromProducer(() => new HelloWorldActor());
 
-//instantiate the actor
+// Spawn a new instance of the HelloWorldActor
 var pid = system.Root.Spawn(props);
-
-//send a message to the actor
-system.Root.Send(pid, new Hello("Alex"));
-
-//prevent application from shutting down before message is received
-Console.ReadLine();
 ```
-{{</ tab >}}
-{{< tab "Go" >}}
+
+#### Go
+
 ```go
-//the actor configuration
-props := actor.FromInstance(&HelloActor{})
+// Create a Props object for the HelloWorldActor
+props := actor.PropsFromProducer(func() actor.Actor { return &HelloWorldActor{} })
 
-//instantiate the actor
-pid := actor.Spawn(props)
-
-//send a message to the actor
-pid.Send(Hello{Who: "Roger"})
+// Spawn a new instance of the HelloWorldActor
+pid := system.Root.Spawn(props)
 ```
-{{</ tab >}}
-{{</ tabs >}}
+
+## Sending a Message
+
+Finally, let's send a `Hello` message to our `HelloWorldActor`:
+
+#### .NET
+
+```csharp
+system.Root.Send(pid, new Hello("World"));
+```
+
+#### Go
+
+```go
+system.Root.Send(pid, &Hello{Who: "World"})
+```
+
+When you run the code, the `HelloWorldActor` will receive and process the `Hello` message, and you should see "Hello World" printed on the console.
+
+That's it! You've successfully created a basic Proto.Actor example. Feel free to explore further and create more complex systems using the powerful features provided by Proto.Actor.
