@@ -107,3 +107,11 @@ system
     x => x.Key == GossipKeys.MemberHeartbeat, 
     update => {....});
 ```    
+
+### Configuring cluster gossip interval 
+
+The default interval between gossip updates is 300 ms. Sometimes we might need to increase this interval, based on the overall load on the system. So, we can configure this interval using `ClusterConfig.WithGossipInterval(interval)`, where `interval` is of type `TimeSpan`. But setting the `interval` to a higher value might lead to some unexpected results, because it would take `interval` amount of time for all the members to come to a consensus, in case of updates in the actor system.  
+
+### Configuring cluster gossip request timeout
+
+The default timeout for sending the gossip to other members is 1500 ms. This can also be configured to the desired value using `ClusterConfig.WithGossipRequestTimeout(timeout)`, where `timeout` is of type `TimeSpan`.
