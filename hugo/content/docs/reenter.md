@@ -3,7 +3,7 @@
 `Context.ReenterAfter` allows you to combine asynchronous operations with the actor-models single-threaded semantics.
 
 Instead of `await`-ing a .NET `Task`, which would block the actor from processing more messages while the task is running.
-You can instead allow the completion of the task to be scheduled back into the actors concurrency control.
+You can instead allow the completion of the task to be scheduled back into the actors concurrency control. The re-entrancy feature is highly useful while dealing with database operations or writing to network streams within an actor.
 
 Behind the covers, `Context.ReenterAfter(task, callback)` uses a task continuation and pass the callback as a message, back to the actor itself.
 
@@ -123,8 +123,11 @@ public override async Task DoStuff(DoStuffRequest request, Action<DoStuffRespons
    // Use reentrancy to handle the task completion.
    Context.ReenterAfter(task, async (completedTask) => 
    {
-      // Pass the result back upon task completion.
-      respond(await completedTask);
+      if(completedTask.IsCompletedSuccessfully) 
+      {
+         // Pass the result back upon task completion.
+         respond(await completedTask);
+      }
    });
 
    // Immediate return allows the actor to process other messages.
