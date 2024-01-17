@@ -80,24 +80,18 @@ Import the latest OpenTelemetry .NET AutoInstrumentation package in your .NET pr
 
 Configure these .NET CLR environment variables, besides the [required ones](https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation?tab=readme-ov-file#instrument-a-net-application)
 
-```
-OTEL_DOTNET_AUTO_TRACES_ADDITIONAL_SOURCES=Proto.Actor
-```
+`OTEL_DOTNET_AUTO_TRACES_ADDITIONAL_SOURCES=Proto.Actor`
 
 You can even mention any manual `ActivitySource`s above to collect any manual instrumented data from them.
 
 You can either set `Console_Exporter` to `true` or `false`, depending on whether you want to view the instrumented data in the console (for debugging purposes). By default, they are all set to `false`.
 
-```
-OTEL_DOTNET_AUTO_TRACES_CONSOLE_EXPORTER_ENABLED=true
-```
+`OTEL_DOTNET_AUTO_TRACES_CONSOLE_EXPORTER_ENABLED=true`
 
 You can configure the OpenTelemetry collector endpoint and protocol using the environment variables
 
-```
-OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
-OTEL_EXPORTER_OTLP_PROTOCOL=grpc
-```
+- `OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317`
+- `OTEL_EXPORTER_OTLP_PROTOCOL=grpc`
 
 #### Word of caution!
 
