@@ -24,7 +24,9 @@ var clusterKind = new ClusterKind("someKind", someKindProps);
 
 It tries to spawn an actor on the same member as sender. If that fails then it tries to select a member using round-robin algorithm.
 
-This strategy might be very useful in event stream processing cases, e.g. when member reads from Kafka partition and partition key is also actor's identity. It reduces number of network calls between members.
+This strategy might be very useful in cases like
+- Event stream processing: When member reads from Kafka partition and partition key is also actor’s identity. It reduces number of network calls between members.
+- Spawning grains in selected members: While using the cluster discovery services like Kubernetes or Consul, grains can be spawned in any of the members by default. But when we want to spawn the grain only the specific member, receiving request from the external traffic (like any network stream, etc), we can use this strategy. 
 
 [Read more about the Local Affinity pattern.](../local-affinity.md)
 
@@ -51,6 +53,8 @@ For each message, this delegate allows to decide if the specific message may tri
 `LocalAffinityOptions.RelocationThroughput`
 
 Controls the throughput of actor relocations, to prevent the spawning actors from overloading external state stores. If not specified, no throttling occurs.
+
+Also, while using the `LocalAffinityRelocationStrategy` configuration, don't forget to use `ClusterKind.WithPidCacheInvalidation()`, so that other cluster members get an information when the actor/grain has been relocated.
 
 ## Custom strategy
 
