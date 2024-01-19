@@ -66,6 +66,37 @@ static void ConfigureTracing(WebApplicationBuilder builder) =>
 
 ```
 
+### OpenTelemetry .NET AutoInstrumentation
+
+Proto.Actor .NET is also compatible with [OpenTelemetry .NET AutoInstrumentation](https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation). Just for reference, OpenTelemetry .NET AutoInstrumentation is an open-source tool from OpenTelemetry and is used to instrument the .NET libraries implicitly. You are not required to configure the tracing or metrics builder explicitly (as shown in the above code snippet) any more, and you can even use it alongside manual instrumentation, if required. It relies on the .NET CLR (Common Language Runtime) for its execution. The main reason why Proto.Actor is compatible with the OpenTelemetry .NET AutoInstrumentation is because the `ActivitySourceName` for all the Proto.Actor library traces is `Proto.Actor`, and once you specify that, all the traces would be collected.
+
+#### Configurations
+
+Import the latest OpenTelemetry .NET AutoInstrumentation package in your .NET project
+
+```csharp
+<PackageReference Include="OpenTelemetry.AutoInstrumentation" Version="1.0.0" />
+```
+
+Configure these .NET CLR environment variables, besides the [required ones](https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation?tab=readme-ov-file#instrument-a-net-application)
+
+`OTEL_DOTNET_AUTO_TRACES_ADDITIONAL_SOURCES=Proto.Actor`
+
+You can even mention any manual `ActivitySource`s above to collect any manual instrumented data from them.
+
+You can either set `Console_Exporter` to `true` or `false`, depending on whether you want to view the instrumented data in the console (for debugging purposes). By default, they are all set to `false`.
+
+`OTEL_DOTNET_AUTO_TRACES_CONSOLE_EXPORTER_ENABLED=true`
+
+You can configure the OpenTelemetry collector endpoint and protocol using the environment variables
+
+- `OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317`
+- `OTEL_EXPORTER_OTLP_PROTOCOL=grpc`
+
+#### Word of caution!
+
+OpenTelemetry .NET AutoInstrumentation works only with `System.Diagnostics.DiagnosticSource` version of 8.0.0 or more, and `.NET` framework version of 4.6.2 or more. Hence, request you to go through their detailed documentaion before using.
+
 ### Setup tracing for Proto.Actor
 
 In order to use Proto.OpenTelemetry with Proto.Actor first you need to create actor's Props and call extension method `WithTracing()`.

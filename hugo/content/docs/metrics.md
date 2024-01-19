@@ -94,6 +94,37 @@ void ConfigureMetrics(WebApplicationBuilder builder) =>
 
 ```
 
+### OpenTelemetry .NET AutoInstrumentation
+
+Just as we have discussed about using [OpenTelemetry .NET AutoInstrumentation](https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation) while collecting [Proto.Actor traces](https://proto.actor/docs/tracing/), you can also collect metrics using it, and hence, no manual metrics builder configuration (like the above code snippet) is required. Besides, you can even use it to collect any manual metrics, if required. All the metrics emitted from the Proto.Actor library correspond to the meter name `Proto.Actor` and hence, once you specify that, all the metrics would be collected.
+
+#### Configurations
+
+Import the latest OpenTelemetry .NET AutoInstrumentation package in your .NET project
+
+```csharp
+<PackageReference Include="OpenTelemetry.AutoInstrumentation" Version="1.0.0" />
+```
+
+Configure these .NET CLR environment variables, besides the [required ones](https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation?tab=readme-ov-file#instrument-a-net-application)
+
+`OTEL_DOTNET_AUTO_METRICS_ADDITIONAL_SOURCES=Proto.Actor`
+
+You can even mention any manual `Meter` names above to collect any manual instrumented data from them.
+
+You can either set `Console_Exporter` to `true` or `false`, depending on whether you want to view the instrumented data in the console (for debugging purposes). By default, they are all set to `false`.
+
+`OTEL_DOTNET_AUTO_METRICS_CONSOLE_EXPORTER_ENABLED=true`
+
+You can configure the OpenTelemetry collector endpoint and protocol using the environment variables
+
+- `OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317`
+- `OTEL_EXPORTER_OTLP_PROTOCOL=grpc`
+
+#### Word of caution!
+
+OpenTelemetry .NET AutoInstrumentation works only with `System.Diagnostics.DiagnosticSource` version of 8.0.0 or more, and `.NET` framework version of 4.6.2 or more. Hence, request you to go through their detailed documentaion before using.
+
 ## Using Prometheus and Grafana to store and visualize metrics
 
 Another example of Prometheus metrics setup might be found in [ActorMetrics example](https://github.com/asynkron/protoactor-dotnet/tree/dev/examples/ActorMetrics).
