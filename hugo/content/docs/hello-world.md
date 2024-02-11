@@ -35,7 +35,7 @@ var system = new ActorSystem();
 ```go
 // Import the actor package
 import (
-	"github.com/AsynkronIT/protoactor-go/actor"
+	"github.com/asynkron/protoactor-go/actor"
 )
 
 // Create a new ActorSystem
