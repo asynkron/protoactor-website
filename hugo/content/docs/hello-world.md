@@ -147,6 +147,7 @@ system.Root.Send(pid, new Hello("World"));
 
 ```go
 system.Root.Send(pid, &Hello{Who: "World"})
+time.Sleep(1 * time.Second)
 ```
 
 When you run the code, the `HelloWorldActor` will receive and process the `Hello` message, and you should see "Hello World" printed on the console.
