@@ -99,7 +99,7 @@ type HelloWorldActor struct{}
 // Implement the Receive method for message processing
 func (state *HelloWorldActor) Receive(context actor.Context) {
 	switch msg := context.Message().(type) {
-	case Hello:
+	case *Hello:
 		// Print the greeting to the console
 		fmt.Printf("Hello %v\n", msg.Who)
 	}
