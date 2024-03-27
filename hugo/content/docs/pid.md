@@ -142,5 +142,5 @@ class GrpcClient green
 
 pid --> ActorProcess --> Mailbox --> ActorContext --> Actor
 pid --> FutureProcess --> TaskCompletionSource
-pid --> RemoteProcess --> EndpointWriter --> GrpcClient --> network --> GrpcServer --> EndpointReader
+pid --> RemoteProcess --> EndpointWriter --> GrpcClient --> network --> GrpcServer --> EndpointReader --> lpid(local pid) --> lActorProcess(ActorProcess) --> lMailbox(Mailbox) --> lActorContext(ActorContext) --> lActor(Actor)
 ```
