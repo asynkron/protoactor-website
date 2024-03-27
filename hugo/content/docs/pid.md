@@ -112,7 +112,7 @@ There are three built-in Process types in Proto.Actor.
 `ActorProcess`, `RemoteProcess` and `FutureProcess`.
 
 ```mermaid
-graph LR
+graph TB
 pid(PID)
 class pid light-blue
 
