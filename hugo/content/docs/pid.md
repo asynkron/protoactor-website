@@ -123,6 +123,7 @@ RemoteProcess(RemoteProcess)
 Mailbox(Mailbox)
 ActorContext(ActorContext)
 Actor((Actor))
+lActor((Actor))
 
 TaskCompletionSource(TaskCompletionSource)
 
