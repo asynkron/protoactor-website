@@ -8,7 +8,7 @@ title: Placement Strategies
 
 ### Is unique for a given ID
 
-This strategy involves using a virtual actor with a unique identifier (ID) as part of its name. This ensures that each actor is unique and can be individually addressed within the cluster. This strategy is typically used when you need to maintain a unique instance of an actor for each entity in your system.
+This strategy involves using a virtual actor with a unique identifier (ID) as part of its name. This ensures that each actor is unique and can be individually addressed within the cluster. By assigning a distinct ID to each actor, the system can prevent conflicts and ensure that each entity, whether a player, monster, or user account, is represented by exactly one actor. This approach is typically used in systems where entities need to be distinctly manageable and trackable across distributed environments.
 
 ```mermaid
 graph TB
@@ -50,7 +50,7 @@ graph TB
 
 ### Is a cluster singleton
 
-Use a virtual actor with a known name.
+This pattern employs a virtual actor that is instantiated only once within the entire cluster and is known by a predefined, constant name. This singleton actor acts as a centralized manager or coordinator, handling tasks that need a global view or centralized control, such as aggregating data from various parts of the cluster or managing shared resources. It ensures that only one instance of the actor exists in the cluster, preventing duplicate efforts and maintaining consistency in operations that require a single point of control.
 
 ```mermaid
 graph TD
@@ -75,8 +75,7 @@ graph TD
 
 ### Always exist on each member
 
-Use a normal actor, boot on startup.
-Use MemberList to see what members exist when communicating with these actors.
+In this setup, a normal actor is created on each cluster member upon startup, ensuring that an instance of the actor is always active and available on every node. These actors, often termed as worker actors, are used for tasks that need to be performed locally on each node, like maintenance routines or data processing specific to that node's segment of the workload. The system uses a member list to track which nodes are active, allowing communication and coordination among the worker actors across the cluster. This method enhances reliability and local responsiveness within the distributed system.
 
 ```mermaid
 graph TB
