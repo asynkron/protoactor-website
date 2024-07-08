@@ -1,8 +1,8 @@
 ---
-title: Kubernetes Provider (.NET)
+title: Kubernetes Provider
 ---
 
-# Kubernetes Provider (.NET)
+# Kubernetes Provider
 
 ## MANDATORY READING!!
 
