@@ -5,6 +5,12 @@ The same setup might be also suitable for some deployment cases, but since moder
 
 [Kubernetes provider](kubernetes-provider-net.md) is another implementation of `IClusterProvider` interface, the same as [Consul provider](cluster/consul-net.md). For more information you can check [Cluster providers section](cluster-providers-net.md).
 
+## MANDATORY READING!!
+
+The essential configuration is CPU Requests combined with No CPU Limits. Deviating from this configuration results in CPU throttling, leading to gossip timeouts and associated issues.
+
+This is not an issue specific to Proto.Actor; rather, it is a problem inherent to real-time systems within Kubernetes. Real-time systems cannot tolerate intermittent CPU pauses on nodes, as this unpredictably renders them unresponsive for undefined durations.
+
 ## Changes in the application
 
 First thing that needs to be done is to reference `Proto.Cluster.Kubernetes` package where this implementation is provided.
