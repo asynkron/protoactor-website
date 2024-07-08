@@ -6,6 +6,8 @@ title: Kubernetes Provider (.NET)
 
 ## MANDATORY READING!!
 
+[Stop using CPU limits](https://home.robusta.dev/blog/stop-using-cpu-limits)
+
 The essential configuration is CPU Requests combined with No CPU Limits. Deviating from this configuration results in CPU throttling, leading to gossip timeouts and associated issues.
 
 This is not an issue specific to Proto.Actor; rather, it is a problem inherent to real-time systems within Kubernetes. Real-time systems cannot tolerate intermittent CPU pauses on nodes, as this unpredictably renders them unresponsive for undefined durations.
