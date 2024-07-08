@@ -4,6 +4,14 @@ title: Kubernetes Provider (.NET)
 
 # Kubernetes Provider (.NET)
 
+## MANDATORY READING!!
+
+The essential configuration is CPU Requests combined with No CPU Limits. Deviating from this configuration results in CPU throttling, leading to gossip timeouts and associated issues.
+
+This is not an issue specific to Proto.Actor; rather, it is a problem inherent to real-time systems within Kubernetes. Real-time systems cannot tolerate intermittent CPU pauses on nodes, as this unpredictably renders them unresponsive for undefined durations.
+
+## Kubernetes Provider
+
 If Proto.Actor application is planned to be deployed inside Kubernetes cluster, then this cluster membership provider is the best choice.
 
 Below is the example how to configure it. The full working code might be found in [Realtime map example](https://github.com/asynkron/realtimemap-dotnet/blob/main/Backend/ProtoActorExtensions.cs#L17). The sample also contains a [Helm chart](https://github.com/asynkron/realtimemap-dotnet/tree/main/chart).
