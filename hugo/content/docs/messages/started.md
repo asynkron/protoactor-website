@@ -1,5 +1,5 @@
 
-# `Started` Message in Proto.Actor (C#)
+# `Started` Message
 
 The `Started` message is a system message in Proto.Actor that is sent to an actor when it first starts. This message is handled internally by the actor system to initialize the actor lifecycle.
 
