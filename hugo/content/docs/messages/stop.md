@@ -29,9 +29,6 @@ public class MyActor : IActor
     {
         switch (context.Message)
         {
-            case Stop _:
-                Console.WriteLine("Stop command received.");
-                break;
             case Stopping _:
                 Console.WriteLine("Actor is stopping.");
                 break;
@@ -42,6 +39,16 @@ public class MyActor : IActor
         return Task.CompletedTask;
     }
 }
+```
+
+## Actor System and Root Context
+
+To stop an actor from the `ActorSystem` using `RootContext`:
+
+```csharp
+var pid = system.Root.Spawn(props);
+system.Root.Stop(pid);
+//or await system.Root.StopAsync(pid)
 ```
 
 ## Conclusion
