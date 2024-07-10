@@ -11,11 +11,11 @@
 ## Lifecycle Messages
 - [`PoisonPill`](poison-pill.md)  
 - [`Restart`](restart.md)
-- [`Restarting`](restarting.md)
+- [`Restarting`](restart.md)
 - [`Started`](started.md)
 - [`Stop`](stop.md)
-- [`Stopping`](stopping.md)
-- [`Stopped`](stopped.md)
+- [`Stopping`](stop.md)
+- [`Stopped`](stop.md)
 - [`Terminated`](terminated.md)
 - 
 ## Special Message Interfaces
