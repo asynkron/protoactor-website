@@ -4,9 +4,9 @@
 ## Supervision Messages  
 - [`Failure`](failure.md)
 - [`ResumeMailbox`](resume-mailbox.md)
-- [`SuspendMailbox`](suspend-mailbox.md)
+- [`SuspendMailbox`](resume-mailbox.md)
 - [`Watch`](watch.md)
-- [`Unwatch`](unwatch.md)
+- [`Unwatch`](watch.md)
 
 ## Lifecycle Messages
 - [`PoisonPill`](poison-pill.md)  
@@ -24,7 +24,7 @@
 
 ## Utility Messages
 - [`Touch`](touch.md)
-- [`Touched`](touched.md)
+- [`Touched`](touch.md)
 - [`Continuation`](continuation.md)  
 - [`ProcessDiagnosticsRequest`](process-diagnostics-request.md)
 - [`ReceiveTimeout`](receive-timeout.md)
