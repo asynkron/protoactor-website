@@ -26,7 +26,7 @@ There are some other common reasons to select a different dispatcher. These reas
   - ensure high-load actors don't starve the system by consuming too much cpu-time;
   - ensure important actors always have a dedicated thread to do their job;
   - create [bulkheads](http://skife.org/architecture/fault-tolerance/2009/12/31/bulkheads.html), ensuring problems created in one part of the system do not leak to others;
-- allow actors to execute in a specific `SyncrhonizationContext`; (.NET specific)
+- allow actors to execute in a specific `SynchronizationContext`; (.NET specific)
 
 {{< note >}}
 Consider using custom dispatchers for special cases only.
