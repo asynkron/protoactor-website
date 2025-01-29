@@ -13,7 +13,7 @@ $"{system.ProcessRegistry.NextId()}/{name}"
 Thus, knowing the address and ID of the interested actor, we can create its PID manually. It is done in the following way.
 
 ```csharp
-var moviePlayCounterActorPid = new PID(system.ProcessRegistry.Address, "$1/MoviePlayCounterActor");
+var moviePlayCounterActorPid = new PID(system.Address, "$1/MoviePlayCounterActor");
 ```
 
 Now we can use the resulting PID's to send messages to our actor. Regardless of where it is deployed and whether our actor is a child.
