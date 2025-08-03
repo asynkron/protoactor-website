@@ -52,7 +52,7 @@ Provides the ability to spawn new actors given a `Props` parameter.
 
 *Implemented by* `RootContext`, `ActorContext`
 
-Provides the ability to immediatly stop an actor, or instruct it to stop after processing current mailbox messages.
+Provides the ability to immediately stop an actor, or instruct it to stop after processing current mailbox messages.
 
 {{< tabs >}}
 {{< tab "C#" >}}

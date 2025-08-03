@@ -1,15 +1,15 @@
 # Performance review by Dotnetos
 
-In february 2022, The Dotnetos teams made a performance review of the Proto.Actor .NET core features.
+In February 2022, The Dotnetos teams made a performance review of the Proto.Actor .NET core features.
 This document contains the findings from this review.
 
 Output of [Proto.Actor benchmarks](https://gist.github.com/rogeralsing/12d16983f9d2e27d7c4b39cd25a64b18), with full PGO on and off, to identify any visible quick wins with "measure first approach". It includes both dotMemory and dotTrace profiling. I've also made an initial code "look around".
 
 ## Spawn benchmark
 
-It's mostly allocating 1GB of `ConcurrentQueueSegment` because `ConcurrentQueue` used underneath initialzed by default with 32 such blocks, which is then multiplied 1M times (per every actor).
+It's mostly allocating 1GB of `ConcurrentQueueSegment` because `ConcurrentQueue` used underneath initialized by default with 32 such blocks, which is then multiplied 1M times (per every actor).
 
-That's a litte suprising consequence of using `ConcurrentQueue` but for 1M it's probably ok!
+That's a little surprising consequence of using `ConcurrentQueue` but for 1M it's probably ok!
 
 There are little suboptimal allocations like below but I'm not sure if it is worth to remove them (one is from the benchmark itself):
 
@@ -100,27 +100,27 @@ public int NumberOfFailures(TimeSpan? within)
 ```
 
 {{< note >}}
-This issue have been corrected after the review
+This issue has been corrected after the review
 {{</ note >}}
 
-Additionaly, a few trivial things:
+Additionally, a few trivial things:
 
 - `NullReferenceException` thrown 150 times from `ActorContext.SendUserMessage`? ![Actor](../images/perf7.png)
 - I'd consider moving to [Compile-time logging source generation](https://docs.microsoft.com/en-us/dotnet/core/extensions/logger-message-generator) or [string interpolation](https://devblogs.microsoft.com/dotnet/string-interpolation-in-c-10-and-net-6/), for example in `Proto.OneForOneStrategy.HandleFailure.LogInfo`
 
 ## Remote benchmark
 
-First of all, the previous fix allows to avoid hundreds of MBs of `WaitCallback` allocations that come from `RemoreMessageHandler.HandleRemoteMessage`.
+First of all, the previous fix allows to avoid hundreds of MBs of `WaitCallback` allocations that come from `RemoteMessageHandler.HandleRemoteMessage`.
 
 {{< note >}}
-This issue have been corrected after the review
+This issue has been corrected after the review
 {{</ note >}}
 
-Besides that, much more data ia allocated because of materializing `MessageEnvelope`, to the extent when looking at anything else does not make sense:
+Besides that, much more data is allocated because of materializing `MessageEnvelope`, to the extent when looking at anything else does not make sense:
 
 ![Actor](../images/perf8.png)
 
-The only thought I have in such scenario is - is it possible to get rid of `object`/`class` in some paths (like sending) and use `ref struct` instead? I've skimmed through code and it obviously require much work. I'm not able to propose anything for now here... But well, I have a feeling it won't be ever possible because of Protobuf ane the whole architecture.
+The only thought I have in such scenario is - is it possible to get rid of `object`/`class` in some paths (like sending) and use `ref struct` instead? I've skimmed through code and it obviously require much work. I'm not able to propose anything for now here... But well, I have a feeling it won't be ever possible because of Protobuf and the whole architecture.
 
 ## Cluster benchmark
 

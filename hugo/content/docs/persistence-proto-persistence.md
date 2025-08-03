@@ -134,7 +134,7 @@ Here we are using the static `WithSnapshotting` method to create the `Persistenc
 ## Event Sourcing and Snapshotting
 
 We can use both event sourcing and snapshotting together. When used in this manner, snapshotting becomes a performance optimisation for cases when you have large numbers of events to replay to rebuild the state of your actor.
-When `RecoverStateAsync` is called, if there are any snapshots saved, then the most recent one will be loaded along with any events that occured _after_ the snapshot was taken.
+When `RecoverStateAsync` is called, if there are any snapshots saved, then the most recent one will be loaded along with any events that occurred _after_ the snapshot was taken.
 The `Persistence` plugin manages this tracking internally through the use of an index that is incremented for each saved event. Any time a snapshot is taken, it is tied to index of the actor at that time.
 
 We can rewrite the `Counter` example above to use event sourcing with snapshotting:

@@ -298,7 +298,7 @@ type Ponger interface {
 }
 ```
 
-A common method for initialization – `Init()` – is already implemented by `cluster.Grain` so a `Ponger` implementation can re-use this by embedding cluster.Grain as below:
+A common method for initialization – `Init()` – is already implemented by `cluster.Grain` so a `Ponger` implementation can reuse this by embedding cluster.Grain as below:
 
 ```go
 type ponger struct {
@@ -306,7 +306,7 @@ type ponger struct {
 }
 ```
 
-However, `Terminate()`, `ReceiveDefault()` and `Ping()` still need to be implemented by a developer. `Terminate()` is called on passivation right before PongerActor stops and hence the subordinating ponger instance also must stop. `ReceiveDefault()` is a method to receive any message that are not expected to be handled in gRPC-like manner; `Ping()` is a method to recieve `PingMessage` and return `PongMessage` in gRPC-like manner.
+However, `Terminate()`, `ReceiveDefault()` and `Ping()` still need to be implemented by a developer. `Terminate()` is called on passivation right before PongerActor stops and hence the subordinating ponger instance also must stop. `ReceiveDefault()` is a method to receive any message that are not expected to be handled in gRPC-like manner; `Ping()` is a method to receive `PingMessage` and return `PongMessage` in gRPC-like manner.
 
 ```go
 type ponger struct {

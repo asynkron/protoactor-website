@@ -72,9 +72,9 @@ This extension is using builder pattern to properly configure `MeterProvider` wi
 Prometheus exporter built-in in the application is the easiest to setup and it will be shown as an example. It is needed to reference `OpenTelemetry.Exporter.Prometheus` nuget package and call `AddPrometheusExporter()` extension method.
 It adds `/metrics` endpoint from where Prometheus is able to scrape metrics. To make it work properly it is needed to call also `app.UseOpenTelemetryPrometheusScrapingEndpoint()` after building an application.
 
-`OpenTelemetry` metrics in C# implementation use [System.Diagnositcs.Metrics](https://docs.microsoft.com/en-us/dotnet/core/diagnostics/metrics-instrumentation).
+`OpenTelemetry` metrics in C# implementation use [System.Diagnostics.Metrics](https://docs.microsoft.com/en-us/dotnet/core/diagnostics/metrics-instrumentation).
 `AddProtoActorInstrumentation()` extension shown in the example is adding Proto.Actor meter name.
-Method has additional parameter `useRecommendedHistogramBoundaries` which is true by default. It causes that default buckets used in OpenTelemetry implementation are changed to more preffered ones.
+Method has additional parameter `useRecommendedHistogramBoundaries` which is true by default. It causes that default buckets used in OpenTelemetry implementation are changed to more preferred ones.
 
 ```csharp
 void ConfigureMetrics(WebApplicationBuilder builder) =>
@@ -123,7 +123,7 @@ You can configure the OpenTelemetry collector endpoint and protocol using the en
 
 #### Word of caution!
 
-OpenTelemetry .NET AutoInstrumentation works only with `System.Diagnostics.DiagnosticSource` version of 8.0.0 or more, and `.NET` framework version of 4.6.2 or more. Hence, request you to go through their detailed documentaion before using.
+OpenTelemetry .NET AutoInstrumentation works only with `System.Diagnostics.DiagnosticSource` version of 8.0.0 or more, and `.NET` framework version of 4.6.2 or more. Hence, request you to go through their detailed documentation before using.
 
 ## Using Prometheus and Grafana to store and visualize metrics
 

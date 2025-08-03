@@ -70,10 +70,10 @@ One situation that presents a problem is when we receive no reply to our request
 What if a compensating action fails? 
   
 ### Escalation 
-In the preceding section we descovered scenarios where we are not sure what state the system is in. Even with retries and compensating actions, things can still go wrong. In an ideal world, these should be very rare! However, they can occur and in these cases it's best to have a fallback strategy, escalating the result of the saga to something else, quite possibly a manual / human process. 
+In the preceding section we discovered scenarios where we are not sure what state the system is in. Even with retries and compensating actions, things can still go wrong. In an ideal world, these should be very rare! However, they can occur and in these cases it's best to have a fallback strategy, escalating the result of the saga to something else, quite possibly a manual / human process.
    
-### Atomicitiy
-One thing a saga does not provide is atomicitiy. In the bank account example above there's nothing to stop other systems interacting with the accounts in-between the debit and the credit operations. This needs bearing in mind as it could rule out the saga pattern for some types of operations.
+### Atomicity
+One thing a saga does not provide is atomicity. In the bank account example above there's nothing to stop other systems interacting with the accounts in-between the debit and the credit operations. This needs bearing in mind as it could rule out the saga pattern for some types of operations.
   
 ___
   
@@ -802,4 +802,4 @@ RESULTS for 99.99% uptime, 0.01% chance of refusal, 0.01% of being busy and 0 re
 
 Overall the results show the importance of retrying our operations, and the need to have idempotent receivers that enable us to retry. We can get very good results with very failure prone systems if we simply retry our operations. 
 
-This is of cource an artificial scenario. In the real world, you'd want more subtle retry strategies that allow remote services to recover from high demand they might be experiencing or failures that might be transient - exponential back-off strategies are more useful than immediate retries. The ability to be able to resume a saga from a given point through the use of an audit log is also very important - if a remote service is down for a considerable amount of time you can still attempt the saga when it has recovered.
+This is of course an artificial scenario. In the real world, you'd want more subtle retry strategies that allow remote services to recover from high demand they might be experiencing or failures that might be transient - exponential back-off strategies are more useful than immediate retries. The ability to be able to resume a saga from a given point through the use of an audit log is also very important - if a remote service is down for a considerable amount of time you can still attempt the saga when it has recovered.
