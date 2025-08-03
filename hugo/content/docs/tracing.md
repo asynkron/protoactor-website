@@ -95,7 +95,7 @@ You can configure the OpenTelemetry collector endpoint and protocol using the en
 
 #### Word of caution!
 
-OpenTelemetry .NET AutoInstrumentation works only with `System.Diagnostics.DiagnosticSource` version of 8.0.0 or more, and `.NET` framework version of 4.6.2 or more. Hence, request you to go through their detailed documentaion before using.
+OpenTelemetry .NET AutoInstrumentation works only with `System.Diagnostics.DiagnosticSource` version of 8.0.0 or more, and `.NET` framework version of 4.6.2 or more. Hence, request you to go through their detailed documentation before using.
 
 ### Setup tracing for Proto.Actor
 

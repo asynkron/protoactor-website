@@ -58,7 +58,7 @@ Let's launch our app and see what happened.
 
 ![](images/3_4_1.png)
 
-Let's replace `Poison()` call with `Stop()` and lunch our app to see what happened.
+Let's replace `Poison()` call with `Stop()` and launch our app to see what happened.
 
 ```diff
 - system.Root.Poison(pid);
@@ -67,7 +67,7 @@ Let's replace `Poison()` call with `Stop()` and lunch our app to see what happen
 
 ![](images/3_4_2.png)
 
-As you can see, the actor succesfully completed job.
+As you can see, the actor successfully completed job.
 
 {{< listfiles "dotnet" >}}
 
