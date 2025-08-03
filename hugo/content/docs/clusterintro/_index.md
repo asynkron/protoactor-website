@@ -279,7 +279,7 @@ cluster
 
 #### PongerActor
 
-`protos_protoactor.go` contains a Ponger.Actor struct in it, which receives the incoming message and makes a method call to the corresponding interface method from the IDL definition, or simply proxies the message to a defaut message receive method. A developer only has to provide such methods by providing Ponger implementation.
+`protos_protoactor.go` contains a Ponger.Actor struct in it, which receives the incoming message and makes a method call to the corresponding interface method from the IDL definition, or simply proxies the message to a default message receive method. A developer only has to provide such methods by providing Ponger implementation.
 
 ![Ponger Actor](requests.png)
 

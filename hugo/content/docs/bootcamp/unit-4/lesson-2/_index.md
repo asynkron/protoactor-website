@@ -16,7 +16,7 @@ We also have a couple of messages `PlayMovieMessage()` and `StopMovieMessage()`.
 
 ![](../../images/4_2_3.png)
 
-These messages have a UserId, and when they fall into `UserCoordinatorActor ()`, `UserCoordinatorActor ()` will check if there is no suitable instance of `UserActor()` for this UserId, then `UserCoordinatorActor()` will create  apropriate `UserActor()`. And Next `UserCoordinatorActor ()` will send messages to the desired `UserActor()` to start or stop playback of the movie.
+These messages have a UserId, and when they fall into `UserCoordinatorActor ()`, `UserCoordinatorActor ()` will check if there is no suitable instance of `UserActor()` for this UserId, then `UserCoordinatorActor()` will create  appropriate `UserActor()`. And Next `UserCoordinatorActor ()` will send messages to the desired `UserActor()` to start or stop playback of the movie.
 
 ![](../../images/4_2_4.png)
 

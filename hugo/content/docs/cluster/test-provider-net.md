@@ -4,7 +4,7 @@ title: Test cluster provider (.NET)
 
 # Test provider
 
-The esiest way to run clustered Proto.Actor setup during developemnt on local machine (without using real clustering) is to use Test Cluster Provider.
+The easiest way to run clustered Proto.Actor setup during development on local machine (without using real clustering) is to use Test Cluster Provider.
 
 This might be used together with other provider, e.g. in dev environment use test provider otherwise use production one. Example might be found in [Realtime map example](https://github.com/asynkron/realtimemap-dotnet/blob/main/Backend/ProtoActorExtensions.cs#L75).
 

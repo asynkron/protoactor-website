@@ -9,7 +9,7 @@ The main feature of this strategy is to split responsibility of owning actor's i
 
 The identity owner member is assigned with a consistent hashing algorithm, while placement is determined with a [member strategy](member-strategies.md).
 
-![Parition Identity Lookup](images/partition-identity-lookup.jpg)
+![Partition Identity Lookup](images/partition-identity-lookup.jpg)
 
 When cluster topology changes (members are leaving or joining the cluster), the partitioned identities need to be rebalanced, because identity ownership changes (according to the consistent).
 
