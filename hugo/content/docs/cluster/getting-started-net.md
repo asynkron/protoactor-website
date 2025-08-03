@@ -247,7 +247,7 @@ To avoid confusion, in this tutorial we'll refer to virtual actors as grains.
 To recap:
 
 1. Grains are essentially actors, meaning they will process messages one at a time.
-1. Grains are not explicitly crated (activated). Instead, they are created when they receive the first message.
+1. Grains are not explicitly created (activated). Instead, they are created when they receive the first message.
 1. Each grain lives in _one_ of the cluster members.
 1. Grain's location is transparent, meaning we don't need to know in which cluster member grain lives to call it.
 1. Communication with grains should almost always be a request/response.

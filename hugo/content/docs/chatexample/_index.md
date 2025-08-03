@@ -112,7 +112,7 @@ In the next couple of sections, we are going to dissect it piece by piece.
 
 ### Creating an Actor System
 
-First we need to intialize and start our actor system and remote which is acomplished by following lines of code located in `InitializeActorSystem` method in the server assembly.
+First we need to initialize and start our actor system and remote which is accomplished by following lines of code located in `InitializeActorSystem` method in the server assembly.
 {{< tabs >}}
 {{< tab "C#" >}}
 
@@ -224,7 +224,7 @@ where you can see that the client side is a tad bit more involved, but nothing t
 
 ### Creating an Actor System
 
-Same as before, we will intialize and start our actor system and remote.
+Same as before, we will initialize and start our actor system and remote.
 {{< tabs >}}
 {{< tab "C#" >}}
 

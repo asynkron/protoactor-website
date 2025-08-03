@@ -284,7 +284,7 @@ public Task ReceiveAsync(IContext context)
 }
 ```
 
-And let's implement method `ProcessStoppingMessage()` . This methos be will display a stop message on the console.
+And let's implement method `ProcessStoppingMessage()` . This method will display a stop message on the console.
 
 ```csharp
 private void ProcessStoppingMessage(Stopping msg)

@@ -60,7 +60,7 @@ The same in the `SmartBulbSimulatorApp`
 services.AddActorSystem(hostContext.Configuration);
 ```
 
-At this step both applications should be ready to run in Kubernetes, but first we need to create conainter images.
+At this step both applications should be ready to run in Kubernetes, but first we need to create container images.
 
 ## Create docker images
 

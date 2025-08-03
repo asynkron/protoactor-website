@@ -190,7 +190,7 @@ services.AddSingleton(provider =>
 });
 ```
 
-For convinience, you can also register a `Cluster` object:
+For convenience, you can also register a `Cluster` object:
 
 ```csharp
 services.AddSingleton(provider => provider

@@ -10,7 +10,7 @@ You will also learn what a supervisor is and what actor-recovery strategies the 
 
 1. [Supervisor and actor hierarchy.](lesson-1)
 2. [Overview of the application that demonstrates the supervisor's capabilities and the actors hierarchy.](lesson-2)
-3. [Actor's addres and PID.](lesson-3)
+3. [Actor's address and PID.](lesson-3)
 4. [Creating UserCoordinatorActor.](lesson-4)
 5. [Creating MoviePlayCounterActor.](lesson-5)
 6. [How parent actors are watching over their children actors.](lesson-6)

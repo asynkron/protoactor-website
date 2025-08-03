@@ -116,7 +116,7 @@ cluster.Unsubscribe("my-topic", ClusterIdentity.Create("my-id", "my-kind"));
 ### What if I forget to unsubscribe?
 
 If you stop the subscriber without first unsubscribing from the topic, two different situations may occur depending on whether virtual or regular actors are used:
-* When using virtal actors, they are assumed to always exist. If there is no activation available currently, the framework will spawn one when a message arrives to this actor. So a message published to the topic will activate the virtual actor again.
+* When using virtual actors, they are assumed to always exist. If there is no activation available currently, the framework will spawn one when a message arrives to this actor. So a message published to the topic will activate the virtual actor again.
 * Regular actors have an explicit lifecycle. If you stop such actor, all messages directed to it will end up in the deadletter process. When this situation is detected, the subscriber will get automatically unsubscribed. It is still recommended to unsubscribe explicitly.
 
 ## Persistent subscriptions
