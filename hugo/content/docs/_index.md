@@ -30,6 +30,8 @@ tags: [protoactor, docs]
 - [Actor lifecycle](life-cycle.md)
 - [Location Transparency](location-transparency.md)
 - [Message Delivery Reliability](durability.md)
+- [Actors vs Queues and Logs](actors-vs-queues.md) - When to pick real-time actors vs durable messaging
+- [Backpressure and Flow Control](backpressure.md)
 
 ## Building Blocks
 
@@ -120,4 +122,5 @@ tags: [protoactor, docs]
 ## Additional Information
 
 - [Core vs contrib Proto.Actor components](core-contrib-components.md)
+- [Proto.Actor vs Erlang and Akka](protoactor-vs-erlang-akka.md)
 - [Books](books.md)
