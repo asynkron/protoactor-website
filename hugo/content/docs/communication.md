@@ -5,7 +5,7 @@ title: Communication
 # How actors communicate with each other
 
 {{< note >}}
-This repository provides supplemental examples for the blog article [[Golang] Protoactor-go 101: How actors communicate with each other](https://blog.oklahome.net/2018/09/protoactor-go-messaging-protocol.html), covering all message-passing methods for the various actors provided by protoactor-go.
+This repository provides supplemental examples for the blog article [[Golang] Protoactor-go 101: How actors communicate with each other](https://blog.oklahome.net/2018/09/protoactor-go-messaging-protocol.html), covering all message-passing methods for the various actors provided by protoactor-go. For higher-level guidance see [Message Patterns](message-patterns.md) and the [Ask Pattern](ask-pattern.md).
 {{</ note >}}
 
 <img src="https://raw.githubusercontent.com/oklahomer/protoactor-go-sender-example/master/docs/components.png"
