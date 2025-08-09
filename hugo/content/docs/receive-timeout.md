@@ -13,8 +13,8 @@ Please note that the receive timeout might fire and enqueue the ReceiveTimeout m
 
 Once set, the receive timeout stays in effect (i.e. continues firing repeatedly after inactivity periods). Pass in `nil` / `null` to `SetReceiveTimeout` to switch off this feature.
 
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
+
 ```csharp
 var props = Props.FromFunc(context =>
 {
@@ -32,8 +32,9 @@ var props = Props.FromFunc(context =>
     return Task.CompletedTask;
 });
 ```
-{{</ tab >}}
-{{< tab "Go" >}}
+
+#### Go
+
 ```go
 props := actor.PropsFromFunc(func(context actor.Context) {
     switch msg := context.Message().(type) {
@@ -46,8 +47,7 @@ props := actor.PropsFromFunc(func(context actor.Context) {
     }
 })
 ```
-{{</ tab >}}
-{{</ tabs >}}
+
 
 By setting the receive-timeout, you are setting a timer to a specific interval and the timer starts to count down from this.
 Once the timer ends, it will send a `ReceiveTimeout` message to itself.

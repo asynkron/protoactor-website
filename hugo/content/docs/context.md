@@ -34,8 +34,8 @@ Proto.Actor provides two forms of Context, a `RootContext` and an `ActorContext`
 
 Provides the ability to spawn new actors given a `Props` parameter.
 
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
+
 ```csharp
     var system = new ActorSystem();
     var props = Props.FromProducer(() => new GreetingActor());
@@ -45,8 +45,7 @@ Provides the ability to spawn new actors given a `Props` parameter.
     // system.Root.SpawnNamed(props, name: "greeter");
     // system.Root.SpawnPrefix(props, prefix: "greet-");
 ```
-{{</ tab >}}
-{{</ tabs >}}
+
 
 ### Stopper
 
@@ -54,8 +53,8 @@ Provides the ability to spawn new actors given a `Props` parameter.
 
 Provides the ability to immediately stop an actor, or instruct it to stop after processing current mailbox messages.
 
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
+
 ```csharp
     // stop immediately
     context.Stop(pid);
@@ -65,8 +64,7 @@ Provides the ability to immediately stop an actor, or instruct it to stop after 
     context.Poison(pid);
     await context.PoisonAsync(pid);
 ```
-{{</ tab >}}
-{{</ tabs >}}
+
 
 ### Info
 
@@ -80,8 +78,8 @@ Provides access to information about the context such as the current actor's `Pa
 
 Provides the ability to `Send` fire-and-forget style messages and `Request` responses from an actor asynchronously.
 
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
+
 ```csharp
     var message = new MyMessage();
     var request = new MyRequest();
@@ -91,8 +89,7 @@ Provides the ability to `Send` fire-and-forget style messages and `Request` resp
     var response = context.Request<MyResponse>(pid, request);
 
 ```
-{{</ tab >}}
-{{</ tabs >}}
+
 
 ### Receiver
 
@@ -100,13 +97,12 @@ Provides the ability to `Send` fire-and-forget style messages and `Request` resp
 
 Provides the ability to `Receive` messages wrapped in a `MessageEnvelope`
 
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
+
 ```csharp
     await context.Receive(envelope);
 ```
-{{</ tab >}}
-{{</ tabs >}}
+
 
 ### Invoker
 

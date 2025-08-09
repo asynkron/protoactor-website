@@ -113,8 +113,7 @@ In the next couple of sections, we are going to dissect it piece by piece.
 ### Creating an Actor System
 
 First we need to initialize and start our actor system and remote which is accomplished by following lines of code located in `InitializeActorSystem` method in the server assembly.
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
 
 ```csharp
 var config =
@@ -132,8 +131,7 @@ system
 context = system.Root;
 ```
 
-{{</ tab >}}
-{{</ tabs >}}
+
 The magic happens on the first lines where we use `BindToLocalhost` method from `Proto.Remote.GrpcCore.GrpcCoreRemoteConfig` static class which creates `Proto.Remote` configuration that binds to `localhost` address on port 8000 and chaining `WithProtoMessages` we tell the config factory where to find the fore mentioned auto-generated messages from our protobuf definition which are in this case located in `chat.messages` namespace.
 
 Next, we simply start the system and make a note of the root context for later usage.
@@ -144,8 +142,7 @@ Easy as that.
 
 ### Overview of Server Actor
 
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
 
 ```csharp
 var clients = new HashSet<PID>();
@@ -205,8 +202,7 @@ context.SpawnNamed(
 );
 ```
 
-{{</ tab>}}
-{{</ tabs >}}
+
 For this example, we are going to use a quick and convenient way of creating an actor from a function which is provided by `Props.FromFunc` method. We are going to spawn the actor in the root context (the top-level actor system).
 
 The actor func takes closure over the `clients` hash set which is used to keep track of all connected clients.\
@@ -225,8 +221,7 @@ where you can see that the client side is a tad bit more involved, but nothing t
 ### Creating an Actor System
 
 Same as before, we will initialize and start our actor system and remote.
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
 
 ```csharp
 var config =
@@ -244,14 +239,12 @@ system
 context = system.Root;
 ```
 
-{{</ tab >}}
-{{</ tabs >}}
+
 The way we do this is pretty much the same as with our server example except we are not providing port number for our client remote configuration. The port will come into play later when we resolve the server `PID`. (see below)
 
 ### Overview of Client Actor
 
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
 
 ```csharp
 client = context.Spawn(
@@ -276,8 +269,7 @@ client = context.Spawn(
 );
 ```
 
-{{</ tab >}}
-{{</ tabs >}}
+
 You can notice that the client actor is pretty straightforward in that it only listens to messages sent by the server and writes them out to console.\
 
 Now let's take a look at how we can resolve the server `PID` and establish a connection to it.
@@ -285,22 +277,19 @@ Now let's take a look at how we can resolve the server `PID` and establish a con
 ### Resolving Server PID
 
 Resolving server `PID` is as easy as calling `FromAddress` factory method on `PID` class supplying it with the combination of `host:port` and the `name/id` of the server actor we spawned earlier.
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
 
 ```csharp
 server = PID.FromAddress("127.0.0.1:8000", "chatserver");
 ```
 
-{{</ tab >}}
-{{</ tabs >}}
+
 Now that we have resolved and obtained the server `PID`, we are able to transparently send messages back and forth via our local actor system.
 
 ### Connecting to Server
 
 As per our previously established protobuf contract, we initiate a connection to the server by sending the initial `Connect` message which contains the `PID` of our client actor, which will subsequently be used by the server actor to respond to us thus establishing a two-way connection.
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
 
 ```csharp
 context.Send(
@@ -312,13 +301,11 @@ context.Send(
 );
 ```
 
-{{</ tab >}}
-{{</ tabs >}}
+
 
 ### Parsing and Sending Command Messages
 
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
 
 ```csharp
 var nick = "Alex";
@@ -362,8 +349,7 @@ while (true)
 }
 ```
 
-{{</ tab >}}
-{{</ tabs >}}
+
 
 This is the main loop of the client program in which we listen for user input from the command line and try to make sense of it (parse it).
 
