@@ -170,13 +170,17 @@ To recap:
 - Then it was spawned as an actor on Member 2.
 - When Member 2 went down, it was spawned on Member 1 as a different actor.
 
-In none of the above situations, we had to care about its state, location, or even existence. Under the hood, Proto.Cluster took care of that details. This is the reason, why grains are sometimes called _virtual_ actors.
+In none of the above situations did we have to care about its state, location, or even existence. Under the hood, Proto.Cluster took care of those details. This is the reason why grains are sometimes called _virtual_ actors.
 
 ### Shutting down a grain
 
-Grains are created automatically, however there is no mechanism out of the box in Proto.Actor that would garbage collect them. To stop the grain you can:
-* stop it in reaction to some event that should terminate its lifetime (e.g. user has disconnected from a game, so there is no need to track them anymore)
-* set the `ReceiveTimeout` on the grain that will detect inactivity, then react to the timeout message by poisoning the grain
+Grains are created automatically; however, there is no mechanism out of the box in Proto.Actor that would garbage collect them. To stop a grain you can:
+* stop it in reaction to an event that should terminate its lifetime (e.g., a user disconnects from a game and no longer needs to be tracked)
+* set `ReceiveTimeout` on the grain to detect inactivity, then react to the timeout message by poisoning the grain
+
+### Activation statistics
+
+Proto.Cluster records basic activation metrics for each grain. Recent updates also track how many times a grain has started, enabling operators to spot repeated restarts or thrashing.
 
 ## Cluster Identity
 

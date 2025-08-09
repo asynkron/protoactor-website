@@ -141,7 +141,7 @@ This topic kind registration overrides the default one in the cluster.
 
 ## BatchingProducer
 
-The delivery of the messages can be optimized by sending them in batches. `BatchingProducer` will help you create message batches in scenarios, where you have multiple publishers publishing to single topic. The batching producer will collect messages from different sources, group them in batches, and send to subscribers.
+Message delivery can be optimized by sending messages in batches. `BatchingProducer` helps create batches when multiple publishers target a single topic. The batching producer collects messages from different sources, groups them, and then sends each batch to subscribers.
 
 ```mermaid
 flowchart LR
@@ -185,9 +185,11 @@ var t2 = producer.ProduceAsync(new ChatMessage { Message = "Hi" });
 await Task.WhenAll(t1, t2);
 ```
 
-Notice how the produce tasks are not awaited in a sequence, but rather all at once. This is the pattern you should follow when using the BatchingProducer. The tasks will complete when the message is actually delivered to the topic, not when added to the internal producer queue.
+Notice how the produce tasks are awaited together instead of sequentially. This pattern ensures that work is parallelized and each task completes only after the message is delivered to the topic, not merely queued internally.
 
 *Note: you can also decide to not await the task if you are interested in the "fire and forget" scenario.*
+
+Disposing the producer stops the internal loop gracefully. Recent updates avoid channel closed exceptions when the producer shuts down.
 
 ### Cancel a message
 

@@ -6,14 +6,15 @@ title: Logging
 
 ## Configuring logging on .NET
 
-In Proto.Actor .NET, Logging is configured via the static `Proto.Log` setting.
+In Proto.Actor .NET, logging is configured through the static `Proto.Log` class.
+Earlier releases briefly marked this logger as obsolete, but it has been restored and remains the recommended entry point.
 
 ### Using console
 
 ```csharp
 public static void SetupLogger()
 {
-    //Configure ProtoActor to use Console logger
+    // Configure Proto.Actor to use the console logger
     Proto.Log.SetLoggerFactory(
         LoggerFactory.Create(l => l.AddConsole().SetMinimumLevel(LogLevel.Error)));
 }
@@ -24,10 +25,10 @@ public static void SetupLogger()
 ```csharp
 public static void SetupLogger()
 {
-    //Configure SeriLog
+    // Configure Serilog
     Log.Logger = new LoggerConfiguration().WriteTo.Console(LogEventLevel.Error).CreateLogger();
-    
-    //Configure ProtoActor to use Serilog
+
+    // Configure Proto.Actor to use Serilog
     Proto.Log.SetLoggerFactory(
         LoggerFactory.Create(l => l.AddSerilog().SetMinimumLevel(LogLevel.Error)));
 }
