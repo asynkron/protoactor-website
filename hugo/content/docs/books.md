@@ -5,7 +5,9 @@ draft: false
 tags: [protoactor, docs]
 ---
 
-# Related material
+# Related Material
+
+Recommended books for further reading on reactive and actor-based systems.
 
 ##  Manning Publications Co.
 

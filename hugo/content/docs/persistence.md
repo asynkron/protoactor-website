@@ -6,11 +6,11 @@ title: Persistence of actor's state
 
 <img src="../images/Persistence-blue.png" style="max-height:400px;margin-bottom:20px;margin-left:20px">
 
-In some scenarios it is needed to permanently save actor's state. The same state should be restored during actor start.
+In some scenarios, it is necessary to persist an actor's state and restore it when the actor starts.
 
 ## Simple state persistence
 
-As an example, temeperature measures in a room will be used. There is room actor that receives temperature measures in some regular periods.
+As an example, we'll use temperature measurements in a room. A room actor receives these measurements at regular intervals.
 
 ```protobuf
 

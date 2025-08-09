@@ -1,14 +1,14 @@
 # Lesson 5: Key features of the Proto.Actor.
 
-So, when we got a basic understanding of the actor model and Proto.Actor. Let's begin to consider the key features of the Proto.Actor platform.
+Now that we have a basic understanding of the actor model and Proto.Actor, let's examine the platform's key features.
 
-Proto.Actor offers us:
+Proto.Actor offers:
 
-- Simple multithreading and asynchronous (concurrency and asynchronous)
-- Simple distributed processing (distribution)
+- Simple multithreading and asynchronous processing (concurrency and asynchronous)
+- Straightforward distributed processing (distribution)
 - High performance
-- Fault Tolerance
-- Ability to use multiple programming languages in a single application (multiple languages)
+- Fault tolerance
+- The ability to use multiple programming languages in a single application (multiple languages)
 
 ### Concurrency and asynchronous.
 

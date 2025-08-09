@@ -1,8 +1,8 @@
 # Lesson 3: Defining Messages.
 
-After we created our actors, the next step is to define the messages that we will send between the actors. In addition to sending simple primitive data types that exist in .Net, such as string or int, we can also define our custom message classes. 
+After creating our actors, the next step is to define the messages they exchange. Alongside simple .NET primitives like strings or integers, we can define our own message classes.
 
-Message classes can be written in two ways, using C# language or platform-independent Protobuf language.
+You can define message classes either in C# or in the platform-independent Protobuf language.
 
 The difference between these ways of creating messages is that when you create a C# message, you can use all data types available on the .Net platform. But when using Protobuf, the choice of data types is very limited. But with Protobuf, you can create actors that can interact with actors written in other programming languages, which is not possible with messages written in C#. 
 

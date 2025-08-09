@@ -7,13 +7,13 @@ tags: [protoactor, docs]
 
 # Actors
 
-An actor is a container for [State](#state), [Behavior](#behavior), a [Mailbox](#mailbox), [Children](#children) and a [Supervisor Strategy](#supervisor-strategy). All of this is encapsulated behind a process ID (`PID`).
+An actor is a container for its [state](#state), [behavior](#behavior), [mailbox](#mailbox), [children](#children) and [supervisor strategy](#supervisor-strategy). All of this is encapsulated behind a process ID (`PID`).
 
 ![Actor](images/actor.png)
 
 ## PID - Process ID
 
-As detailed below, an actor object needs to be shielded from the outside in order to benefit from the actor model. Therefore, actors are represented to the outside using PID's, which are objects that can be passed around freely and without restriction. This split into inner and outer object enables transparency for all the desired operations: restarting an actor without needing to update references elsewhere, placing the actual actor object on remote hosts, sending messages to actors in completely different applications. But the most important aspect is that it is not possible to look inside an actor and get hold of its state from the outside, unless the actor unwisely publishes this information itself.
+As detailed below, an actor object needs to be shielded from the outside in order to benefit from the actor model. Therefore, actors are represented externally using PIDs, which are objects that can be passed around freely and without restriction. This split into inner and outer objects enables transparency for all the desired operations: restarting an actor without needing to update references elsewhere, placing the actual actor object on remote hosts, and sending messages to actors in completely different applications. The most important aspect is that it is not possible to look inside an actor and access its state from the outside unless the actor unwisely publishes this information itself.
 
 Read more: [PID](pid.md)
 

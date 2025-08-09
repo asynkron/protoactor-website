@@ -16,13 +16,14 @@ title: Professional Services
   [Agenda](workshop-cluster.md),
   <a href="mailto:info@asynkron.se?subject=Proto.Cluster Workshop">Contact us</a>
 
-- **Code and Architectural review of actor based systems** - <a href="mailto:info@asynkron.se?subject=Architectural Review">Contact us</a>
+- **Code and Architectural review of actor-based systems** - <a href="mailto:info@asynkron.se?subject=Architectural Review">Contact us</a>
 
 ## Dedicated Team Member
 
-Do you need a full-time distributed systems engineer / Proto.Actor expert?
+Do you need a full-time distributed systems engineer or Proto.Actor expert?
 <a href="mailto:info@asynkron.se?subject=dedicated team member">Contact us</a>
 
 ## Support Subscription
 
+For ongoing assistance, we offer support subscriptions.
   <a href="mailto:info@asynkron.se?subject=Proto.Cluster Support">Contact us</a>

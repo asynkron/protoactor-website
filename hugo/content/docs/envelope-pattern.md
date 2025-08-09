@@ -2,14 +2,14 @@
 
 ## Batching in event-driven architectures
 
-A common use-case for actor-based event processing is to consume data from some form of queue or log, such as Rabbit MQ or Kafka.
+A common use case for actor-based event processing is consuming data from a queue or log, such as RabbitMQ or Kafka.
 
 If you use some form of persistence in your event processor, be it plain snapshots of state or event-sourcing, this can result in writes to the database for each message processed.
 One message goes in, you process it, you write the new state of your entity/actor back to the persistent store.
 
 This can result in bottlenecks in terms of writes against the persistent store. For example, if you process 10,000 messages per second, that could result in 10,000 writes to the persistent store.
 
-This pattern limits the number of writes to the persistent store by grouping messages together, where you only write back once they are all processed, and then ack this back to the underlying message queue/log you are using.
+This pattern reduces writes to the persistent store by grouping messages and writing once after they are all processed, then acknowledging the batch to the underlying message queue or log.
 
 Besides the trivial use case of writing to persistent storage, sending messages in batch from one actor to the other improves performance significantly when the system is under load and processing lots of messages per second.
 

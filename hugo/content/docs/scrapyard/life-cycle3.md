@@ -1,8 +1,8 @@
 # Lesson 6: How parent actors are watching over their children actors.
 
-One of the actor system features is that the system has fault tolerance and the ability to recover from failures automatically. This is achieved through parental control, where the parent actor controls the state of their children's actors.
+One key feature of the actor system is its built-in fault tolerance and ability to recover from failures automatically. This is achieved through parental control, where the parent actor monitors the state of its children.
 
-Parental control is that when an actor throws an exception, the first thing that happens is that the actor itself and all its child actors will be suspended from handling the messages. And next the message about the error in the child actor will be passed to its parent actor.
+Under parental control, when an actor throws an exception, the actor and all its child actors are suspended from handling messages. The error is then reported to the parent actor.
 
 The parent actor will decide how to handle this error and then sends a message to the child actor, with instructions on what to do in this situation. There are many different strategies for handling exceptions in child actors. For example, a parent actor can restart a child actor if an error occurs in it.
 

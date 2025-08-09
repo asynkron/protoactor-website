@@ -1,4 +1,4 @@
-# Mermaid diagram tests
+# Mermaid Diagram Examples
 
 ```mermaid
 sequenceDiagram
@@ -14,7 +14,7 @@ sequenceDiagram
     Bob-->>Jonathan: splendid!
 ```
 
-## test test
+## Additional Examples
 
 ```mermaid
   graph TD;

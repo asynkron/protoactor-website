@@ -13,9 +13,8 @@ tags: [protoactor, docs]
 
 ## Virtual Actors, aka. Grains
 
-Proto.Cluster leverages the _"Virtual Actor Model"_, which was pioneered by Microsoft Orleans.
-Unlike the traditional Actor Model used in Erlang or Akka, where developers must care about actor lifecycles, placement and failures.
-The virtual actor model instead focus on ease of use, high availability where most of the complexity have been abstracted away from the developer.
+Proto.Cluster leverages the _"Virtual Actor Model"_, pioneered by Microsoft Orleans.
+Unlike the traditional Actor Model used in Erlang or Akka, where developers must manage actor lifecycles, placement, and failures, the virtual actor model focuses on ease of use and high availability, abstracting most complexity away from the developer.
 
 > The Microsoft Orleans website describes this as _A straightforward approach to building distributed, high-scale applications in .NET_.
 
