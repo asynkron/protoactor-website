@@ -25,11 +25,14 @@ tags: [protoactor, docs]
 
 - [What is an Actor?](actors.md)
 - [What is a Message?](messages.md)
+- [Actor Communication](communication.md)
 - [Terminology, Concepts](terminology.md)
 - [Supervision and Monitoring](supervision.md)
+- [Fault Tolerance](fault-tolerance.md)
 - [Actor lifecycle](life-cycle.md)
 - [Location Transparency](location-transparency.md)
 - [Message Delivery Reliability](durability.md)
+- [Message Patterns](message-patterns.md)
 - [Actors vs Queues and Logs](actors-vs-queues.md) - When to pick real-time actors vs durable messaging
 - [Backpressure and Flow Control](backpressure.md)
 - [Consistency Models](consistency-models.md)
@@ -114,6 +117,8 @@ tags: [protoactor, docs]
 
 ## Useful Patterns
 
+- [Ask Pattern](ask-pattern.md)
+- [Idempotency in Messaging](idempotency.md)
 - [Message Throttling](throttling.md)
 - [Work Pulling Pattern](work-pulling.md)
 - [Limit Concurrency](limit-concurrency.md)

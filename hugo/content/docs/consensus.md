@@ -6,7 +6,7 @@ tags: [protoactor, docs]
 ---
 # Consensus and Leader Election
 
-Consensus algorithms coordinate state across nodes so that the cluster agrees on a single value. They are essential when strong consistency or coordination is required.
+Consensus algorithms coordinate state across nodes so that the cluster agrees on a single value. They are essential when strong consistency or coordination is required, as described by the [CAP Theorem](cap-theorem.md) and the trade‑offs in [Consistency Models](consistency-models.md).
 
 ## Why Consensus?
 Failures and partitions can create multiple conflicting updates. Protocols like Raft or Paxos elect a leader and replicate a log to keep nodes in sync.

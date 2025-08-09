@@ -15,7 +15,7 @@ Besides the trivial use case of writing to persistent storage, sending messages 
 
 
 #### Requires:
-* Idempotency, message deduplication in actor (can be done using `Props.WithClusterRequestDeduplication(deduplicationWindow)`, where `deduplicationWindow` is an optional field and is of `TimeSpan` type)
+* [Idempotency in Messaging](idempotency.md) and message deduplication in actor (can be done using `Props.WithClusterRequestDeduplication(deduplicationWindow)`, where `deduplicationWindow` is an optional field and is of `TimeSpan` type)
 
 #### Pros:
 * High throughput processing
