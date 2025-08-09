@@ -33,8 +33,8 @@ var props = Actor.FromProducer(() => new MyActor())
 {{</ tab >}}
 {{< tab "Go" >}}
 ```go
-props := actor.FromProducer(MyActorProducer)
-    .WithMailbox(MyMailboxProducer)
+props := actor.PropsFromProducer(MyActorProducer,
+    actor.WithMailbox(MyMailboxProducer))
 ```
 {{</ tab >}}
 {{</ tabs >}}
@@ -52,6 +52,42 @@ The unbounded mailbox is a convenient default but in a scenario where messages a
 ### Dropping Head Mailbox
 
 ![Dropping head mailbox](images/dropping-head-mailbox.png)
+
+## Batching Mailbox
+
+A batching mailbox collects messages from one or more sources and groups them into a `MessageBatch`
+before handing them to the configured `IMessageInvoker`. This can improve throughput when many small
+messages arrive in bursts.
+
+```mermaid
+sequenceDiagram
+    participant S as Sender
+    participant B as BatchingMailbox
+    participant A as Actor
+    S->>B: message 1
+    S->>B: message 2
+    B->>A: MessageBatch [1,2]
+```
+
+To use the batching mailbox with an actor:
+
+{{< tabs >}}
+{{< tab "C#" >}}
+```csharp
+var props = Props.FromProducer(() => new MyActor())
+    .WithMailbox(() => new BatchingMailbox(100));
+```
+{{</ tab >}}
+{{< tab "Go" >}}
+```go
+props := actor.PropsFromProducer(func() actor.Actor { return &MyActor{} },
+    actor.WithMailbox(func() actor.Mailbox { return mailbox.NewBatching(100) }))
+```
+{{</ tab >}}
+{{</ tabs >}}
+
+The same mailbox can also be used outside actors for scenarios such as log aggregation or batched
+database writes.
 
 ## Mailbox Instrumentation
 

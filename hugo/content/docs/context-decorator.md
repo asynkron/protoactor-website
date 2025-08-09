@@ -1,14 +1,90 @@
 ---
-title: Context Decorator
+title: Extensions and Context Decorators
 ---
 
-# Context Decorator
+# Extensions and Context Decorators
 
-Context Decorators allow developers to surround actors with custom functionality, this could be anything from custom message receive logic, to intercepting outgoing calls from the context.
+Proto.Actor can be extended at both the actor and actor system level.
 
-For example the `OpenTracing` plugin is built using this mechanism.
+## Context Decorators
+
+Context decorators allow developers to surround actors with custom functionality, from custom
+message receive logic to intercepting outgoing calls.
 
 To apply context decorators to an actor, use the `Props.WithContextDecorator` method.
+
+```mermaid
+graph LR
+    Sender --> Decorator --> Actor
+```
+
+{{< tabs >}}
+{{< tab "C#" >}}
+```csharp
+public class MyDecorator : IContextDecorator
+{
+    public IContext Decorate(IContext context) => new MyContext(context);
+}
+
+var props = Props.FromProducer(() => new MyActor())
+    .WithContextDecorator(new MyDecorator());
+```
+{{</ tab >}}
+{{< tab "Go" >}}
+```go
+func myDecorator(next actor.ContextDecoratorFunc) actor.ContextDecoratorFunc {
+    return func(ctx actor.Context) actor.Context {
+        return &myContext{Context: next(ctx)}
+    }
+}
+
+props := actor.PropsFromProducer(func() actor.Actor { return &myActor{} },
+    actor.WithContextDecorator(myDecorator))
+```
+{{</ tab >}}
+{{</ tabs >}}
+
+## Actor Extensions
+
+Actor extensions allow adding cross-cutting functionality to individual actors by decorating
+their `IContext`. They are ideal for concerns such as logging or metrics and build upon the
+context decorator mechanism shown above.
+
+## Actor System Extensions
+
+Actor system extensions provide hooks into the lifecycle of the entire `ActorSystem`.
+
+```mermaid
+graph TD
+    System[ActorSystem] --> Ext[Extension]
+```
+
+{{< tabs >}}
+{{< tab "C#" >}}
+```csharp
+public class MyExtension : IActorSystemExtension { }
+
+var system = new ActorSystem();
+system.Extensions.Register(new MyExtension());
+```
+{{</ tab >}}
+{{< tab "Go" >}}
+```go
+import "github.com/asynkron/protoactor-go/extensions"
+
+var extID = extensions.NextExtensionID()
+
+type myExtension struct{}
+
+func (*myExtension) ExtensionID() extensions.ExtensionID {
+    return extID
+}
+
+system := actor.NewActorSystem()
+system.Extensions.Register(&myExtension{})
+```
+{{</ tab >}}
+{{</ tabs >}}
 
 ## Conceptual overview
 

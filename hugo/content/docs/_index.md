@@ -90,7 +90,7 @@ tags: [protoactor, docs]
 ### Utility features
 
 - [AsyncSemaphore](asyncsemaphore.md) - How do I limit concurrency to a given resource?
-- [BatchingMailbox](batching-mailbox.md) - How do I collect many events and process as single one unit?
+- [Batching Mailbox](mailboxes.md#batching-mailbox) - How do I collect many events and process as single one unit?
 - [Throttle](throttle.md) - How do I throttle method calls?
 
 ## Performance
@@ -107,9 +107,7 @@ tags: [protoactor, docs]
 
 ## Extension models
 
-- [ActorSystem Extensions](actorsystem-extensions.md)
-- [Actor Extensions](actor-extensions.md)
-- [Context Decorator](context-decorator.md)
+- [Extensions and Context Decorator](context-decorator.md)
 
 ## Articles
 
@@ -127,7 +125,7 @@ tags: [protoactor, docs]
 - [Local Affinity](local-affinity.md)
 - [Placement Strategies](placement-strategies.md)
 - [Coordinated Persistence](coordinated-persistence.md)
-- [Batched Persistence](batched-persistence.md)
+- [Batched Persistence](persistence.md#batched-persistence)
 - [Circuit Breaker Pattern](circuit-breaker.md)
 
 ## Additional Information

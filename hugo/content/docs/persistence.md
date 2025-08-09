@@ -89,7 +89,7 @@ After applying any change on actor's state, the second delegate is used and the 
 
                 await _persistRoomState(_roomState);
             }
-            
+
             bool TemperatureHasChanged() =>
                 MeasureIsNewer() && MeasureIsDifferent();
 
@@ -98,6 +98,25 @@ After applying any change on actor's state, the second delegate is used and the 
         }
 
 ```
+
+## Batched Persistence
+
+Batched persistence groups several persistence operations before writing them to the underlying
+store, reducing I/O overhead for write-heavy scenarios. The feature is currently available for the
+.NET implementation of Proto.Actor.
+
+```mermaid
+graph LR
+    A[Actor] --> B[Batch]
+    B --> D[(Database)]
+```
+
+```csharp
+var props = Props.FromProducer(() => new MyPersistentActor())
+    .WithPersistence(new BatchingPersistence(batchSize: 50));
+```
+
+At the time of writing there is no Go implementation for batched persistence.
 
 ## Persistence using events and snapshots
 
