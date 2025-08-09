@@ -41,9 +41,21 @@ Provides the ability to spawn new actors given a `Props` parameter.
     var props = Props.FromProducer(() => new GreetingActor());
     var pid = system.Root.Spawn(props);
 
-    // other actor spawning methods:
-    // system.Root.SpawnNamed(props, name: "greeter");
-    // system.Root.SpawnPrefix(props, prefix: "greet-");
+      // other actor spawning methods:
+      // system.Root.SpawnNamed(props, name: "greeter");
+      // system.Root.SpawnPrefix(props, prefix: "greet-");
+  ```
+
+#### Go
+
+```go
+system := actor.NewActorSystem()
+props := actor.PropsFromProducer(func() actor.Actor { return &GreetingActor{} })
+pid := system.Root.Spawn(props)
+
+// other actor spawning methods:
+// system.Root.SpawnNamed(props, "greeter")
+// system.Root.SpawnPrefix(props, "greet-")
 ```
 
 
@@ -62,7 +74,19 @@ Provides the ability to immediately stop an actor, or instruct it to stop after 
 
     // stop after processing current user messages in mailbox
     context.Poison(pid);
-    await context.PoisonAsync(pid);
+      await context.PoisonAsync(pid);
+  ```
+
+#### Go
+
+```go
+// stop immediately
+context.Stop(pid)
+// context.StopFuture(pid)
+
+// stop after processing current user messages in mailbox
+context.Poison(pid)
+// context.PoisonFuture(pid)
 ```
 
 
@@ -86,8 +110,19 @@ Provides the ability to `Send` fire-and-forget style messages and `Request` resp
 
     context.Send(pid, message);
     
-    var response = context.Request<MyResponse>(pid, request);
+      var response = context.Request<MyResponse>(pid, request);
 
+  ```
+
+#### Go
+
+```go
+message := &MyMessage{}
+request := &MyRequest{}
+
+context.Send(pid, message)
+
+response, _ := context.RequestFuture(pid, request, 3*time.Second).Result()
 ```
 
 
@@ -101,6 +136,12 @@ Provides the ability to `Receive` messages wrapped in a `MessageEnvelope`
 
 ```csharp
     await context.Receive(envelope);
+```
+
+#### Go
+
+```go
+context.Receive(envelope)
 ```
 
 
