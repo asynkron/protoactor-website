@@ -5,176 +5,122 @@ title: Getting started
 
 # Getting started with Proto.Actor
 
-This tutorial introduces Proto.Actor by guiding you through the creation of a simple C# greeter actor.
+Proto.Actor is a cross-platform actor framework that helps you build concurrent and distributed systems. In this guide you will build a minimal greeter in both .NET and Go to learn the basic building blocks: messages, actors, and the actor system.
 
 ![getting started](images/Getting-Started-3-blue.png)
 
 ## Set up your project
 
-First, we need to start Visual Studio and create a new C# Console Application. Once we have our console application, we need to install Proto.Actor package. In order to do this open up the Package Manager Console and type:
+Proto.Actor can be used from multiple languages. We'll create a simple console application in each runtime.
+
+#### .NET
+
+Create a new console project and install the Proto.Actor package from NuGet:
 
 ```PM
 PM> Install-Package Proto.Actor
 ```
 
-Then we need to add ```using Proto.Actor``` statement:
+Reference the Proto namespace in your source file:
 
 ```csharp
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-//Add these two lines
 using Proto;
+```
 
-namespace ConsoleApplication11
+#### Go
+
+Initialize a module and pull in the Proto.Actor dependency:
+
+```bash
+go mod init greeter
+go get github.com/asynkron/protoactor-go
+```
+
+## Define a message
+
+Actors communicate exclusively through messages. Messages should be immutable so they can safely be shared between threads. Our greeter will respond to a `Greet` message containing the name to greet.
+
+#### .NET
+
+```csharp
+// Greet carries the name of the person to greet
+public record Greet(string Who);
+```
+
+#### Go
+
+```go
+// Greet carries the name of the person to greet
+type Greet struct{ Who string }
+```
+
+## Create the actor
+
+An actor processes one message at a time and encapsulates its own state. The `GreetingActor` prints a message whenever it receives a `Greet`. The Go version uses the standard `fmt` package for output.
+
+#### .NET
+
+```csharp
+public class GreetingActor : IActor
 {
-    class Program
+    public Task ReceiveAsync(IContext ctx)
     {
-        static void Main(string[] args)
+        if (ctx.Message is Greet greet)
         {
+            Console.WriteLine($"Hello {greet.Who}");
         }
+        return Task.CompletedTask;
     }
 }
 ```
 
-## Create your first actor
+#### Go
 
-First, let's create a class `Greet`. This class is the message type that will be sent to the actor and that the actor will respond. The instance of the message class must be immutable. You can read more about what messages are in Proto.Actor [here](https://proto.actor/docs/bootcamp/unit-1/lesson-8/). 
-In the class `Greet`, we create the property `Who`, which has a public getter and a private setter. The property will be set in the constructor when creating an instance of the class. This way we can guarantee that the `Who` property will not change after the creation of the instance of class `Greet`.
+```go
+type greetingActor struct{}
 
-```csharp
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Proto;
-
-namespace ConsoleApplication11
-{
-    // Create an (immutable) message type that your actor will respond to
-    public class Greet
-    {
-        public Greet(string who)
-        {
-            Who = who;
-        }
-        public string Who { get;private set; }
-    }
-
-    class Program
-    {
-        static void Main(string[] args)
-        {
-        }
+// Receive handles incoming messages for the actor
+func (g *greetingActor) Receive(ctx actor.Context) {
+    switch msg := ctx.Message().(type) {
+    case *Greet:
+        fmt.Printf("Hello %s\n", msg.Who)
     }
 }
 ```
 
-Once we have the message type, we can create our actor. To do this, we create class `GreetingActor` that inherits from the `IActor` interface. In this class, we need to implement an asynchronous method `ReceiveAsync` that has `IContext` parameter. If the incoming `IContext` contains a message of the `Greet` type, then we need to respond to it. Otherwise, no action is required.
+## Run the actor
+
+The actor system is the runtime container for your actors. It is used to spawn actors and send them messages.
+
+#### .NET
 
 ```csharp
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+var system = new ActorSystem();
+var props = Props.FromProducer(() => new GreetingActor());
+var pid = system.Root.Spawn(props);
 
-using Proto;
+// Send a message to the actor
+system.Root.Send(pid, new Greet("World"));
 
-namespace ConsoleApplication11
-{
-    public class Greet
-    {
-        public Greet(string who)
-        {
-            Who = who;
-        }
-        public string Who { get;private set; }
-    }
+// Prevent the application from exiting immediately
+Console.ReadLine();
+```
 
-    // Create the actor class
-    public class GreetingActor : IActor
-    {
-        public Task ReceiveAsync(IContext ctx)
-        {
-            if (ctx.Message is Greet greet)
-            {
-                // Tell the actor to respond
-                // to the Greet message
-                Console.WriteLine($"Hello {greet.Who}"); 
-            }
-            return Task.CompletedTask;
-        }
-    }
+#### Go
 
-    class Program
-    {
-        static void Main(string[] args)
-        {
-        }
-    }
+```go
+func main() {
+    system := actor.NewActorSystem()
+    props := actor.PropsFromProducer(func() actor.Actor { return &greetingActor{} })
+    pid := system.Root.Spawn(props)
+
+    // Send a message to the actor
+    system.Root.Send(pid, &Greet{Who: "World"})
+
+    // Prevent the program from exiting immediately
+    _, _ = console.ReadLine()
 }
 ```
 
-Now it's time to consume our actor, we do so by calling `Spawn`. First, let's create `Props` that determine how the actor will be created. Read more about [what Prop is](https://proto.actor/docs/props/). Then spawn the actor using created `Props` and send a message of `Greet` type to it.
+You've now created and run your first Proto.Actor program in both .NET and Go. This simple example forms the foundation for building resilient, concurrent applications that scale across cores and machines.
 
-```csharp
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Proto;
-
-namespace ConsoleApplication11
-{
-    public class Greet
-    {
-        public Greet(string who)
-        {
-            Who = who;
-        }
-        public string Who { get;private set; }
-    }
-
-    // Create the actor class
-    public class GreetingActor : IActor
-    {
-        public Task ReceiveAsync(IContext ctx)
-        {
-            if (ctx.Message is Greet greet)
-            {
-                // Tell the actor to respond
-                // to the Greet message
-                Console.WriteLine($"Hello {greet.Who}"); 
-            }
-            return Task.CompletedTask;
-        }
-    }
-
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            var system = new ActorSystem();
-            var props = Props.FromProducer(() => new GreetingActor());
-            var greeter = system.Root.Spawn(props);
-
-            // Send a message to the actor
-            system.Root.Send(greeter, new Greet("World"));
-
-            // This prevents the app from exiting
-            // before the async work is done
-            Console.ReadLine();
-        }
-    }
-}
-```
-
-That is it, your actor is now ready to consume messages sent from any number of calling threads.
