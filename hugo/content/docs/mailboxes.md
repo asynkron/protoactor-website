@@ -24,20 +24,20 @@ By default, an unbounded mailbox is used, this means any number of messages can 
 
 To use a specific mailbox implementation, you can customize the Props:
 
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
+
 ```csharp
 var props = Actor.FromProducer(() => new MyActor())
     .WithMailbox(() => UnboundedMailbox.Create());
 ```
-{{</ tab >}}
-{{< tab "Go" >}}
+
+#### Go
+
 ```go
 props := actor.PropsFromProducer(MyActorProducer,
     actor.WithMailbox(MyMailboxProducer))
 ```
-{{</ tab >}}
-{{</ tabs >}}
+
 
 ## Unbounded Mailbox
 
@@ -71,20 +71,20 @@ sequenceDiagram
 
 To use the batching mailbox with an actor:
 
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
+
 ```csharp
 var props = Props.FromProducer(() => new MyActor())
     .WithMailbox(() => new BatchingMailbox(100));
 ```
-{{</ tab >}}
-{{< tab "Go" >}}
+
+#### Go
+
 ```go
 props := actor.PropsFromProducer(func() actor.Actor { return &MyActor{} },
     actor.WithMailbox(func() actor.Mailbox { return mailbox.NewBatching(100) }))
 ```
-{{</ tab >}}
-{{</ tabs >}}
+
 
 The same mailbox can also be used outside actors for scenarios such as log aggregation or batched
 database writes.

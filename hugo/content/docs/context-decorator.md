@@ -18,8 +18,8 @@ graph LR
     Sender --> Decorator --> Actor
 ```
 
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
+
 ```csharp
 public class MyDecorator : IContextDecorator
 {
@@ -29,8 +29,9 @@ public class MyDecorator : IContextDecorator
 var props = Props.FromProducer(() => new MyActor())
     .WithContextDecorator(new MyDecorator());
 ```
-{{</ tab >}}
-{{< tab "Go" >}}
+
+#### Go
+
 ```go
 func myDecorator(next actor.ContextDecoratorFunc) actor.ContextDecoratorFunc {
     return func(ctx actor.Context) actor.Context {
@@ -41,8 +42,7 @@ func myDecorator(next actor.ContextDecoratorFunc) actor.ContextDecoratorFunc {
 props := actor.PropsFromProducer(func() actor.Actor { return &myActor{} },
     actor.WithContextDecorator(myDecorator))
 ```
-{{</ tab >}}
-{{</ tabs >}}
+
 
 ## Actor Extensions
 
@@ -59,16 +59,17 @@ graph TD
     System[ActorSystem] --> Ext[Extension]
 ```
 
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
+
 ```csharp
 public class MyExtension : IActorSystemExtension { }
 
 var system = new ActorSystem();
 system.Extensions.Register(new MyExtension());
 ```
-{{</ tab >}}
-{{< tab "Go" >}}
+
+#### Go
+
 ```go
 import "github.com/asynkron/protoactor-go/extensions"
 
@@ -83,8 +84,7 @@ func (*myExtension) ExtensionID() extensions.ExtensionID {
 system := actor.NewActorSystem()
 system.Extensions.Register(&myExtension{})
 ```
-{{</ tab >}}
-{{</ tabs >}}
+
 
 ## Conceptual overview
 

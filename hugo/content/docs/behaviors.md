@@ -145,8 +145,8 @@ private Task Smashed(IContext context)
 
 This example shows how to use the `BecomeStacked` and `UnbecomeStacked` methods. When the actor calls `UnbecomeStacked` in `Receive2` it reverts back to `Receive`.
 
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
+
 
 ```csharp
 public Task Receive(IContext context)
@@ -160,8 +160,9 @@ public Task Receive2(IContext context)
 }
 ```
 
-{{</ tab >}}
-{{< tab "Go" >}}
+
+#### Go
+
 
 ```go
 func (state *BecomeActor) Receive(context actor.Context) {
@@ -173,5 +174,4 @@ func (state *BecomeActor) Receive2(context actor.Context) {
 }
 ```
 
-{{</ tab >}}
-{{</ tabs >}}
+

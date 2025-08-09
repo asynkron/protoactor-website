@@ -34,19 +34,30 @@ Proto.Actor provides two forms of Context, a `RootContext` and an `ActorContext`
 
 Provides the ability to spawn new actors given a `Props` parameter.
 
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
+
 ```csharp
     var system = new ActorSystem();
     var props = Props.FromProducer(() => new GreetingActor());
     var pid = system.Root.Spawn(props);
 
-    // other actor spawning methods:
-    // system.Root.SpawnNamed(props, name: "greeter");
-    // system.Root.SpawnPrefix(props, prefix: "greet-");
+      // other actor spawning methods:
+      // system.Root.SpawnNamed(props, name: "greeter");
+      // system.Root.SpawnPrefix(props, prefix: "greet-");
+  ```
+
+#### Go
+
+```go
+system := actor.NewActorSystem()
+props := actor.PropsFromProducer(func() actor.Actor { return &GreetingActor{} })
+pid := system.Root.Spawn(props)
+
+// other actor spawning methods:
+// system.Root.SpawnNamed(props, "greeter")
+// system.Root.SpawnPrefix(props, "greet-")
 ```
-{{</ tab >}}
-{{</ tabs >}}
+
 
 ### Stopper
 
@@ -54,8 +65,8 @@ Provides the ability to spawn new actors given a `Props` parameter.
 
 Provides the ability to immediately stop an actor, or instruct it to stop after processing current mailbox messages.
 
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
+
 ```csharp
     // stop immediately
     context.Stop(pid);
@@ -63,10 +74,21 @@ Provides the ability to immediately stop an actor, or instruct it to stop after 
 
     // stop after processing current user messages in mailbox
     context.Poison(pid);
-    await context.PoisonAsync(pid);
+      await context.PoisonAsync(pid);
+  ```
+
+#### Go
+
+```go
+// stop immediately
+context.Stop(pid)
+// context.StopFuture(pid)
+
+// stop after processing current user messages in mailbox
+context.Poison(pid)
+// context.PoisonFuture(pid)
 ```
-{{</ tab >}}
-{{</ tabs >}}
+
 
 ### Info
 
@@ -80,19 +102,29 @@ Provides access to information about the context such as the current actor's `Pa
 
 Provides the ability to `Send` fire-and-forget style messages and `Request` responses from an actor asynchronously.
 
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
+
 ```csharp
     var message = new MyMessage();
     var request = new MyRequest();
 
     context.Send(pid, message);
     
-    var response = context.Request<MyResponse>(pid, request);
+      var response = context.Request<MyResponse>(pid, request);
 
+  ```
+
+#### Go
+
+```go
+message := &MyMessage{}
+request := &MyRequest{}
+
+context.Send(pid, message)
+
+response, _ := context.RequestFuture(pid, request, 3*time.Second).Result()
 ```
-{{</ tab >}}
-{{</ tabs >}}
+
 
 ### Receiver
 
@@ -100,13 +132,18 @@ Provides the ability to `Send` fire-and-forget style messages and `Request` resp
 
 Provides the ability to `Receive` messages wrapped in a `MessageEnvelope`
 
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
+
 ```csharp
     await context.Receive(envelope);
 ```
-{{</ tab >}}
-{{</ tabs >}}
+
+#### Go
+
+```go
+context.Receive(envelope)
+```
+
 
 ### Invoker
 

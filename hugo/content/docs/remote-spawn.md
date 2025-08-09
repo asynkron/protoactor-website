@@ -20,8 +20,8 @@ This is essentially a dictionary mapping from string, the Kind, to a `Props` whi
 
 ### Registration
 
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
+
 
 ```csharp
 var config = GrpcCoreRemoteConfig
@@ -30,80 +30,80 @@ var config = GrpcCoreRemoteConfig
     .WithRemoteKind("echo", Props.FromProducer(() => new EchoActor()));
 ```
 
-{{</ tab >}}
-{{< tab "Go" >}}
+
+#### Go
+
 
 ```go
 var config = remote.Configure(advertisedHost, 12000)
     .WithRemoteKind("echo", actor.FromProducer(someProducer));
 ```
 
-{{</ tab >}}
-{{</ tabs >}}
+
 
 ### Client Usage
 
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
+
 
 ```csharp
 var result = await system.Remote().SpawnNamedAsync("remoteaddress", "actor name", "actor kind", timeout);
 var pid = result.Pid;
 ```
 
-{{</ tab >}}
-{{< tab "Go" >}}
+
+#### Go
+
 
 ```go
 pid := remoter.Spawn("remoteaddress", "actor name", "actor kind")
 ```
 
-{{</ tab >}}
-{{</ tabs >}}
+
 
 ## Remote Spawn using Proto.Cluster
 
 ### Registration
 
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
+
 
 ```csharp
 var config = ClusterConfig.Setup(....)
     .WithClusterKind("echo", Props.FromProducer(() => new EchoActor()));
 ```
 
-{{</ tab >}}
-{{< tab "Go" >}}
+
+#### Go
+
 
 ```go
 var config = cluster.Configure(...)
     .WithClusterKind("echo", actor.FromProducer(someProducer));
 ```
 
-{{</ tab >}}
-{{</ tabs >}}
+
 
 ### Client Usage
 
 Note how we are not touching any `PID` here, instead all the resolution of virtual actors is hidden from the developer behind the cluster API.
 
-{{< tabs >}}
-{{< tab "C#" >}}
+#### .NET
+
 
 ```csharp
 var res = cluster.RequestAsync("MyActor","MyKind", msg, CancellationTokens.WithTimeout(2000));
 ```
 
-{{</ tab >}}
-{{< tab "Go" >}}
+
+#### Go
+
 
 ```go
 res := cluster.Call("MyActor","MyKind", msg)
 ```
 
-{{</ tab >}}
-{{</ tabs >}}
+
 
 ## Why the separation of the two?
 
