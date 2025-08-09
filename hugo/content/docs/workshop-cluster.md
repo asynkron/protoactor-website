@@ -1,6 +1,6 @@
 # Workshop: Proto.Cluster - Distributed systems made easy
 
-Learn how to leverage programming abstractions such as actors, grains, persistence, and cluster pub-sub to built highly scalable, real-time, systems.
+Learn how to leverage programming abstractions such as actors, grains, persistence, and cluster pub-sub to build highly scalable, real-time systems.
 
 #### Agenda
 

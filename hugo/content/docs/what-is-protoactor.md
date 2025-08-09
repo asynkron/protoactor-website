@@ -8,9 +8,9 @@ tags: [protoactor, docs]
 # What is Proto.Actor?
 Proto.Actor is a **Next generation Actor Model framework**.
 
-Over the last few years we have seen two competing approaches of actors emerging.
-First we have the classical Erlang/Classic Akka style actors, and later came the Microsoft Orleans style *"virtual actors"* or *"Grains"*.
-These two ways both yield different benefits and drawbacks.
+Over the last few years, two competing approaches to actors have emerged.
+First are the classical Erlang/Classic Akka-style actors; later came the Microsoft Orleans-style *"virtual actors"* or *"grains"*.
+Each approach offers different benefits and drawbacks.
 
 Proto.Actor unifies both of these two ways of working under a common framework.
 

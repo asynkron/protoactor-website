@@ -1,8 +1,8 @@
 # Why use the actor model
 
-So, why should we use the actor model in our application? Using an actor model makes it easy to create scalable, competitive, high throughput, and low latency applications.
+Why should we use the actor model in our application? The actor model simplifies building scalable, high-throughput, low-latency applications.
 
-Therefore, if you need to create an application that has one or more of these properties, an actor model may be the right choice for you.
+If you need an application with any of these properties, the actor model may be the right choice.
 
 So let's go deeper into why we may need to use the actor model and Proto.Actor platform in our application.
 

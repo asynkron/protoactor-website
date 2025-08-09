@@ -1,8 +1,8 @@
-# Lesson 7: What's an actor in Proto.Actor.
+# Lesson 7: What is an Actor in Proto.Actor
 
-In this lesson, we will learn more about the main features of actors. And so let's get started. First of all, I would like to note that the actor model is well-described by one phrase. **Everything is an actor**.
+In this lesson we explore the main features of actors. The actor model is well summarized by the phrase **Everything is an actor**.
 
-It means that the actors are the fundamental, primitive computing units that do all the work in our system or other words, the actors are the building blocks of our system.
+This means actors are the fundamental computing units that do all the work in our system; in other words, they are its building blocks.
 
 In an application, actors must perform small, well-defined tasks, so our application consists of multiple actors, each of which performs a strictly defined task ([Single-responsibility principle](https://en.wikipedia.org/wiki/Single-responsibility_principle)). 
 

@@ -4,7 +4,7 @@ title: Process ID
 
 # PID
 
-When you spawn an actor you don't get a direct reference to it. Instead, you get a `PID` (short for process ID) which is a serializable identifier that is used to send messages to the actor's mailbox. A benefit of this is that the `PID` can easily and cheaply be serialized and sent over the wire, allowing for actors to communicate remotely.
+When you spawn an actor, you don't receive a direct reference to it. Instead, you get a `PID` (short for process ID), a serializable identifier used to send messages to the actor's mailbox. This `PID` can be easily serialized and sent over the wire, enabling actors to communicate remotely.
 
 ## Overview
 

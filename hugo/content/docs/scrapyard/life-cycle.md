@@ -1,12 +1,12 @@
 # Lesson 1: Actor Lifecycle.
 
-Let's start studying this module by considering the stages of the actor's life cycle.
+We begin this module by reviewing the stages of an actor's life cycle.
 
 ### Stage № 1 Starting
 
-At the start stage, the actor initialized in our actor system. In other words, the instance of our actor is created, and a link to it saved in our actor system.
+At the starting stage, the actor is initialized within our actor system. In other words, an instance is created and a link to it is saved in the system.
 
-After the actor was created, the actor system will send to our actor a system message Started which will cause the method `ProcessMessageAsync()` to be invoked. This allows you to process the start stage of the actor.
+After the actor is created, the actor system sends a `Started` system message, which triggers the `ProcessMessageAsync()` method. This allows you to handle the actor's start stage.
 
 ### Stage № 2 Receiving Messages.
 

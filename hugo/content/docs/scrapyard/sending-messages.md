@@ -1,10 +1,10 @@
 # Lesson 4: Types of Message Sending.
 
-In Proto.Actor there are several ways to send messages. 
+Proto.Actor provides several ways to send messages.
 
-The first way is to use the `Send` method. This method is used when one actor wants to send a message to another actor and, not waiting to get a response from them, continue their work.
+The first method is `Send`, used when one actor sends a message to another and continues working without waiting for a response.
 
-As opposed to the `Send` method, Proto.Actor provides the `RequestAsync` method. This method, after sending a message, suspends the execution of the current actor until a response is received.
+In contrast to `Send`, the `RequestAsync` method suspends the current actor after sending a message until a response is received.
 
 And finally, the third method is the `Forward` method. This method is used when it is necessary to forward a received message to another actor. This method is usually used when you want to send root messages in the system.
 

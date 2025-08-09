@@ -2,11 +2,11 @@
 title: Futures
 ---
 
-This article shows usages of `actor.Future`.
+This article demonstrates how to use `actor.Future`.
 
 ## Future.Wait/Future.Result
-`Future.Wait()` or `Future.Result()` wait until the response comes or the execution times out.
-Since the actor blocks, incoming messages stuck in the mailbox.
+`Future.Wait()` or `Future.Result()` wait until a response arrives or the execution times out.
+Because the actor blocks, incoming messages are stuck in the mailbox.
 
 <img src="https://raw.githubusercontent.com/oklahomer/protoactor-go-future-example/master/docs/wait/timeline.png" style="max-width: 100%;">
 

@@ -7,7 +7,7 @@ tags: [protoactor, docs]
 
 # Proto.Actor Framework
 
-## TLDR; Just show me the code!
+## TL;DR: Just show me the code!
 
 - [Hello World](hello-world)
 - [Getting Started](getting-started)
@@ -43,7 +43,7 @@ tags: [protoactor, docs]
     - [ReenterAfter](reenter.md) - How do I handle reentrancy in actors?
   - [Mailboxes](mailboxes.md) - How does the actor process messages?
   - [Deadletter](deadletter.md) - What happens to lost messages?
-  - [Router](routers.md) - How do I forward messages to to pools or groups of workers?
+  - [Router](routers.md) - How do I forward messages to pools or groups of workers?
   - [Eventstream](eventstream.md) - How are infrastructure events managed?
   - [Behaviors](behaviors.md) - How do I build state machines with actors?
   - [Middleware](middleware.md) - How do I intercept or observe messages between actors?

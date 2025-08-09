@@ -9,18 +9,18 @@ tags: [protoactor, docs]
 
 ### Virtual Actors with locality to Kafka consumer
 
-Local Affinity placement enables us to place virtual actors in the locality to some other resource.
-In this example, we place the virtual actors close to an Apache Kafka consumer. The actors on the same cluster member, will only be actors that consume messages from the partitions of this specific Kafka consumer.
+Local affinity placement lets us position virtual actors close to other resources.
+In this example, virtual actors are placed near an Apache Kafka consumer. The actors on the same cluster member consume messages only from the partitions handled by that consumer.
 
 ![Actor](images/local-affinity-1.png)
 
 ### Scale up or down
 
-In case there is a scale up or down scenario, some of these actors will now be on the original node where they first spawned.
-This means that the communication from the Proto.Kafka forwarder will have to do remote communication with those actors.
+If the cluster scales up or down, some actors may no longer reside on the node where they first spawned.
+This means the communication from the Proto.Kafka forwarder will have to use remote communication with those actors.
 
 Here is where gradual migration comes into play.
-The actors will check if the sender of a message is on a remote node, and if so, ad a random, user-defined interval, start to shut themselves down and eventually respawn on the correct node.
+Actors check whether the message sender is on a remote node and, at a random user-defined interval, shut themselves down and eventually respawn on the correct node.
 
 ![Actor](images/local-affinity-2.png)
 

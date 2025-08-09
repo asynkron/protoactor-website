@@ -5,7 +5,7 @@ title: Getting started
 
 # Getting started with Proto.Actor
 
-This tutorial is intended to give an introduction to using Proto.Actor by creating a simple greeter actor using C#.
+This tutorial introduces Proto.Actor by guiding you through the creation of a simple C# greeter actor.
 
 ![getting started](images/Getting-Started-3-blue.png)
 

@@ -6,16 +6,12 @@ tags: [protoactor, docs]
 ---
 # Fault Tolerance
 
-Each actor is the supervisor of its children, and as such each actor defines fault handling supervisor strategy.
-This strategy cannot be changed afterwards as it is an integral part of the
-actor system's structure.
+Each actor is the supervisor of its children and defines a fault-handling supervisor strategy.
+This strategy cannot be changed afterward, as it is an integral part of the actor system's structure.
 
 ## Fault Handling in Practice
 
-First, let us look at a sample that illustrates one way to handle data store errors,
-which is a typical source of failure in real world applications. Of course it depends
-on the actual application what is possible to do when the data store is unavailable,
-but in this sample we use a best effort re-connect approach.
+First, let's look at a sample that illustrates one way to handle data store errors—a common source of failure in real-world applications. The best approach depends on the application, but in this sample we use a best-effort reconnect.
 
 Read the following source code. The inlined comments explain the different pieces of
 the fault handling and why they are added. It is also highly recommended to run this
