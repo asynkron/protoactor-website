@@ -33,8 +33,8 @@ var props = Actor.FromProducer(() => new MyActor())
 {{</ tab >}}
 {{< tab "Go" >}}
 ```go
-props := actor.FromProducer(MyActorProducer)
-    .WithMailbox(MyMailboxProducer)
+props := actor.PropsFromProducer(MyActorProducer,
+    actor.WithMailbox(MyMailboxProducer))
 ```
 {{</ tab >}}
 {{</ tabs >}}

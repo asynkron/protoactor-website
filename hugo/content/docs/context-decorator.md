@@ -32,14 +32,14 @@ var props = Props.FromProducer(() => new MyActor())
 {{</ tab >}}
 {{< tab "Go" >}}
 ```go
-type myDecorator struct{}
-
-func (d myDecorator) Decorate(ctx actor.Context) actor.Context {
-    return &myContext{Context: ctx}
+func myDecorator(next actor.ContextDecoratorFunc) actor.ContextDecoratorFunc {
+    return func(ctx actor.Context) actor.Context {
+        return &myContext{Context: next(ctx)}
+    }
 }
 
 props := actor.PropsFromProducer(func() actor.Actor { return &myActor{} },
-    actor.WithContextDecorator(myDecorator{}))
+    actor.WithContextDecorator(myDecorator))
 ```
 {{</ tab >}}
 {{</ tabs >}}
@@ -70,9 +70,15 @@ system.Extensions.Register(new MyExtension());
 {{</ tab >}}
 {{< tab "Go" >}}
 ```go
+import "github.com/asynkron/protoactor-go/extensions"
+
+var extID = extensions.NextExtensionID()
+
 type myExtension struct{}
 
-func (m *myExtension) Start(ctx actor.SystemContext) {}
+func (*myExtension) ExtensionID() extensions.ExtensionID {
+    return extID
+}
 
 system := actor.NewActorSystem()
 system.Extensions.Register(&myExtension{})
