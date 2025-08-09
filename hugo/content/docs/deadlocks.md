@@ -11,7 +11,12 @@ It's entirely possible to create a deadlock by awaiting actor-to-actor or actor-
 
 One situation where a deadlock may occur is when actor initiates requests to itself and awaits the result. In this case the request message cannot be processed, since the processing is blocked by awaiting.
 
-![Actor deadlock](images/actor-deadlock.png)
+```mermaid
+flowchart LR;
+
+    A[Actor] --request and await--> A;
+
+```
 
 Requesting to self in order to get some result back is rarely a good idea. In most cases accessing the actor's state directly is a better solution.
 
