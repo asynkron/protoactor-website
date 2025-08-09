@@ -265,9 +265,18 @@ Router----r3-->Routee3
 
 `ConsistentHash` can be very useful when dealing with **Commands** in the sense of [**CQRS**](http://en.wikipedia.org/wiki/Command%E2%80%93query_separation#Command_Query_Responsibility_Segregation) or [**Domain Driven Design**].
 
-For example, let's assume we have the following incoming sequence of **"Customer Commands"**:
+For example, consider a set of customer commands:
 
-//TODO
+```cs
+public record CreateCustomer(string Id, string Name);
+public record UpdateAddress(string Id, string Street);
+
+context.Send(router, new CreateCustomer("42", "Alice"));
+context.Send(router, new UpdateAddress("42", "7 Main St"));
+context.Send(router, new UpdateAddress("17", "99 Broadway"));
+```
+
+With a consistent hash router all commands for customer `42` will reach the same routee, ensuring that only one actor processes that customer's state.
 
 ## Specially Handled Messages
 
@@ -275,13 +284,15 @@ Most messages sent to router will be forwarded according to router's routing log
 
 ### Broadcast Messages
 
-A `Broadcast` message can be used to send message to **all** routees of a router. When a router receives `Broadcast` message, it will broadcast that message's **payload** to all routees, no matter how that router normally handles its messages.
+A `RouterBroadcastMessage` can be used to send a message to **all** routees of a router. When the router receives this message, it broadcasts the payload to every routee regardless of its normal routing logic.
 
 Here is an example of how to send a message to every routee of a router.
 
-//TODO
+```cs
+context.Send(router, new RouterBroadcastMessage(new Ping()));
+```
 
-In this example, the router received the `Broadcast` message, extracted its payload (`Hello, workers`), and then dispatched it to all its routees. It is up to each routee actor to handle the payload.
+In this example, the router receives the `RouterBroadcastMessage`, extracts the `Ping` payload and dispatches it to all routees. It is up to each routee actor to handle the payload.
 
 ## Advanced
 
@@ -294,5 +305,4 @@ A normal actor can be used for routing messages, but an actor's single-threaded 
 The cost to this is, of course, that the internals of routing code are more complicated than if routers were implemented with normal actors. Fortunately all of this complexity is invisible to consumers of the routing API. However, it is something to be aware of when implementing your own routers.
 
 ### Router Logic
-
-//TODO
+When implementing a custom router you supply a routing function that selects a routee for each message. The function can look at message content or other metadata to decide where to send it. Routees can also be added or removed dynamically if your routing logic supports it.
