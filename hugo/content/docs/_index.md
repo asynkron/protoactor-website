@@ -32,6 +32,11 @@ tags: [protoactor, docs]
 - [Message Delivery Reliability](durability.md)
 - [Actors vs Queues and Logs](actors-vs-queues.md) - When to pick real-time actors vs durable messaging
 - [Backpressure and Flow Control](backpressure.md)
+- [Consistency Models](consistency-models.md)
+- [CAP Theorem](cap-theorem.md)
+- [Consensus and Leader Election](consensus.md)
+- [Service Discovery](service-discovery.md)
+- [Sharding and Data Partitioning](sharding-and-partitioning.md)
 
 ## Building Blocks
 
@@ -118,6 +123,7 @@ tags: [protoactor, docs]
 - [Placement Strategies](placement-strategies.md)
 - [Coordinated Persistence](coordinated-persistence.md)
 - [Batched Persistence](batched-persistence.md)
+- [Circuit Breaker Pattern](circuit-breaker.md)
 
 ## Additional Information
 

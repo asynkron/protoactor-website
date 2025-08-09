@@ -11,13 +11,7 @@ This strategy cannot be changed afterward, as it is an integral part of the acto
 
 ## Fault Handling in Practice
 
-First, let's look at a sample that illustrates one way to handle data store errors—a common source of failure in real-world applications. The best approach depends on the application, but in this sample we use a best-effort reconnect.
-
-Read the following source code. The inlined comments explain the different pieces of
-the fault handling and why they are added. It is also highly recommended to run this
-sample as it is easy to follow the log output to understand what is happening in runtime.
-
-!!!TODO: Port sample code
+Data store errors are a common source of failure in real-world applications. A typical approach is to catch exceptions and use `ReenterAfter` to retry the operation after a delay. The exact strategy depends on the application's tolerance for duplicates and latency.
 
 ## Creating a Supervisor Strategy
 
@@ -26,7 +20,16 @@ in more depth.
 
 For the sake of demonstration let us consider the following strategy:
 
-!!!TODO: Port sample code
+```cs
+public override SupervisorStrategy SupervisorStrategy => new OneForOneStrategy(
+    (exception) => exception switch
+    {
+        SqlException => SupervisorDirective.Restart,
+        _ => SupervisorDirective.Stop
+    },
+    10,
+    TimeSpan.FromMinutes(1));
+```
 
 We have chosen a few well-known exception types in order to demonstrate the
 application of the fault handling directives described in [Supervision](supervision.md).
