@@ -14,3 +14,19 @@ These notes capture how diagrams are typically authored in this repository.
 - Use dashed lines or `linkStyle` to suppress unused arrows when needed.
 
 These conventions are derived from existing documentation and should guide future diagram additions.
+
+Here is a valid diagram with correct styling:
+
+```mermaid
+graph LR
+    sender(Main)
+    class sender green
+    pid(PID)
+    class pid light-blue
+    msg(Hello)
+    class msg message
+    receiver((HelloWorld<br>Actor))
+
+    sender --> msg
+    msg --- pid --> receiver
+```
