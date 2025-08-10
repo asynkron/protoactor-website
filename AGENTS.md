@@ -5,6 +5,7 @@ These notes capture how diagrams are typically authored in this repository.
 - Use **Mermaid** for all diagrams.
 - Choose `graph LR` for left-to-right flows or `graph TB` for top-to-bottom layouts.
 - Represent actors as double‑circled nodes, e.g. `actor((Actor Name))`.
+- Avoid styling actors with color, unless it´s very important to highlight a specific actor.
 - Represent PIDs with simple nodes labeled `PID` and color them using `class pid light-blue`.
 - Represent messages as nodes with the `message` class, e.g. `msg(Hello)\nclass msg message`.
 - Apply color classes such as `green`, `blue`, `light-blue`, `yellow`, `red`, `gray`, or `comment` to convey meaning.
