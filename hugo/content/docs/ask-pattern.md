@@ -38,7 +38,7 @@ stay loosely coupled and can react when they are ready.
 flowchart LR
     producer((Producer)) -- emits --> evt(StateChanged)
     evt --> consumer((Consumer))
-    class evt message green
+
 ```
 
 ```csharp
@@ -74,7 +74,6 @@ flowchart LR
     req1 --> B((Actor B))
     B --> req2(Request)
     req2 --> A
-    class req1,req2 message yellow
 ```
 If Actor A awaits a reply from Actor B while B simultaneously awaits a reply from A, neither actor can proceed. Reentrancy or redesigning the communication flow breaks the cycle.
 
