@@ -23,22 +23,6 @@ No matter if they are close or far away.
 ##### Using a PID to communicate with a remote actor:
 ![Remote Actor](images/actor-remote.png)
 
-A PID uniquely identifies an actor. The same PID can be used from any machine to reach that actor:
-
-```mermaid
-graph LR
-    pid(PID)
-    class pid light-blue
-    network(Network)
-    class network message
-
-    localSender((Actor))
-    remoteSender((Actor))
-    target((Actor))
-
-    localSender --- pid --> target
-    remoteSender --- pid --> network --> target
-```
 
 ## Ways in which Transparency is Broken
 
