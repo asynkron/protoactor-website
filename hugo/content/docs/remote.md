@@ -124,7 +124,71 @@ var remoteConfig =
     );
 ```
 
-You can read more about gPRC compression [here](grpc-compression.md).
+```go
+package main
+
+import (
+    "github.com/asynkron/protoactor-go/actor"
+    remote "github.com/asynkron/protoactor-go/remote"
+    "google.golang.org/grpc"
+    "google.golang.org/grpc/encoding/gzip"
+)
+
+func main() {
+    _ = gzip.Name // register gzip
+
+    cfg := remote.Configure("127.0.0.1", 8080,
+        remote.WithServerOptions(grpc.RPCCompressor(grpc.NewGZIPCompressor())),
+        remote.WithDialOptions(grpc.WithDefaultCallOptions(grpc.UseCompressor(gzip.Name))),
+    )
+
+    remote.NewRemote(actor.NewActorSystem(), cfg).Start()
+}
+```
+
+You can read more about gRPC compression [here](grpc-compression.md).
+
+### Configure TLS
+
+Proto.Remote can also secure connections with TLS certificates.
+
+```csharp
+var certificate = new X509Certificate2("localhost.pfx", "password");
+var remoteConfig = GrpcNetRemoteConfig.BindTo(advertisedHost) with
+{
+    UseHttps = true,
+    ConfigureKestrel = options =>
+    {
+        options.Protocols = HttpProtocols.Http2;
+        options.UseHttps(certificate);
+    }
+};
+```
+
+```go
+package main
+
+import (
+    "github.com/asynkron/protoactor-go/actor"
+    remote "github.com/asynkron/protoactor-go/remote"
+    "google.golang.org/grpc"
+    "google.golang.org/grpc/credentials"
+)
+
+func main() {
+    serverCreds, _ := credentials.NewServerTLSFromFile("server.crt", "server.key")
+    clientCreds, _ := credentials.NewClientTLSFromFile("server.crt", "")
+
+    cfg := remote.Configure("127.0.0.1", 8080,
+        remote.WithServerOptions(grpc.Creds(serverCreds)),
+        remote.WithDialOptions(grpc.WithTransportCredentials(clientCreds)),
+    )
+
+    remote.NewRemote(actor.NewActorSystem(), cfg).Start()
+}
+```
+
+For a more complete example see [gRPC TLS](grpc-tls.md).
 
 ## Usage
 
