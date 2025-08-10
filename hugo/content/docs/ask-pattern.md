@@ -40,8 +40,6 @@ graph LR
     consumer((Consumer))
     evt(StateChanged)
 
-    class producer green
-    class consumer green
     class evt message
 
     producer -- emits --> evt
@@ -83,8 +81,6 @@ graph LR
     req1(Request)
     req2(Request)
 
-    class A green
-    class B green
     class req1 message
     class req2 message
 
