@@ -34,7 +34,7 @@ tags: [protoactor, docs]
 - [Location Transparency](location-transparency.md)
 - [Message Delivery Reliability](durability.md)
 - [Message Patterns](message-patterns.md)
-- [Actors vs Queues and Logs](actors-vs-queues.md) - When to pick real-time actors vs durable messaging
+- [Actors vs Queues and Logs](actors-vs-queues.md) - Comparison and decision guide for messaging primitives
 - [Backpressure and Flow Control](backpressure.md)
 - [Consistency Models](consistency-models.md)
 - [CAP Theorem](cap-theorem.md)
@@ -105,6 +105,7 @@ tags: [protoactor, docs]
 - [Metrics](metrics.md)
 - [Logging](logging.md)
 - [Health Checks](health-checks.md)
+- [Observability Cookbook](observability-cookbook.md)
 
 ## Extension models
 
@@ -128,6 +129,7 @@ tags: [protoactor, docs]
 - [Coordinated Persistence](coordinated-persistence.md)
 - [Batched Persistence](persistence.md#batched-persistence)
 - [Circuit Breaker Pattern](circuit-breaker.md)
+- [Supervisor Strategy Recipes](supervisor-strategy-recipes.md)
 
 ## Additional Information
 
