@@ -23,7 +23,22 @@ No matter if they are close or far away.
 ##### Using a PID to communicate with a remote actor:
 ![Remote Actor](images/actor-remote.png)
 
+The same PID can route messages to both local and remote actors:
 
+```mermaid
+graph LR
+    pid(PID)
+    class pid light-blue
+    network(Network)
+    class network message
+
+    sender((Actor))
+    local((Actor))
+    remote((Actor))
+
+    sender --- pid --> local
+    sender --- pid --> network --> remote
+```
 
 ## Ways in which Transparency is Broken
 
