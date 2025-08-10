@@ -23,3 +23,43 @@ Proto.Actor offers tools to help implement idempotency:
 - [Durability](durability.md) explains delivery guarantees and why duplicate messages appear
 
 Combine these techniques with [Reentrancy](reenter.md) for non-blocking retries.
+
+## .NET example
+
+```csharp
+public class TransferActor : IActor
+{
+    private readonly HashSet<string> _seen = new();
+    public Task ReceiveAsync(IContext ctx)
+    {
+        switch (ctx.Message)
+        {
+            case Transfer cmd when _seen.Add(cmd.Id):
+                // unique key in DB prevents double credit
+                database.Execute("INSERT INTO transfers(id, amount) VALUES(@Id,@Amount)", cmd);
+                break;
+        }
+        return Task.CompletedTask;
+    }
+}
+```
+
+## Go example
+
+```go
+type transferActor struct {
+    seen map[string]struct{}
+}
+
+func (a *transferActor) Receive(ctx actor.Context) {
+    switch msg := ctx.Message().(type) {
+    case *Transfer:
+        if _, ok := a.seen[msg.Id]; ok {
+            return // already processed
+        }
+        a.seen[msg.Id] = struct{}{}
+        // UPSERT guarantees a single effect
+        db.Exec(`INSERT INTO transfers(id, amount) VALUES(?, ?) ON CONFLICT DO NOTHING`, msg.Id, msg.Amount)
+    }
+}
+```
