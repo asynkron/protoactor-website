@@ -7,6 +7,18 @@ title: Receive timeout
 
 The `Context.SetReceiveTimeout` defines the inactivity timeout after which the sending of a `ReceiveTimeout` message is triggered. When specified, the Receive function should be able to handle an `ReceiveTimeout` message.
 
+```mermaid
+sequenceDiagram
+    participant S as Sender
+    participant A as Actor
+    participant T as Timer
+
+    A->>T: SetReceiveTimeout
+    S->>A: Message
+    A->>T: Reset timer
+    T-->>A: ReceiveTimeout
+```
+
 {{< note >}}
 Please note that the receive timeout might fire and enqueue the ReceiveTimeout message right after another message was enqueued; hence it is not guaranteed that upon reception of the receive timeout there must have been an idle period beforehand as configured via this method.
 {{</ note >}}

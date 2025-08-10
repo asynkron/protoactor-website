@@ -9,6 +9,38 @@ tags: [protoactor, docs]
 
 Proto.Actor provides two forms of Context, a `RootContext` and an `ActorContext`. These contexts are composed of various functionality provided by distinct facets. Both types of context implement `Spawner`, `Stopper`, `Info` and `Sender` facets, while the `ActorContext` implements additional facets.
 
+```mermaid
+graph LR
+    root[RootContext]
+    actor[ActorContext]
+
+    subgraph "Shared Facets"
+        spawner[Spawner]
+        stopper[Stopper]
+        info[Info]
+        sender[Sender]
+    end
+
+    subgraph "ActorContext Only"
+        receiver[Receiver]
+        invoker[Invoker]
+        supervisor[Supervisor]
+    end
+
+    root --> spawner
+    root --> stopper
+    root --> info
+    root --> sender
+
+    actor --> spawner
+    actor --> stopper
+    actor --> info
+    actor --> sender
+    actor --> receiver
+    actor --> invoker
+    actor --> supervisor
+```
+
 ## Root Context Facets
 
   - [Spawner](#spawner)
