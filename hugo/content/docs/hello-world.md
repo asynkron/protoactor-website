@@ -137,6 +137,20 @@ pid := system.Root.Spawn(props)
 
 Finally, let's send a `Hello` message to our `HelloWorldActor`:
 
+```mermaid
+graph LR
+    sender(Main)
+    class sender green
+    pid(PID)
+    class pid light-blue
+    msg(Hello)
+    class msg message
+    receiver((HelloWorld<br>Actor))
+
+    sender --> msg
+    msg --- pid --> receiver
+```
+
 #### .NET
 
 ```csharp

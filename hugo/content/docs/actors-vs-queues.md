@@ -9,6 +9,19 @@ tags: [actors, queues, logs]
 
 Actors excel at managing in-memory state and orchestrating concurrent work. Their mailboxes are ephemeral and rely on best-effort delivery. If a process crashes, in-flight messages may be lost. For workflows that demand durable delivery, ordering or exactly-once processing, a dedicated queue or log is the safer option.
 
+The diagram below contrasts direct actor messaging with using a persistent queue or log.
+
+```mermaid
+graph LR
+    producer((Producer<br>Actor))
+    consumer((Consumer<br>Actor))
+    queue[(Queue/Log)]
+    class queue yellow
+
+    producer --> consumer
+    producer --- queue --> consumer
+```
+
 ## Real-time vs durable messaging
 
 Actors pass messages directly in memory and can react in microseconds. This makes them ideal for real-time workloads such as multiplayer games or IoT device coordination where even small delays are unacceptable. Queues and logs persist to disk and replicate data, adding milliseconds of latency. They are "realtime-ish": great for reliability, but they cannot meet ultra low-latency requirements.
