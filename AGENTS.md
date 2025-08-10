@@ -9,7 +9,8 @@ These notes capture how diagrams are typically authored in this repository.
 - Represent messages as nodes with the `message` class, e.g. `msg(Hello)\nclass msg message`.
 - Apply color classes such as `green`, `blue`, `light-blue`, `yellow`, `red`, `gray`, or `comment` to convey meaning.
 - Group related items with `subgraph` blocks and use `style` directives when boundaries need highlighting.
-- Use `sequenceDiagram` for request–response or time-ordered interactions; use flowcharts (`graph`/`flowchart`) for structural or topology diagrams.
+- Use `sequenceDiagram` for request–response or time-ordered interactions; use flowcharts (`graph`) for structural or topology diagrams (do NOT use `flowchart`)
+- make sure to use valid syntax for styling elements in graph diagrams
 - Use dashed lines or `linkStyle` to suppress unused arrows when needed.
 
 These conventions are derived from existing documentation and should guide future diagram additions.
