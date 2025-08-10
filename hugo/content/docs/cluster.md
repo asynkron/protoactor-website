@@ -202,7 +202,8 @@ Here are some examples of cluster identities:
 
 If you're new to the concept of virtual actors / grains, it's highly recommended that you take a look at a tutorial:
 
-[Getting Started With Grains / Virtual Actors (.NET)](cluster/getting-started-net.md)
+- [Getting Started With Grains / Virtual Actors (.NET)](cluster/getting-started-net.md)
+- [Getting Started With Grains / Virtual Actors (Go)](cluster/getting-started-go.md)
 
 ## Proto.Cluster components
 

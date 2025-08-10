@@ -1,0 +1,244 @@
+---
+layout: docs.hbs
+title: Getting Started With Grains / Virtual Actors (Go)
+---
+
+# Getting Started With Grains / Virtual Actors (Go)
+
+In this tutorial we will:
+
+1. Model smart bulbs and a smart house using virtual actors/grains.
+2. Run these grains in a cluster of members (nodes).
+3. Send messages to and between these grains.
+4. Host everything in a simple Go app.
+
+The code from this tutorial is available [on GitHub](https://github.com/asynkron/protoactor-go/tree/dev/examples/cluster-grain).
+
+## Setting up the project
+
+First things first, let's get the project setup and basic configuration out of the way, so we can later focus on grains and clustering.
+
+### Required packages
+
+Create a folder named `proto-cluster-tutorial` and initialize a Go module:
+
+```bash
+go mod init github.com/you/proto-cluster-tutorial
+```
+
+We'll need the following packages:
+
+- `github.com/asynkron/protoactor-go/actor`
+- `github.com/asynkron/protoactor-go/cluster`
+- `github.com/asynkron/protoactor-go/remote`
+- `github.com/asynkron/protoactor-go/cluster/clusterproviders/consul` (for development we can keep everything local)
+- `github.com/asynkron/protoactor-go/cluster/identitylookup/disthash`
+
+Install them using `go get`:
+
+```bash
+go get github.com/asynkron/protoactor-go@latest
+```
+
+### Base app
+
+Let's establish what our base app code should look like. Create a `main.go` file:
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, Proto.Cluster!")
+}
+```
+
+Try running your app to see if everything works so far.
+
+### Basic Proto.Cluster infrastructure and configuration
+
+First, we'll get the basic infrastructure of the cluster going.
+
+We need to create, configure and start an `ActorSystem`. We'll also configure the remote and cluster components.
+
+`main.go`:
+
+```go
+package main
+
+import (
+    "fmt"
+
+    "github.com/asynkron/protoactor-go/actor"
+    "github.com/asynkron/protoactor-go/cluster"
+    "github.com/asynkron/protoactor-go/cluster/clusterproviders/consul"
+    "github.com/asynkron/protoactor-go/cluster/identitylookup/disthash"
+    "github.com/asynkron/protoactor-go/remote"
+)
+
+func main() {
+    system := actor.NewActorSystem()
+
+    provider, _ := consul.New()
+    lookup := disthash.New()
+    remoteConfig := remote.Configure("localhost", 0)
+
+    clusterConfig := cluster.Configure("ProtoClusterTutorial", provider, lookup, remoteConfig)
+    c := cluster.New(system, clusterConfig)
+
+    c.StartMember()
+    fmt.Println("Cluster member started. Press Enter to exit...")
+    fmt.Scanln()
+    c.Shutdown(true)
+}
+```
+
+Let's go through each configuration section one by one:
+
+#### Actor System configuration
+
+This is a standard Proto.Actor configuration. It's out of the scope for this tutorial; if you want to learn more, you should check out the [Actors](../actors.md) section of Proto.Actor's documentation.
+
+#### Remote configuration
+
+Proto.Cluster uses Proto.Remote for transport. Again, its configuration is out of scope for this tutorial; if you want to learn more, you should check out the [Remote](../remote.md) section of Proto.Actor's documentation.
+
+#### Cluster configuration
+
+This is where we configure Proto.Cluster. Let's explain its parameters:
+
+1. `clusterName` - any name will do.
+2. `clusterProvider` - a Cluster Provider is an abstraction that provides information about currently available members (nodes) in a cluster. Since right now our cluster only has one member, it's ok to use a [Consul provider](consul-net.md).
+3. `identityLookup` - an Identity Lookup is an abstraction that allows a cluster to locate grains. `disthash` is generally a good choice for most cases. You can read more about Identity Lookup [here](identity-lookup-net.md).
+
+### Cluster object
+
+Most of the time we'll want to interact with the cluster, we will use a `Cluster` object. You can get it from an `ActorSystem` instance:
+
+```go
+import "github.com/asynkron/protoactor-go/cluster"
+
+// ...
+
+c := cluster.New(system, clusterConfig)
+```
+
+### Starting a cluster member
+
+Cluster members need to be explicitly started and shut down. In the sample above, `StartMember` and `Shutdown` take care of it.
+
+## Implementing grains
+
+Now that the infrastructure is in place we can create grains. We'll model a smart bulb that can be turned on and off and can report its state.
+
+### Define messages and grain contract
+
+Create a file named `smartbulb.proto`:
+
+```protobuf
+syntax = "proto3";
+package smartbulb;
+option go_package = "github.com/you/proto-cluster-tutorial/smartbulb";
+
+import "google/protobuf/empty.proto";
+
+message GetStateResponse {
+  bool isOn = 1;
+}
+
+service SmartBulb {
+  rpc TurnOn(google.protobuf.Empty) returns (google.protobuf.Empty);
+  rpc TurnOff(google.protobuf.Empty) returns (google.protobuf.Empty);
+  rpc GetState(google.protobuf.Empty) returns (GetStateResponse);
+}
+```
+
+Once you have this, you can generate your code using `protoc`:
+
+```bash
+protoc --go_out=. --go_opt=paths=source_relative \
+    --plugin=protoc-gen-go-grain=PATH_TO_PROTOC_GEN_GO_GRAIN \
+    --go-grain_out=. --go-grain_opt=paths=source_relative \
+    smartbulb.proto
+```
+
+### Implementing the grain
+
+When the contracts have been generated, you can start implementing your grain:
+
+```go
+package smartbulb
+
+import (
+    "github.com/asynkron/protoactor-go/cluster"
+    "google.golang.org/protobuf/types/known/emptypb"
+)
+
+type Bulb struct {
+    on bool
+}
+
+func (b *Bulb) Init(ctx cluster.GrainContext)           {}
+func (b *Bulb) Terminate(ctx cluster.GrainContext)      {}
+func (b *Bulb) ReceiveDefault(ctx cluster.GrainContext) {}
+
+func (b *Bulb) TurnOn(_ *emptypb.Empty, ctx cluster.GrainContext) (*emptypb.Empty, error) {
+    b.on = true
+    return &emptypb.Empty{}, nil
+}
+
+func (b *Bulb) TurnOff(_ *emptypb.Empty, ctx cluster.GrainContext) (*emptypb.Empty, error) {
+    b.on = false
+    return &emptypb.Empty{}, nil
+}
+
+func (b *Bulb) GetState(_ *emptypb.Empty, ctx cluster.GrainContext) (*GetStateResponse, error) {
+    return &GetStateResponse{IsOn: b.on}, nil
+}
+
+func init() {
+    SmartBulbFactory(func() SmartBulb { return &Bulb{} })
+}
+```
+
+Register the grain kind when configuring the cluster:
+
+```go
+bulbKind := smartbulb.NewSmartBulbKind(func() smartbulb.SmartBulb { return &smartbulb.Bulb{} }, 0)
+clusterConfig := cluster.Configure("ProtoClusterTutorial", provider, lookup, remoteConfig, cluster.WithKinds(bulbKind))
+```
+
+### Interacting with the grain
+
+You can obtain a client for a specific smart bulb grain via the generated helper:
+
+```go
+bulbClient := smartbulb.GetSmartBulbGrainClient(c, "kitchen")
+if _, err := bulbClient.TurnOn(nil); err != nil {
+    panic(err)
+}
+state, _ := bulbClient.GetState(nil)
+fmt.Println("Is on:", state.IsOn)
+```
+
+## Running multiple members
+
+To showcase how grains work in a distributed system, run two instances of the application. Each instance will host grains and will be able to communicate with grains on other nodes.
+
+Start the first node:
+
+```bash
+go run main.go
+```
+
+In another terminal, run the second node:
+
+```bash
+go run main.go
+```
+
+Try turning smart bulbs on and off from either node; state will be kept per grain identity across the cluster.
+
+That's it – you've created and run your first grains in Proto.Actor using Go.
+
