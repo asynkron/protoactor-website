@@ -10,7 +10,7 @@ tags: [protoactor, docs]
 Proto.Actor provides two forms of Context, a `RootContext` and an `ActorContext`. These contexts are composed of various functionality provided by distinct facets. Both types of context implement `Spawner`, `Stopper`, `Info` and `Sender` facets, while the `ActorContext` implements additional facets.
 
 ```mermaid
-graph LR
+graph TB
     root[RootContext]
     actor[ActorContext]
 
@@ -106,7 +106,7 @@ Provides the ability to immediately stop an actor, or instruct it to stop after 
 
     // stop after processing current user messages in mailbox
     context.Poison(pid);
-      await context.PoisonAsync(pid);
+    // await context.PoisonAsync(pid);
   ```
 
 #### Go
