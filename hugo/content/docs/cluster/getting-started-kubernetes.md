@@ -1,6 +1,6 @@
 # Kubernetes deployment
 
-This is the continuation of the [Getting Started With Grains tutorial](getting-started-net.md). For now, the tutorial showed how to run multiple members locally using Consul.
+This is the continuation of the [Getting Started With Grains tutorial for .NET](getting-started-net.md). If you're using Go, start with the [Getting Started With Grains / Virtual Actors (Go)](getting-started-go.md) guide. For now, the tutorial showed how to run multiple members locally using Consul.
 The same setup might be also suitable for some deployment cases, but since modern applications are more often deployed in Kubernetes, it is better to select dedicated provider for it.
 
 [Kubernetes provider](kubernetes-provider-net.md) is another implementation of `IClusterProvider` interface, the same as [Consul provider](cluster/consul-net.md). For more information you can check [Cluster providers section](cluster-providers-net.md).
