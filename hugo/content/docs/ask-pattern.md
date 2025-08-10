@@ -36,8 +36,16 @@ stay loosely coupled and can react when they are ready.
 
 ```mermaid
 graph LR
-    producer((Producer)) -- emits --> evt(StateChanged)
-    evt --> consumer((Consumer))
+    producer((Producer))
+    consumer((Consumer))
+    evt(StateChanged)
+
+    class producer green
+    class consumer green
+    class evt message
+
+    producer -- emits --> evt
+    evt --> consumer
 
 ```
 
@@ -70,10 +78,18 @@ Waiting on `RequestAsync` inside an actor's receive method suspends message proc
 ## Deadlock Example
 ```mermaid
 graph LR
-    A((Actor A)) --> req1(Request)
-    req1 --> B((Actor B))
-    B --> req2(Request)
-    req2 --> A
+    A((Actor A))
+    B((Actor B))
+    req1(Request)
+    req2(Request)
+
+    class A green
+    class B green
+    class req1 message
+    class req2 message
+
+    A --> req1 --> B
+    B --> req2 --> A
 ```
 If Actor A awaits a reply from Actor B while B simultaneously awaits a reply from A, neither actor can proceed. Reentrancy or redesigning the communication flow breaks the cycle.
 
