@@ -35,7 +35,7 @@ rather than having others ask for it. By telling peers about changes, actors
 stay loosely coupled and can react when they are ready.
 
 ```mermaid
-flowchart LR
+graph LR
     producer((Producer)) -- emits --> evt(StateChanged)
     evt --> consumer((Consumer))
 
@@ -69,7 +69,7 @@ Waiting on `RequestAsync` inside an actor's receive method suspends message proc
 
 ## Deadlock Example
 ```mermaid
-flowchart LR
+graph LR
     A((Actor A)) --> req1(Request)
     req1 --> B((Actor B))
     B --> req2(Request)
