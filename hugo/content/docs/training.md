@@ -6,24 +6,27 @@ title: Professional Services
 
 ## Presentations
 
-- **Introduction to the actor-model and Proto.Actor** - 1h Session <a href="mailto:info@asynkron.se?subject=Proto.Actor Presentation">Contact us</a>
+- **Introduction to the actor model and Proto.Actor** – 1-hour session.  
+  <a href="mailto:info@asynkron.se?subject=Proto.Actor Presentation">Contact us</a>
 
 ## Workshops
 
-- **Introduction to the actor-model and Proto.Actor, Q&A, hands on coding** - Full-day <a href="mailto:info@asynkron.se?subject=Proto.Actor Workshop">Contact us</a>
+- **Introduction to the actor model and Proto.Actor** – full-day workshop with Q&A and hands-on coding.  
+  <a href="mailto:info@asynkron.se?subject=Proto.Actor Workshop">Contact us</a>
 
-- **Proto.Actor Cluster - Distributed systems made easy** - Full-day,
-  [Agenda](workshop-cluster.md),
+- **Proto.Actor Cluster – distributed systems made easy** – full-day workshop.  
+  [Agenda](workshop-cluster.md) |
   <a href="mailto:info@asynkron.se?subject=Proto.Cluster Workshop">Contact us</a>
 
-- **Code and Architectural review of actor-based systems** - <a href="mailto:info@asynkron.se?subject=Architectural Review">Contact us</a>
+- **Code and architecture review for actor-based systems**.  
+  <a href="mailto:info@asynkron.se?subject=Architectural Review">Contact us</a>
 
 ## Dedicated Team Member
 
-Do you need a full-time distributed systems engineer or Proto.Actor expert?
-<a href="mailto:info@asynkron.se?subject=dedicated team member">Contact us</a>
+Need a full-time distributed-systems engineer or Proto.Actor expert?<br/>
+<a href="mailto:info@asynkron.se?subject=Dedicated team member">Contact us</a>
 
 ## Support Subscription
 
-For ongoing assistance, we offer support subscriptions.
-  <a href="mailto:info@asynkron.se?subject=Proto.Cluster Support">Contact us</a>
+Stay productive with an ongoing support subscription that provides direct access to Proto.Actor experts for guidance, troubleshooting, and best practices.<br/>
+<a href="mailto:info@asynkron.se?subject=Proto.Cluster Support">Contact us to discuss support options</a>
