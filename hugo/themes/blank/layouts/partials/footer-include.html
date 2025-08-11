@@ -46,6 +46,7 @@
   const lightBlueColor = "#00ADF8";
   const lineWidth = "4px";
   const strokeWidth = "3px";
+  const stateLineWidth = "2px";
   const strokeColor = backgroundColor;
   const commentColor = "#FFF2CC";
   const commentBorderColor = "#D6B656";
@@ -233,8 +234,82 @@
     stroke: ${lineColor} !important;
   }
 
+  /* State diagram overrides */
+  $prefix .statediagram-state rect,
+  $prefix .statediagram-state polygon,
+  $prefix .statediagram-cluster rect {
+    fill: ${blueColor} !important;
+    stroke: ${backgroundColor} !important;
+    stroke-width: ${lineWidth} !important;
+  }
+
+  $prefix .node circle.state-start,
+  $prefix .node circle.state-end,
+  $prefix .node .fork-join {
+    fill: ${lineColor} !important;
+    stroke: ${lineColor} !important;
+  }
+
+  $prefix .transition,
+  $prefix .note-edge {
+    stroke: ${lineColor} !important;
+    stroke-width: ${stateLineWidth} !important;
+    fill: none !important;
+  }
+
+  $prefix .stateGroup text,
+  $prefix .stateLabel text,
+  $prefix .cluster-label,
+  $prefix .nodeLabel {
+    fill: ${textColor} !important;
+    color: ${textColor} !important;
+    font-family: ${fontFamily};
+  }
+
+  $prefix .edgeLabel .label text,
+  $prefix .edgeLabel span {
+    fill: #333 !important;
+    color: #333 !important;
+    font-family: ${fontFamily};
+  }
+
+  $prefix .edgeLabel span {
+    background-color: #e8e8e8;
+    text-align: center;
+  }
+
+  $prefix .edgeLabel .label rect {
+    fill: #e8e8e8 !important;
+    stroke: none !important;
+    opacity: 1 !important;
+  }
+
+  $prefix .stateLabel .box {
+    fill: none !important;
+    stroke: none !important;
+    opacity: 1 !important;
+  }
+
+  $prefix #statediagram-barbEnd,
+  $prefix defs #statediagram-barbEnd {
+    fill: ${lineColor} !important;
+    stroke: ${lineColor} !important;
+  }
+
+  $prefix .state-note,
+  $prefix .statediagram-note rect {
+    fill: #ffbb00;
+    stroke: none;
+  }
+
+  $prefix .state-note text,
+  $prefix .statediagram-note text,
+  $prefix .statediagram-note .nodeLabel {
+    fill: #373635;
+  }
+
   $prefix line {
-    stroke-width: 2px !important;
+    stroke-width: ${stateLineWidth} !important;
     stroke: #a0a0a0 !important;
   }
 
