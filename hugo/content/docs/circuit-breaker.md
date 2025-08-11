@@ -33,14 +33,164 @@ flowchart LR;
 ```
 
 ## Example
-```cs
-var breaker = new CircuitBreaker(5, TimeSpan.FromSeconds(30));
-if(!breaker.TryExecute(() => context.RequestAsync(target, msg)))
+The snippet below shows a minimal circuit breaker actor. It tracks consecutive failures
+and transitions between **Closed**, **Open**, and **HalfOpen**. This example can be
+adapted or extended for production use.
+
+```csharp
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Proto;
+
+public sealed class ServiceUnavailable
 {
-    context.Respond(new ServiceUnavailable());
+    public string Reason { get; }
+    public ServiceUnavailable(string reason = "Circuit open or call failed") => Reason = reason;
 }
+
+public enum CircuitState { Closed, Open, HalfOpen }
+
+public sealed class HalfOpenTrigger { } // internal signal
+
+public sealed class CircuitBreakerActor : IActor
+{
+    private readonly PID _target;
+    private readonly int _failureThreshold;
+    private readonly TimeSpan _openDuration;       // how long to stay Open
+    private readonly TimeSpan _perCallTimeout;     // timeout for each request
+    private readonly Func<object, bool>? _isFailureReply;
+
+    private CircuitState _state = CircuitState.Closed;
+    private int _consecutiveFailures = 0;
+    private bool _trialInFlight = false;
+
+    public CircuitBreakerActor(
+        PID target,
+        int failureThreshold,
+        TimeSpan openDuration,
+        TimeSpan perCallTimeout,
+        Func<object, bool>? isFailureReply = null)
+    {
+        _target = target;
+        _failureThreshold = Math.Max(1, failureThreshold);
+        _openDuration = openDuration <= TimeSpan.Zero ? TimeSpan.FromSeconds(30) : openDuration;
+        _perCallTimeout = perCallTimeout <= TimeSpan.Zero ? TimeSpan.FromSeconds(5) : perCallTimeout;
+        _isFailureReply = isFailureReply;
+    }
+
+    public Task ReceiveAsync(IContext context) => context.Message switch
+    {
+        HalfOpenTrigger => OnHalfOpenTrigger(context),
+        _                 => OnUserMessage(context, context.Message!)
+    };
+
+    private Task OnHalfOpenTrigger(IContext context)
+    {
+        if (_state == CircuitState.Open)
+        {
+            _state = CircuitState.HalfOpen;
+            _trialInFlight = false;
+        }
+        return Task.CompletedTask;
+    }
+
+    private async Task OnUserMessage(IContext context, object msg)
+    {
+        if (_state == CircuitState.Open)
+        {
+            context.Respond(new ServiceUnavailable("Circuit is open"));
+            return;
+        }
+
+        if (_state == CircuitState.HalfOpen && _trialInFlight)
+        {
+            context.Respond(new ServiceUnavailable("Half-open: trial already in flight"));
+            return;
+        }
+
+        var replyTo = context.Sender;
+        var isTrial = _state == CircuitState.HalfOpen;
+        if (isTrial) _trialInFlight = true;
+
+        object? reply = null;
+        bool success = false;
+
+        try
+        {
+            using var cts = new CancellationTokenSource(_perCallTimeout);
+            reply = await context.RequestAsync<object>(_target, msg, cts.Token).ConfigureAwait(false);
+            success = _isFailureReply?.Invoke(reply) != true;
+        }
+        catch (OperationCanceledException)
+        {
+            success = false;
+        }
+        catch
+        {
+            success = false;
+        }
+
+        if (success)
+        {
+            _consecutiveFailures = 0;
+            if (_state == CircuitState.HalfOpen)
+            {
+                _state = CircuitState.Closed;
+                _trialInFlight = false;
+            }
+            context.Respond(reply!);
+            return;
+        }
+
+        _consecutiveFailures++;
+
+        if (_state == CircuitState.HalfOpen)
+        {
+            Open(context);
+            _trialInFlight = false;
+        }
+        else if (_state == CircuitState.Closed && _consecutiveFailures >= _failureThreshold)
+        {
+            Open(context);
+        }
+
+        context.Respond(new ServiceUnavailable(
+            _state == CircuitState.Open ? "Circuit opened" : "Call failed"));
+    }
+
+    private void Open(IContext context)
+    {
+        _state = CircuitState.Open;
+        _trialInFlight = false;
+        var delay = Task.Delay(_openDuration);
+        context.ReenterAfter(delay, _ =>
+        {
+            if (_state == CircuitState.Open)
+                context.Self.Tell(new HalfOpenTrigger());
+            return Task.CompletedTask;
+        });
+    }
+}
+
+// Usage
+var system = new ActorSystem();
+
+var targetPid  = system.Root.Spawn(Props.FromProducer(() => new TargetActor()));
+var breakerPid = system.Root.Spawn(Props.FromProducer(() =>
+    new CircuitBreakerActor(
+        target: targetPid,
+        failureThreshold: 5,
+        openDuration: TimeSpan.FromSeconds(30),
+        perCallTimeout: TimeSpan.FromSeconds(3),
+        isFailureReply: reply => reply is ErrorResponse // treat domain error as failure
+    )));
+
+var reply = await system.Root.RequestAsync<MyReply>(breakerPid, new MyRequest(), TimeSpan.FromSeconds(5));
 ```
-The code above rejects requests when more than five consecutive failures occur.
+
+This sample returns `ServiceUnavailable` when the circuit is open or a call fails. For
+production scenarios consider adding metrics, logging, or retry policies to improve resilience.
 
 ## Tips
 - Combine with retries and timeouts.
