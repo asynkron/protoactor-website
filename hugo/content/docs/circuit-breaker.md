@@ -26,10 +26,13 @@ Wrap outbound requests in a circuit breaker component. On failure, record the er
 
 ## Interaction
 ```mermaid
-flowchart LR;
-    Actor[Calling Actor] --> Breaker[Circuit Breaker];
-    Breaker -->|closed| Service[Dependency];
-    Breaker -.open.-> Actor;
+graph LR
+    caller((Calling Actor))
+    breaker((Circuit Breaker))
+    service[Dependency]
+    caller --> breaker
+    breaker -->|closed| service
+    breaker -.open.-> caller
 ```
 
 ## Example
@@ -191,6 +194,156 @@ var reply = await system.Root.RequestAsync<MyReply>(breakerPid, new MyRequest(),
 
 This sample returns `ServiceUnavailable` when the circuit is open or a call fails. For
 production scenarios consider adding metrics, logging, or retry policies to improve resilience.
+
+## Middleware Example
+Circuit breaking can also be implemented as receive middleware. This variant
+counts handler exceptions but cannot inspect replies or caller timeouts.
+
+```csharp
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Proto;
+
+public sealed class ServiceUnavailable
+{
+    public string Reason { get; }
+    public ServiceUnavailable(string reason = "Circuit open") => Reason = reason;
+}
+
+public enum CircuitState { Closed, Open, HalfOpen }
+
+public static class CircuitBreakerMiddleware
+{
+    /// <summary>
+    /// Create a receive-middleware circuit breaker.
+    /// Counts handler exceptions as failures.
+    /// Optional isFailureRequest can reject certain requests up front.
+    /// </summary>
+    public static ReceiveMiddleware Create(
+        int failureThreshold = 5,
+        TimeSpan? openDuration = null,
+        Func<object, bool>? isFailureRequest = null)
+    {
+        var _failureThreshold = Math.Max(1, failureThreshold);
+        var _openDuration     = openDuration is { } od && od > TimeSpan.Zero ? od : TimeSpan.FromSeconds(30);
+
+        var _state            = CircuitState.Closed;
+        var _consecutiveFail  = 0;
+        var _trialAllowed     = true;
+        CancellationTokenSource? _cooldownCts = null;
+
+        void Open()
+        {
+            _state = CircuitState.Open;
+            _trialAllowed = false;
+
+            _cooldownCts?.Cancel();
+            _cooldownCts = new CancellationTokenSource();
+            var token = _cooldownCts.Token;
+
+            _ = Task.Run(async () =>
+            {
+                try
+                {
+                    await Task.Delay(_openDuration, token).ConfigureAwait(false);
+                    if (!token.IsCancellationRequested)
+                    {
+                        _state = CircuitState.HalfOpen;
+                        _trialAllowed = true; // first request gets through
+                    }
+                }
+                catch (OperationCanceledException) { }
+            }, token);
+        }
+
+        void OnSuccess()
+        {
+            _consecutiveFail = 0;
+            if (_state == CircuitState.HalfOpen)
+            {
+                _state = CircuitState.Closed;
+                _trialAllowed = true;
+            }
+        }
+
+        void OnFailure()
+        {
+            _consecutiveFail++;
+            if (_state == CircuitState.HalfOpen)
+            {
+                Open();
+                return;
+            }
+
+            if (_state == CircuitState.Closed && _consecutiveFail >= _failureThreshold)
+            {
+                Open();
+            }
+        }
+
+        return next => async (context, message) =>
+        {
+            if (message is ISystemMessage || message is LifecycleEvent)
+            {
+                await next(context, message).ConfigureAwait(false);
+                return;
+            }
+
+            if (_state == CircuitState.Open)
+            {
+                context.Respond(new ServiceUnavailable("Circuit is open"));
+                return;
+            }
+
+            if (_state == CircuitState.HalfOpen && !_trialAllowed)
+            {
+                context.Respond(new ServiceUnavailable("Half-open: trial already in flight"));
+                return;
+            }
+
+            var upfrontFail = isFailureRequest?.Invoke(message) == true;
+            if (upfrontFail)
+            {
+                OnFailure();
+                context.Respond(new ServiceUnavailable("Rejected by circuit rule"));
+                return;
+            }
+
+            var isTrial = _state == CircuitState.HalfOpen && _trialAllowed;
+            if (isTrial) _trialAllowed = false;
+
+            try
+            {
+                await next(context, message).ConfigureAwait(false);
+                OnSuccess();
+            }
+            catch
+            {
+                OnFailure();
+                context.Respond(new ServiceUnavailable("Handler failed"));
+            }
+        };
+    }
+}
+
+// Usage
+var targetProps = Props
+    .FromProducer(() => new TargetActor())
+    .WithReceiverMiddleware(
+        CircuitBreakerMiddleware.Create(
+            failureThreshold: 5,
+            openDuration: TimeSpan.FromSeconds(30),
+            isFailureRequest: null // or msg => msg is Ping { ShouldFail = true }
+        ));
+
+var targetPid = system.Root.Spawn(targetProps);
+
+var reply = await system.Root.RequestAsync<MyReply>(targetPid, new MyRequest(), TimeSpan.FromSeconds(5));
+```
+
+This middleware approach keeps senders agnostic but cannot observe caller
+timeouts or reply content. Use the actor variant if you need those features.
 
 ## Tips
 - Combine with retries and timeouts.
