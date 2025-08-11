@@ -259,7 +259,6 @@
 
   $prefix .stateGroup text,
   $prefix .stateLabel text,
-  $prefix .edgeLabel .label text,
   $prefix .cluster-label,
   $prefix .nodeLabel {
     fill: ${textColor} !important;
@@ -267,16 +266,28 @@
     font-family: ${fontFamily};
   }
 
-  $prefix .edgeLabel .label rect,
-  $prefix .stateLabel .box {
-    fill: none !important;
+  $prefix .edgeLabel .label text,
+  $prefix .edgeLabel span {
+    fill: #333 !important;
+    color: #333 !important;
+    font-family: ${fontFamily};
+  }
+
+  $prefix .edgeLabel span {
+    background-color: #e8e8e8;
+    text-align: center;
+  }
+
+  $prefix .edgeLabel .label rect {
+    fill: #e8e8e8 !important;
     stroke: none !important;
     opacity: 1 !important;
   }
 
-  $prefix .edgeLabel .label span {
-    color: ${textColor} !important;
-    font-family: ${fontFamily};
+  $prefix .stateLabel .box {
+    fill: none !important;
+    stroke: none !important;
+    opacity: 1 !important;
   }
 
   $prefix #statediagram-barbEnd,
