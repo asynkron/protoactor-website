@@ -124,3 +124,10 @@ func main() {
 
 You've now created and run your first Proto.Actor program in both .NET and Go. This simple example forms the foundation for building resilient, concurrent applications that scale across cores and machines.
 
+## Example Source Code
+
+Working implementations are available on GitHub:
+
+- [.NET greeter example](https://github.com/asynkron/protoactor-dotnet/tree/dev/examples/HelloWorld)
+- [Go greeter example](https://github.com/asynkron/protoactor-go/tree/dev/examples/actor-helloworld)
+

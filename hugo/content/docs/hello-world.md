@@ -167,3 +167,10 @@ time.Sleep(1 * time.Second)
 When you run the code, the `HelloWorldActor` will receive and process the `Hello` message, and you should see "Hello World" printed on the console.
 
 That's it! You've successfully created a basic Proto.Actor example. Feel free to explore further and create more complex systems using the powerful features provided by Proto.Actor.
+
+## Example Source Code
+
+Complete implementations are available on GitHub:
+
+- [.NET HelloWorld example](https://github.com/asynkron/protoactor-dotnet/tree/dev/examples/HelloWorld)
+- [Go HelloWorld example](https://github.com/asynkron/protoactor-go/tree/dev/examples/actor-helloworld)

@@ -11,6 +11,13 @@ This document outlines the concept behind supervision and what that means for yo
 
 ![supervision](images/Supervision-all-blue.png)
 
+## Example Source Code
+
+Practical implementations are available on GitHub:
+
+- [.NET Supervision example](https://github.com/asynkron/protoactor-dotnet/tree/dev/examples/Supervision)
+- [Go Supervision example](https://github.com/asynkron/protoactor-go/tree/dev/examples/actor-supervision)
+
 ## What Supervision means
 
 Supervision describes a dependency relationship between actors: the supervisor delegates tasks to subordinates and therefore must respond to their failures. When a subordinate detects a failure (i.e. throws an exception), it suspends itself and all its subordinates and sends a message to its supervisor, signaling failure. Depending on the nature of the work to be supervised and the nature of the failure, the supervisor has a choice of the following four options:
