@@ -46,6 +46,7 @@
   const lightBlueColor = "#00ADF8";
   const lineWidth = "4px";
   const strokeWidth = "3px";
+  const stateLineWidth = "2px";
   const strokeColor = backgroundColor;
   const commentColor = "#FFF2CC";
   const commentBorderColor = "#D6B656";
@@ -252,7 +253,7 @@
   $prefix .transition,
   $prefix .note-edge {
     stroke: ${lineColor} !important;
-    stroke-width: ${lineWidth} !important;
+    stroke-width: ${stateLineWidth} !important;
     fill: none !important;
   }
 
@@ -268,8 +269,14 @@
 
   $prefix .edgeLabel .label rect,
   $prefix .stateLabel .box {
-    fill: ${actorColor} !important;
-    opacity: 0.5;
+    fill: none !important;
+    stroke: none !important;
+    opacity: 1 !important;
+  }
+
+  $prefix .edgeLabel .label span {
+    color: ${textColor} !important;
+    font-family: ${fontFamily};
   }
 
   $prefix #statediagram-barbEnd,
@@ -291,7 +298,7 @@
   }
 
   $prefix line {
-    stroke-width: 2px !important;
+    stroke-width: ${stateLineWidth} !important;
     stroke: #a0a0a0 !important;
   }
 
