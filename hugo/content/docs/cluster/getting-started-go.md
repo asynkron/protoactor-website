@@ -14,7 +14,7 @@ In this tutorial we will:
 3. Send messages to and between these grains.
 4. Host everything in a simple Go app.
 
-The code from this tutorial is available [on GitHub](https://github.com/asynkron/protoactor-go/tree/dev/examples/cluster-grain).
+The code from this tutorial is available on GitHub: [Go version](https://github.com/asynkron/protoactor-go/tree/dev/examples/cluster-grain) | [.NET version](https://github.com/asynkron/protoactor-dotnet/tree/dev/examples/ClusterGrainHelloWorld).
 
 ## Setting up the project
 

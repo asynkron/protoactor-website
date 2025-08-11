@@ -51,7 +51,7 @@ We can then take these contracts and use gRPC in order to generate clients and s
 
 ## High-Level Overview of Our Chat Example
 
-You can find the example on github [here](https://github.com/aneshas/protoactor-dotnet/tree/chat-example-refactor/examples/Chat).
+You can find full source code on GitHub for both runtimes: [.NET](https://github.com/asynkron/protoactor-dotnet/tree/dev/examples/Chat) | [Go](https://github.com/asynkron/protoactor-go/tree/dev/examples/remote-chat).
 ![Proto.Remote](chat-overview.png)
 As shown in the picture, our chat example will consist of client and server actors distributed over the network communicating via `Proto.Remote` library.
 
@@ -464,9 +464,12 @@ If the user tries to change the default nick by using /nick command, we parse th
 
 At last, if the user types in some unstructured text we it is a chat message pass it along as such to the server via SayRequest message. Remember that we wired up our client actor to receive messages from the server and print them out to the console.
 
-## Go Example Source
+## Example Source Code
 
-As stated before, client and server might as well be built using different languages and interact with each other just as well. In fact, there is the same chat example written in `Go` [hosted here](https://github.com/asynkron/protoactor-go/tree/dev/examples/remote-chat).
+As stated before, client and server might as well be built using different languages and interact with each other just as well. Full implementations are available on GitHub:
+
+- [.NET Chat example](https://github.com/asynkron/protoactor-dotnet/tree/dev/examples/Chat)
+- [Go Chat example](https://github.com/asynkron/protoactor-go/tree/dev/examples/remote-chat)
 
 This brings us to the end of the tour of our chat example. Hope you enjoyed it.
 

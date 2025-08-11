@@ -11,6 +11,13 @@ tags: [protoactor, docs]
 
 <small>[Homage to Proto.Actors Swedish roots, Swedish midsummer ring dance - Connected Cluster Actors]</small>
 
+## Example Source Code
+
+Working cluster examples are available on GitHub:
+
+- [.NET cluster example](https://github.com/asynkron/protoactor-dotnet/tree/dev/examples/ClusterGrainHelloWorld)
+- [Go cluster example](https://github.com/asynkron/protoactor-go/tree/dev/examples/cluster-basic)
+
 ## Virtual Actors, aka. Grains
 
 Proto.Cluster leverages the _"Virtual Actor Model"_, pioneered by Microsoft Orleans.
