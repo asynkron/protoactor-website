@@ -20,39 +20,3 @@ var system = new ActorSystem();
 var props = Props.FromProducer(() => new MyActor(provider.GetRequiredService<IMyService>()));
 var pid = system.Root.Spawn(props);
 ```
-
-## Using DI in Go
-
-```go
-package main
-
-import (
-    "github.com/asynkron/protoactor-go/actor"
-    "github.com/asynkron/protoactor-go/di"
-)
-
-type myService struct{}
-
-type myActor struct{ svc *myService }
-
-func (a *myActor) Receive(ctx actor.Context) {}
-
-func main() {
-    builder := di.New()
-    builder.Register(func() *myService { return &myService{} })
-    props := di.PropsFromFunc(builder, func(svc *myService) actor.Actor { return &myActor{svc: svc} })
-    system := actor.NewActorSystem()
-    pid := system.Root.Spawn(props)
-    _ = pid
-}
-```
-
-## DI Diagram
-
-```mermaid
-graph LR
-    container[[DI Container]]
-    actor((Actor))
-    class actor green
-    container --> actor
-```
