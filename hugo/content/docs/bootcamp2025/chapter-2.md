@@ -1,6 +1,7 @@
 # Chapter 2: Proto.Actor Core Primitives
 
 **Chapters:** [1](chapter-1/) | [2](chapter-2/) | [3](chapter-3/) | [4](chapter-4/) | [5](chapter-5/)
+
 Now that we understand the basic actor model, let’s see how Proto.Actor implements these concepts and what core primitives it provides. We will cover how to define an actor’s behavior, how to create and start actors, how actors send and receive messages, and how the actor lifecycle and hierarchy work. We’ll illustrate with simple examples in C# and Go.
 
 ## Actors, Messages, and the Actor System
@@ -189,19 +190,19 @@ Proto.Actor actors have a well-defined lifecycle. They go through stages such as
 
 The context (`IContext` in C#, `actor.Context` in Go) passed to the actor’s receive method provides methods to interact with the actor system during those lifecycle events and beyond:
 
-- ctx.Self – the `PID` of the current actor (itself).
+- `ctx.Self` – the `PID` of the current actor (itself).
 
-- ctx.Sender – the `PID` of the actor that sent the current message (if available). Using ctx.Respond(msg) in C# (or ctx.Respond(msg) in Go) will send a response back to the Sender.
+- `ctx.Sender` – the `PID` of the actor that sent the current message (if available). Using `ctx.Respond(msg)` in C# (or `ctx.Respond(msg)` in Go) will send a response back to the `Sender`.
 
-- ctx.Spawn(props) – spawn a new child actor under the current actor. The new actor’s parent will be the current actor, meaning if the current actor stops, it will stop its children as well.
+- `ctx.Spawn(props)` – spawn a new child actor under the current actor. The new actor’s parent will be the current actor, meaning if the current actor stops, it will stop its children as well.
 
-- ctx.Stop(targetPid) – stop a child actor (or you can stop ctx.Self to stop itself). Stopping an actor will eventually send it a Stopped message and terminate it after it processes current messages.
+- `ctx.Stop(targetPid)` – stop a child actor (or you can stop `ctx.Self` to stop itself). Stopping an actor will eventually send it a `Stopped` message and terminate it after it processes current messages.
 
-- ctx.SetReceiveTimeout(duration) – if set, if the actor doesn’t receive any message for the given duration, it will get a ReceiveTimeout message. This is useful to implement auto-shutdown of idle actors, etc.
+- `ctx.SetReceiveTimeout(duration)` – if set, if the actor doesn’t receive any message for the given duration, it will get a `ReceiveTimeout` message. This is useful to implement auto-shutdown of idle actors, etc.
 
-- ctx.Forward(pid, message) – forward the exact message (and original sender) to another actor.
+- `ctx.Forward(pid, message)` – forward the exact message (and original sender) to another actor.
 
-- ctx.Watch(targetPid) – watch another actor; you will get a Terminated message if that actor stops (this is useful for monitoring lifecycles).
+- `ctx.Watch(targetPid)` – watch another actor; you will get a `Terminated` message if that actor stops (this is useful for monitoring lifecycles).
 
 These are just a few highlights of the context API. The context is powerful: it’s your interface to the actor system from within the actor. For example, an actor can spawn children to delegate work, and if a child crashes, the parent will be notified via a Terminated message – at which point the parent can decide to spawn a new child or handle the error. This ties into supervision.
 

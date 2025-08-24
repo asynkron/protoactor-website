@@ -1,6 +1,7 @@
 # Chapter 1: Introduction to the Actor Model and Proto.Actor
 
 **Chapters:** [1](chapter-1/) | [2](chapter-2/) | [3](chapter-3/) | [4](chapter-4/) | [5](chapter-5/)
+
 The actor model is a conceptual model for designing concurrent, distributed systems. In the actor model, an actor is a lightweight entity that encapsulates state and behavior, and communicates exclusively by exchanging messages. Actors do not share memory; instead, they send messages to each other asynchronously. This eliminates the need for locks or manual thread management, since each actor processes one message at a time in a single-threaded manner. The actor model provides a high-level abstraction for concurrency, making it easier to build systems that are responsive, resilient, and elastic (as advocated by the Reactive Manifesto). Key benefits of using the actor model include:
 
 - Simplified Concurrency: No explicit threads or locks — actors run independently and handle messages sequentially, avoiding race conditions by design.
