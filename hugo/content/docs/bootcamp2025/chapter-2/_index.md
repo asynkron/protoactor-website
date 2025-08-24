@@ -1,8 +1,17 @@
 # Chapter 2: Proto.Actor Core Primitives
 
-**Chapters:** [1](chapter-1/) | [2](chapter-2/) | [3](chapter-3/) | [4](chapter-4/) | [5](chapter-5/)
+**Chapters:** [1](../chapter-1/) | [2](../chapter-2/) | [3](../chapter-3/) | [4](../chapter-4/) | [5](../chapter-5/)
 
 Now that we understand the basic actor model, let’s see how Proto.Actor implements these concepts and what core primitives it provides. We will cover how to define an actor’s behavior, how to create and start actors, how actors send and receive messages, and how the actor lifecycle and hierarchy work. We’ll illustrate with simple examples in C# and Go.
+
+## Additional Core Topics
+
+- [Supervision](supervision/)
+- [PIDs](pids/)
+- [Metrics](metrics/)
+- [Extensions](extensions/)
+- [Dependency Injection](dependency-injection/)
+- [Spawning](spawning/)
 
 ## Actors, Messages, and the Actor System
 
@@ -249,4 +258,4 @@ In this hierarchy, if Child Actor 1 encounters an error, the Parent can decide w
 
 With these basics, you can already build concurrent applications that make use of multiple actors communicating in-process. In the next chapter, we will extend this to distributed scenarios. Proto.Actor’s Remoting allows actors in different processes or machines to send messages to each other as easily as if they were local. We’ll explore how to configure and use Proto.Actor’s remote capabilities.
 
-**Chapters:** [1](chapter-1/) | [2](chapter-2/) | [3](chapter-3/) | [4](chapter-4/) | [5](chapter-5/)
+**Chapters:** [1](../chapter-1/) | [2](../chapter-2/) | [3](../chapter-3/) | [4](../chapter-4/) | [5](../chapter-5/)
