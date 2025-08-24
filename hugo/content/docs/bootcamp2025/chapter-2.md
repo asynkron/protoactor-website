@@ -11,10 +11,7 @@ All actors live within an `ActorSystem` – this is the runtime that tracks acto
 
  
 
-Message definitions: Messages can be defined as simple classes/structs. They should be immutable (especially if they might be shared across threads) to avoid concurrent modification issues
-proto.actor
-proto.actor
-. For example, in C# you might define:
+Message definitions: Messages can be defined as simple classes/structs. They should be immutable (especially if they might be shared across threads) to avoid concurrent modification issues. For example, in C# you might define:
 
 ```csharp
 // C# - define a message as an immutable record or class
@@ -200,10 +197,8 @@ Actors form a hierarchy: whenever you spawn an actor from within another actor, 
 
  
 
-Supervision means that a parent actor is responsible for handling failures of its children. If a child actor throws an exception or fails to process a message, Proto.Actor will stop the child and notify the parent (the parent receives a Terminated message for that child, with a failure reason). By default, Proto.Actor (like the Erlang model) uses a “let it crash” philosophy – you usually don’t catch exceptions inside the actor; instead, if an unrecoverable error happens, the actor can crash and be restarted by a supervisor. Proto.Actor lets you define supervision strategies for your actors (for example, restart the child, stop it, escalate the failure to the parent’s parent, etc.). The default strategy in Proto.Actor is to restart the child actor on failure a certain number of times (or stop it if it exceeds a restart limit)
-GitHub
-GitHub
-. This way, your system can recover from errors without bringing down the entire process. For example, if one actor responsible for a specific task crashes, its parent can restart it fresh, while other actors continue unaffected.
+Supervision means that a parent actor is responsible for handling failures of its children. If a child actor throws an exception or fails to process a message, Proto.Actor will stop the child and notify the parent (the parent receives a Terminated message for that child, with a failure reason). By default, Proto.Actor (like the Erlang model) uses a “let it crash” philosophy – you usually don’t catch exceptions inside the actor; instead, if an unrecoverable error happens, the actor can crash and be restarted by a supervisor. Proto.Actor lets you define supervision strategies for your actors (for example, restart the child, stop it, escalate the failure to the parent’s parent, etc.). The default strategy in Proto.Actor is to restart the child actor on failure a certain number of times (or stop it if it exceeds a restart limit).
+This way, your system can recover from errors without bringing down the entire process. For example, if one actor responsible for a specific task crashes, its parent can restart it fresh, while other actors continue unaffected.
 
  
 

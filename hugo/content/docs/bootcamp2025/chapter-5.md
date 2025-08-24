@@ -16,15 +16,9 @@ Proto.TestKit offers a few key components:
 - Watch what messages an actor sends to others by placing the probe in between or attaching it as a monitor.
 - Generally, observe actor behavior without modifying the actors under test.
 
-- Mailbox/Receive Probes: You can attach a probe to an actor’s Props so that the probe will get a copy of messages sent to or from that actor. For example, Props.WithReceiveProbe(probe) in .NET will forward every message an actor processes to the probe after the actor has processed it
-GitHub
-GitHub
-. Similarly, WithSendProbe(probe) captures messages the actor sends out. In Go, there are testkit.WithMailboxStats or WithReceiveMiddleware to capture messages via middleware. These are advanced, but extremely useful for white-box testing of actor internals (without changing the actor code).
+- Mailbox/Receive Probes: You can attach a probe to an actor’s Props so that the probe will get a copy of messages sent to or from that actor. For example, Props.WithReceiveProbe(probe) in .NET will forward every message an actor processes to the probe after the actor has processed it. Similarly, WithSendProbe(probe) captures messages the actor sends out. In Go, there are testkit.WithMailboxStats or WithReceiveMiddleware to capture messages via middleware. These are advanced, but extremely useful for white-box testing of actor internals (without changing the actor code).
 
-- Awaiting and conditions: The test kit provides functions like probe.ExpectNext<T> or probe.GetNextMessage() with timeouts to wait for messages to arrive, and probe.ExpectNoMessage() to assert that nothing arrives within a duration
-GitHub
-GitHub
-. There’s also AwaitCondition to poll for some condition to become true within a time. These help eliminate brittle sleep-based tests; you can wait up to X seconds for an event rather than assuming it happens by X.
+- Awaiting and conditions: The test kit provides functions like probe.ExpectNext<T> or probe.GetNextMessage() with timeouts to wait for messages to arrive, and probe.ExpectNoMessage() to assert that nothing arrives within a duration. There’s also AwaitCondition to poll for some condition to become true within a time. These help eliminate brittle sleep-based tests; you can wait up to X seconds for an event rather than assuming it happens by X.
 
 Let’s walk through examples in both C# and Go to illustrate typical test scenarios.
 
@@ -76,10 +70,7 @@ public class PingActorTests
 
 In this test, we used CreateTestProbe() to get a probe and its PID. The probe acts like an actor that we can send messages from and that buffers received messages. We then spawned the PingActor normally. Instead of doing system.Root.RequestAsync (which could have been another way to get a response), we demonstrated using the probe:
 
-probe.Request(pingPid, "ping") sends the "ping" message to pingPid, but it does so in a way that sets the sender of the message as the probe itself. In Proto.TestKit, probe.Request is essentially calling Context.Request from within the probe’s context
-GitHub
-GitHub
-. This means when PingActor does Respond("pong"), Proto.Actor will deliver the "pong" to the sender (which is the probe).
+probe.Request(pingPid, "ping") sends the "ping" message to pingPid, but it does so in a way that sets the sender of the message as the probe itself. In Proto.TestKit, probe.Request is essentially calling Context.Request from within the probe’s context. This means when PingActor does Respond("pong"), Proto.Actor will deliver the "pong" to the sender (which is the probe).
 
 Then probe.GetNextMessageAsync<string>() waits for the probe’s actor to receive a message of type string. It returns that message, which we assert is "pong". If no message arrives in the default timeout (usually 1 second), the test fails. If a wrong type or content arrives, we can detect that too.
 
@@ -139,43 +130,23 @@ var startedMsg = await probe.GetNextMessageAsync<JobStarted>();
 Assert.Equal("abc123", startedMsg.JobId);
 ```
 
-What happens here is WithSendProbe(probe) wraps the actor’s context such that whenever the actor calls context.Send or context.Respond, the message is relayed to the probe (in addition to being delivered to its actual target)
-GitHub
-GitHub
-. This allows the test to capture outgoing communications passively. In our test, we don’t even need to know who the actual target was; if a JobStarted was sent anywhere, our probe got a copy. We then assert on it.
+What happens here is WithSendProbe(probe) wraps the actor’s context such that whenever the actor calls context.Send or context.Respond, the message is relayed to the probe (in addition to being delivered to its actual target). This allows the test to capture outgoing communications passively. In our test, we don’t even need to know who the actual target was; if a JobStarted was sent anywhere, our probe got a copy. We then assert on it.
 
-Proto.TestKit also has TestMailboxStats (in .NET) and similar in Go, which can hook into the actor’s mailbox to count messages or detect if a message was received. For example, WithMailboxProbe(probe) in .NET uses a ProbeMailboxStatistics under the hood to send every mailbox-received message to the probe
-GitHub
-GitHub
-. This can be used to verify order of messages in mailbox or detect if certain messages were enqueued.
+Proto.TestKit also has TestMailboxStats (in .NET) and similar in Go, which can hook into the actor’s mailbox to count messages or detect if a message was received. For example, WithMailboxProbe(probe) in .NET uses a ProbeMailboxStatistics under the hood to send every mailbox-received message to the probe. This can be used to verify order of messages in mailbox or detect if certain messages were enqueued.
 
-In Go, to achieve similar things, you can use testkit.NewTestMailboxStats(predicate) which returns a mailbox stats that can signal when a certain message passes through the mailbox
-GitHub
-GitHub
-. For example, to wait until a "done" message is processed, as shown in the Proto.Actor Go testkit examples
-GitHub
-GitHub
-.
+In Go, to achieve similar things, you can use testkit.NewTestMailboxStats(predicate) which returns a mailbox stats that can signal when a certain message passes through the mailbox. For example, to wait until a "done" message is processed, as shown in the Proto.Actor Go testkit examples.
 
 ## Example 3: Timing and Scheduler Testing
-If your actor uses timers (e.g., ReceiveTimeout or schedules messages to itself), testing timing-dependent behavior could be flaky if you rely on real time. Proto.Actor provides a hook ISchedulerHook in .NET which you can implement to intercept scheduled events, allowing your test to simulate time progression deterministically
-GitHub
-GitHub
-. In practice, you might not need this unless you have complex timing logic. A simpler approach in tests is often to shorten timeouts (e.g., set a small ReceiveTimeout in the actor for test) and then use ExpectNextMessage within that span.
+If your actor uses timers (e.g., ReceiveTimeout or schedules messages to itself), testing timing-dependent behavior could be flaky if you rely on real time. Proto.Actor provides a hook ISchedulerHook in .NET which you can implement to intercept scheduled events, allowing your test to simulate time progression deterministically. In practice, you might not need this unless you have complex timing logic. A simpler approach in tests is often to shorten timeouts (e.g., set a small ReceiveTimeout in the actor for test) and then use ExpectNextMessage within that span.
 
 ## Best Practices for Testing Proto.Actor:
 - Use Probes to avoid sleeps: Instead of doing Thread.Sleep or time.Sleep and then checking if something happened, use the probe’s GetNextMessage or AwaitCondition to wait until the expected event occurs or a timeout passes. This makes tests more deterministic and faster (they don’t always wait the full timeout if the message comes earlier).
 - Isolate actor logic: For unit testing an actor, treat it as a black box – send it messages, and observe responses or outgoing messages. If the actor modifies some external state (like a database), consider abstracting that behind an interface so you can inject a fake implementation for testing that records what happens.
 - Use TestKit for integration tests: You can spin up a mini actor system in a test, spawn multiple actors (some could be test probes) and simulate interactions. For example, test a supervisor strategy by making an actor throw an exception (maybe by sending it a special message that causes error) and verifying the supervisor restarted it (maybe the actor has a counter state that resets on restart – you can check that). Proto.TestKit doesn’t directly assert “actor restarted,” but you infer it from behavior.
-- Cluster testing: You can run multiple cluster members in a test (like the Go example above) to simulate distributed scenarios. The TestProvider or AutoManaged provider is useful here. There is also mention of Cluster Testing in Proto.Actor documentation (they provide hooks to simulate network partitions or member changes). If you need to test how your code handles node failures, you might use those hooks or simply start and stop cluster members in the test and see how the remaining system responds
-proto.actor
-.
+- Cluster testing: You can run multiple cluster members in a test (like the Go example above) to simulate distributed scenarios. The TestProvider or AutoManaged provider is useful here. There is also mention of Cluster Testing in Proto.Actor documentation (they provide hooks to simulate network partitions or member changes). If you need to test how your code handles node failures, you might use those hooks or simply start and stop cluster members in the test and see how the remaining system responds.
 
 ## A brief note on Proto.TestKit in Go
-The Go testkit is slightly less full-featured than the .NET one (since Go doesn’t have async/await, the patterns differ). But as we saw, the fundamentals are there: TestProbe actor with Request and ExpectNoMessage, and utility for GetNextMessageOf[T]. The Go testkit also has NewTestMailboxStats which can be used as a mailbox middleware to capture mailbox events, similar to .NET’s TestMailboxStats
-GitHub
-GitHub
-.
+The Go testkit is slightly less full-featured than the .NET one (since Go doesn’t have async/await, the patterns differ). But as we saw, the fundamentals are there: TestProbe actor with Request and ExpectNoMessage, and utility for GetNextMessageOf[T]. The Go testkit also has NewTestMailboxStats which can be used as a mailbox middleware to capture mailbox events, similar to .NET’s TestMailboxStats.
 
 ## Summary
 Testing actor-based systems can be made systematic with these tools: TestProbe to simulate actors and capture communications, and scheduling hooks to control timing. By using Proto.TestKit, you can write tests that:

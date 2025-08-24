@@ -6,27 +6,20 @@ Remoting enables horizontal scaling and distribution of work. Suppose you have m
 
 ## Key aspects of Proto.Remote:
 - It uses gRPC for transport (which means it’s efficient and supports cross-language communication).
-- It uses Protocol Buffers (Protobuf) for serializing messages by default. You define your message schemas in .proto files so that both sender and receiver know how to serialize/deserialize the messages
-proto.actor
-proto.actor
-.
+- It uses Protocol Buffers (Protobuf) for serializing messages by default. You define your message schemas in .proto files so that both sender and receiver know how to serialize/deserialize the messages.
+
 - Actors are identified by a address:port and a name (the PID contains these). If an actor is known by name on a remote node, you can send it messages by constructing a PID with that node’s address and the actor’s name.
-- You can also spawn actors remotely – meaning from one node, instruct another node to create an actor of a given kind. Proto.Remote allows registering “kinds” of actors that can be spawned remotely
-proto.actor
-proto.actor
-.
+- You can also spawn actors remotely – meaning from one node, instruct another node to create an actor of a given kind. Proto.Remote allows registering “kinds” of actors that can be spawned remotely.
+
 
 ## Configuring Proto.Remote
 To use remoting, each process (actor system) needs to open a port and start a remote server. In C#, this is done by creating a GrpcNetRemoteConfig and adding it to the ActorSystem; in Go, by configuring remote.Configure. Typically, you will:
 
-Register message types: Proto.Actor needs to know how to serialize your message classes. In C#, you call config = GrpcNetRemoteConfig.BindTo(host, port).WithProtoMessages(Descriptor), passing in the Protobuf descriptor for your messages
-proto.actor
-. In Go, you’d include remote.WithProtoFiles or ensure your Protobuf-generated Go types are registered. (For simplicity, if you’re only sending simple string or int messages, you might use built-in serialization, but Protobuf is recommended for compatibility).
+Register message types: Proto.Actor needs to know how to serialize your message classes. In C#, you call config = GrpcNetRemoteConfig.BindTo(host, port).WithProtoMessages(Descriptor), passing in the Protobuf descriptor for your messages.
+In Go, you’d include remote.WithProtoFiles or ensure your Protobuf-generated Go types are registered. (For simplicity, if you’re only sending simple string or int messages, you might use built-in serialization, but Protobuf is recommended for compatibility).
 
-Register actor kinds (for remote spawn): If you want to allow other nodes to spawn certain types of actors on this node, register them by name. In C#: .WithRemoteKind("echo", Props.FromProducer(() => new EchoActor())) adds an actor kind named "echo" with its creation logic
-proto.actor
-proto.actor
-. In Go, there’s remote.Register("echo", actor.PropsFromProducer(...)) typically.
+Register actor kinds (for remote spawn): If you want to allow other nodes to spawn certain types of actors on this node, register them by name. In C#: .WithRemoteKind("echo", Props.FromProducer(() => new EchoActor())) adds an actor kind named "echo" with its creation logic.
+In Go, there’s remote.Register("echo", actor.PropsFromProducer(...)) typically.
 
 Start the remote: In C#, either call remote.Start() if using the older API (Remote class), or if using the new ActorSystem configuration API, you’d do system.Root.SpawnNamedAsync for remote spawn or simply rely on cluster (which auto-starts remote). In Go, call remoter := remote.NewRemote(system, config); remoter.Start().
 
@@ -170,9 +163,8 @@ Proto.Remote automatically handles serialization and networking. When you send a
 The only extra steps needed are the configuration (to set up networking and serialization) and ensuring both sides know the message types (hence sharing Protobuf schemas or assemblies). In a multi-language scenario (say, a Go client and a C# server), using Protobuf for messages is essential so that both have a common definition of the data structures. As long as the Protobuf contracts are the same, a Go actor can send a message to a C# actor and vice versa.
 
 ## Location Transparency and Remote Spawning
-Location transparency means you could design your system without hard-coding where actors run. For instance, you might have an actor that does image processing – you can initially run it locally, but if load increases, you could run that actor on a separate machine and simply adjust addressing or use cluster (later). Proto.Remote even allows remote spawning: one node can ask another to spawn a new actor of a given kind. We touched on registering kinds earlier. For example, if Node2 wanted to spawn an actor on Node1, it could call something like system.Root.SpawnNamedAsync("127.0.0.1:8000", "someName", "pingKind") in C#
-proto.actor
-. This would instruct Node1’s remote system to create a new actor using the Props we registered as "pingKind". The returned PID would represent that new remote actor, and then we could send messages to it. Remote spawning is advanced usage that can be helpful, but often, if you’re building a dynamic system, you might use Proto.Cluster which automates a lot of that.
+Location transparency means you could design your system without hard-coding where actors run. For instance, you might have an actor that does image processing – you can initially run it locally, but if load increases, you could run that actor on a separate machine and simply adjust addressing or use cluster (later). Proto.Remote even allows remote spawning: one node can ask another to spawn a new actor of a given kind. We touched on registering kinds earlier. For example, if Node2 wanted to spawn an actor on Node1, it could call something like system.Root.SpawnNamedAsync("127.0.0.1:8000", "someName", "pingKind") in C#.
+This would instruct Node1’s remote system to create a new actor using the Props we registered as "pingKind". The returned PID would represent that new remote actor, and then we could send messages to it. Remote spawning is advanced usage that can be helpful, but often, if you’re building a dynamic system, you might use Proto.Cluster which automates a lot of that.
 
 ## Diagram: Remote Message Flow
 The following sequence diagram illustrates the interaction between two actors on different nodes using Proto.Remote, including an optional reply:

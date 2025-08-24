@@ -11,17 +11,13 @@ The actor model is a conceptual model for designing concurrent, distributed syst
 
 - Fault Tolerance via Supervision: Actors form hierarchies. An actor can create child actors and supervise them. If a child actor fails (e.g., throws an exception), the parent actor can handle the failure (restart the child, replace it, etc.), creating a self-healing system.
 
-In the context of Proto.Actor, these principles are applied in a modern, cross-platform framework. Proto.Actor is an open-source actor framework available in multiple languages (including .NET/C# and Go) that implements both classic actors and “virtual actors” in clusters. It provides the building blocks to create actors, send messages, and scale out your system across cores and network nodes. Proto.Actor uses proven technologies under the hood (like gRPC for networking and Protocol Buffers for serialization) instead of reinventing them
-GitHub
-GitHub
-. This means Proto.Actor integrates well with other systems and languages, allowing, for example, a Go actor to communicate with a C# actor over the network with ease.
+In the context of Proto.Actor, these principles are applied in a modern, cross-platform framework. Proto.Actor is an open-source actor framework available in multiple languages (including .NET/C# and Go) that implements both classic actors and “virtual actors” in clusters. It provides the building blocks to create actors, send messages, and scale out your system across cores and network nodes. Proto.Actor uses proven technologies under the hood (like gRPC for networking and Protocol Buffers for serialization) instead of reinventing them.
+This means Proto.Actor integrates well with other systems and languages, allowing, for example, a Go actor to communicate with a C# actor over the network with ease.
 
  
 
-A virtual actor (or grain, in Proto.Actor terminology) is a concept used in distributed clusters (inspired by Microsoft Orleans). Virtual actors abstract away the manual creation and placement of actors in a cluster. Instead of explicitly spawning an actor on a specific node, you as a developer simply send a message to a cluster identity (a logical name for the actor), and the cluster ensures an actor instance exists to receive that message
-GitHub
-GitHub
-. The first time a message is sent to a given identity (e.g., “user/123”), Proto.Actor’s cluster will automatically activate an actor for that identity on an available node. This actor is then kept alive to process subsequent messages, and if the hosting node goes down, the cluster can transparently recreate the actor on another node. We will delve into virtual actors in the cluster chapter, but it’s important to know that Proto.Actor supports both traditional actor usage (where you manage actor lifecycles in your process) and virtual actors (where the cluster manages lifecycles for you).
+A virtual actor (or grain, in Proto.Actor terminology) is a concept used in distributed clusters (inspired by Microsoft Orleans). Virtual actors abstract away the manual creation and placement of actors in a cluster. Instead of explicitly spawning an actor on a specific node, you as a developer simply send a message to a cluster identity (a logical name for the actor), and the cluster ensures an actor instance exists to receive that message.
+The first time a message is sent to a given identity (e.g., “user/123”), Proto.Actor’s cluster will automatically activate an actor for that identity on an available node. This actor is then kept alive to process subsequent messages, and if the hosting node goes down, the cluster can transparently recreate the actor on another node. We will delve into virtual actors in the cluster chapter, but it’s important to know that Proto.Actor supports both traditional actor usage (where you manage actor lifecycles in your process) and virtual actors (where the cluster manages lifecycles for you).
 
  
 
