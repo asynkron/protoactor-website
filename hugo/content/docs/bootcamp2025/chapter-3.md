@@ -1,4 +1,6 @@
 # Chapter 3: Remoting with Proto.Actor (Proto.Remote)
+
+**Chapters:** [1](chapter-1/) | [2](chapter-2/) | [3](chapter-3/) | [4](chapter-4/) | [5](chapter-5/)
 Thus far, our actors have all been within a single process. One of the powerful features of Proto.Actor is that it supports location transparency not just in theory but in practice: you can have actors running on different machines (or processes) communicate with each other. Proto.Actor’s Remoting module (often referred to as Proto.Remote) provides the networking layer to send messages between actor systems over the network (using gRPC under the hood). In this chapter, we’ll cover how to set up remoting, how remote actors are addressed, and a simple example of sending messages between two processes (in C# and Go).
 
 ## Why Remoting?
@@ -187,3 +189,5 @@ sequenceDiagram
 In this diagram, Actor A sends a message to Actor B’s PID. The Proto.Remote system on Node1 packages the message and sends it over the network to Node2. Node2’s remote system delivers it to Actor B. If Actor B calls Respond (or otherwise sends a message back to the original sender), the process reverses, delivering the reply to Actor A. The developer did not have to explicitly manage sockets or endpoints beyond the initial configuration – Proto.Actor’s remoting took care of it.
 
 With Proto.Remote, you can build distributed applications where each service or component runs in its own process but still interacts through actors. However, remoting requires that you manage the node membership (i.e., knowing addresses of nodes and starting them manually). For dynamic clusters with many nodes joining/leaving and virtual actor activation, Proto.Actor offers the Cluster abstraction, which we cover next.
+
+**Chapters:** [1](chapter-1/) | [2](chapter-2/) | [3](chapter-3/) | [4](chapter-4/) | [5](chapter-5/)
