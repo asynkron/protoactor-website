@@ -1,6 +1,7 @@
 # Chapter 5: Testing Proto.Actor Systems with Proto.TestKit
 
 **Chapters:** [1](chapter-1/) | [2](chapter-2/) | [3](chapter-3/) | [4](chapter-4/) | [5](chapter-5/)
+
 Testing is a crucial part of developing reliable systems. Actor-based systems introduce concurrency, which can make testing tricky if you try to do it with traditional approaches (like expecting results immediately, or trying to synchronize threads manually). Proto.Actor provides the Proto.TestKit module (for .NET and Go) to assist in writing tests for actors. In this chapter, we’ll cover how to use test kit features such as test probes to capture messages, how to simulate timings, and general strategies for testing actors, both in isolation and as part of a system.
 
 ## Challenges in Testing Actors
