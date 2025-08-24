@@ -1,4 +1,6 @@
 # Chapter 5: Testing Proto.Actor Systems with Proto.TestKit
+
+**Chapters:** [1](chapter-1/) | [2](chapter-2/) | [3](chapter-3/) | [4](chapter-4/) | [5](chapter-5/)
 Testing is a crucial part of developing reliable systems. Actor-based systems introduce concurrency, which can make testing tricky if you try to do it with traditional approaches (like expecting results immediately, or trying to synchronize threads manually). Proto.Actor provides the Proto.TestKit module (for .NET and Go) to assist in writing tests for actors. In this chapter, we’ll cover how to use test kit features such as test probes to capture messages, how to simulate timings, and general strategies for testing actors, both in isolation and as part of a system.
 
 ## Challenges in Testing Actors
@@ -27,6 +29,15 @@ Suppose we have a simple actor that replies “pong” when it receives “ping�
 
 - Sending "ping" yields a "pong" response.
 - The actor doesn’t send any unexpected messages.
+
+```mermaid
+sequenceDiagram
+    participant Probe as TestProbe
+    participant Actor as PingActor
+    Probe->>Actor: ping
+    Actor-->>Probe: pong
+    Probe->>Probe: assert reply
+```
 
 ### C# Test using TestProbe:
 ```csharp
@@ -158,3 +169,5 @@ Testing actor-based systems can be made systematic with these tools: TestProbe t
 With Proto.Actor, since everything is message-driven, most tests boil down to “given this input message (and maybe some preceding messages), the actor should send/output this other message or produce that effect.” The testkit helps capture those outputs for verification.
 
 This concludes the Proto.Actor Bootcamp. We started from the foundational concepts of the actor model, explored Proto.Actor’s core API for building actors in C# and Go, then extended to remote communication and cluster-based virtual actors, and finally saw how to test actor systems effectively. With these tutorials, you should be able to create your own concurrent, distributed applications using Proto.Actor, step by step: first get comfortable with actors and messages, then scale out with remoting or clustering, and always validate your actor behavior with thorough tests. Happy acting!
+
+**Chapters:** [1](chapter-1/) | [2](chapter-2/) | [3](chapter-3/) | [4](chapter-4/) | [5](chapter-5/)

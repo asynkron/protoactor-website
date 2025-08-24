@@ -1,4 +1,6 @@
 # Chapter 2: Proto.Actor Core Primitives
+
+**Chapters:** [1](chapter-1/) | [2](chapter-2/) | [3](chapter-3/) | [4](chapter-4/) | [5](chapter-5/)
 Now that we understand the basic actor model, let’s see how Proto.Actor implements these concepts and what core primitives it provides. We will cover how to define an actor’s behavior, how to create and start actors, how actors send and receive messages, and how the actor lifecycle and hierarchy work. We’ll illustrate with simple examples in C# and Go.
 
 ## Actors, Messages, and the Actor System
@@ -163,6 +165,18 @@ When you spawned the actor, you got a PID. The PID (Process ID) is a core primit
 
 For example, a PID might look like Pid{ Address="", Id="Actor$123" } for a local actor, or { Address="127.0.0.1:8000", Id="remoteActor" } for a remote actor on another process. PIDs are how you send messages – you don’t call methods on an actor, you send it messages via its PID. The actor’s mailbox receives the message and eventually the actor’s Receive handles it. This indirection is what enables location transparency: if the actor moves or is actually remote, you still just have a PID. The Proto.Actor infrastructure handles delivering the message to wherever the actor lives (more on this in the Remoting chapter).
 
+```mermaid
+graph LR
+    sender((Sender))
+    msg(Message)
+    class msg message
+    pid(PID)
+    class pid light-blue
+    receiver((Receiver))
+    sender --> msg
+    msg --- pid --> receiver
+```
+
  
 
 You can obtain a PID by spawning an actor (which returns it), by looking one up by name (if you spawned with a name or registered a name in a naming system), or via cluster identity (discussed in the Cluster chapter). PIDs can also be shared: you can send a PID to another actor as part of a message (e.g., send your PID so the receiver can reply directly).
@@ -205,12 +219,12 @@ This way, your system can recover from errors without bringing down the entire p
 Here’s a simple diagram of a small actor hierarchy with a parent supervising two children:
 
 ```mermaid
-flowchart TB
-    Parent([Parent Actor])
-    Child1([Child Actor 1])
-    Child2([Child Actor 2])
-    Parent --> Child1
-    Parent --> Child2
+graph TB
+    parent((Parent Actor))
+    child1((Child Actor 1))
+    child2((Child Actor 2))
+    parent --> child1
+    parent --> child2
 ```
 
 
@@ -233,3 +247,5 @@ In this hierarchy, if Child Actor 1 encounters an error, the Parent can decide w
 - Parent/Child and Supervision – actors form a tree; parents supervise children for errors.
 
 With these basics, you can already build concurrent applications that make use of multiple actors communicating in-process. In the next chapter, we will extend this to distributed scenarios. Proto.Actor’s Remoting allows actors in different processes or machines to send messages to each other as easily as if they were local. We’ll explore how to configure and use Proto.Actor’s remote capabilities.
+
+**Chapters:** [1](chapter-1/) | [2](chapter-2/) | [3](chapter-3/) | [4](chapter-4/) | [5](chapter-5/)
